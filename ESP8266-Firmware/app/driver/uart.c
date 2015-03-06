@@ -13,6 +13,7 @@
 #include "osapi.h"
 #include "driver/uart.h"
 #include "user_config.h"
+#include "user/interface.h"
 
 #define UART0   0
 #define UART1   1
@@ -200,6 +201,8 @@ uart0_rx_intr_handler(void *para)
         // insert here for get one command line from uart
         if (RcvChar == '\r' || RcvChar == '\n' ) {
             pRxBuff->BuffState = WRITE_OVER;
+            checkCommand( ((pRxBuff->pWritePos)-(pRxBuff->pRcvMsgBuff)), pRxBuff->pRcvMsgBuff ); // Check received line if it is a valid command
+            pRxBuff->pWritePos = pRxBuff->pRcvMsgBuff - 1;
         }
         
         if (pRxBuff->pWritePos == (pRxBuff->pRcvMsgBuff + RX_BUFF_SIZE)) {
