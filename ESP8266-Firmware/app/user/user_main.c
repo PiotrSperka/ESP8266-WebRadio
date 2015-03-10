@@ -41,9 +41,9 @@ void onTestTmr(void)
 }
 
 void task_init(void){
-    os_timer_disarm(&testTmr);
-    os_timer_setfn(&testTmr, &onTestTmr, (void*)0);
-    os_timer_arm(&testTmr, 500, 1);
+    //os_timer_disarm(&testTmr);
+    //os_timer_setfn(&testTmr, &onTestTmr, (void*)0);
+    //os_timer_arm(&testTmr, 2000, 1);
     //taskQueue = (os_event_t *)os_malloc(sizeof(os_event_t) * TASK_QUEUE_LEN);
     //system_os_task(task_lua, USER_TASK_PRIO_0, taskQueue, TASK_QUEUE_LEN);
 }
@@ -58,7 +58,9 @@ void user_init(void)
 {
     uart_init(BIT_RATE_460800, BIT_RATE_460800);
 
-    uart0_sendStr("\n\n\nModded by Piotr Sperka\nhttp:\\\\piotrsperka.info");
+    uart0_sendStr("\n\nFirmware v0.1 by Piotr Sperka\nhttp:\\\\piotrsperka.info\n\n");
+    
+    wifi_set_opmode(0x01); // SET WIFI TO STATION MODE
     
     system_init_done_cb(task_init);
 }

@@ -1,0 +1,2 @@
+void serverInit();
+void serverDisconnect();
