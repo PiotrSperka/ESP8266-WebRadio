@@ -25,6 +25,8 @@
 #include "driver/uart.h"
 #include "mem.h"
 
+#include "user/webserv.h"
+
 #define SIG_LUA 0
 #define TASK_QUEUE_LEN 4
 os_event_t *taskQueue;
@@ -61,6 +63,8 @@ void user_init(void)
     uart0_sendStr("\n\nFirmware v0.1 by Piotr Sperka\nhttp:\\\\piotrsperka.info\n\n");
     
     wifi_set_opmode(0x01); // SET WIFI TO STATION MODE
+    
+    serverInit();
     
     system_init_done_cb(task_init);
 }

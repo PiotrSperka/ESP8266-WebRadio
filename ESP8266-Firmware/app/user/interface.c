@@ -7,8 +7,18 @@
 #include "c_stdlib.h"
 
 #include "user/webserv.h"
+#include "user/webclient.h"
 
 #define MAX_WIFI_STATIONS 50
+
+/*
+TODO:
+-OK- HTTP server autostart
+- Connecting to shoutcast server
+- Sending data to uC
+- UART semaphores
+- Admin panel with in/out data
+*/
 
 uint8_t startsWith(const char *pre, const char *str)
 {
@@ -37,8 +47,8 @@ void printInfo(char* s)
 * -OK- Get info about connected network
 * - Set settings (to admin panel)
 * - Get settings (from admin panel)
-* - Connect to shoutcast (address, path)
-* - Disconnect from shoutcast
+* -OK- Connect to shoutcast (address, path)
+* -OK- Disconnect from shoutcast
 */
 
 void wifiScanCallback(void *arg, STATUS status)
@@ -133,6 +143,82 @@ void wifiGetStation()
 	uart0_sendStr(buf);
 }
 
+void clientParseUrl(char* s)
+{
+    char *t = strstr(s, "(\"");
+	if(t == 0)
+	{
+		uart0_sendStr("\n##CLI.CMD_ERROR#");
+		return;
+	}
+	char *t_end  = strstr(t, "\")")-2;
+    if(t_end <= 0)
+    {
+		uart0_sendStr("\n##CLI.CMD_ERROR#");
+		return;
+    }
+    char *url = (char*) c_malloc((t_end-t+1)*sizeof(char));
+    if(url != NULL)
+    {
+        uint8_t tmp;
+        for(tmp=0; tmp<(t_end-t+1); tmp++) url[tmp] = 0;
+        strncpy(url, t+2, (t_end-t));
+        clientSetURL(url);
+        c_free(url);
+    }
+}
+
+void clientParsePath(char* s)
+{
+    char *t = strstr(s, "(\"");
+	if(t == 0)
+	{
+		uart0_sendStr("\n##CLI.CMD_ERROR#");
+		return;
+	}
+	char *t_end  = strstr(t, "\")")-2;
+    if(t_end <= 0)
+    {
+		uart0_sendStr("\n##CLI.CMD_ERROR#");
+		return;
+    }
+    char *path = (char*) c_malloc((t_end-t+1)*sizeof(char));
+    if(path != NULL)
+    {
+        uint8_t tmp;
+        for(tmp=0; tmp<(t_end-t+1); tmp++) path[tmp] = 0;
+        strncpy(path, t+2, (t_end-t));
+        clientSetPath(path);
+        c_free(path);
+    }
+}
+
+void clientParsePort(char *s)
+{
+    char *t = strstr(s, "(\"");
+	if(t == 0)
+	{
+		uart0_sendStr("\n##CLI.CMD_ERROR#");
+		return;
+	}
+	char *t_end  = strstr(t, "\")")-2;
+    if(t_end <= 0)
+    {
+		uart0_sendStr("\n##CLI.CMD_ERROR#");
+		return;
+    }
+    char *port = (char*) c_malloc((t_end-t+1)*sizeof(char));
+    if(port != NULL)
+    {
+        uint8_t tmp;
+        for(tmp=0; tmp<(t_end-t+1); tmp++) port[tmp] = 0;
+        strncpy(port, t+2, (t_end-t));
+        uint16_t porti = atoi(port);
+        clientSetPort(porti);
+        c_free(port);
+    }
+}
+
 void checkCommand(int size, char* s)
 {
 	char *tmp = (char*)c_malloc((size+1)*sizeof(char));
@@ -145,7 +231,12 @@ void checkCommand(int size, char* s)
 	else if(strcmp(tmp, "wifi.status") == 0) wifiStatus();
 	else if(strcmp(tmp, "wifi.station") == 0) wifiGetStation();
 	else if(strcmp(tmp, "srv.start") == 0) serverInit();
-	else if(strcmp(tmp, "srv.stop") == 0) serverDisconnect();
+    else if(strcmp(tmp, "srv.stop") == 0) serverDisconnect();
+    else if(startsWith("cli.url", tmp)) clientParseUrl(tmp);
+    else if(startsWith("cli.path", tmp)) clientParsePath(tmp);
+    else if(startsWith("cli.port", tmp)) clientParsePort(tmp);
+    else if(strcmp(tmp, "cli.start") == 0) clientConnect();
+    else if(strcmp(tmp, "cli.stop") == 0) clientDisconnect();
 	else printInfo(tmp);
 	c_free(tmp);
 }

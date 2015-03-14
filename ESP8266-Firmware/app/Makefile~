@@ -24,7 +24,7 @@ SPECIAL_MKTARGETS=$(APP_MKTARGETS)
 SUBDIRS=    \
 	user	\
 	driver	\
-	#lwip	\
+	lwip	\
 	json	\
 	upgrade	\
 	platform	\
@@ -33,7 +33,7 @@ SUBDIRS=    \
 	#mqtt	\
 	smart 	\
 	#wofs 	\
-	modules	\
+	#modules	\
 	#spiffs
 
 endif # } PDIR
@@ -80,7 +80,7 @@ COMPONENTS_eagle.app.v6 = \
 	smart/smart.a 	\
 	#wofs/wofs.a 	\
 	#spiffs/spiffs.a 	\
-	modules/libmodules.a
+	#modules/libmodules.a
 
 LINKFLAGS_eagle.app.v6 = \
 	-L../lib        \

@@ -31,9 +31,9 @@ SUBDIRS=    \
 	libc 	\
 	#lua 	\
 	#mqtt	\
-	smart 	\
+	#smart 	\
 	#wofs 	\
-	modules	\
+	#modules	\
 	#spiffs
 
 endif # } PDIR
@@ -77,10 +77,10 @@ COMPONENTS_eagle.app.v6 = \
 	libc/liblibc.a 	\
 	#lua/liblua.a 	\
 	#mqtt/mqtt.a 	\
-	smart/smart.a 	\
+	#smart/smart.a 	\
 	#wofs/wofs.a 	\
 	#spiffs/spiffs.a 	\
-	modules/libmodules.a
+	#modules/libmodules.a
 
 LINKFLAGS_eagle.app.v6 = \
 	-L../lib        \
