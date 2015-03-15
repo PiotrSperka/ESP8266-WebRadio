@@ -14,12 +14,42 @@ ip_addr_t clientIP;
 static struct espconn clientConn;
 static esp_tcp clientTcp;
 
-struct icyHeader* clientGetHeader()
+static const char* icyHeaders[] = { "icy-name:", "icy-notice1:", "icy-notice2:",  "icy-url:", "icy-genre:", "icy-br:" };
+
+ICACHE_FLASH_ATTR struct icyHeader* clientGetHeader()
 {
 	return &header;
 }
 
-void clientSetURL(char* url)
+ICACHE_FLASH_ATTR void clientParseHeader(char* s)
+{
+	// icy-notice1 icy-notice2 icy-name icy-genre icy-url icy-br
+	uint8_t header_num;
+	for(header_num=0; header_num<ICY_HEADERS_COUNT; header_num++)
+	{
+		char *t;
+		t = strstr(s, icyHeaders[header_num]);
+		if( t != NULL )
+		{
+			t += strlen(icyHeaders[header_num]);
+			char *t_end = strstr(t, "\r\n");
+			if(t_end != NULL)
+			{
+				uint16_t len = t_end - t;
+				if(header.members.mArr[header_num] != NULL) c_free(header.members.mArr[header_num]);
+				header.members.mArr[header_num] = (char*)c_malloc((len+1)*sizeof(char));
+				if(header.members.mArr[header_num] != NULL)
+				{
+					int i;
+					for(i = 0; i<len+1; i++) header.members.mArr[header_num][i] = 0;
+					strncpy(header.members.mArr[header_num], t, len);
+				}
+			}
+		}
+	}
+}
+
+ICACHE_FLASH_ATTR void clientSetURL(char* url)
 {
 	int l = strlen(url)+1;
 	if(clientURL != NULL) c_free(clientURL);
@@ -28,7 +58,7 @@ void clientSetURL(char* url)
 	uart0_sendStr("\n##CLI.URLSET#\n");
 }
 
-void clientSetPath(char* path)
+ICACHE_FLASH_ATTR void clientSetPath(char* path)
 {
 	int l = strlen(path)+1;
 	if(clientPath != NULL) c_free(clientPath);
@@ -37,7 +67,7 @@ void clientSetPath(char* path)
 	uart0_sendStr("\n##CLI.PATHSET#\n");
 }
 
-void clientSetPort(uint16_t port)
+ICACHE_FLASH_ATTR void clientSetPort(uint16_t port)
 {
 	clientPort = port;
 	uart0_sendStr("\n##CLI.PORTSET#\n");
@@ -45,9 +75,10 @@ void clientSetPort(uint16_t port)
 
 ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned short len)
 {
-	char buf[128];
-	c_sprintf(buf, "TCP data received: %d bytes\n", len);
-	uart0_sendStr(buf);
+	clientParseHeader(pdata);
+	//char buf[128];
+	//c_sprintf(buf, "TCP data received: %d bytes\n", len);
+	//uart0_sendStr(buf);
 }
 
 ICACHE_FLASH_ATTR void clientSentCallback(void *arg)
@@ -100,7 +131,7 @@ ICACHE_FLASH_ATTR void clientIpFoundCallback(const char *name, ip_addr_t *ipaddr
 	}
 }
 
-void clientConnect()
+ICACHE_FLASH_ATTR void clientConnect()
 {
 	clientConn.type = ESPCONN_TCP;
 	clientConn.state = ESPCONN_NONE;
@@ -115,8 +146,15 @@ void clientConnect()
 	uart0_sendStr("\n##CLI.DNSLOOKUP#\n");
 }
 
-void clientDisconnect()
+ICACHE_FLASH_ATTR void clientDisconnect()
 {
 	espconn_disconnect(&clientConn);
+	int i;
+	for(i=0; i<ICY_HEADERS_COUNT; i++)
+		if(header.members.mArr[i] != NULL)
+		{
+			c_free(header.members.mArr[i]);
+			header.members.mArr[i] = NULL;
+		}
 	uart0_sendStr("\n##CLI.STOPPED#\n");
 }

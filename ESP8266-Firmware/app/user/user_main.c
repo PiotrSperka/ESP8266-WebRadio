@@ -26,6 +26,7 @@
 #include "mem.h"
 
 #include "user/webserv.h"
+#include "user/webclient.h"
 
 #define SIG_LUA 0
 #define TASK_QUEUE_LEN 4
@@ -65,6 +66,11 @@ void user_init(void)
     wifi_set_opmode(0x01); // SET WIFI TO STATION MODE
     
     serverInit();
+    // DEBUG
+    clientSetURL("ant-waw.cdn.eurozet.pl");
+    clientSetPort(8602);
+    clientSetPath("/");
+    // DEBUG
     
     system_init_done_cb(task_init);
 }

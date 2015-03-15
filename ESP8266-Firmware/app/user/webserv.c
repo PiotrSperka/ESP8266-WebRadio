@@ -1,4 +1,5 @@
 #include "user/webserv.h"
+#include "user/webclient.h"
 #include "osapi.h"
 #include "c_stdio.h"
 #include "c_string.h"
@@ -12,7 +13,7 @@ static esp_tcp servTcp;
 
 #define INTERNAL_FLASH_START_ADDRESS    0x40200000
 
-uint32_t fread( void *to, uint32_t fromaddr, uint32_t size )
+ICACHE_FLASH_ATTR uint32_t fread( void *to, uint32_t fromaddr, uint32_t size )
 {
   fromaddr -= INTERNAL_FLASH_START_ADDRESS;
   int r;
@@ -25,6 +26,63 @@ uint32_t fread( void *to, uint32_t fromaddr, uint32_t size )
   }
 }
 
+ICACHE_FLASH_ATTR char* my_strdup(char* string, int length)
+{
+  char* newstr = (char*)c_malloc((length+1)*sizeof(char));
+  if(newstr != NULL)
+  {
+    int i;
+    for(i=0; i<length+1; i++) if(i < length) newstr[i] = string[i]; else newstr[i] = 0;
+  }
+  return newstr;
+}
+
+ICACHE_FLASH_ATTR char* str_replace ( char *string, const char *substr, const char *replacement, int length ){
+  char *tok = NULL;
+  char *newstr = NULL;
+  char *oldstr = NULL;
+  /* if either substr or replacement is NULL, duplicate string a let caller handle it */
+  if ( substr == NULL ) {
+    newstr = my_strdup(string, length);
+    c_free(string);
+    return newstr;
+  }
+  if( replacement == NULL ) replacement = "";
+  //newstr = strdup (string);
+  newstr = my_strdup(string, length);
+  
+  while ( (tok = strstr ( newstr, substr ))){
+    oldstr = newstr;
+    newstr = c_malloc ( strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) + 1 );
+    /*failed to alloc mem, free old string and return NULL */
+    if ( newstr == NULL ){
+      c_free (oldstr);
+      return NULL;
+    }
+    c_memcpy ( newstr, oldstr, tok - oldstr );
+    c_memcpy ( newstr + (tok - oldstr), replacement, strlen ( replacement ) );
+    c_memcpy ( newstr + (tok - oldstr) + strlen( replacement ), tok + strlen ( substr ), strlen ( oldstr ) - strlen ( substr ) - ( tok - oldstr ) );
+    c_memset ( newstr + strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) , 0, 1 );
+    c_free (oldstr);
+  }
+  c_free(string);
+  return newstr;
+}
+
+ICACHE_FLASH_ATTR char* serverParseCGI(char* html, int length)
+{
+  struct icyHeader *header = clientGetHeader();
+  char* h = html;
+
+  h = str_replace(h, "#ICY-NAME#", header->members.single.name, length);
+  h = str_replace(h, "#ICY-NOTICE1#", header->members.single.notice1, strlen(h));
+  h = str_replace(h, "#ICY-NOTICE2#", header->members.single.notice2, strlen(h));
+  h = str_replace(h, "#ICY-GENRE#", header->members.single.genre, strlen(h));
+  h = str_replace(h, "#ICY-URL#", header->members.single.url, strlen(h));
+  h = str_replace(h, "#ICY-BITRATE#", header->members.single.bitrate, strlen(h));
+
+  return h;
+}
 
 ICACHE_FLASH_ATTR struct servFile* findFile(char* name)
 {
@@ -52,14 +110,18 @@ ICACHE_FLASH_ATTR void serveFile(char* name)
 	}
 	else length = 0;
 
-	c_sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\n\r\n", (f!=NULL ? f->type : "text/plain"), length);
-	espconn_sent(&servConn,buf,strlen(buf)); // SEND HEADER
 	if(length > 0)
 	{
 		char *con = (char*)c_malloc(length*sizeof(char));
 		if(con != NULL)
 		{
 			fread(con, (uint32_t)content, length);
+      if(f->cgi == 1) {
+        con = serverParseCGI(con, length);
+        length = strlen(con);
+      }
+      c_sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\n\r\n", (f!=NULL ? f->type : "text/plain"), length);
+	    espconn_sent(&servConn,buf,strlen(buf)); // SEND HEADER
 			espconn_sent(&servConn, (uint8_t*)con, length); // SEND CONTENT
 			/*uint32_t tsnd = 0;
 			while(1)
@@ -76,6 +138,11 @@ ICACHE_FLASH_ATTR void serveFile(char* name)
 			c_free(con);
 		}
 	}
+  else
+  {
+    c_sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\n\r\n", (f!=NULL ? f->type : "text/plain"), 0);
+	  espconn_sent(&servConn,buf,strlen(buf)); // SEND HEADER
+  }
 }
 
 ICACHE_FLASH_ATTR void serverReceiveCallback(void *arg, char *pdata, unsigned short len)

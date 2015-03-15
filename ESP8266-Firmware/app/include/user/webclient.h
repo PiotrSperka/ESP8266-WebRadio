@@ -1,12 +1,22 @@
 #include "c_types.h"
 
+#define ICY_HEADERS_COUNT 6
+
 struct icyHeader
 {
-	char* name;
-	char* notice;
-	char* url;
-	char* genre;
-	uint16_t bitrate;
+	union
+	{
+		char* mArr[ICY_HEADERS_COUNT];
+		struct
+		{
+			char* name;
+			char* notice1;
+			char* notice2;
+			char* url;
+			char* genre;
+			char* bitrate;
+		} single;
+	} members;
 };
 
 void clientSetURL(char* url);
