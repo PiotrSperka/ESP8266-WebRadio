@@ -61,7 +61,7 @@ void user_init(void)
 {
     uart_init(BIT_RATE_460800, BIT_RATE_460800);
 
-    uart0_sendStr("\n\nFirmware v0.1 by Piotr Sperka\nhttp:\\\\piotrsperka.info\n\n");
+    uart0_sendStr("\n#Firmware v0.5 by Piotr Sperka\nhttp:\\\\piotrsperka.info#\n");
     
     wifi_set_opmode(0x01); // SET WIFI TO STATION MODE
     

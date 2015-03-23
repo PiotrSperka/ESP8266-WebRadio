@@ -98,7 +98,7 @@ ICACHE_FLASH_ATTR struct servFile* findFile(char* name)
 ICACHE_FLASH_ATTR void serveFile(char* name)
 {
 	int length;
-	char buf[96];
+	char buf[128];
 	const char *content;
 	
 	struct servFile* f = findFile(name);
@@ -120,21 +120,9 @@ ICACHE_FLASH_ATTR void serveFile(char* name)
         con = serverParseCGI(con, length);
         length = strlen(con);
       }
-      c_sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\n\r\n", (f!=NULL ? f->type : "text/plain"), length);
+      c_sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n", (f!=NULL ? f->type : "text/plain"), length);
 	    espconn_sent(&servConn,buf,strlen(buf)); // SEND HEADER
 			espconn_sent(&servConn, (uint8_t*)con, length); // SEND CONTENT
-			/*uint32_t tsnd = 0;
-			while(1)
-			{
-				int tlen = 4096, temp=0;
-				uint32_t taddr = (uint32_t)content + tsnd;
-				if(length < 4096) tlen = length;
-				fread(con, taddr, tlen);
-				espconn_sent(&servConn,(uint8_t*)con,tlen); // SEND CONTENT
-				length -= tlen;
-				tsnd += tlen;
-				if(length == 0) break;
-			}*/
 			c_free(con);
 		}
 	}
@@ -198,6 +186,8 @@ ICACHE_FLASH_ATTR void serverInit()
 	espconn_regist_recvcb(&servConn, serverReceiveCallback);
 	espconn_regist_sentcb(&servConn, serverSentCallback);
 	espconn_regist_reconcb(&servConn, serverReconnectCallback);
+  
+  espconn_tcp_set_max_con_allow(&servConn, 16);
 	
 	espconn_accept(&servConn);
 	uart0_sendStr("\n##SRV.STARTED#\n");
