@@ -10,7 +10,7 @@ Audio decoder: VS1053<br />
 ##Changelog
 ###v0.6
 -**[ESP8266]**Started making new firmware based on esp_iot_rtos_sdk with bare LwIP and freeRTOS<br />
--**[Hardware]**New conception of hardware, where main MCU is ESP8266 and some small AVR is only to provide user interface (LCD, etc.) and configure ESP via UART<br />
+-**[Hardware]**New conception of hardware, where main MCU is ESP8266<br />
 -First tests of new firmware are very promising, because HTTP server based on Netconn is very responsive (much better than previous version of firmware)
 ###v0.5
 -**[ESP8266]**Improved: HTTP server configuration<br />
