@@ -38,12 +38,6 @@ endif
 #
 
 INCLUDES := $(INCLUDES) -I $(PDIR)include
-INCLUDES += -I ./
-INCLUDES += -I ../../include/ets
-INCLUDES += -I ../libc
-INCLUDES += -I ../platform
-#INCLUDES += -I ../lua
-INCLUDES += -I ../wofs
 PDIR := ../$(PDIR)
 sinclude $(PDIR)Makefile
 

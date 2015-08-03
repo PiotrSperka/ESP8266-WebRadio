@@ -4,81 +4,165 @@ ifndef PDIR
 
 endif
 
-#############################################################
-# Select compile
-#
-ifeq ($(OS),Windows_NT)
-# WIN32
-# We are under windows.
-	ifeq ($(XTENSA_CORE),lx106)
-		# It is xcc
-		AR = xt-ar
-		CC = xt-xcc
-		NM = xt-nm
-		CPP = xt-cpp
-		OBJCOPY = xt-objcopy
-		#MAKE = xt-make
-		CCFLAGS += -Os --rename-section .text=.irom0.text --rename-section .literal=.irom0.literal
-	else 
-		# It is gcc, may be cygwin
-		# Can we use -fdata-sections?
-		CCFLAGS += -Os -ffunction-sections -fno-jump-tables
-		AR = xtensa-lx106-elf-ar
-		CC = xtensa-lx106-elf-gcc
-		NM = xtensa-lx106-elf-nm
-		CPP = xtensa-lx106-elf-cpp
-		OBJCOPY = xtensa-lx106-elf-objcopy
-	endif
-	FIRMWAREDIR = ..\\bin\\
-	ifndef COMPORT
-		ESPPORT = com1
-	else
-		ESPPORT = $(COMPORT)
-	endif
-    ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
-# ->AMD64
-    endif
-    ifeq ($(PROCESSOR_ARCHITECTURE),x86)
-# ->IA32
-    endif
+ifeq ($(COMPILE), gcc)
+	AR = xtensa-lx106-elf-ar
+	CC = xtensa-lx106-elf-gcc
+	NM = xtensa-lx106-elf-nm
+	CPP = xtensa-lx106-elf-g++
+	OBJCOPY = xtensa-lx106-elf-objcopy
+	OBJDUMP = xtensa-lx106-elf-objdump
 else
-# We are under other system, may be Linux. Assume using gcc.
-	# Can we use -fdata-sections?
-	ifndef COMPORT
-		ESPPORT = /dev/ttyUSB0
-	else
-		ESPPORT = $(COMPORT)
-	endif
-	CCFLAGS += -Os -ffunction-sections -fno-jump-tables
 	AR = xtensa-lx106-elf-ar
 	CC = xtensa-lx106-elf-gcc
 	NM = xtensa-lx106-elf-nm
 	CPP = xtensa-lx106-elf-cpp
 	OBJCOPY = xtensa-lx106-elf-objcopy
-	FIRMWAREDIR = ../bin/
-    UNAME_S := $(shell uname -s)
-    ifeq ($(UNAME_S),Linux)
-# LINUX
-    endif
-    ifeq ($(UNAME_S),Darwin)
-# OSX
-    endif
-    UNAME_P := $(shell uname -p)
-    ifeq ($(UNAME_P),x86_64)
-# ->AMD64
-    endif
-    ifneq ($(filter %86,$(UNAME_P)),)
-# ->IA32
-    endif
-    ifneq ($(filter arm%,$(UNAME_P)),)
-# ->ARM
+	OBJDUMP = xtensa-lx106-elf-objdump
+endif
+
+BOOT?=none
+APP?=0
+SPI_SPEED?=40
+SPI_MODE?=QIO
+SPI_SIZE_MAP?=0
+
+ifeq ($(BOOT), new)
+    boot = new
+else
+    ifeq ($(BOOT), old)
+        boot = old
+    else
+        boot = none
     endif
 endif
-#############################################################
-ESPTOOL ?= ../tools/esptool.py
 
+ifeq ($(APP), 1)
+    app = 1
+else
+    ifeq ($(APP), 2)
+        app = 2
+    else
+        app = 0
+    endif
+endif
+
+ifeq ($(SPI_SPEED), 26.7)
+    freqdiv = 1
+else
+    ifeq ($(SPI_SPEED), 20)
+        freqdiv = 2
+    else
+        ifeq ($(SPI_SPEED), 80)
+            freqdiv = 15
+        else
+            freqdiv = 0
+        endif
+    endif
+endif
+
+
+ifeq ($(SPI_MODE), QOUT)
+    mode = 1
+else
+    ifeq ($(SPI_MODE), DIO)
+        mode = 2
+    else
+        ifeq ($(SPI_MODE), DOUT)
+            mode = 3
+        else
+            mode = 0
+        endif
+    endif
+endif
+
+addr = 0x01000
+
+ifeq ($(SPI_SIZE_MAP), 1)
+  size_map = 1
+  flash = 256
+else
+  ifeq ($(SPI_SIZE_MAP), 2)
+    size_map = 2
+    flash = 1024
+    ifeq ($(app), 2)
+      addr = 0x81000
+    endif
+  else
+    ifeq ($(SPI_SIZE_MAP), 3)
+      size_map = 3
+      flash = 2048
+      ifeq ($(app), 2)
+        addr = 0x81000
+      endif
+    else
+      ifeq ($(SPI_SIZE_MAP), 4)
+        size_map = 4
+        flash = 4096
+        ifeq ($(app), 2)
+          addr = 0x81000
+        endif
+      else
+        ifeq ($(SPI_SIZE_MAP), 5)
+          size_map = 5
+          flash = 2048
+          ifeq ($(app), 2)
+            addr = 0x101000
+          endif
+        else
+          ifeq ($(SPI_SIZE_MAP), 6)
+            size_map = 6
+            flash = 4096
+            ifeq ($(app), 2)
+              addr = 0x101000
+            endif
+          else
+            size_map = 0
+            flash = 512
+            ifeq ($(app), 2)
+              addr = 0x41000
+            endif
+          endif
+        endif
+      endif
+    endif
+  endif
+endif
+
+LD_FILE = $(LDDIR)/eagle.app.v6.ld
+
+ifneq ($(boot), none)
+ifneq ($(app),0)
+    ifeq ($(size_map), 6)
+      LD_FILE = $(LDDIR)/eagle.app.v6.$(boot).2048.ld
+    else
+      ifeq ($(size_map), 5)
+        LD_FILE = $(LDDIR)/eagle.app.v6.$(boot).2048.ld
+      else
+        ifeq ($(size_map), 4)
+          LD_FILE = $(LDDIR)/eagle.app.v6.$(boot).1024.app$(app).ld
+        else
+          ifeq ($(size_map), 3)
+            LD_FILE = $(LDDIR)/eagle.app.v6.$(boot).1024.app$(app).ld
+          else
+            ifeq ($(size_map), 2)
+              LD_FILE = $(LDDIR)/eagle.app.v6.$(boot).1024.app$(app).ld
+            else
+              ifeq ($(size_map), 0)
+                LD_FILE = $(LDDIR)/eagle.app.v6.$(boot).512.app$(app).ld
+              endif
+            endif
+	      endif
+	    endif
+	  endif
+	endif
+	BIN_NAME = user$(app).$(flash).$(boot).$(size_map)
+endif
+else
+    app = 0
+endif
 
 CSRCS ?= $(wildcard *.c)
+CPPSRCS ?= $(wildcard *.cpp)
 ASRCs ?= $(wildcard *.s)
 ASRCS ?= $(wildcard *.S)
 SUBDIRS ?= $(patsubst %/,%,$(dir $(wildcard */Makefile)))
@@ -87,10 +171,12 @@ ODIR := .output
 OBJODIR := $(ODIR)/$(TARGET)/$(FLAVOR)/obj
 
 OBJS := $(CSRCS:%.c=$(OBJODIR)/%.o) \
+        $(CPPSRCS:%.cpp=$(OBJODIR)/%.o) \
         $(ASRCs:%.s=$(OBJODIR)/%.o) \
         $(ASRCS:%.S=$(OBJODIR)/%.o)
 
 DEPS := $(CSRCS:%.c=$(OBJODIR)/%.d) \
+        $(CPPSRCS:%.cpp=$(OBJODIR)/%.d) \
         $(ASRCs:%.s=$(OBJODIR)/%.d) \
         $(ASRCS:%.S=$(OBJODIR)/%.d)
 
@@ -105,7 +191,7 @@ OBINS := $(GEN_BINS:%=$(BINODIR)/%)
 
 CCFLAGS += 			\
 	-g			\
-	-O2			\
+	-O3			\
 	-Wpointer-arith		\
 	-Wundef			\
 	-Werror			\
@@ -113,7 +199,9 @@ CCFLAGS += 			\
 	-fno-inline-functions	\
 	-nostdlib       \
 	-mlongcalls	\
-	-mtext-section-literals
+	-mtext-section-literals \
+	-ffunction-sections \
+	-fdata-sections
 #	-Wall			
 
 CFLAGS = $(CCFLAGS) $(DEFINES) $(EXTRA_CCFLAGS) $(INCLUDES)
@@ -149,7 +237,60 @@ endef
 
 $(BINODIR)/%.bin: $(IMAGEODIR)/%.out
 	@mkdir -p $(BINODIR)
-	$(ESPTOOL) elf2image $< -o $(FIRMWAREDIR)
+	
+ifeq ($(APP), 0)
+	@$(RM) -r ../bin/eagle.S ../bin/eagle.dump
+	@$(OBJDUMP) -x -s $< > ../bin/eagle.dump
+	@$(OBJDUMP) -S $< > ../bin/eagle.S
+else
+	@$(RM) -r ../bin/upgrade/$(BIN_NAME).S ../bin/upgrade/$(BIN_NAME).dump
+	@$(OBJDUMP) -x -s $< > ../bin/upgrade/$(BIN_NAME).dump
+	@$(OBJDUMP) -S $< > ../bin/upgrade/$(BIN_NAME).S
+endif
+
+	@$(OBJCOPY) --only-section .text -O binary $< eagle.app.v6.text.bin
+	@$(OBJCOPY) --only-section .data -O binary $< eagle.app.v6.data.bin
+	@$(OBJCOPY) --only-section .rodata -O binary $< eagle.app.v6.rodata.bin
+	@$(OBJCOPY) --only-section .irom0.text -O binary $< eagle.app.v6.irom0text.bin
+
+	@echo ""
+	@echo "!!!"
+	
+ifeq ($(app), 0)
+	@python ../tools/gen_appbin.py $< 0 $(mode) $(freqdiv) $(size_map)
+	@mv eagle.app.flash.bin ../bin/eagle.flash.bin
+	@mv eagle.app.v6.irom0text.bin ../bin/eagle.irom0text.bin
+	@rm eagle.app.v6.*
+	@echo "No boot needed."
+	@echo "Generate eagle.flash.bin and eagle.irom0text.bin successully in folder bin."
+	@echo "eagle.flash.bin-------->0x00000"
+	@echo "eagle.irom0text.bin---->0x40000"
+else
+    ifneq ($(boot), new)
+		@python ../tools/gen_appbin.py $< 1 $(mode) $(freqdiv) $(size_map)
+		@echo "Support boot_v1.1 and +"
+    else
+		@python ../tools/gen_appbin.py $< 2 $(mode) $(freqdiv) $(size_map)
+
+    	ifeq ($(size_map), 6)
+		@echo "Support boot_v1.4 and +"
+        else
+            ifeq ($(size_map), 5)
+		@echo "Support boot_v1.4 and +"
+            else
+		@echo "Support boot_v1.2 and +"
+            endif
+        endif
+    endif
+
+	@mv eagle.app.flash.bin ../bin/upgrade/$(BIN_NAME).bin
+	@rm eagle.app.v6.*
+	@echo "Generate $(BIN_NAME).bin successully in folder bin/upgrade."
+	@echo "boot.bin------------>0x00000"
+	@echo "$(BIN_NAME).bin--->$(addr)"
+endif
+
+	@echo "!!!"
 
 #############################################################
 # Rules base
@@ -165,13 +306,6 @@ clean:
 clobber: $(SPECIAL_CLOBBER)
 	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d) clobber;)
 	$(RM) -r $(ODIR)
-
-flash: 
-ifndef PDIR
-	$(MAKE) -C ./app flash
-else
-	$(ESPTOOL) --port $(ESPPORT) write_flash 0x00000 $(FIRMWAREDIR)0x00000.bin 0x10000 $(FIRMWAREDIR)0x10000.bin
-endif
 
 .subdirs:
 	@set -e; $(foreach d, $(SUBDIRS), $(MAKE) -C $(d);)
@@ -196,6 +330,18 @@ $(OBJODIR)/%.d: %.c
 	@echo DEPEND: $(CC) -M $(CFLAGS) $<
 	@set -e; rm -f $@; \
 	$(CC) -M $(CFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\.o\)[ :]*,$(OBJODIR)/\1 $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+	
+$(OBJODIR)/%.o: %.cpp
+	@mkdir -p $(OBJODIR);
+	$(CPP) $(if $(findstring $<,$(DSRCS)),$(DFLAGS),$(CFLAGS)) $(COPTS_$(*F)) -o $@ -c $<
+
+$(OBJODIR)/%.d: %.cpp
+	@mkdir -p $(OBJODIR);
+	@echo DEPEND: $(CPP) -M $(CFLAGS) $<
+	@set -e; rm -f $@; \
+	$(CPP) -M $(CFLAGS) $< > $@.$$$$; \
 	sed 's,\($*\.o\)[ :]*,$(OBJODIR)/\1 $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
@@ -243,6 +389,8 @@ $(foreach image,$(GEN_IMAGES),$(eval $(call MakeImage,$(basename $(image)))))
 # Required for each makefile to inherit from the parent
 #
 
-INCLUDES := $(INCLUDES) -I $(PDIR)include -I $(PDIR)include/$(TARGET)
+INCLUDES := $(INCLUDES) -I $(PDIR)include -I $(PDIR)extra_include
+INCLUDES += -I $(PDIR)include/lwip -I $(PDIR)include/lwip/ipv4 -I $(PDIR)include/lwip/ipv6
+INCLUDES += -I $(PDIR)include/espressif
 PDIR := ../$(PDIR)
 sinclude $(PDIR)Makefile

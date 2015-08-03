@@ -6,49 +6,53 @@
  * Description: entry file of user application
  *
  * Modification history:
- *     2014/1/1,  v1.00 create this file.
- *     2015/03/06 v1.01 Piotr Sperka - tests and some modifications
+ *     2014/12/1, v1.0 create this file.
 *******************************************************************************/
-//#include "lua.h"
-#include "platform.h"
-#include "c_string.h"
-#include "c_stdlib.h"
-#include "c_stdio.h"
+#include "esp_common.h"
 
-#include "osapi.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
-//#include "romfs.h"
- 
-#include "user_interface.h"
+#include "el_uart.h"
 
-#include "ets_sys.h"
-#include "driver/uart.h"
-#include "mem.h"
+#include "lwip/sockets.h"
+#include "lwip/dns.h"
+#include "lwip/netdb.h"
 
-#include "user/webserv.h"
-#include "user/webclient.h"
+#include "interface.h"
+#include "webserver.h"
 
-#define SIG_LUA 0
-#define TASK_QUEUE_LEN 4
-os_event_t *taskQueue;
-ETSTimer testTmr;
+#include "lwip/sockets.h"
+#include "lwip/sys.h"
 
-void onTestTmr(void)
-{
-    char buf[8];
-    static int i = 0;
-    i++;
-    c_sprintf(buf, "%d", i);
-    uart0_sendStr("\nTest timera - wywolanie ");
-    uart0_sendStr(buf);
+void uartInterfaceTask(void *pvParameters) {
+	char tmp[64];
+	int t = 0;
+	for(t = 0; t<64; t++) tmp[t] = 0;
+	t = 0;
+	uart_rx_init();
+	printf("UART READY TO READ\n");
+	while(1) {
+		while(1) {
+			char c = uart_getchar();
+			if(c == '\r') break;
+			if(c == '\n') break;
+			tmp[t] = c;
+			t++;
+		}
+		checkCommand(t, tmp);
+		for(t = 0; t<64; t++) tmp[t] = 0;
+		t = 0;
+		vTaskDelay(100);
+	}
 }
 
-void task_init(void){
-    //os_timer_disarm(&testTmr);
-    //os_timer_setfn(&testTmr, &onTestTmr, (void*)0);
-    //os_timer_arm(&testTmr, 2000, 1);
-    //taskQueue = (os_event_t *)os_malloc(sizeof(os_event_t) * TASK_QUEUE_LEN);
-    //system_os_task(task_lua, USER_TASK_PRIO_0, taskQueue, TASK_QUEUE_LEN);
+void clientTask(void *pvParams) {
+	// TODO:
+}
+
+UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
+	uart_div_modify(uart_no, UART_CLK_FREQ / baud_rate);
 }
 
 /******************************************************************************
@@ -59,18 +63,20 @@ void task_init(void){
 *******************************************************************************/
 void user_init(void)
 {
-    uart_init(BIT_RATE_460800, BIT_RATE_460800);
+	UART_SetBaudrate(0,115200);
+	wifi_set_opmode(STATION_MODE);
+    printf("SDK version:%s\n", system_get_sdk_version());
+	
+	//DEBUG
+	struct station_config *config = (struct station_config *)zalloc(sizeof(struct station_config));
+	sprintf(config->ssid, "linksys@Pogodna8");
+	sprintf(config->password, "Pogodna8");
+	wifi_station_set_config(config);
+    free(config);
+	//DEBUG
 
-    uart0_sendStr("\n#Firmware v0.5 by Piotr Sperka\nhttp:\\\\piotrsperka.info#\n");
-    
-    wifi_set_opmode(0x01); // SET WIFI TO STATION MODE
-    
-    serverInit();
-    // DEBUG
-    clientSetURL("ant-waw.cdn.eurozet.pl");
-    clientSetPort(8602);
-    clientSetPath("/");
-    // DEBUG
-    
-    system_init_done_cb(task_init);
+	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 2, NULL);
+	xTaskCreate(serverTask, "t2", 256, NULL, 2, NULL);
+	xTaskCreate(clientTask, "t2", 10240, NULL, 2, NULL);
 }
+

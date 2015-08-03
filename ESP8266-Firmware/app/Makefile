@@ -22,19 +22,7 @@ GEN_IMAGES= eagle.app.v6.out
 GEN_BINS= eagle.app.v6.bin
 SPECIAL_MKTARGETS=$(APP_MKTARGETS)
 SUBDIRS=    \
-	user	\
-	driver	\
-	lwip	\
-	json	\
-	upgrade	\
-	platform	\
-	libc 	\
-	#lua 	\
-	#mqtt	\
-	#smart 	\
-	#wofs 	\
-	#modules	\
-	#spiffs
+	user
 
 endif # } PDIR
 
@@ -57,40 +45,19 @@ ifeq ($(FLAVOR),release)
     TARGET_LDFLAGS += -g -O0
 endif
 
-LD_FILE = $(LDDIR)/eagle.app.v6.ld
-
-ifeq ($(APP), 1)
-	LD_FILE = $(LDDIR)/eagle.app.v6.app1.ld
-endif
-
-ifeq ($(APP), 2)
-	LD_FILE = $(LDDIR)/eagle.app.v6.app2.ld
-endif
-
 COMPONENTS_eagle.app.v6 = \
-	user/libuser.a	\
-	driver/libdriver.a	\
-	lwip/liblwip.a	\
-	json/libjson.a	\
-	upgrade/libupgrade.a	\
-	platform/libplatform.a	\
-	libc/liblibc.a 	\
-	#lua/liblua.a 	\
-	#mqtt/mqtt.a 	\
-	#smart/smart.a 	\
-	#wofs/wofs.a 	\
-	#spiffs/spiffs.a 	\
-	#modules/libmodules.a
+	user/libuser.a
 
 LINKFLAGS_eagle.app.v6 = \
 	-L../lib        \
+	-Wl,--gc-sections   \
 	-nostdlib	\
     -T$(LD_FILE)   \
 	-Wl,--no-check-sections	\
     -u call_user_start	\
 	-Wl,-static						\
 	-Wl,--start-group					\
-	-lc					\
+	-lminic \
 	-lgcc					\
 	-lhal					\
 	-lphy	\
@@ -98,9 +65,8 @@ LINKFLAGS_eagle.app.v6 = \
 	-lnet80211	\
 	-lwpa	\
 	-lmain	\
-	-ljson	\
-	-lsmartconfig	\
-	-lssl	\
+	-lfreertos	\
+	-llwip	\
 	$(DEP_LIBS_eagle.app.v6)					\
 	-Wl,--end-group
 
@@ -122,11 +88,7 @@ DEPENDS_eagle.app.v6 = \
 #	-DTXRX_TXBUF_DEBUG
 #	-DTXRX_RXBUF_DEBUG
 #	-DWLAN_CONFIG_CCX
-CONFIGURATION_DEFINES =	-D__ets__ \
-			-DICACHE_FLASH	\
-			-DLWIP_OPEN_SRC	\
-			-DPBUF_RSV_FOR_WLAN	\
-			-DEBUF_LWIP
+CONFIGURATION_DEFINES =	-DICACHE_FLASH
 
 DEFINES +=				\
 	$(UNIVERSAL_TARGET_DEFINES)	\
@@ -150,10 +112,9 @@ DDEFINES +=				\
 #
 
 INCLUDES := $(INCLUDES) -I $(PDIR)include
-INCLUDES += -I ./
 PDIR := ../$(PDIR)
 sinclude $(PDIR)Makefile
 
-
 .PHONY: FORCE
 FORCE:
+
