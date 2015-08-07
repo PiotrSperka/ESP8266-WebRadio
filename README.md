@@ -1,13 +1,17 @@
 # **ESP8266-WebRadio** #
 ###WiFi shoutcast player based on ESP8266 chip
 ##Basic informations
-Version: 0.6
+Version: 0.7
 Status: under design and development
 ##Used hardware
 MCU: AVR<br />
 WiFi: ESP8266<br />
 Audio decoder: VS1053<br />
 ##Changelog
+###v0.7
+-**[ESP8266]**Simple and rough sketch of VS1053 driver (working)
+-**[ESP8266]**Simple client with hardcoded IP and port (working)
+-I can say that alpha version of player works for now, because I can listen to some SHOUTcast streams.
 ###v0.6
 -**[ESP8266]**Started making new firmware based on esp_iot_rtos_sdk with bare LwIP and freeRTOS<br />
 -**[Hardware]**New conception of hardware, where main MCU is ESP8266 and some small AVR is only to provide user interface (LCD, etc.) and configure ESP via UART<br />

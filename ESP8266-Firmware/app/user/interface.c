@@ -231,12 +231,12 @@ void checkCommand(int size, char* s)
 	else if(strcmp(tmp, "wifi.status") == 0) wifiStatus();
 	else if(strcmp(tmp, "wifi.station") == 0) wifiGetStation();
 	/*else if(strcmp(tmp, "srv.start") == 0) serverInit();
-    else if(strcmp(tmp, "srv.stop") == 0) serverDisconnect();
+    else if(strcmp(tmp, "srv.stop") == 0) serverDisconnect();*/
     else if(startsWith("cli.url", tmp)) clientParseUrl(tmp);
     else if(startsWith("cli.path", tmp)) clientParsePath(tmp);
     else if(startsWith("cli.port", tmp)) clientParsePort(tmp);
     else if(strcmp(tmp, "cli.start") == 0) clientConnect();
-    else if(strcmp(tmp, "cli.stop") == 0) clientDisconnect();*/
+    else if(strcmp(tmp, "cli.stop") == 0) clientDisconnect();
 	else printInfo(tmp);
 	free(tmp);
 }

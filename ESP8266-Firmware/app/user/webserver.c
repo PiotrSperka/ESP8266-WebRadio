@@ -1,12 +1,13 @@
 #include "webserver.h"
 #include "serv-fs.h"
+#include "webclient.h"
 
 #include "lwip/opt.h"
 #include "lwip/arch.h"
 #include "lwip/api.h"
 
-const static char http_html_hdr[] = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
-const static char http_index_html[] = "<html><head><title>Congrats!</title></head><body><h1>Welcome to our lwIP HTTP server!</h1><p>This is a small test page, served by httpserver-netconn.</body></html>";
+//const static char http_html_hdr[] = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
+//const static char http_index_html[] = "<html><head><title>Congrats!</title></head><body><h1>Welcome to our lwIP HTTP server!</h1><p>This is a small test page, served by httpserver-netconn.</body></html>";
 
 #define INTERNAL_FLASH_START_ADDRESS    0x40200000
 
@@ -22,7 +23,7 @@ ICACHE_FLASH_ATTR uint32_t fread( void *to, uint32_t fromaddr, uint32_t size )
     return 0;
   }
 }
-
+/*
 char *str_replace(char *orig, char *rep, char *with) {
     char *result; // the return string
     char *ins;    // the next insert point
@@ -66,18 +67,63 @@ char *str_replace(char *orig, char *rep, char *with) {
     strcpy(tmp, orig);
     return result;
 }
+*/
+
+ICACHE_FLASH_ATTR char* my_strdup(char* string, int length)
+{
+  char* newstr = (char*)malloc((length+1)*sizeof(char));
+  if(newstr != NULL)
+  {
+    int i;
+    for(i=0; i<length+1; i++) if(i < length) newstr[i] = string[i]; else newstr[i] = 0;
+  }
+  return newstr;
+}
+
+ICACHE_FLASH_ATTR char* str_replace ( char *string, const char *substr, const char *replacement, int length ){
+  char *tok = NULL;
+  char *newstr = NULL;
+  char *oldstr = NULL;
+  /* if either substr or replacement is NULL, duplicate string a let caller handle it */
+  if ( substr == NULL ) {
+    newstr = my_strdup(string, length);
+    free(string);
+    return newstr;
+  }
+  if( replacement == NULL ) replacement = "";
+  //newstr = strdup (string);
+  newstr = my_strdup(string, length);
+  
+  while ( (tok = strstr ( newstr, substr ))){
+    oldstr = newstr;
+    newstr = malloc ( strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) + 1 );
+    /*failed to alloc mem, free old string and return NULL */
+    if ( newstr == NULL ){
+      free (oldstr);
+      return NULL;
+    }
+    memcpy ( newstr, oldstr, tok - oldstr );
+    memcpy ( newstr + (tok - oldstr), replacement, strlen ( replacement ) );
+    memcpy ( newstr + (tok - oldstr) + strlen( replacement ), tok + strlen ( substr ), strlen ( oldstr ) - strlen ( substr ) - ( tok - oldstr ) );
+    memset ( newstr + strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) , 0, 1 );
+    free (oldstr);
+  }
+  free(string);
+  return newstr;
+}
+
 
 ICACHE_FLASH_ATTR char* serverParseCGI(char* html, int length)
 {
-//  struct icyHeader *header = clientGetHeader();
+  struct icyHeader *header = clientGetHeader();
   char* h = html;
 
-/*  h = str_replace(h, "#ICY-NAME#", header->members.single.name, length);
+  h = str_replace(h, "#ICY-NAME#", header->members.single.name, length);
   h = str_replace(h, "#ICY-NOTICE1#", header->members.single.notice1, strlen(h));
   h = str_replace(h, "#ICY-NOTICE2#", header->members.single.notice2, strlen(h));
   h = str_replace(h, "#ICY-GENRE#", header->members.single.genre, strlen(h));
   h = str_replace(h, "#ICY-URL#", header->members.single.url, strlen(h));
-  h = str_replace(h, "#ICY-BITRATE#", header->members.single.bitrate, strlen(h));*/
+  h = str_replace(h, "#ICY-BITRATE#", header->members.single.bitrate, strlen(h));
 
   return h;
 }
@@ -115,8 +161,8 @@ ICACHE_FLASH_ATTR void serveFile(char* name, struct netconn *conn)
 		{
 			fread(con, (uint32_t)content, length);
 			if(f->cgi == 1) {
-				//con = serverParseCGI(con, length);
-				//length = strlen(con);
+				con = serverParseCGI(con, length);
+				length = strlen(con);
 			}
 			sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n", (f!=NULL ? f->type : "text/plain"), length);
 			netconn_write(conn, buf, strlen(buf), NETCONN_NOCOPY); // SEND HEADER

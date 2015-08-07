@@ -38,6 +38,4 @@
  ../../include/lwip/ipv4/lwip/inet.h ../../include/lwip/ipv6/lwip/inet6.h \
  ../../include/lwip/lwip/dns.h ../../include/lwip/lwip/err.h \
  ../../include/lwip/lwip/netdb.h ../include/interface.h \
- ../include/webserver.h ../../include/lwip/lwip/sys.h \
- ../../include/lwip/arch/sys_arch.h ../../include/freertos/semphr.h \
- ../../include/freertos/queue.h
+ ../include/webserver.h ../include/webclient.h ../include/vs1053.h

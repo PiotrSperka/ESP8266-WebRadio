@@ -21,9 +21,10 @@
 
 #include "interface.h"
 #include "webserver.h"
+#include "webclient.h"
 
-#include "lwip/sockets.h"
-#include "lwip/sys.h"
+#include "vs1053.h"
+
 
 void uartInterfaceTask(void *pvParameters) {
 	char tmp[64];
@@ -47,10 +48,6 @@ void uartInterfaceTask(void *pvParameters) {
 	}
 }
 
-void clientTask(void *pvParams) {
-	// TODO:
-}
-
 UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
 	uart_div_modify(uart_no, UART_CLK_FREQ / baud_rate);
 }
@@ -63,7 +60,7 @@ UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
 *******************************************************************************/
 void user_init(void)
 {
-	UART_SetBaudrate(0,115200);
+	UART_SetBaudrate(0,460800);
 	wifi_set_opmode(STATION_MODE);
     printf("SDK version:%s\n", system_get_sdk_version());
 	
@@ -74,9 +71,18 @@ void user_init(void)
 	wifi_station_set_config(config);
     free(config);
 	//DEBUG
+	
+	VS1053_HW_init();
+	VS1053_Start();
+	VS1053_SetVolume(50);
+	//VS1053_SineTest();
+	VS1053_regtest();
+	VS1053_SPI_SpeedUp();
+	VS1053_regtest();
 
 	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 2, NULL);
 	xTaskCreate(serverTask, "t2", 256, NULL, 2, NULL);
-	xTaskCreate(clientTask, "t2", 10240, NULL, 2, NULL);
+	xTaskCreate(clientTask, "t3", 256, NULL, 2, NULL);
+	xTaskCreate(vsTask, "t4", 768, NULL, 2, NULL);
 }
 
