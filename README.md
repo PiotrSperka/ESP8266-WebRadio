@@ -4,13 +4,25 @@
 Version: 0.7
 Status: under design and development
 ##Used hardware
-MCU: AVR<br />
-WiFi: ESP8266<br />
+WiFi and main MCU: ESP8266<br />
+MCU (for UI): AVR<br />
 Audio decoder: VS1053<br />
+##TODO list
+###ESP8266
+-Finish web interface<br />
+-Sound settings in web interface<br />
+-UART commands for VS1053 sound settings<br />
+-Code cleanup
+###AVR
+-Hardware design<br />
+-Code
+###Hardware
+-Schematic<br />
+-PCD design and assembly
 ##Changelog
 ###v0.7
--**[ESP8266]**Simple and rough sketch of VS1053 driver (working)
--**[ESP8266]**Simple client with hardcoded IP and port (working)
+-**[ESP8266]**Simple and rough sketch of VS1053 driver (working)<br />
+-**[ESP8266]**Rough sketch of webclient is working<br />
 -I can say that alpha version of player works for now, because I can listen to some SHOUTcast streams.
 ###v0.6
 -**[ESP8266]**Started making new firmware based on esp_iot_rtos_sdk with bare LwIP and freeRTOS<br />

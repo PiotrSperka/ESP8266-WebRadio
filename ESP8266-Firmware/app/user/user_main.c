@@ -1,12 +1,9 @@
 /******************************************************************************
- * Copyright 2013-2014 Espressif Systems (Wuxi)
+ * Copyright 2015 Piotr Sperka (http://www.piotrsperka.info)
  *
  * FileName: user_main.c
  *
  * Description: entry file of user application
- *
- * Modification history:
- *     2014/12/1, v1.0 create this file.
 *******************************************************************************/
 #include "esp_common.h"
 
@@ -44,7 +41,7 @@ void uartInterfaceTask(void *pvParameters) {
 		checkCommand(t, tmp);
 		for(t = 0; t<64; t++) tmp[t] = 0;
 		t = 0;
-		vTaskDelay(100);
+		vTaskDelay(25); // 250ms
 	}
 }
 
@@ -62,7 +59,6 @@ void user_init(void)
 {
 	UART_SetBaudrate(0,460800);
 	wifi_set_opmode(STATION_MODE);
-    printf("SDK version:%s\n", system_get_sdk_version());
 	
 	//DEBUG
 	struct station_config *config = (struct station_config *)zalloc(sizeof(struct station_config));
@@ -70,15 +66,16 @@ void user_init(void)
 	sprintf(config->password, "Pogodna8");
 	wifi_station_set_config(config);
     free(config);
+	clientSetURL("ant-kat-01.cdn.eurozet.pl"); // Without http:// !!!
+	clientSetPort(8604);
+	clientSetPath("/");
 	//DEBUG
 	
 	VS1053_HW_init();
 	VS1053_Start();
 	VS1053_SetVolume(50);
-	//VS1053_SineTest();
-	VS1053_regtest();
+
 	VS1053_SPI_SpeedUp();
-	VS1053_regtest();
 
 	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 2, NULL);
 	xTaskCreate(serverTask, "t2", 256, NULL, 2, NULL);

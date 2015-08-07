@@ -15,8 +15,8 @@
 
 #define RST_PIN 0
 #define CS_PIN 15
-#define XCS_PIN 5 //GPIO5 (!)
-#define WREQ_PIN 4 //GPIO4 (!)
+#define XDCS_PIN 5 //GPIO5 (!)
+#define DREQ_PIN 4 //GPIO4 (!)
 
 #define SET 1
 #define RESET 0
@@ -66,7 +66,6 @@ void 	VS1053_HW_init();
 void 	VS1053_SineTest();
 void	VS1053_Start();
 //void 	VS1053_SendMusicBytes(uint8_t* music,int quantity);
-void play();
 int 	VS1053_SendMusicBytes(uint8_t* music,uint16_t quantity);
 void 	VS1053_SoftwareReset();
 uint16_t	VS1053_GetBitrate();
@@ -92,15 +91,16 @@ void	VS1053_BassDown(uint8_t xdB);
 void	VS1053_SetBassFreq(uint8_t xTenHz);
 
 //private functions
-uint8_t SPIPutChar(uint8_t outB);
+void SPIPutChar(uint8_t outB);
+uint8_t SPIGetChar();
 void Delay(uint32_t nTime);
 void ControlReset(uint8_t State);
 void SCI_ChipSelect(uint8_t State);
 void SDI_ChipSelect(uint8_t State);
-void WriteRegister(uint8_t addressbyte,
+void VS1053_WriteRegister(uint8_t addressbyte,
 		uint8_t highbyte, uint8_t lowbyte);
-uint16_t ReadRegister(uint8_t addressbyte);
-void ResetChip();
+uint16_t VS1053_ReadRegister(uint8_t addressbyte);
+void VS1053_ResetChip();
 
 uint16_t MaskAndShiftRight(uint16_t Source, uint16_t Mask, uint16_t Shift);
 

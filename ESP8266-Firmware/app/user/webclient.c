@@ -13,6 +13,7 @@ struct icyHeader header = {NULL, NULL, NULL, NULL, 0};
 char *clientURL = NULL;
 char *clientPath = NULL;
 uint16_t clientPort = 80;
+struct ip_addr ipAddress;
 
 static const char* icyHeaders[] = { "icy-name:", "icy-notice1:", "icy-notice2:",  "icy-url:", "icy-genre:", "icy-br:", "icy-metaint:" };
 
@@ -22,9 +23,13 @@ static uint16_t metasize = 0;
 
 static uint8_t connect = 0, playing = 0;
 
-uint8_t buf1[2048], buf2[2048];
-uint16_t siz1 = 0, siz2 = 0;
-uint8_t bufno = 0;
+
+/* TODO:
+	- MUTEXES !!!
+	- METADATA HANDLING
+	- IP SETTINGS
+	- VS1053 - DELAY USING vTaskDelay
+*/
 
 
 ///////////////
@@ -35,7 +40,7 @@ uint16_t wptr = 0;
 uint16_t rptr = 0;
 uint8_t bempty = 1;
 
-uint16_t getBufferFree() { // To co jest wolne
+uint16_t getBufferFree() {
 	if(wptr > rptr ) return BUFFER_SIZE - wptr + rptr;
 	else if(wptr < rptr) return rptr - wptr;
 	else if(bempty) return BUFFER_SIZE; else return 0;
@@ -47,9 +52,8 @@ uint16_t getBufferFilled() {
 
 uint16_t bufferWrite(uint8_t *data, uint16_t size) {
 	uint16_t s = size, i = 0;
-	//if(s > getBufferFree()) s = getBufferFree();
 	for(i=0; i<s; i++) {
-		if(getBufferFree() == 0) {printf("oflw\n");return i;}
+		if(getBufferFree() == 0) return i;
 		buffer[wptr] = data[i];
 		if(bempty) bempty = 0;
 		wptr++;
@@ -62,13 +66,19 @@ uint16_t bufferRead(uint8_t *data, uint16_t size) {
 	uint16_t s = size, i = 0;
 	if(s > getBufferFilled()) s = getBufferFilled();
 	for (i = 0; i < s; i++) {
-		if(getBufferFilled() == 0) {printf("uflw\n"); return i;}
+		if(getBufferFilled() == 0) return i;
 		data[i] = buffer[rptr];
 		rptr++;
 		if(rptr == BUFFER_SIZE) rptr = 0;
 		if(rptr == wptr) bempty = 1;
 	}
 	return s;
+}
+
+void bufferReset() {
+	wptr = 0;
+	rptr = 0;
+	bempty = 1;
 }
 
 ///////////////
@@ -88,7 +98,6 @@ ICACHE_FLASH_ATTR void clientParseHeader(char* s)
 		t = strstr(s, icyHeaders[header_num]);
 		if( t != NULL )
 		{
-			printf("Found %s\n", icyHeaders[header_num]);
 			t += strlen(icyHeaders[header_num]);
 			char *t_end = strstr(t, "\r\n");
 			if(t_end != NULL)
@@ -103,7 +112,6 @@ ICACHE_FLASH_ATTR void clientParseHeader(char* s)
 						int i;
 						for(i = 0; i<len+1; i++) header.members.mArr[header_num][i] = 0;
 						strncpy(header.members.mArr[header_num], t, len);
-						printf("%s\n\n", header.members.mArr[header_num]);
 					}
 				}
 				else // Numerical header field
@@ -121,12 +129,6 @@ ICACHE_FLASH_ATTR void clientParseHeader(char* s)
 			}
 		}
 	}
-}
-
-ICACHE_FLASH_ATTR uint16_t clientProcessData(char* s, uint16_t size)
-{
-	VS1053_SendMusicBytes(s, size);
-	return size; // todo: !!!
 }
 
 ICACHE_FLASH_ATTR uint16_t clientProcessMetadata(char* s, uint16_t size)
@@ -201,10 +203,11 @@ ICACHE_FLASH_ATTR void clientConnect()
 	metacount = 0;
 	metasize = 0;
 	
-	connect = 1; // todo: semafor!!!
-	
-	//espconn_gethostbyname(&clientConn, clientURL, &clientIP, clientIpFoundCallback);
-	//printf("\n##CLI.DNSLOOKUP#\n");
+	if(netconn_gethostbyname(clientURL, &ipAddress) == ERR_OK) {
+		connect = 1; // todo: semafor!!!
+	} else {
+		clientDisconnect();
+	}
 }
 
 ICACHE_FLASH_ATTR void clientDisconnect()
@@ -215,8 +218,12 @@ ICACHE_FLASH_ATTR void clientDisconnect()
 
 ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned short len)
 {
-	
-	/*if(cstatus == C_HEADER)	{
+	/* TODO:
+		- What if header is in more than 1 data part?
+		- Metadata processing
+		- Buffer underflow handling (?)
+	*/
+	if(cstatus == C_HEADER)	{
 		clientParseHeader(pdata);
 		char *t1 = strstr(pdata, "\r\n\r\n"); // END OF HEADER
 		if(t1 != NULL) {
@@ -225,66 +232,27 @@ ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned sh
 		}
 		else return;
 	} else {
-		//unsigned int k,l,ptr=0;
-	//if(len == 100) printf("DATA RECV(%d): %s\r\n",len,data);
-		/*while(len > 0)
-		{
-			while(VS1053_checkWREQ() == 0); //czekaj na dreq
-			SDI_ChipSelect(SET);
-				if(len >= 32) l = 32; else l = len;
-				for (k=0; k < l; k++)
-				{
-				SPIPutChar(pdata[ptr++]);
-				}
-				len -= l;
-			SDI_ChipSelect(RESET);
-		}*/
-		//VS1053_SendMusicBytes(pdata, len);
-		/*int i = 0;
-		if(bufno == 0) {
-			if(len > 2048) printf("Overflow!");
-			for(i = 0; i<len; i++) buf1[i] = pdata[i];
-			siz1 = len;
-			bufno = 1;
-		} else {
-			if(len > 2048) printf("Overflow!");
-			for(i = 0; i<len; i++) buf2[i] = pdata[i];
-			siz2 = len;
-			bufno = 0;
-		}
-		playing = 1;*/
 		uint16_t l = 0;
 		do {
 			if(getBufferFree() < len) vTaskDelay(1);
 			else l = bufferWrite(pdata, len);
 		} while(l < len);
-		if(!playing && getBufferFree() < BUFFER_SIZE/2) { playing=1; printf("%d", getBufferFree()); }
-		//else if(playing && getBufferFree() > BUFFER_SIZE/10) { playing = 0; printf("Underflow");}
-		//clientProcessData(pdata, len);	
-	//}
+		
+		if(!playing && getBufferFree() < BUFFER_SIZE/2) { 
+			playing=1;
+		}	
+	}
 }
 
 void vsTask(void *pvParams) {
-	uint8_t b[2048];
+	uint8_t b[1024];
 	while(1) {
 		if(playing) {
-			//if(bufno == 0) VS1053_SendMusicBytes(buf2, siz2);
-			//else VS1053_SendMusicBytes(buf1, siz1);
-			uint16_t i = 0;
-			for(i=0; i<2048; i++) b[i] = 0;
-			uint16_t size = bufferRead(b, 2048);
-			//printf("%s", b);
-			uint16_t s = 0;
+			uint16_t size = bufferRead(b, 1024), s = 0;
 			while(s < size) {
 				s += VS1053_SendMusicBytes(b+s, size-s);
-				//printf("%02X ", b[s]);
-				//s++;
 				vTaskDelay(1);
 			}
-			
-			if(!connect) printf("%d\n", getBufferFree());
-			vTaskDelay(1);
-			//if(size < 256) vTaskDelay(10);
 		} else vTaskDelay(10);
 	}
 }
@@ -292,15 +260,8 @@ void vsTask(void *pvParams) {
 void clientTask(void *pvParams) {
 	struct netconn *NetConn = NULL;
 	struct netbuf *inbuf;
-	struct ip_addr ipaddrserv;
+	
 	err_t rc1, rc2, rc3;
-	
-	//const char string[] = "GET /www/test.mp3 HTTP/1.0\r\n\r\n";
-	const char string[] = "GET / HTTP/1.0\r\n\r\n";
-	IP4_ADDR(&ipaddrserv, 178, 32, 207, 240); // todo:
-	//IP4_ADDR(&ipaddrserv, 192, 168, 1, 39); // todo:
-	
-	vTaskDelay(1000); // 10s
 	
 	while(1) {
 		
@@ -315,33 +276,29 @@ void clientTask(void *pvParams) {
 			}
 			rc1 = netconn_bind(NetConn, NULL, 81);        //3250          /* Adres IP i port local host'a */
 			printf("netcon binded\r\n");
-			rc2 = netconn_connect(NetConn, &ipaddrserv, 8604);     // todo: !!!         /* Adres IP i port serwera */
+			rc2 = netconn_connect(NetConn, &ipAddress, clientPort);     // todo: !!!         /* Adres IP i port serwera */
 			//rc2 = netconn_connect(NetConn, &ipaddrserv, 80); 
 			printf("netcon connected\r\n");
 
 			if(rc1 != ERR_OK || rc2 != ERR_OK){
 					netconn_delete(NetConn);
 					printf("connection error\r\n");
-					while(1) {}
+					clientDisconnect();
+					continue;
 			} else {
-				netconn_write(NetConn, string, sizeof(string), NETCONN_NOCOPY);
+				char *getQuery = malloc(sizeof(char)*(strlen(clientPath) + 18));
+				sprintf(getQuery, "GET %s HTTP/1.0\r\n\r\n", clientPath);
+				netconn_write(NetConn, getQuery, strlen(getQuery), NETCONN_NOCOPY);
+				free(getQuery);
 				while((netconn_recv(NetConn, &inbuf)) == ERR_OK){
 					int BufLen = netbuf_len(inbuf);
-					//int i = 0;
-					//printf("New buf: %d", BufLen);
 					char *tmp = malloc(BufLen);
 					netbuf_copy(inbuf, tmp, BufLen);
-					
-					//for(i = 0; i< BufLen; i++) WRITE_PERI_REG(UART_FIFO(0), tmp[i]);
+
 					clientReceiveCallback(NULL, tmp, BufLen);
-					//netbuf_copy(inbuf, tmp, BufLen);
-					
-					//tmp[BufLen] = 0;
-					//printf("%s", tmp);
+
 					free(tmp);
 					netbuf_delete(inbuf);
-					//vTaskDelay(1);
-					//CpBytes = netbuf_copy(inbuf, mybuf, BufLen);
 					
 					if(connect == 0) break;
 					vTaskDelay(1);
@@ -349,16 +306,15 @@ void clientTask(void *pvParams) {
 
 			}
 
+			playing = 0;
+			bufferReset();
 			netconn_close(NetConn);
 			printf("netcon closed\r\n");
-			//netbuf_delete(inbuf);
 			netconn_delete(NetConn);
 			printf("netcon deleted\r\n");
 		
 		}
 
-		vTaskDelay(100);
-
-		// TODO:
+		vTaskDelay(10);
 	}
 }
