@@ -10,32 +10,75 @@
 				<img src="logo.png"><p>Webradio administration panel</p>
 			</div>
 			<div id="CONTENT">
-				<h1>Now playing</h1>
-				<p><span class="bold">Name: </span>#ICY-NAME#</p>
-				<p><span class="bold">Notice: </span>#ICY-NOTICE1# #ICY-NOTICE2#</p>
-				<p><span class="bold">Genre: </span>#ICY-GENRE#</p>
-				<p><span class="bold">URL: </span><a href="#ICY-URL#" target="_blank">#ICY-URL#</a></p>
-				<p><span class="bold">Bitrate: </span>#ICY-BITRATE# kB/s</p>
-				<h1>Select station</h1>
-				<form action"/" method="GET">
-					<p>Select station:<br>
-					<select>
-						<option>Antyradio Katowice</option>
-						<option>Antyradio Kraków</option>
-						<option>Kerrang Radio</option>
-					</select>
-					<input type="submit" value="Play">
-					</p>
-				</form>
-				<h1>Add station</h1>
-				<form action"/" method="GET">
-					<p>
-					<span class="bold">URL: </span><input type="text" name="u"><br>
-					<span class="bold">Path: </span><input type="text" name="p" value="/"><br>
-					<input type="submit" value="Add">
-					</p>
-				</form>
+				<ul class="tabs">
+				<li>
+				<input type="radio" name="tabs" id="tab1" checked />
+				<label for="tab1">Main</label>
+				<div id="tab-content1" class="tab-content">
+				 <h1>Now playing</h1>
+					<p><span class="bold">Name: </span>#ICY-NAME#</p>
+					<p><span class="bold">Notice: </span>#ICY-NOTICE1# #ICY-NOTICE2#</p>
+					<p><span class="bold">Genre: </span>#ICY-GENRE#</p>
+					<p><span class="bold">URL: </span><a href="#ICY-URL#" target="_blank">#ICY-URL#</a></p>
+					<p><span class="bold">Bitrate: </span>#ICY-BITRATE# kB/s</p>
+					<h1>Select station</h1>
+					<form action="/" method="GET">
+						<p>Select station:<br>
+						<select>
+							<option>Antyradio Katowice</option>
+							<option>Antyradio Kraków</option>
+							<option>Kerrang Radio</option>
+						</select>
+						<input type="submit" value="Play">
+						</p>
+					</form>
+					<h1>Instant play</h1>
+					<form action="instant_play" method="POST">
+						<p>
+						<span class="bold">URL: </span><input type="text" name="url"><br>
+						<span class="bold">Port: </span><input type="text" name="port" value="80"><br>
+						<span class="bold">Path: </span><input type="text" name="path" value="/"><br>
+						<input type="submit" value="Play">
+						</p>
+					</form>
+				</div>
+				</li>
+				<li>
+					<input type="radio" name="tabs" id="tab2" />
+					<label for="tab2">Manage stations</label>
+					<div id="tab-content2" class="tab-content">
+					  <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla?</p>
+					</div>
+				</li>
+				<li>
+					<input type="radio" name="tabs" id="tab3" />
+					<label for="tab3">Sound settings</label>
+					<div id="tab-content3" class="tab-content">
+					<h1>Sound settings</h1>
+					<form action="sound" method="POST">
+						<p>
+						<span class="bold">Treble control: </span><input type="range" id="treble_range" name="treble" onChange="onRangeChange('treble_range', 'treble_span', 1.5, false)" min=0 max=8 value=2><span id="treble_span"></span><br>
+						<span class="bold">Bass enhance: </span><input type="range"  id="bass_range" name="bass" onChange="onRangeChange('bass_range', 'bass_span', 1, false)" min=0 max=15 value=3><span id="bass_span"></span><br>
+						<span class="bold">Volume: </span><input type="range" id="vol_range" name="vol" onChange="onRangeChange('vol_range', 'vol_span', -0.5, true)" min=0 max=254 value=50><span id="vol_span"></span><br>
+						<input type="submit" value="Play">
+						</p>
+					</form>
+					</div>
+				</li>
+				</ul>
 			</div>
 		</div>
+		<script>
+			function onRangeChange($range, $spanid, $mul, $rotate) {
+				var val = document.getElementById($range).value;
+				if($rotate) val = document.getElementById($range).max - val;
+				document.getElementById($spanid).innerHTML = (val * $mul) + " dB";
+			}
+			document.addEventListener("DOMContentLoaded", function(event) { 
+			  onRangeChange('treble_range', 'treble_span', 1.5, false);
+			  onRangeChange('bass_range', 'bass_span', 1, false);
+			  onRangeChange('vol_range', 'vol_span', -0.5, true);
+			});
+		</script>
 	</body>
 </HTML>

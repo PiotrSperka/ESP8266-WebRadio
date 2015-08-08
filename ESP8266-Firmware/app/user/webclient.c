@@ -33,7 +33,7 @@ static uint8_t connect = 0, playing = 0;
 
 
 ///////////////
-#define BUFFER_SIZE 20480
+#define BUFFER_SIZE 10240
 
 uint8_t buffer[BUFFER_SIZE];
 uint16_t wptr = 0;
@@ -251,7 +251,7 @@ void vsTask(void *pvParams) {
 			uint16_t size = bufferRead(b, 1024), s = 0;
 			while(s < size) {
 				s += VS1053_SendMusicBytes(b+s, size-s);
-				vTaskDelay(1);
+				vTaskDelay(2);
 			}
 		} else vTaskDelay(10);
 	}
@@ -268,13 +268,13 @@ void clientTask(void *pvParams) {
 		if(connect) {
 
 			NetConn = netconn_new(NETCONN_TCP);
-			netconn_set_recvtimeout(NetConn, 30000);
+			netconn_set_recvtimeout(NetConn, 1000);
 
 			if(NetConn == NULL){
 					/*No memory for new connection? */
 					printf("No mem for new con\r\n");
 			}
-			rc1 = netconn_bind(NetConn, NULL, 81);        //3250          /* Adres IP i port local host'a */
+			rc1 = netconn_bind(NetConn, NULL, 666);        //3250          /* Adres IP i port local host'a */
 			printf("netcon binded\r\n");
 			rc2 = netconn_connect(NetConn, &ipAddress, clientPort);     // todo: !!!         /* Adres IP i port serwera */
 			//rc2 = netconn_connect(NetConn, &ipaddrserv, 80); 
@@ -290,16 +290,15 @@ void clientTask(void *pvParams) {
 				sprintf(getQuery, "GET %s HTTP/1.0\r\n\r\n", clientPath);
 				netconn_write(NetConn, getQuery, strlen(getQuery), NETCONN_NOCOPY);
 				free(getQuery);
-				while((netconn_recv(NetConn, &inbuf)) == ERR_OK){
+				while(1){
+					if(netconn_recv(NetConn, &inbuf) != ERR_OK) break;
 					int BufLen = netbuf_len(inbuf);
 					char *tmp = malloc(BufLen);
 					netbuf_copy(inbuf, tmp, BufLen);
-
+					netbuf_delete(inbuf);
 					clientReceiveCallback(NULL, tmp, BufLen);
 
 					free(tmp);
-					netbuf_delete(inbuf);
-					
 					if(connect == 0) break;
 					vTaskDelay(1);
 				}

@@ -85,7 +85,7 @@
 #define configMAX_PRIORITIES		( ( unsigned portBASE_TYPE ) 15 )
 #define configMINIMAL_STACK_SIZE	( ( unsigned short )176 )	
 //#define configTOTAL_HEAP_SIZE		( ( size_t ) ( 17 * 1024 ) )
-#define configMAX_TASK_NAME_LEN		( 16 )
+#define configMAX_TASK_NAME_LEN		( 4 )
 #define configUSE_TRACE_FACILITY	0
 #define configUSE_STATS_FORMATTING_FUNCTIONS 0
 #define configUSE_16_BIT_TICKS		0
@@ -100,7 +100,7 @@
 #define configUSE_TIMERS    1
 
 #if configUSE_TIMERS
-#define configTIMER_TASK_PRIORITY ( tskIDLE_PRIORITY + 2 )
+#define configTIMER_TASK_PRIORITY ( tskIDLE_PRIORITY + 4 )
 #define configTIMER_QUEUE_LENGTH (10)
 #define configTIMER_TASK_STACK_DEPTH  ( ( unsigned short ) 512 )
 #endif

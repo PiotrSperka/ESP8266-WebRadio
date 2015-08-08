@@ -9,6 +9,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h"
 
 #include "el_uart.h"
 
@@ -21,7 +22,6 @@
 #include "webclient.h"
 
 #include "vs1053.h"
-
 
 void uartInterfaceTask(void *pvParameters) {
 	char tmp[64];
@@ -73,13 +73,13 @@ void user_init(void)
 	
 	VS1053_HW_init();
 	VS1053_Start();
-	VS1053_SetVolume(50);
+	VS1053_SetVolume(70);
 
 	VS1053_SPI_SpeedUp();
 
-	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 2, NULL);
-	xTaskCreate(serverTask, "t2", 256, NULL, 2, NULL);
-	xTaskCreate(clientTask, "t3", 256, NULL, 2, NULL);
-	xTaskCreate(vsTask, "t4", 768, NULL, 2, NULL);
+	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 1, NULL);
+	xTaskCreate(serverTask, "t2", 512, NULL, 1, NULL);
+	xTaskCreate(clientTask, "t3", 512, NULL, 2, NULL);
+	xTaskCreate(vsTask, "t4", 1300, NULL, 1, NULL);
 }
 
