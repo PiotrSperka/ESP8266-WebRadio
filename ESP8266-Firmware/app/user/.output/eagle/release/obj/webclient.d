@@ -1,8 +1,8 @@
 .output/eagle/release/obj/webclient.o .output/eagle/release/obj/webclient.d : webclient.c ../include/webclient.h \
- ../../include/espressif/c_types.h ../../include/lwip/lwip/opt.h \
- ../../include/lwip/lwipopts.h ../../include/lwip/lwip/debug.h \
- ../../include/lwip/lwip/arch.h ../../include/lwip/arch/cc.h \
- ../../include/lwip/lwip/api.h \
+ ../../include/espressif/c_types.h ../include/webserver.h \
+ ../../include/lwip/lwip/opt.h ../../include/lwip/lwipopts.h \
+ ../../include/lwip/lwip/debug.h ../../include/lwip/lwip/arch.h \
+ ../../include/lwip/arch/cc.h ../../include/lwip/lwip/api.h \
  /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/lib/gcc/xtensa-lx106-elf/4.8.2/include/stddef.h \
  ../../include/lwip/lwip/netbuf.h ../../include/lwip/lwip/pbuf.h \
  ../../include/lwip/lwip/err.h ../../include/lwip/lwip/ip_addr.h \

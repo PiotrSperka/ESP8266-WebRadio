@@ -78,8 +78,8 @@ void user_init(void)
 	VS1053_SPI_SpeedUp();
 
 	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 1, NULL);
-	xTaskCreate(serverTask, "t2", 512, NULL, 1, NULL);
-	xTaskCreate(clientTask, "t3", 512, NULL, 2, NULL);
-	xTaskCreate(vsTask, "t4", 1300, NULL, 1, NULL);
+	xTaskCreate(serverTask, "t2", 256, NULL, 1, NULL);
+	xTaskCreate(clientTask, "t3", 256, NULL, 2, NULL);
+	xTaskCreate(vsTask, "t4", 512, NULL, 2, NULL);
 }
 

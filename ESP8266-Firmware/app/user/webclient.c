@@ -1,5 +1,7 @@
 #include "webclient.h"
 
+#include "webserver.h"
+
 #include "lwip/opt.h"
 #include "lwip/arch.h"
 #include "lwip/api.h"

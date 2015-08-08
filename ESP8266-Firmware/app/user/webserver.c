@@ -6,7 +6,9 @@
 #include "lwip/arch.h"
 #include "lwip/api.h"
 
-#include "freertos/semphr.h"
+#include "lwip/sockets.h"
+#include "lwip/dns.h"
+#include "lwip/netdb.h"
 
 #define INTERNAL_FLASH_START_ADDRESS    0x40200000
 
@@ -45,7 +47,6 @@ ICACHE_FLASH_ATTR char* str_replace ( char *string, const char *substr, const ch
     return newstr;
   }
   if( replacement == NULL ) replacement = "";
-  //newstr = strdup (string);
   newstr = my_strdup(string, length);
   
   while ( (tok = strstr ( newstr, substr ))){
@@ -93,7 +94,7 @@ ICACHE_FLASH_ATTR struct servFile* findFile(char* name)
 	}
 }
 
-ICACHE_FLASH_ATTR void serveFile(char* name, struct netconn *conn)
+ICACHE_FLASH_ATTR void serveFile(char* name, int conn)
 {
 	int length;
 	char buf[128];
@@ -119,15 +120,15 @@ ICACHE_FLASH_ATTR void serveFile(char* name, struct netconn *conn)
 				length = strlen(con);
 			}
 			sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n", (f!=NULL ? f->type : "text/plain"), length);
-			netconn_write(conn, buf, strlen(buf), NETCONN_NOCOPY); // SEND HEADER
-			netconn_write(conn, con, length, NETCONN_COPY); // SEND CONTENT
+			write(conn, buf, strlen(buf));
+			write(conn, con, length);
 			free(con);
 		}
 	}
 	else
 	{
 		sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\n\r\n", (f!=NULL ? f->type : "text/plain"), 0);
-		netconn_write(conn, buf, strlen(buf), NETCONN_COPY); // SEND HEADER
+		write(conn, buf, strlen(buf));
 	}
 }
 
@@ -148,12 +149,13 @@ char* getParameterFromResponse(char* param, char* data, uint16_t data_length) {
 	} else return NULL;
 }
 
-ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, struct netconn *conn) {
+ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int conn) {
 	if(strcmp(name, "/instant_play") == 0) {
 		if(data_size > 0) { 
 			char* url = getParameterFromResponse("url=", data, data_size);
 			char* path = getParameterFromResponse("path=", data, data_size);
 			char* port = getParameterFromResponse("port=", data, data_size);
+			printf("%s %s %s\n\n", url, path, port);
 			if(url != NULL && path != NULL && port != NULL) {
 				clientDisconnect();
 				vTaskDelay(10);
@@ -173,21 +175,7 @@ ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, struct 
 	serveFile("/", conn); // Return back to index.html
 }
 
-static void http_server_netconn_serve(struct netconn *conn)
-{
-  struct netbuf *inbuf;
-  char *buf;
-  u16_t buflen;
-  err_t err;
-  
-  // Read the data from the port, blocking if nothing yet there. 
-  // We assume the request (the part we care about) is in one netbuf
-  err = netconn_recv(conn, &inbuf);
-  
-  if (err == ERR_OK) {
-    netbuf_data(inbuf, (void**)&buf, &buflen);
-    
-	// Look for GET or POST command
+void httpServerHandleConnection(int conn, char* buf, uint16_t buflen) {
 	char *c;
 	if( (c = strstr(buf, "GET ")) != NULL)
 	{
@@ -219,43 +207,52 @@ static void http_server_netconn_serve(struct netconn *conn)
 			uint16_t len = buflen - (d_start-buf);
 			handlePOST(fname, d_start, len, conn);
 		}
-	}
-  }
-  // Close the connection (server closes in HTTP)
-  netconn_close(conn);
-  
-  // Delete the buffer (netconn_recv gives us ownership,
-  // so we have to make sure to deallocate the buffer)
-  netbuf_delete(inbuf);
+	}	
 }
 
-
 void serverTask(void *pvParams) {
-	struct netconn *conn, *newconn;
-	err_t err;
+	struct sockaddr_in server_addr, client_addr;
+	int server_sock, client_sock;
+	socklen_t sin_size;
+	
+	while (1) {
+        bzero(&server_addr, sizeof(struct sockaddr_in));
+        server_addr.sin_family = AF_INET;
+        server_addr.sin_addr.s_addr = INADDR_ANY;
+        server_addr.sin_port = htons(80);
 
-	while(1) {
-		// Create a new TCP connection handle
-		conn = netconn_new(NETCONN_TCP);
-		LWIP_ERROR("http_server: invalid conn", (conn != NULL), return;);
+        int recbytes;
 
-		// Bind to port 80 (HTTP) with default IP address
-		netconn_bind(conn, NULL, 80);
+        do {
+            if (-1 == (server_sock = socket(AF_INET, SOCK_STREAM, 0))) {
+                break;
+            }
 
-		// Put the connection into LISTEN state
-		netconn_listen(conn);
+            if (-1 == bind(server_sock, (struct sockaddr *)(&server_addr), sizeof(struct sockaddr))) {
+                break;
+            }
 
-		do {
-			err = netconn_accept(conn, &newconn);
-			if (err == ERR_OK) {
-				http_server_netconn_serve(newconn);
-				netconn_delete(newconn);
-			}
-			vTaskDelay(5);
-		} while(err == ERR_OK);
+            if (-1 == listen(server_sock, 5)) {
+                break;
+            }
 
-		netconn_close(conn);
-		netconn_delete(conn);	
-		vTaskDelay(10);
-	}
+            sin_size = sizeof(client_addr);
+
+            while(1) {
+                if ((client_sock = accept(server_sock, (struct sockaddr *) &client_addr, &sin_size)) < 0) {
+                    continue;
+                }
+
+                char *buf = (char *)zalloc(2048);
+                while ((recbytes = read(client_sock , buf, 2047)) > 0) { // For now we assume max. 2047 bytes for request
+					httpServerHandleConnection(client_sock, buf, recbytes);
+                }
+                free(buf);
+
+                if (recbytes <= 0) {
+                    close(client_sock);
+                }
+            }
+        } while (0);
+    }	
 }

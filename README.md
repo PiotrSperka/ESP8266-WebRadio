@@ -9,7 +9,6 @@ MCU (for UI): AVR<br />
 Audio decoder: VS1053<br />
 ##TODO list
 ###ESP8266
--TCP/IP stack (?) hangs when playing music and refreshing webinterface few times<br />
 -Finish web interface<br />
 -Sound settings in web interface<br />
 -UART commands for VS1053 sound settings<br />
@@ -22,6 +21,7 @@ Audio decoder: VS1053<br />
 -PCD design and assembly
 ##Changelog
 ###v0.8
+-**[ESP8266]**Webserver uses sockets - improved stability<br />
 -**[ESP8266]**Improvments of webinterface (now supports Instant Play)<br />
 -**[ESP8266]**Improvments of webserver (simple POST parser)<br />
 -**[ESP8266]**DNS lookup
