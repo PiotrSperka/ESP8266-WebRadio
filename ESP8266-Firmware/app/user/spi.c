@@ -25,6 +25,16 @@
 
 #include "spi.h"
 
+xSemaphoreHandle sSPI = NULL;
+
+uint8_t spi_take_semaphore() {
+	if(sSPI) if(xSemaphoreTake(sSPI, portMAX_DELAY)) return 1;
+	return 0;
+}
+
+void spi_give_semaphore() {
+	if(sSPI) xSemaphoreGive(sSPI);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -35,6 +45,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 void spi_init(uint8 spi_no){
+	
+	if(!sSPI) vSemaphoreCreateBinary(sSPI);
+	spi_give_semaphore();
 	
 	if(spi_no > 1) return; //Only SPI and HSPI are valid spi modules. 
 

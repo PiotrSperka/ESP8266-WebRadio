@@ -44,6 +44,10 @@ void VS1053_SPI_SpeedUp()
 	spi_clock(HSPI, 4, 2); //10MHz
 }
 
+void VS1053_SPI_SpeedDown() {
+	spi_clock(HSPI, 4, 10); //2MHz
+}
+
 void SPIPutChar(uint8_t data){
 	spi_tx8(HSPI, data);
 	while(spi_busy(HSPI));
@@ -115,6 +119,8 @@ void VS1053_SineTest(){
 
 void VS1053_WriteRegister(uint8_t addressbyte, uint8_t highbyte, uint8_t lowbyte)
 {
+	spi_take_semaphore();
+	VS1053_SPI_SpeedDown();
 	SDI_ChipSelect(RESET);
 	while(VS1053_checkDREQ() == 0);
 	SCI_ChipSelect(SET);
@@ -124,9 +130,13 @@ void VS1053_WriteRegister(uint8_t addressbyte, uint8_t highbyte, uint8_t lowbyte
 	SPIPutChar(lowbyte);
 	while(VS1053_checkDREQ() == 0);
 	SCI_ChipSelect(RESET);
+	VS1053_SPI_SpeedUp();
+	spi_give_semaphore();
 }
 
 uint16_t VS1053_ReadRegister(uint8_t addressbyte){
+	spi_take_semaphore();
+	VS1053_SPI_SpeedDown();
 	uint16_t result;
 	SDI_ChipSelect(RESET);
 	while(VS1053_checkDREQ() == 0);
@@ -137,8 +147,9 @@ uint16_t VS1053_ReadRegister(uint8_t addressbyte){
 	result |= SPIGetChar();
 	while(VS1053_checkDREQ() == 0);
 	SCI_ChipSelect(RESET);
+	VS1053_SPI_SpeedUp();
+	spi_give_semaphore();
 	return result;
-
 }
 
 void VS1053_ResetChip(){
@@ -193,6 +204,7 @@ void VS1053_Start(){
 
 int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
 	if(quantity < 1) return 0;
+	while(!spi_take_semaphore());
 	while(VS1053_checkDREQ() == 0);
 	SDI_ChipSelect(SET);
 	int o = 0;
@@ -211,6 +223,7 @@ int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
 		}
 	}
 	SDI_ChipSelect(RESET);
+	spi_give_semaphore();
 	return o;
 }
 

@@ -24,7 +24,8 @@
 
 #ifndef SPI_APP_H
 #define SPI_APP_H
-
+#include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
 #include "spi_register.h"
 #include "ets_sys.h"
 #include "osapi.h"
@@ -52,7 +53,8 @@
 
 
 
-
+uint8_t spi_take_semaphore();
+void spi_give_semaphore();
 
 void spi_init(uint8 spi_no);
 void spi_init_gpio(uint8 spi_no, uint8 sysclk_as_spiclk);

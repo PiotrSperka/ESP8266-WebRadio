@@ -109,6 +109,7 @@ uint8_t VS1053_checkWREQ();
 void VS1053_regtest();
 void VS1053_sine(char pitch);
 void VS1053_SPI_SpeedUp();
+void VS1053_SPI_SpeedDown();
 //void VS1053_PluginLoad();
 
 #endif /* VS1053_H_ */

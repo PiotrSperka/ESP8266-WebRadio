@@ -9,6 +9,8 @@
 
 #include "esp_common.h"
 
+#include "freertos/semphr.h"
+
 #include "vs1053.h"
 
 struct icyHeader header = {NULL, NULL, NULL, NULL, 0};
@@ -23,11 +25,12 @@ static enum clientStatus cstatus;
 static uint32_t metacount = 0;
 static uint16_t metasize = 0;
 
+xSemaphoreHandle sConnect, sConnected, sDisconnect;
+
 static uint8_t connect = 0, playing = 0;
 
 
 /* TODO:
-	- MUTEXES !!!
 	- METADATA HANDLING
 	- IP SETTINGS
 	- VS1053 - DELAY USING vTaskDelay
@@ -85,6 +88,23 @@ void bufferReset() {
 
 ///////////////
 
+ICACHE_FLASH_ATTR void clientInit() {
+	vSemaphoreCreateBinary(sConnect);
+	vSemaphoreCreateBinary(sConnected);
+	vSemaphoreCreateBinary(sDisconnect);
+	xSemaphoreTake(sConnect, portMAX_DELAY);
+	xSemaphoreTake(sConnected, portMAX_DELAY);
+	xSemaphoreTake(sDisconnect, portMAX_DELAY);
+}
+
+ICACHE_FLASH_ATTR uint8_t clientIsConnected() {
+	if(xSemaphoreTake(sConnected, 0)) {
+		xSemaphoreGive(sConnected);
+		return 0;
+	}
+	return 1;
+}
+
 ICACHE_FLASH_ATTR struct icyHeader* clientGetHeader()
 {
 	return &header;
@@ -94,6 +114,12 @@ ICACHE_FLASH_ATTR void clientParseHeader(char* s)
 {
 	// icy-notice1 icy-notice2 icy-name icy-genre icy-url icy-br
 	uint8_t header_num;
+	for(header_num=0; header_num<ICY_HEADERS_COUNT; header_num++) {
+		if(header_num != 6) if(header.members.mArr[header_num] != NULL) {
+			free(header.members.mArr[header_num]);
+			header.members.mArr[header_num] = NULL;
+		}
+	}
 	for(header_num=0; header_num<ICY_HEADERS_COUNT; header_num++)
 	{
 		char *t;
@@ -206,7 +232,8 @@ ICACHE_FLASH_ATTR void clientConnect()
 	metasize = 0;
 	
 	if(netconn_gethostbyname(clientURL, &ipAddress) == ERR_OK) {
-		connect = 1; // todo: semafor!!!
+		xSemaphoreGive(sConnect);
+		//connect = 1; // todo: semafor!!!
 	} else {
 		clientDisconnect();
 	}
@@ -214,7 +241,8 @@ ICACHE_FLASH_ATTR void clientConnect()
 
 ICACHE_FLASH_ATTR void clientDisconnect()
 {
-	connect = 0;
+	//connect = 0;
+	xSemaphoreGive(sDisconnect);
 	printf("\n##CLI.STOPPED#\n");
 }
 
@@ -225,19 +253,29 @@ ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned sh
 		- Metadata processing
 		- Buffer underflow handling (?)
 	*/
+	static int metad = -1;
 	if(cstatus == C_HEADER)	{
 		clientParseHeader(pdata);
+		if(header.members.single.metaint > 0) metad = header.members.single.metaint;
 		char *t1 = strstr(pdata, "\r\n\r\n"); // END OF HEADER
 		if(t1 != NULL) {
 			//processed = t1-pdata + 4;
 			cstatus = C_DATA;
+			int newlen = len - (t1-pdata) - 4;
+			if(newlen > 0) clientReceiveCallback(NULL, t1+4, newlen);
 		}
-		else return;
 	} else {
 		uint16_t l = 0;
+		char* buf = pdata;
+		/*if(len > metad) {
+			int l = pdata[metad+1]*16;
+			printf("%d\n", l);
+			int rest = len - (&(pdata[metad+1])-pdata) -l;
+			metad = header.members.single.metaint - rest;
+		} else metad -= len;*/
 		do {
 			if(getBufferFree() < len) vTaskDelay(1);
-			else l = bufferWrite(pdata, len);
+			else l = bufferWrite(buf, len);
 		} while(l < len);
 		
 		if(!playing && getBufferFree() < BUFFER_SIZE/2) { 
@@ -248,6 +286,7 @@ ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned sh
 
 void vsTask(void *pvParams) {
 	uint8_t b[1024];
+	
 	while(1) {
 		if(playing) {
 			uint16_t size = bufferRead(b, 1024), s = 0;
@@ -266,8 +305,11 @@ void clientTask(void *pvParams) {
 	err_t rc1, rc2, rc3;
 	
 	while(1) {
+		xSemaphoreGive(sConnected);
 		
-		if(connect) {
+		if(xSemaphoreTake(sConnect, portMAX_DELAY)) {
+			
+			xSemaphoreTake(sDisconnect, 0);
 
 			NetConn = netconn_new(NETCONN_TCP);
 			netconn_set_recvtimeout(NetConn, 1000);
@@ -288,8 +330,8 @@ void clientTask(void *pvParams) {
 					clientDisconnect();
 					continue;
 			} else {
-				char *getQuery = malloc(sizeof(char)*(strlen(clientPath) + 18));
-				sprintf(getQuery, "GET %s HTTP/1.0\r\n\r\n", clientPath);
+				char *getQuery = malloc(sizeof(char)*(strlen(clientPath) + 34));
+				sprintf(getQuery, "GET %s HTTP/1.0\r\nicy-metadata:0\r\n\r\n", clientPath);
 				netconn_write(NetConn, getQuery, strlen(getQuery), NETCONN_NOCOPY);
 				free(getQuery);
 				while(1){
@@ -301,21 +343,19 @@ void clientTask(void *pvParams) {
 					clientReceiveCallback(NULL, tmp, BufLen);
 
 					free(tmp);
-					if(connect == 0) break;
+					if(xSemaphoreTake(sDisconnect, 0)) break;
+					xSemaphoreTake(sConnected, 0);
 					vTaskDelay(1);
 				}
 
 			}
-
+			
 			playing = 0;
 			bufferReset();
 			netconn_close(NetConn);
 			printf("netcon closed\r\n");
 			netconn_delete(NetConn);
 			printf("netcon deleted\r\n");
-		
 		}
-
-		vTaskDelay(10);
 	}
 }

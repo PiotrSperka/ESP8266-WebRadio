@@ -23,6 +23,9 @@ struct icyHeader
 
 enum clientStatus { C_HEADER, C_METADATA, C_DATA };
 
+void clientInit();
+uint8_t clientIsConnected();
+
 void clientSetURL(char* url);
 void clientSetPath(char* path);
 void clientSetPort(uint16_t port);

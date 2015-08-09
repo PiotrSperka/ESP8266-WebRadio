@@ -60,6 +60,8 @@ void user_init(void)
 	UART_SetBaudrate(0,460800);
 	wifi_set_opmode(STATION_MODE);
 	
+	clientInit();
+	
 	//DEBUG
 	struct station_config *config = (struct station_config *)zalloc(sizeof(struct station_config));
 	sprintf(config->ssid, "linksys@Pogodna8");
@@ -74,6 +76,7 @@ void user_init(void)
 	VS1053_HW_init();
 	VS1053_Start();
 	VS1053_SetVolume(70);
+	printf("\n\nVOLUME: %d\n\n", VS1053_GetVolume());
 
 	VS1053_SPI_SpeedUp();
 

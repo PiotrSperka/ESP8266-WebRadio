@@ -33,12 +33,12 @@
 						</p>
 					</form>
 					<h1>Instant play</h1>
-					<form action="instant_play" method="POST">
+					<form>
 						<p>
-						<span class="bold">URL: </span><input type="text" name="url"><br>
-						<span class="bold">Port: </span><input type="text" name="port" value="80"><br>
-						<span class="bold">Path: </span><input type="text" name="path" value="/"><br>
-						<input type="submit" value="Play">
+						<span class="bold">URL: </span><input type="text" id="instant_url" name="url"><br>
+						<span class="bold">Port: </span><input type="text" id="instant_port" name="port" value="80"><br>
+						<span class="bold">Path: </span><input type="text" id="instant_path" name="path" value="/"><br>
+						<input type="button" value="Play" onClick="instantPlay()">
 						</p>
 					</form>
 				</div>
@@ -55,12 +55,12 @@
 					<label for="tab3">Sound settings</label>
 					<div id="tab-content3" class="tab-content">
 					<h1>Sound settings</h1>
-					<form action="sound" method="POST">
+					<form>
 						<p>
-						<span class="bold">Treble control: </span><input type="range" id="treble_range" name="treble" onChange="onRangeChange('treble_range', 'treble_span', 1.5, false)" min=0 max=8 value=2><span id="treble_span"></span><br>
-						<span class="bold">Bass enhance: </span><input type="range"  id="bass_range" name="bass" onChange="onRangeChange('bass_range', 'bass_span', 1, false)" min=0 max=15 value=3><span id="bass_span"></span><br>
-						<span class="bold">Volume: </span><input type="range" id="vol_range" name="vol" onChange="onRangeChange('vol_range', 'vol_span', -0.5, true)" min=0 max=254 value=50><span id="vol_span"></span><br>
-						<input type="submit" value="Play">
+						<span class="bold">Treble control: </span><input type="range" id="treble_range" name="treble" onChange="onRangeChange('treble_range', 'treble_span', 1.5, false)" min=0 max=8 value=#SOUND-TREBLE#><span id="treble_span"></span><br>
+						<span class="bold">Bass enhance: </span><input type="range"  id="bass_range" name="bass" onChange="onRangeChange('bass_range', 'bass_span', 1, false)" min=0 max=15 value=#SOUND-BASS#><span id="bass_span"></span><br>
+						<span class="bold">Volume: </span><input type="range" id="vol_range" name="vol" onChange="onRangeChange('vol_range', 'vol_span', -0.5, true)" min=0 max=254 value=#SOUND-VOL#><span id="vol_span"></span><br>
+						<input type="button" onClick="saveSoundSettings()" value="Save">
 						</p>
 					</form>
 					</div>
@@ -69,10 +69,29 @@
 			</div>
 		</div>
 		<script>
+			function reloadAfter($seconds) {
+				setTimeout(function(){
+				   window.location.replace("/");
+				}, $seconds*1000);
+			}
 			function onRangeChange($range, $spanid, $mul, $rotate) {
 				var val = document.getElementById($range).value;
 				if($rotate) val = document.getElementById($range).max - val;
 				document.getElementById($spanid).innerHTML = (val * $mul) + " dB";
+			}
+			function instantPlay() {
+				xmlhttp = new XMLHttpRequest();
+				xmlhttp.open("POST","instant_play",false);
+				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xmlhttp.send("url=" + document.getElementById('instant_url').value + "&port=" + document.getElementById('instant_port').value + "&path=" + document.getElementById('instant_path').value);
+				window.location.replace("/");
+			}
+			function saveSoundSettings() {
+				xmlhttp = new XMLHttpRequest();
+				xmlhttp.open("POST","sound",false);
+				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xmlhttp.send("vol=" + document.getElementById('vol_range').value + "&bass=" + document.getElementById('bass_range').value + "&treble=" + document.getElementById('treble_range').value);
+				window.location.replace("/");
 			}
 			document.addEventListener("DOMContentLoaded", function(event) { 
 			  onRangeChange('treble_range', 'treble_span', 1.5, false);

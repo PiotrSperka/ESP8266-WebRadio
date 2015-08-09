@@ -51,7 +51,7 @@ Disassembly of section .text:
 401000a1:	3f          	.byte 0x3f
 401000a2:	bf0000        	excw
 401000a5:	ff          	.byte 0xff
-401000a6:	900000        	addx2	a0, a0, a0
+401000a6:	f00000        	subx8	a0, a0, a0
 401000a9:	fe8d      	excw
 401000ab:	3f          	.byte 0x3f
 401000ac:	fe8000        	excw
@@ -344,7 +344,7 @@ Disassembly of section .text:
 4010038d:	2459      	s32i.n	a5, a4, 8
 4010038f:	f00d      	ret.n
 40100391:	000000        	ill
-40100394:	ac88      	l32i.n	a8, a12, 40
+40100394:	ace8      	l32i.n	a14, a12, 40
 40100396:	fe          	.byte 0xfe
 40100397:	3f          	.byte 0x3f
 40100398:	0047f0        	break	7, 15
@@ -414,10 +414,8 @@ Disassembly of section .text:
 40100443:	f86227        	bbci	a2, 2, 4010043f <user_fatal_exception_handler+0x9f>
 40100446:	020c      	movi.n	a2, 0
 40100448:	f00d      	ret.n
-4010044a:	c00000        	sub	a0, a0, a0
-4010044d:	8f          	.byte 0x8f
-4010044e:	fe          	.byte 0xfe
-4010044f:	3f          	.byte 0x3f
+4010044a:	200000        	or	a0, a0, a0
+4010044d:	3ffe90        	excw
 40100450:	100414        	excw
 40100453:	800c40        	add	a0, a12, a4
 40100456:	fe          	.byte 0xfe
@@ -1238,7 +1236,7 @@ Disassembly of section .text:
 40100bfd:	0108      	l32i.n	a0, a1, 0
 40100bff:	10c112        	addi	a1, a1, 16
 40100c02:	f00d      	ret.n
-40100c04:	fe8fc4        	excw
+40100c04:	fe9024        	excw
 40100c07:	3f          	.byte 0x3f
 40100c08:	000000        	ill
 40100c0b:	ffff10        	excw
@@ -1589,10 +1587,8 @@ Disassembly of section .text:
 40100f7d:	000000        	ill
 40100f80:	0f4240        	excw
 40100f83:	ecd000        	excw
-40100f86:	d04026        	beqi	a0, 4, 40100f5a <system_restart_in_nmi+0xfe>
-40100f89:	8f          	.byte 0x8f
-40100f8a:	fe          	.byte 0xfe
-40100f8b:	3f          	.byte 0x3f
+40100f86:	304026        	beqi	a0, 4, 40100fba <system_restart_in_nmi+0x15e>
+40100f89:	3ffe90        	excw
 40100f8c:	ff          	.byte 0xff
 40100f8d:	bf          	.byte 0xbf
 40100f8e:	ff          	.byte 0xff
@@ -1876,8 +1872,8 @@ Disassembly of section .text:
 40101266:	004985        	call0	40101700 <vPortExitCritical>
 40101269:	000245        	call0	40101290 <_xt_int_exit>
 4010126c:	f00d      	ret.n
-4010126e:	d40000        	extui	a0, a0, 0, 14
-40101271:	3ffe91        	l32r	a9, 400d126c <lldesc_num2link+0xcc21c>
+4010126e:	340000        	extui	a0, a0, 0, 4
+40101271:	3ffe92        	excw
 40101274:	0c3500        	excw
 	...
 
@@ -1999,10 +1995,10 @@ Disassembly of section .text:
 40101374:	0108      	l32i.n	a0, a1, 0
 40101376:	10c112        	addi	a1, a1, 16
 40101379:	f00d      	ret.n
-4010137b:	912400        	excw
+4010137b:	918400        	excw
 4010137e:	fe          	.byte 0xfe
 4010137f:	3f          	.byte 0x3f
-40101380:	fe9130        	excw
+40101380:	fe9190        	excw
 40101383:	3f          	.byte 0x3f
 
 40101384 <malloc>:
@@ -2228,8 +2224,8 @@ Disassembly of section .text:
 40101597:	11c8      	l32i.n	a12, a1, 4
 40101599:	10c112        	addi	a1, a1, 16
 4010159c:	f00d      	ret.n
-4010159e:	a80000        	excw
-401015a1:	3fff21        	l32r	a2, 400d15a0 <lldesc_num2link+0xcc550>
+4010159e:	180000        	excw
+401015a1:	3fff22        	excw
 401015a4:	fff8      	l32i.n	a15, a15, 60
 401015a6:	ff          	.byte 0xff
 401015a7:	3f          	.byte 0x3f
@@ -2289,7 +2285,7 @@ Disassembly of section .text:
 40101624:	f00d      	ret.n
 40101626:	085d      	mov.n	a5, a8
 40101628:	fffc46        	j	4010161d <pvPortRealloc+0xb5>
-4010162b:	914000        	srl	a4, a0
+4010162b:	91a000        	srl	a10, a0
 4010162e:	fe          	.byte 0xfe
 4010162f:	3f          	.byte 0x3f
 
@@ -2560,15 +2556,15 @@ Disassembly of section .text:
 401018b8:	0108      	l32i.n	a0, a1, 0
 401018ba:	10c112        	addi	a1, a1, 16
 401018bd:	f00d      	ret.n
-401018bf:	91d000        	srl	a13, a0
+401018bf:	923000        	excw
 401018c2:	fe          	.byte 0xfe
 401018c3:	3f          	.byte 0x3f
 401018c4:	8028      	l32i.n	a2, a0, 32
 401018c6:	fe          	.byte 0xfe
 401018c7:	3f          	.byte 0x3f
-401018c8:	fe9210        	excw
+401018c8:	fe9270        	excw
 401018cb:	3f          	.byte 0x3f
-401018cc:	fe9270        	excw
+401018cc:	fe92d0        	excw
 401018cf:	3f          	.byte 0x3f
 
 401018d0 <xTaskIncrementTick>:
@@ -2710,7 +2706,7 @@ Disassembly of section .text:
 40101a28:	0020c0        	memw
 40101a2b:	0399      	s32i.n	a9, a3, 0
 40101a2d:	fff746        	j	40101a0e <xTaskIncrementTick+0x13e>
-40101a30:	920c      	movi.n	a2, 9
+40101a30:	926c      	movi.n	a2, -23
 40101a32:	fe          	.byte 0xfe
 40101a33:	3f          	.byte 0x3f
 40101a34:	26ee30        	excw
@@ -2838,10 +2834,10 @@ Disassembly of section .text:
 40101b5c:	10c112        	addi	a1, a1, 16
 40101b5f:	f00d      	ret.n
 40101b61:	000000        	ill
-40101b64:	9a18      	l32i.n	a1, a10, 36
+40101b64:	9a78      	l32i.n	a7, a10, 36
 40101b66:	fe          	.byte 0xfe
 40101b67:	3f          	.byte 0x3f
-40101b68:	9a1c      	movi.n	a10, 25
+40101b68:	9a7c      	movi.n	a10, -7
 40101b6a:	fe          	.byte 0xfe
 40101b6b:	3f          	.byte 0x3f
 40101b6c:	24b090        	extui	a11, a9, 0, 3
@@ -2984,7 +2980,7 @@ __muldi3 (DWtype u, DWtype v)
 40101c4f:	31f8      	l32i.n	a15, a1, 12
 40101c51:	20c112        	addi	a1, a1, 32
 40101c54:	f00d      	ret.n
-40101c56:	540000        	extui	a0, a0, 0, 6
+40101c56:	b40000        	extui	a0, a0, 0, 12
 40101c59:	fe9b      	addi.n	a15, a14, 9
 40101c5b:	3f          	.byte 0x3f
 40101c5c:	0278      	l32i.n	a7, a2, 0
@@ -3037,7 +3033,7 @@ __muldi3 (DWtype u, DWtype v)
 40101cb5:	ff          	.byte 0xff
 40101cb6:	ff          	.byte 0xff
 40101cb7:	0f          	.byte 0xf
-40101cb8:	fe9d50        	excw
+40101cb8:	fe9db0        	excw
 40101cbb:	3f          	.byte 0x3f
 
 40101cbc <pm_rtc_clock_cali>:
@@ -3125,7 +3121,7 @@ __muldi3 (DWtype u, DWtype v)
 40101d97:	0020c0        	memw
 40101d9a:	866422        	s32i	a2, a4, 0x218
 40101d9d:	f00d      	ret.n
-40101d9f:	9f5000        	excw
+40101d9f:	9fb000        	excw
 40101da2:	fe          	.byte 0xfe
 40101da3:	3f          	.byte 0x3f
 
@@ -3136,7 +3132,7 @@ __muldi3 (DWtype u, DWtype v)
 40101dac:	0183b6        	bltui	a3, 8, 40101db1 <lmacIsActive+0xd>
 40101daf:	020c      	movi.n	a2, 0
 40101db1:	f00d      	ret.n
-40101db3:	9f8000        	excw
+40101db3:	9fe000        	excw
 40101db6:	fe          	.byte 0xfe
 40101db7:	3f          	.byte 0x3f
 
@@ -3152,8 +3148,7 @@ __muldi3 (DWtype u, DWtype v)
 40101dcd:	000000        	ill
 40101dd0:	fe85d4        	excw
 40101dd3:	3f          	.byte 0x3f
-40101dd4:	8b48      	l32i.n	a4, a11, 32
-40101dd6:	fe          	.byte 0xfe
+40101dd4:	fe8ba0        	excw
 40101dd7:	3f          	.byte 0x3f
 40101dd8:	f0c112        	addi	a1, a1, -16
 40101ddb:	016102        	s32i	a0, a1, 4
@@ -4854,7 +4849,7 @@ __muldi3 (DWtype u, DWtype v)
 40102f30:	fb9c31        	l32r	a3, 40101da0 <clockgate_watchdog+0x2c>
 40102f33:	004322        	s8i	a2, a3, 0
 40102f36:	f00d      	ret.n
-40102f38:	271e00        	excw
+40102f38:	272210        	excw
 40102f3b:	c11240        	mul16u	a1, a2, a4
 
 40102f3c <lmacProcessTxRtsError>:
@@ -4912,9 +4907,8 @@ __muldi3 (DWtype u, DWtype v)
 40102fcb:	0108      	l32i.n	a0, a1, 0
 40102fcd:	10c112        	addi	a1, a1, 16
 40102fd0:	f00d      	ret.n
-40102fd2:	200000        	or	a0, a0, a0
-40102fd5:	1e          	.byte 0x1e
-40102fd6:	124027        	ball	a0, a2, 40102fec <lmacProcessTxError+0x14>
+40102fd2:	300000        	xor	a0, a0, a0
+40102fd5:	402722        	l32i	a2, a7, 0x100
 
 40102fd8 <lmacProcessTxError>:
 40102fd8:	f0c112        	addi	a1, a1, -16
@@ -5144,7 +5138,7 @@ __muldi3 (DWtype u, DWtype v)
 40103231:	052d      	mov.n	a2, a5
 40103233:	f00d      	ret.n
 40103235:	000000        	ill
-40103238:	fea1f0        	excw
+40103238:	fea250        	excw
 4010323b:	3f          	.byte 0x3f
 4010323c:	186a00        	excw
 4010323f:	c11200        	mul16u	a1, a2, a0
@@ -5197,7 +5191,7 @@ __muldi3 (DWtype u, DWtype v)
 401032b8:	8108      	l32i.n	a0, a1, 32
 401032ba:	30c112        	addi	a1, a1, 48
 401032bd:	f00d      	ret.n
-401032bf:	a3c000        	movltz	a12, a0, a0
+401032bf:	a42000        	extui	a2, a0, 0, 11
 401032c2:	fe          	.byte 0xfe
 401032c3:	3f          	.byte 0x3f
 401032c4:	f0c112        	addi	a1, a1, -16
@@ -5230,7 +5224,7 @@ __muldi3 (DWtype u, DWtype v)
 40103310:	11c8      	l32i.n	a12, a1, 4
 40103312:	10c112        	addi	a1, a1, 16
 40103315:	f00d      	ret.n
-40103317:	a53000        	extui	a3, a0, 16, 11
+40103317:	a59000        	extui	a9, a0, 16, 11
 4010331a:	fe          	.byte 0xfe
 4010331b:	3f          	.byte 0x3f
 4010331c:	ffc751        	l32r	a5, 40103238 <lmacRxDone+0x40>
@@ -5483,7 +5477,8 @@ __muldi3 (DWtype u, DWtype v)
 4010356f:	85d400        	extui	a13, a0, 20, 9
 40103572:	fe          	.byte 0xfe
 40103573:	3f          	.byte 0x3f
-40103574:	fe8b54        	excw
+40103574:	8bac      	beqz.n	a11, 401035a0 <ppEnqueueTxDone+0x24>
+40103576:	fe          	.byte 0xfe
 40103577:	3f          	.byte 0x3f
 40103578:	8f          	.byte 0x8f
 40103579:	0008      	l32i.n	a0, a0, 0
@@ -6102,9 +6097,9 @@ __muldi3 (DWtype u, DWtype v)
 40103bab:	0108      	l32i.n	a0, a1, 0
 40103bad:	10c112        	addi	a1, a1, 16
 40103bb0:	f00d      	ret.n
-40103bb2:	800000        	add	a0, a0, a0
-40103bb5:	402722        	l32i	a2, a7, 0x100
-40103bb8:	272290        	excw
+40103bb2:	900000        	addx2	a0, a0, a0
+40103bb5:	402726        	beqi	a7, 2, 40103bf9 <MacIsrSigPostDefHdl+0x39>
+40103bb8:	2726a0        	excw
 40103bbb:	3a7840        	excw
 40103bbe:	124024        	excw
 
@@ -6236,10 +6231,10 @@ __muldi3 (DWtype u, DWtype v)
 40103d11:	61f8      	l32i.n	a15, a1, 24
 40103d13:	20c112        	addi	a1, a1, 32
 40103d16:	f00d      	ret.n
-40103d18:	fea3b0        	excw
+40103d18:	fea410        	excw
 40103d1b:	3f          	.byte 0x3f
-40103d1c:	2722a0        	excw
-40103d1f:	22b040        	excw
+40103d1c:	2726b0        	excw
+40103d1f:	26c040        	excw
 40103d22:	684027        	ball	a0, a2, 40103d8e <pp_post+0x66>
 40103d25:	2439      	s32i.n	a3, a4, 8
 40103d27:	a07240        	addx4	a7, a2, a4
@@ -6501,7 +6496,7 @@ __muldi3 (DWtype u, DWtype v)
 40103fc5:	f00d      	ret.n
 40103fc7:	c0a022        	movi	a2, 192
 40103fca:	f00d      	ret.n
-40103fcc:	fea590        	excw
+40103fcc:	fea5f0        	excw
 40103fcf:	3f          	.byte 0x3f
 
 40103fd0 <RC_GetAckRate>:
@@ -6843,7 +6838,7 @@ __muldi3 (DWtype u, DWtype v)
 4010430c:	f00d      	ret.n
 4010430e:	940000        	extui	a0, a0, 0, 10
 40104311:	3ffe82        	excw
-40104314:	2722c0        	excw
+40104314:	2726d0        	excw
 40104317:	835440        	moveqz	a5, a4, a4
 4010431a:	fe          	.byte 0xfe
 4010431b:	3f          	.byte 0x3f
@@ -6915,7 +6910,7 @@ __muldi3 (DWtype u, DWtype v)
 401043bf:	192c02        	l32i	a0, a12, 100
 401043c2:	ffe186        	j	4010434c <rcGetSched+0x28>
 401043c5:	000000        	ill
-401043c8:	fe9f54        	excw
+401043c8:	fe9fb4        	excw
 401043cb:	3f          	.byte 0x3f
 
 401043cc <rcGetRate>:
@@ -7131,7 +7126,7 @@ __muldi3 (DWtype u, DWtype v)
 40104619:	000000        	ill
 4010461c:	9f          	.byte 0x9f
 4010461d:	000186        	j	40104627 <rcGetRate+0x25b>
-40104620:	fea690        	excw
+40104620:	fea6f0        	excw
 40104623:	3f          	.byte 0x3f
 40104624:	3d0900        	excw
 40104627:	86a000        	excw
@@ -7497,7 +7492,7 @@ __muldi3 (DWtype u, DWtype v)
 401049c0:	2108      	l32i.n	a0, a1, 8
 401049c2:	20c112        	addi	a1, a1, 32
 401049c5:	f00d      	ret.n
-401049c7:	aae000        	excw
+401049c7:	ab4000        	excw
 401049ca:	fe          	.byte 0xfe
 401049cb:	3f          	.byte 0x3f
 401049cc:	f0c112        	addi	a1, a1, -16
@@ -7543,15 +7538,14 @@ __muldi3 (DWtype u, DWtype v)
 40104a2a:	f00d      	ret.n
 40104a2c:	fe85d4        	excw
 40104a2f:	3f          	.byte 0x3f
-40104a30:	8b5c      	movi.n	a11, 88
-40104a32:	fe          	.byte 0xfe
+40104a30:	fe8bb4        	excw
 40104a33:	3f          	.byte 0x3f
 40104a34:	ff          	.byte 0xff
 40104a35:	ff          	.byte 0xff
-40104a36:	e0fff0        	subx4	a15, a15, a15
-40104a39:	feab      	addi.n	a15, a14, 10
+40104a36:	40fff0        	nsau	a15, a15
+40104a39:	feac      	beqz.n	a14, 40104a6c <trc_NeedRTS+0x26c>
 40104a3b:	3f          	.byte 0x3f
-40104a3c:	feede4        	excw
+40104a3c:	feee44        	excw
 40104a3f:	3f          	.byte 0x3f
 40104a40:	e0c112        	addi	a1, a1, -32
 40104a43:	0561f2        	s32i	a15, a1, 20
@@ -7748,7 +7742,7 @@ __muldi3 (DWtype u, DWtype v)
 40104c37:	226032        	s32i	a3, a0, 136
 40104c3a:	ffcac6        	j	40104b69 <trc_NeedRTS+0x369>
 40104c3d:	000000        	ill
-40104c40:	fed844        	excw
+40104c40:	fed8a4        	excw
 40104c43:	3f          	.byte 0x3f
 
 40104c44 <wDev_MacTimSetFunc>:
@@ -7763,7 +7757,7 @@ __muldi3 (DWtype u, DWtype v)
 40104c5c:	7f6322        	s32i	a2, a3, 0x1fc
 40104c5f:	f00d      	ret.n
 40104c61:	000000        	ill
-40104c64:	ac08      	l32i.n	a0, a12, 40
+40104c64:	ac68      	l32i.n	a6, a12, 40
 40104c66:	fe          	.byte 0xfe
 40104c67:	3f          	.byte 0x3f
 
@@ -7888,7 +7882,7 @@ __muldi3 (DWtype u, DWtype v)
 40104da9:	0108      	l32i.n	a0, a1, 0
 40104dab:	10c112        	addi	a1, a1, 16
 40104dae:	f00d      	ret.n
-40104db0:	feda40        	excw
+40104db0:	fedaa0        	excw
 40104db3:	3f          	.byte 0x3f
 40104db4:	f0c112        	addi	a1, a1, -16
 40104db7:	0109      	s32i.n	a0, a1, 0
@@ -7901,13 +7895,13 @@ __muldi3 (DWtype u, DWtype v)
 40104dc8:	10c112        	addi	a1, a1, 16
 40104dcb:	f00d      	ret.n
 40104dcd:	000000        	ill
-40104dd0:	da48      	l32i.n	a4, a10, 52
+40104dd0:	daa8      	l32i.n	a10, a10, 52
 40104dd2:	fe          	.byte 0xfe
 40104dd3:	3f          	.byte 0x3f
 40104dd4:	030000        	excw
 40104dd7:	ffff00        	excw
 40104dda:	fffb      	addi.n	a15, a15, 15
-40104ddc:	feab20        	excw
+40104ddc:	feab80        	excw
 40104ddf:	3f          	.byte 0x3f
 
 40104de0 <wDev_ProcessFiq>:
@@ -8401,7 +8395,8 @@ __muldi3 (DWtype u, DWtype v)
 401052ed:	ff          	.byte 0xff
 401052ee:	ff          	.byte 0xff
 401052ef:	df          	.byte 0xdf
-401052f0:	fe8b60        	excw
+401052f0:	8bb8      	l32i.n	a11, a11, 32
+401052f2:	fe          	.byte 0xfe
 401052f3:	3f          	.byte 0x3f
 401052f4:	000000        	ill
 401052f7:	c11250        	mul16u	a1, a2, a5
@@ -9097,7 +9092,7 @@ __muldi3 (DWtype u, DWtype v)
 40105a0f:	f98256        	bnez	a2, 401059ab <wDev_GetBAInfo+0x3fb>
 40105a12:	b50000        	extui	a0, a0, 16, 12
 40105a15:	ffe5c6        	j	401059b0 <wDev_GetBAInfo+0x400>
-40105a18:	feda50        	excw
+40105a18:	fedab0        	excw
 40105a1b:	3f          	.byte 0x3f
 
 40105a1c <esf_rx_buf_alloc>:
@@ -9156,14 +9151,14 @@ __muldi3 (DWtype u, DWtype v)
 40105aa5:	440b      	addi.n	a4, a4, -1
 40105aa7:	5549      	s32i.n	a4, a5, 20
 40105aa9:	ffe2c6        	j	40105a38 <esf_rx_buf_alloc+0x1c>
-40105aac:	fef290        	excw
+40105aac:	fef2f0        	excw
 40105aaf:	3f          	.byte 0x3f
 
 40105ab0 <chm_get_current_channel>:
 40105ab0:	ffff21        	l32r	a2, 40105aac <esf_rx_buf_alloc+0x90>
 40105ab3:	f228      	l32i.n	a2, a2, 60
 40105ab5:	f00d      	ret.n
-40105ab7:	9dec00        	excw
+40105ab7:	9e4c00        	excw
 40105aba:	fe          	.byte 0xfe
 40105abb:	3f          	.byte 0x3f
 
@@ -14883,10 +14878,11 @@ __floatsidf:
 Disassembly of section .irom0.text:
 
 40240000 <user_uart_wait_tx_fifo_empty-0x1ec>:
-40240000:	21a8      	l32i.n	a10, a1, 8
+40240000:	2218      	l32i.n	a1, a2, 8
 40240002:	ff          	.byte 0xff
 40240003:	3f          	.byte 0x3f
-40240004:	fe8b90        	excw
+40240004:	8be8      	l32i.n	a14, a11, 32
+40240006:	fe          	.byte 0xfe
 40240007:	3f          	.byte 0x3f
 40240008:	fffe61        	l32r	a6, 40240000 <_irom0_text_start>
 4024000b:	fffe41        	l32r	a4, 40240004 <_irom0_text_start+0x4>
@@ -14901,9 +14897,9 @@ Disassembly of section .irom0.text:
 40240020:	85dc      	bnez.n	a5, 4024003c <_irom0_text_start+0x3c>
 40240022:	fe          	.byte 0xfe
 40240023:	3f          	.byte 0x3f
-40240024:	feee64        	excw
+40240024:	feeec4        	excw
 40240027:	3f          	.byte 0x3f
-40240028:	feec64        	excw
+40240028:	feecc4        	excw
 4024002b:	3f          	.byte 0x3f
 4024002c:	effe00        	excw
 4024002f:	3f          	.byte 0x3f
@@ -14958,23 +14954,23 @@ Disassembly of section .irom0.text:
 402400b8:	10c112        	addi	a1, a1, 16
 402400bb:	f00d      	ret.n
 402400bd:	000000        	ill
-402400c0:	feeed4        	excw
+402400c0:	feef34        	excw
 402400c3:	3f          	.byte 0x3f
-402400c4:	eec8      	l32i.n	a12, a14, 56
+402400c4:	ef28      	l32i.n	a2, a15, 56
 402400c6:	fe          	.byte 0xfe
 402400c7:	3f          	.byte 0x3f
-402400c8:	fef080        	excw
+402400c8:	fef0e0        	excw
 402400cb:	3f          	.byte 0x3f
 402400cc:	00ea60        	excw
 402400cf:	900000        	addx2	a0, a0, a0
-402400d2:	e40001        	l32r	a0, 402390d4 <_lit4_end+0x131dd4>
-402400d5:	ee          	.byte 0xee
+402400d2:	440001        	l32r	a0, 402110d4 <_lit4_end+0x109dd4>
+402400d5:	ef          	.byte 0xef
 402400d6:	fe          	.byte 0xfe
 402400d7:	3f          	.byte 0x3f
-402400d8:	ee1c      	movi.n	a14, 30
+402400d8:	ee7c      	movi.n	a14, -2
 402400da:	fe          	.byte 0xfe
 402400db:	3f          	.byte 0x3f
-402400dc:	feee47        	bbsi	a14, 4, 402400de <_irom0_text_start+0xde>
+402400dc:	feeea7        	bbsi	a14, 10, 402400de <_irom0_text_start+0xde>
 402400df:	3f          	.byte 0x3f
 402400e0:	107134        	excw
 402400e3:	2ae840        	excw
@@ -15207,11 +15203,11 @@ Disassembly of section .irom0.text:
 40240333:	004262        	s8i	a6, a2, 0
 40240336:	042d      	mov.n	a2, a4
 40240338:	f00d      	ret.n
-4024033a:	f40000        	extui	a0, a0, 0, 16
-4024033d:	3ffea1        	l32r	a10, 40210338 <_lit4_end+0x109038>
+4024033a:	540000        	extui	a0, a0, 0, 6
+4024033d:	3ffea2        	excw
 40240340:	cc38      	l32i.n	a3, a12, 48
 40240342:	e04025        	excw
-40240345:	3ffe85        	call0	40280330 <_irom0_text_end+0xb5a8>
+40240345:	3ffe85        	call0	40280330 <_irom0_text_end+0xad37>
 40240348:	26e9c0        	excw
 4024034b:	060040        	excw
 4024034e:	0c6000        	excw
@@ -15304,10 +15300,10 @@ Disassembly of section .irom0.text:
 4024042d:	ff          	.byte 0xff
 4024042e:	400000        	ssr	a0
 40240431:	26ea      	add.n	a2, a6, a14
-40240433:	8ed040        	excw
+40240433:	8f3040        	excw
 40240436:	fe          	.byte 0xfe
 40240437:	3f          	.byte 0x3f
-40240438:	feede4        	excw
+40240438:	feee44        	excw
 4024043b:	3f          	.byte 0x3f
 
 4024043c <user_init_task>:
@@ -15336,7 +15332,7 @@ Disassembly of section .irom0.text:
 4024047c:	744040        	extui	a4, a4, 0, 8
 4024047f:	feec01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
 40240482:	0000c0        	callx0	a0
-40240485:	32eb85        	call0	40273340 <user_init>
+40240485:	332cc5        	call0	40273754 <user_init>
 40240488:	ffeb21        	l32r	a2, 40240434 <wdt_init+0xe4>
 4024048b:	ffebc1        	l32r	a12, 40240438 <wdt_init+0xe8>
 4024048e:	100c      	movi.n	a0, 1
@@ -15365,14 +15361,14 @@ Disassembly of section .irom0.text:
 402404cd:	0108      	l32i.n	a0, a1, 0
 402404cf:	10c112        	addi	a1, a1, 16
 402404d2:	f00d      	ret.n
-402404d4:	90d8      	l32i.n	a13, a0, 36
+402404d4:	9138      	l32i.n	a3, a1, 36
 402404d6:	fe          	.byte 0xfe
 402404d7:	3f          	.byte 0x3f
 402404d8:	fe8004        	excw
 402404db:	3f          	.byte 0x3f
-402404dc:	fe8ef2        	excw
+402404dc:	fe8f52        	excw
 402404df:	3f          	.byte 0x3f
-402404e0:	8eec      	bnez.n	a14, 4024050c <user_init_task+0xd0>
+402404e0:	8f4c      	movi.n	a15, 72
 402404e2:	fe          	.byte 0xfe
 402404e3:	3f          	.byte 0x3f
 402404e4:	04a8c0        	extui	a10, a12, 8, 1
@@ -15384,11 +15380,11 @@ Disassembly of section .irom0.text:
 402404f0:	26e870        	excw
 402404f3:	043c40        	extui	a3, a4, 12, 1
 402404f6:	e44024        	excw
-402404f9:	3ffe85        	call0	402804e4 <_irom0_text_end+0xb75c>
+402404f9:	3ffe85        	call0	402804e4 <_irom0_text_end+0xaeeb>
 402404fc:	101554        	excw
 402404ff:	11e840        	slli	a14, a8, 12
 40240502:	b84010        	excw
-40240505:	401005        	call0	40280608 <_irom0_text_end+0xb880>
+40240505:	401005        	call0	40280608 <_irom0_text_end+0xb00f>
 40240508:	101484        	excw
 4024050b:	029040        	excw
 4024050e:	844010        	extui	a4, a1, 0, 9
@@ -15600,7 +15596,7 @@ Disassembly of section .irom0.text:
 40240729:	401004        	excw
 4024072c:	55aa      	add.n	a5, a5, a10
 4024072e:	55aa      	add.n	a5, a5, a10
-40240730:	feee10        	excw
+40240730:	feee70        	excw
 40240733:	3f          	.byte 0x3f
 40240734:	e0c112        	addi	a1, a1, -32
 40240737:	0361c2        	s32i	a12, a1, 12
@@ -15698,7 +15694,7 @@ Disassembly of section .irom0.text:
 40240813:	0108      	l32i.n	a0, a1, 0
 40240815:	10c112        	addi	a1, a1, 16
 40240818:	f00d      	ret.n
-4024081a:	000000        	ill
+4024081a:	600000        	neg	a0, a0
 4024081d:	8f          	.byte 0x8f
 4024081e:	fe          	.byte 0xfe
 4024081f:	3f          	.byte 0x3f
@@ -15800,7 +15796,7 @@ Disassembly of section .irom0.text:
 4024090d:	10c112        	addi	a1, a1, 16
 40240910:	f00d      	ret.n
 40240912:	d40000        	extui	a0, a0, 0, 14
-40240915:	3ffe85        	call0	40280900 <_irom0_text_end+0xbb78>
+40240915:	3ffe85        	call0	40280900 <_irom0_text_end+0xb307>
 40240918:	85e8      	l32i.n	a14, a5, 32
 4024091a:	fe          	.byte 0xfe
 4024091b:	3f          	.byte 0x3f
@@ -16390,7 +16386,7 @@ Disassembly of section .irom0.text:
 40240e44:	ffef21        	l32r	a2, 40240e00 <_free_r+0x14>
 40240e47:	0228      	l32i.n	a2, a2, 0
 40240e49:	f00d      	ret.n
-40240e4b:	8fc000        	excw
+40240e4b:	902000        	addx2	a2, a0, a0
 40240e4e:	fe          	.byte 0xfe
 40240e4f:	3f          	.byte 0x3f
 
@@ -16502,14 +16498,12 @@ Disassembly of section .irom0.text:
 
 40240f3c <Uart_Init>:
 40240f3c:	f00d      	ret.n
-40240f3e:	d40000        	extui	a0, a0, 0, 14
-40240f41:	8f          	.byte 0x8f
-40240f42:	fe          	.byte 0xfe
-40240f43:	3f          	.byte 0x3f
+40240f3e:	340000        	extui	a0, a0, 0, 4
+40240f41:	3ffe90        	excw
 40240f44:	0ffc      	bnez.n	a15, 40240f78 <Uart_Init+0x3c>
 40240f46:	b04024        	excw
 40240f49:	26eb      	addi.n	a2, a6, 14
-40240f4b:	908c40        	addx2	a8, a12, a4
+40240f4b:	90ec40        	addx2	a14, a12, a4
 40240f4e:	fe          	.byte 0xfe
 40240f4f:	3f          	.byte 0x3f
 40240f50:	f0c112        	addi	a1, a1, -16
@@ -16572,14 +16566,14 @@ Disassembly of section .irom0.text:
 40240fe4:	0148      	l32i.n	a4, a1, 0
 40240fe6:	794042        	s8i	a4, a0, 121
 40240fe9:	ffe886        	j	40240f8f <Uart_Init+0x53>
-40240fec:	8fe8      	l32i.n	a14, a15, 32
+40240fec:	9048      	l32i.n	a4, a0, 36
 40240fee:	fe          	.byte 0xfe
 40240fef:	3f          	.byte 0x3f
-40240ff0:	fe9110        	excw
+40240ff0:	fe9170        	excw
 40240ff3:	3f          	.byte 0x3f
-40240ff4:	fe9060        	excw
+40240ff4:	fe90c0        	excw
 40240ff7:	3f          	.byte 0x3f
-40240ff8:	fe8ff3        	excw
+40240ff8:	fe9053        	excw
 40240ffb:	3f          	.byte 0x3f
 40240ffc:	f0c112        	addi	a1, a1, -16
 40240fff:	31e9      	s32i.n	a14, a1, 12
@@ -16819,7 +16813,7 @@ Disassembly of section .irom0.text:
 40241244:	0108      	l32i.n	a0, a1, 0
 40241246:	10c112        	addi	a1, a1, 16
 40241249:	f00d      	ret.n
-4024124b:	ed9400        	excw
+4024124b:	edf400        	excw
 4024124e:	fe          	.byte 0xfe
 4024124f:	3f          	.byte 0x3f
 40241250:	001000        	excw
@@ -17068,7 +17062,7 @@ Disassembly of section .irom0.text:
 402414c8:	e71566        	bnei	a5, 1, 402414b3 <system_upgrade_userbin_check+0x1f>
 402414cb:	120c      	movi.n	a2, 1
 402414cd:	fff906        	j	402414b5 <system_upgrade_userbin_check+0x21>
-402414d0:	fe8fd0        	excw
+402414d0:	fe9030        	excw
 402414d3:	3f          	.byte 0x3f
 
 402414d4 <system_upgrade_flag_set>:
@@ -17193,7 +17187,7 @@ Disassembly of section .irom0.text:
 40241610:	130c      	movi.n	a3, 1
 40241612:	202230        	or	a2, a2, a3
 40241615:	ffcb86        	j	40241547 <system_upgrade_reboot+0x37>
-40241618:	fef650        	excw
+40241618:	fef6b0        	excw
 4024161b:	3f          	.byte 0x3f
 4024161c:	100fb0        	and	a0, a15, a11
 4024161f:	c11240        	mul16u	a1, a2, a4
@@ -17323,7 +17317,7 @@ Disassembly of section .irom0.text:
 40241747:	10c112        	addi	a1, a1, 16
 4024174a:	000080        	ret
 4024174d:	000000        	ill
-40241750:	fe9050        	excw
+40241750:	fe90b0        	excw
 40241753:	3f          	.byte 0x3f
 
 40241754 <system_overclock>:
@@ -17364,7 +17358,7 @@ Disassembly of section .irom0.text:
 402417a8:	0108      	l32i.n	a0, a1, 0
 402417aa:	10c112        	addi	a1, a1, 16
 402417ad:	f00d      	ret.n
-402417af:	ac8c00        	excw
+402417af:	acec00        	excw
 402417b2:	fe          	.byte 0xfe
 402417b3:	3f          	.byte 0x3f
 
@@ -17482,20 +17476,19 @@ Disassembly of section .irom0.text:
 402418cd:	000000        	ill
 402418d0:	fe8000        	excw
 402418d3:	3f          	.byte 0x3f
-402418d4:	8488      	l32i.n	a8, a4, 32
+402418d4:	848c      	beqz.n	a4, 402418e0 <system_station_got_ip_set+0x100>
 402418d6:	fe          	.byte 0xfe
 402418d7:	3f          	.byte 0x3f
 402418d8:	26ed30        	excw
 402418db:	849040        	extui	a9, a4, 0, 9
 402418de:	fe          	.byte 0xfe
 402418df:	3f          	.byte 0x3f
-402418e0:	8b8c      	beqz.n	a11, 402418ec <system_station_got_ip_set+0x10c>
-402418e2:	fe          	.byte 0xfe
+402418e0:	fe8be4        	excw
 402418e3:	3f          	.byte 0x3f
 402418e4:	26ed50        	excw
 402418e7:	ed7040        	excw
-402418ea:	a84026        	beqi	a0, 4, 40241896 <system_station_got_ip_set+0xb6>
-402418ed:	3fff21        	l32r	a2, 402118ec <_lit4_end+0x10a5ec>
+402418ea:	184026        	beqi	a0, 4, 40241906 <system_print_meminfo+0xe>
+402418ed:	3fff22        	excw
 402418f0:	ffc000        	excw
 402418f3:	3f          	.byte 0x3f
 402418f4:	26ed90        	excw
@@ -17932,10 +17925,10 @@ Disassembly of section .irom0.text:
 40241d09:	0108      	l32i.n	a0, a1, 0
 40241d0b:	10c112        	addi	a1, a1, 16
 40241d0e:	f00d      	ret.n
-40241d10:	902c      	movi.n	a0, 41
+40241d10:	908c      	beqz.n	a0, 40241d1d <wifi_get_opmode_default+0x81>
 40241d12:	fe          	.byte 0xfe
 40241d13:	3f          	.byte 0x3f
-40241d14:	ed98      	l32i.n	a9, a13, 56
+40241d14:	edf8      	l32i.n	a15, a13, 56
 40241d16:	fe          	.byte 0xfe
 40241d17:	3f          	.byte 0x3f
 40241d18:	f0c112        	addi	a1, a1, -16
@@ -18309,10 +18302,10 @@ Disassembly of section .irom0.text:
 40242090:	10c112        	addi	a1, a1, 16
 40242093:	f00d      	ret.n
 40242095:	000000        	ill
-40242098:	eecc      	bnez.n	a14, 402420aa <wifi_station_get_ap_info+0xa>
+40242098:	ef2c      	movi.n	a15, 46
 4024209a:	fe          	.byte 0xfe
 4024209b:	3f          	.byte 0x3f
-4024209c:	f0d8      	l32i.n	a13, a0, 60
+4024209c:	f138      	l32i.n	a3, a1, 60
 4024209e:	fe          	.byte 0xfe
 4024209f:	3f          	.byte 0x3f
 
@@ -18433,14 +18426,14 @@ Disassembly of section .irom0.text:
 402421c0:	0000c0        	callx0	a0
 402421c3:	020c      	movi.n	a2, 0
 402421c5:	fffac6        	j	402421b4 <wifi_station_ap_number_set+0x4c>
-402421c8:	feeed0        	excw
+402421c8:	feef30        	excw
 402421cb:	3f          	.byte 0x3f
-402421cc:	feed24        	excw
+402421cc:	feed84        	excw
 402421cf:	3f          	.byte 0x3f
-402421d0:	feee20        	excw
+402421d0:	feee80        	excw
 402421d3:	3f          	.byte 0x3f
 402421d4:	010000        	slli	a0, a0, 32
-402421d7:	eeba00        	excw
+402421d7:	ef1a00        	excw
 402421da:	fe          	.byte 0xfe
 402421db:	3f          	.byte 0x3f
 402421dc:	e0c112        	addi	a1, a1, -32
@@ -18547,7 +18540,7 @@ Disassembly of section .irom0.text:
 402422e7:	2108      	l32i.n	a0, a1, 8
 402422e9:	20c112        	addi	a1, a1, 32
 402422ec:	f00d      	ret.n
-402422ee:	200000        	or	a0, a0, a0
+402422ee:	800000        	add	a0, a0, a0
 402422f1:	3ffe91        	l32r	a9, 402122ec <_lit4_end+0x10afec>
 402422f4:	d0c112        	addi	a1, a1, -48
 402422f7:	51d9      	s32i.n	a13, a1, 20
@@ -18833,7 +18826,7 @@ Disassembly of section .irom0.text:
 402425bb:	f8a901        	l32r	a0, 40240860 <vApplicationTickHook+0x64>
 402425be:	0000c0        	callx0	a0
 402425c1:	fffc46        	j	402425b6 <wifi_station_ap_change+0x116>
-402425c4:	fef272        	excw
+402425c4:	fef2d2        	excw
 402425c7:	3f          	.byte 0x3f
 
 402425c8 <wifi_station_scan>:
@@ -18871,8 +18864,8 @@ Disassembly of section .irom0.text:
 4024261a:	0000c0        	callx0	a0
 4024261d:	020c      	movi.n	a2, 0
 4024261f:	fffb46        	j	40242610 <wifi_station_scan+0x48>
-40242622:	d00000        	subx2	a0, a0, a0
-40242625:	3ffef0        	excw
+40242622:	300000        	xor	a0, a0, a0
+40242625:	3ffef1        	l32r	a15, 40212620 <_lit4_end+0x10b320>
 
 40242628 <wifi_station_get_auto_connect>:
 40242628:	ffff31        	l32r	a3, 40242624 <wifi_station_scan+0x5c>
@@ -18978,7 +18971,7 @@ Disassembly of section .irom0.text:
 4024272b:	0000c0        	callx0	a0
 4024272e:	020c      	movi.n	a2, 0
 40242730:	fff846        	j	40242715 <wifi_station_connect+0x89>
-40242733:	906400        	addx2	a6, a4, a0
+40242733:	90c400        	addx2	a12, a4, a0
 40242736:	fe          	.byte 0xfe
 40242737:	3f          	.byte 0x3f
 
@@ -19144,10 +19137,10 @@ Disassembly of section .irom0.text:
 402428b7:	fffac6        	j	402428a6 <wifi_softap_cacl_mac+0x4a>
 402428ba:	900000        	addx2	a0, a0, a0
 402428bd:	26eb      	addi.n	a2, a6, 14
-402428bf:	eec040        	excw
+402428bf:	ef2040        	excw
 402428c2:	fe          	.byte 0xfe
 402428c3:	3f          	.byte 0x3f
-402428c4:	feeec4        	excw
+402428c4:	feef24        	excw
 402428c7:	3f          	.byte 0x3f
 
 402428c8 <wifi_softap_set_default_ssid>:
@@ -19349,10 +19342,10 @@ Disassembly of section .irom0.text:
 40242ac8:	10c112        	addi	a1, a1, 16
 40242acb:	f00d      	ret.n
 40242acd:	000000        	ill
-40242ad0:	9058      	l32i.n	a5, a0, 36
+40242ad0:	90b8      	l32i.n	a11, a0, 36
 40242ad2:	fe          	.byte 0xfe
 40242ad3:	3f          	.byte 0x3f
-40242ad4:	feef25        	excw
+40242ad4:	feef85        	call0	402419d0 <system_get_data_of_array_8+0x14>
 40242ad7:	3f          	.byte 0x3f
 40242ad8:	e0c112        	addi	a1, a1, -32
 40242adb:	51e9      	s32i.n	a14, a1, 20
@@ -19654,7 +19647,7 @@ Disassembly of section .irom0.text:
 40242ddf:	0dd8      	l32i.n	a13, a13, 0
 40242de1:	446fd2        	s32i	a13, a15, 0x110
 40242de4:	fff646        	j	40242dc1 <wifi_softap_set_station_info+0x51>
-40242de7:	ed6400        	excw
+40242de7:	edc400        	excw
 40242dea:	fe          	.byte 0xfe
 40242deb:	3f          	.byte 0x3f
 
@@ -19734,7 +19727,7 @@ Disassembly of section .irom0.text:
 40242eac:	020c      	movi.n	a2, 0
 40242eae:	fff946        	j	40242e97 <wifi_softap_get_station_info+0xab>
 40242eb1:	000000        	ill
-40242eb4:	feedb4        	excw
+40242eb4:	feee14        	excw
 40242eb7:	3f          	.byte 0x3f
 
 40242eb8 <wifi_softap_free_station_info>:
@@ -19883,7 +19876,7 @@ Disassembly of section .irom0.text:
 4024301b:	0000c0        	callx0	a0
 4024301e:	020c      	movi.n	a2, 0
 40243020:	fff946        	j	40243009 <wifi_softap_deauth+0xad>
-40243023:	ee8000        	excw
+40243023:	eee000        	excw
 40243026:	fe          	.byte 0xfe
 40243027:	3f          	.byte 0x3f
 
@@ -20152,9 +20145,9 @@ Disassembly of section .irom0.text:
 402432d8:	f87e31        	l32r	a3, 402414d0 <system_upgrade_userbin_check+0x3c>
 402432db:	4b6322        	s32i	a2, a3, 0x12c
 402432de:	f00d      	ret.n
-402432e0:	fe8ed4        	excw
+402432e0:	fe8f34        	excw
 402432e3:	3f          	.byte 0x3f
-402432e4:	fe8ee0        	excw
+402432e4:	fe8f40        	excw
 402432e7:	3f          	.byte 0x3f
 
 402432e8 <wifi_get_ip_info>:
@@ -20443,7 +20436,7 @@ Disassembly of section .irom0.text:
 402435a7:	0000c0        	callx0	a0
 402435aa:	ffb906        	j	40243492 <wifi_set_macaddr+0x12>
 402435ad:	000000        	ill
-402435b0:	ed9c      	beqz.n	a13, 402435d2 <wifi_status_led_install+0x1e>
+402435b0:	edfc      	bnez.n	a13, 402435f2 <wifi_status_led_install+0x3e>
 402435b2:	fe          	.byte 0xfe
 402435b3:	3f          	.byte 0x3f
 
@@ -20500,7 +20493,7 @@ Disassembly of section .irom0.text:
 40243633:	002102        	l32i	a0, a1, 0
 40243636:	10c112        	addi	a1, a1, 16
 40243639:	f00d      	ret.n
-4024363b:	908000        	addx2	a8, a0, a0
+4024363b:	90e000        	addx2	a14, a0, a0
 4024363e:	fe          	.byte 0xfe
 4024363f:	3f          	.byte 0x3f
 
@@ -20575,13 +20568,13 @@ Disassembly of section .irom0.text:
 402436e9:	10c112        	addi	a1, a1, 16
 402436ec:	f00d      	ret.n
 402436ee:	fc0000        	excw
-402436f1:	3ffe85        	call0	402836dc <_irom0_text_end+0xe954>
+402436f1:	3ffe85        	call0	402836dc <_irom0_text_end+0xe0e3>
 
 402436f4 <system_get_sdk_version>:
 402436f4:	ffff21        	l32r	a2, 402436f0 <system_uart_de_swap+0x34>
 402436f7:	f00d      	ret.n
 402436f9:	000000        	ill
-402436fc:	fe9124        	excw
+402436fc:	fe9184        	excw
 402436ff:	3f          	.byte 0x3f
 
 40243700 <xPortGetFreeHeapSize>:
@@ -20649,7 +20642,7 @@ Disassembly of section .irom0.text:
 
 4024378c <vPortEndScheduler>:
 4024378c:	f00d      	ret.n
-4024378e:	500000        	excw
+4024378e:	b00000        	addx8	a0, a0, a0
 40243791:	3ffe91        	l32r	a9, 4021378c <_lit4_end+0x10c48c>
 
 40243794 <_xt_isr_attach>:
@@ -21413,10 +21406,10 @@ Disassembly of section .irom0.text:
 40243ed0:	1108      	l32i.n	a0, a1, 4
 40243ed2:	10c112        	addi	a1, a1, 16
 40243ed5:	f00d      	ret.n
-40243ed7:	91d000        	srl	a13, a0
+40243ed7:	923000        	excw
 40243eda:	fe          	.byte 0xfe
 40243edb:	3f          	.byte 0x3f
-40243edc:	fe9270        	excw
+40243edc:	fe92d0        	excw
 40243edf:	3f          	.byte 0x3f
 40243ee0:	704c      	movi.n	a0, 71
 40243ee2:	124010        	excw
@@ -21527,7 +21520,7 @@ Disassembly of section .irom0.text:
 40243fdc:	1c0c      	movi.n	a12, 1
 40243fde:	ffe246        	j	40243f6b <xTaskGenericCreate+0x87>
 40243fe1:	000000        	ill
-40243fe4:	fe91e4        	excw
+40243fe4:	fe9244        	excw
 40243fe7:	3f          	.byte 0x3f
 40243fe8:	107064        	excw
 40243feb:	c11240        	mul16u	a1, a2, a4
@@ -21763,7 +21756,7 @@ Disassembly of section .irom0.text:
 4024420c:	f00d      	ret.n
 4024420e:	0e0c      	movi.n	a14, 0
 40244210:	ffe446        	j	402441a5 <vTaskPrioritySet+0x61>
-40244213:	920000        	excw
+40244213:	926000        	excw
 40244216:	fe          	.byte 0xfe
 40244217:	3f          	.byte 0x3f
 
@@ -21886,7 +21879,7 @@ Disassembly of section .irom0.text:
 40244334:	0108      	l32i.n	a0, a1, 0
 40244336:	10c112        	addi	a1, a1, 16
 40244339:	f00d      	ret.n
-4024433b:	921400        	excw
+4024433b:	927400        	excw
 4024433e:	fe          	.byte 0xfe
 4024433f:	3f          	.byte 0x3f
 
@@ -21944,7 +21937,7 @@ Disassembly of section .irom0.text:
 402443c0:	474c      	movi.n	a7, 68
 402443c2:	0c4024        	excw
 402443c5:	3ffe86        	j	402543c3 <phy_gpio_cfg+0x227>
-402443c8:	922c      	movi.n	a2, 41
+402443c8:	928c      	beqz.n	a2, 402443d5 <vTaskStartScheduler+0x1>
 402443ca:	fe          	.byte 0xfe
 402443cb:	3f          	.byte 0x3f
 402443cc:	26ee10        	excw
@@ -22012,7 +22005,7 @@ Disassembly of section .irom0.text:
 40244463:	0020c0        	memw
 40244466:	166322        	s32i	a2, a3, 88
 40244469:	f00d      	ret.n
-4024446b:	920400        	excw
+4024446b:	926400        	excw
 4024446e:	fe          	.byte 0xfe
 4024446f:	3f          	.byte 0x3f
 40244470:	1018d0        	and	a1, a8, a13
@@ -22371,11 +22364,11 @@ Disassembly of section .irom0.text:
 402447bb:	11c8      	l32i.n	a12, a1, 4
 402447bd:	10c112        	addi	a1, a1, 16
 402447c0:	f00d      	ret.n
-402447c2:	9c0000        	excw
+402447c2:	fc0000        	excw
 402447c5:	3ffe93        	excw
-402447c8:	fe9244        	excw
+402447c8:	fe92a4        	excw
 402447cb:	3f          	.byte 0x3f
-402447cc:	9258      	l32i.n	a5, a2, 36
+402447cc:	92b8      	l32i.n	a11, a2, 36
 402447ce:	fe          	.byte 0xfe
 402447cf:	3f          	.byte 0x3f
 402447d0:	f0c112        	addi	a1, a1, -16
@@ -22533,7 +22526,7 @@ Disassembly of section .irom0.text:
 40244955:	620002        	l8ui	a0, a0, 98
 40244958:	67a5a0        	excw
 4024495b:	0c1193        	excw
-4024495e:	551b05        	call0	40299b10 <_irom0_text_end+0x24d88>
+4024495e:	551b05        	call0	40299b10 <_irom0_text_end+0x24517>
 40244961:	221b      	addi.n	a2, a2, 1
 40244963:	000242        	l8ui	a4, a2, 0
 40244966:	f45050        	extui	a5, a5, 0, 16
@@ -22647,7 +22640,7 @@ Disassembly of section .irom0.text:
 40244a5f:	0108      	l32i.n	a0, a1, 0
 40244a61:	10c112        	addi	a1, a1, 16
 40244a64:	f00d      	ret.n
-40244a66:	9c0000        	excw
+40244a66:	fc0000        	excw
 40244a69:	3ffe93        	excw
 40244a6c:	4bcc      	bnez.n	a11, 40244a74 <vTaskPriorityInherit+0x90>
 40244a6e:	144024        	excw
@@ -22862,7 +22855,7 @@ Disassembly of section .irom0.text:
 40244c5a:	3728      	l32i.n	a2, a7, 12
 40244c5c:	0228      	l32i.n	a2, a2, 0
 40244c5e:	f00d      	ret.n
-40244c60:	fe93d4        	excw
+40244c60:	fe9434        	excw
 40244c63:	3f          	.byte 0x3f
 40244c64:	f0c112        	addi	a1, a1, -16
 40244c67:	0261c2        	s32i	a12, a1, 8
@@ -23025,9 +23018,9 @@ Disassembly of section .irom0.text:
 40244de9:	0108      	l32i.n	a0, a1, 0
 40244deb:	20c112        	addi	a1, a1, 32
 40244dee:	f00d      	ret.n
-40244df0:	fe93c0        	excw
+40244df0:	fe9420        	excw
 40244df3:	3f          	.byte 0x3f
-40244df4:	93ac      	beqz.n	a3, 40244e21 <xTimerGetTimerDaemonTaskHandle+0x2ad>
+40244df4:	940c      	movi.n	a4, 9
 40244df6:	fe          	.byte 0xfe
 40244df7:	3f          	.byte 0x3f
 40244df8:	f0c112        	addi	a1, a1, -16
@@ -23133,7 +23126,7 @@ Disassembly of section .irom0.text:
 40244ee8:	10c112        	addi	a1, a1, 16
 40244eeb:	f00d      	ret.n
 40244eed:	000000        	ill
-40244ef0:	fe93e0        	excw
+40244ef0:	fe9440        	excw
 40244ef3:	3f          	.byte 0x3f
 40244ef4:	f0c112        	addi	a1, a1, -16
 40244ef7:	fffe61        	l32r	a6, 40244ef0 <pvTimerGetTimerID+0x84>
@@ -23312,7 +23305,7 @@ Disassembly of section .irom0.text:
 402450b5:	1108      	l32i.n	a0, a1, 4
 402450b7:	10c112        	addi	a1, a1, 16
 402450ba:	f00d      	ret.n
-402450bc:	99cc      	bnez.n	a9, 402450c9 <dhcp_coarse_tmr+0x9>
+402450bc:	9a2c      	movi.n	a10, 41
 402450be:	fe          	.byte 0xfe
 402450bf:	3f          	.byte 0x3f
 
@@ -23458,7 +23451,7 @@ Disassembly of section .irom0.text:
 40245220:	10c112        	addi	a1, a1, 16
 40245223:	f00d      	ret.n
 40245225:	000000        	ill
-40245228:	fe93f0        	excw
+40245228:	fe9450        	excw
 4024522b:	3f          	.byte 0x3f
 4024522c:	e0c112        	addi	a1, a1, -32
 4024522f:	21c9      	s32i.n	a12, a1, 8
@@ -25075,7 +25068,7 @@ Disassembly of section .irom0.text:
 40246209:	223b      	addi.n	a2, a2, 3
 4024620b:	f00d      	ret.n
 4024620d:	000000        	ill
-40246210:	9418      	l32i.n	a1, a4, 36
+40246210:	9478      	l32i.n	a7, a4, 36
 40246212:	fe          	.byte 0xfe
 40246213:	3f          	.byte 0x3f
 40246214:	fe8030        	excw
@@ -25471,9 +25464,9 @@ Disassembly of section .irom0.text:
 40246606:	fff9c6        	j	402465f1 <node_remove_from_list+0x419>
 40246609:	100c      	movi.n	a0, 1
 4024660b:	fff7c6        	j	402465ee <node_remove_from_list+0x416>
-4024660e:	300000        	xor	a0, a0, a0
+4024660e:	900000        	addx2	a0, a0, a0
 40246611:	3ffe94        	excw
-40246614:	941c      	movi.n	a4, 25
+40246614:	947c      	movi.n	a4, -7
 40246616:	fe          	.byte 0xfe
 40246617:	3f          	.byte 0x3f
 40246618:	26eec0        	excw
@@ -25684,7 +25677,7 @@ Disassembly of section .irom0.text:
 4024682b:	ffcb85        	call0	402464e4 <node_remove_from_list+0x30c>
 4024682e:	fff706        	j	4024680e <node_remove_from_list+0x636>
 40246831:	000000        	ill
-40246834:	fe9434        	excw
+40246834:	fe9494        	excw
 40246837:	3f          	.byte 0x3f
 40246838:	fe7731        	l32r	a3, 40246214 <node_remove_from_list+0x3c>
 4024683b:	f0c112        	addi	a1, a1, -16
@@ -26036,7 +26029,7 @@ Disassembly of section .irom0.text:
 40246b8c:	0108      	l32i.n	a0, a1, 0
 40246b8e:	10c112        	addi	a1, a1, 16
 40246b91:	f00d      	ret.n
-40246b93:	944000        	extui	a4, a0, 0, 10
+40246b93:	94a000        	extui	a10, a0, 0, 10
 40246b96:	fe          	.byte 0xfe
 40246b97:	3f          	.byte 0x3f
 40246b98:	de43d0        	excw
@@ -26084,7 +26077,7 @@ Disassembly of section .irom0.text:
 40246bf3:	a06260        	addx4	a6, a2, a6
 40246bf6:	0639      	s32i.n	a3, a6, 0
 40246bf8:	f00d      	ret.n
-40246bfa:	500000        	excw
+40246bfa:	b00000        	addx8	a0, a0, a0
 40246bfd:	3ffe94        	excw
 
 40246c00 <dns_getserver>:
@@ -26107,7 +26100,7 @@ Disassembly of section .irom0.text:
 40246c23:	0108      	l32i.n	a0, a1, 0
 40246c25:	10c112        	addi	a1, a1, 16
 40246c28:	f00d      	ret.n
-40246c2a:	600000        	neg	a0, a0
+40246c2a:	c00000        	sub	a0, a0, a0
 40246c2d:	3ffe94        	excw
 40246c30:	e0c112        	addi	a1, a1, -32
 40246c33:	0361d2        	s32i	a13, a1, 12
@@ -26659,7 +26652,7 @@ Disassembly of section .irom0.text:
 402471a0:	0108      	l32i.n	a0, a1, 0
 402471a2:	10c112        	addi	a1, a1, 16
 402471a5:	f00d      	ret.n
-402471a7:	98d000        	excw
+402471a7:	993000        	excw
 402471aa:	fe          	.byte 0xfe
 402471ab:	3f          	.byte 0x3f
 402471ac:	f0c112        	addi	a1, a1, -16
@@ -27219,7 +27212,7 @@ Disassembly of section .irom0.text:
 40247713:	ffc906        	j	4024763b <etharp_output+0x2b>
 40247716:	c27c      	movi.n	a2, -4
 40247718:	ffc7c6        	j	4024763b <etharp_output+0x2b>
-4024771b:	98c000        	excw
+4024771b:	992000        	excw
 4024771e:	fe          	.byte 0xfe
 4024771f:	3f          	.byte 0x3f
 40247720:	26ef40        	excw
@@ -27429,7 +27422,7 @@ Disassembly of section .irom0.text:
 40247918:	20c112        	addi	a1, a1, 32
 4024791b:	f00d      	ret.n
 4024791d:	000000        	ill
-40247920:	fe98c4        	excw
+40247920:	fe9924        	excw
 40247923:	3f          	.byte 0x3f
 
 40247924 <etharp_request>:
@@ -27783,7 +27776,7 @@ Disassembly of section .irom0.text:
 40247c97:	20dd40        	or	a13, a13, a4
 40247c9a:	ffd606        	j	40247bf6 <ipaddr_aton+0x16e>
 40247c9d:	000000        	ill
-40247ca0:	fe99a0        	excw
+40247ca0:	fe9a00        	excw
 40247ca3:	3f          	.byte 0x3f
 
 40247ca4 <ipaddr_ntoa>:
@@ -27880,8 +27873,8 @@ Disassembly of section .irom0.text:
 40247d73:	3108      	l32i.n	a0, a1, 12
 40247d75:	30c112        	addi	a1, a1, 48
 40247d78:	f00d      	ret.n
-40247d7a:	d00000        	subx2	a0, a0, a0
-40247d7d:	fe99      	s32i.n	a9, a14, 60
+40247d7a:	300000        	xor	a0, a0, a0
+40247d7d:	fe9a      	add.n	a15, a14, a9
 40247d7f:	3f          	.byte 0x3f
 
 40247d80 <ip_route>:
@@ -27925,7 +27918,7 @@ Disassembly of section .irom0.text:
 40247ddc:	11c8      	l32i.n	a12, a1, 4
 40247dde:	10c112        	addi	a1, a1, 16
 40247de1:	f00d      	ret.n
-40247de3:	99b000        	excw
+40247de3:	9a1000        	excw
 40247de6:	fe          	.byte 0xfe
 40247de7:	3f          	.byte 0x3f
 40247de8:	3f          	.byte 0x3f
@@ -28316,8 +28309,8 @@ Disassembly of section .irom0.text:
 
 402481c0 <netif_init>:
 402481c0:	f00d      	ret.n
-402481c2:	c80000        	excw
-402481c5:	fe99      	s32i.n	a9, a14, 60
+402481c2:	280000        	excw
+402481c5:	fe9a      	add.n	a15, a14, a9
 402481c7:	3f          	.byte 0x3f
 
 402481c8 <netif_add>:
@@ -28438,10 +28431,10 @@ Disassembly of section .irom0.text:
 402482c9:	f00d      	ret.n
 402482cb:	052d      	mov.n	a2, a5
 402482cd:	f00d      	ret.n
-402482cf:	9a1c00        	excw
+402482cf:	9a7c00        	excw
 402482d2:	fe          	.byte 0xfe
 402482d3:	3f          	.byte 0x3f
-402482d4:	fe9a30        	excw
+402482d4:	fe9a90        	excw
 402482d7:	3f          	.byte 0x3f
 
 402482d8 <netif_set_ipaddr>:
@@ -29259,10 +29252,10 @@ Disassembly of section .irom0.text:
 40248a32:	f00d      	ret.n
 40248a34:	f32f21        	l32r	a2, 402456f0 <dhcp_arp_reply+0x1d0>
 40248a37:	fffb86        	j	40248a29 <pbuf_strstr+0x39>
-40248a3a:	bc0000        	excw
-40248a3d:	fe99      	s32i.n	a9, a14, 60
+40248a3a:	1c0000        	excw
+40248a3d:	fe9a      	add.n	a15, a14, a9
 40248a3f:	3f          	.byte 0x3f
-40248a40:	fe99d4        	excw
+40248a40:	fe9a34        	excw
 40248a43:	3f          	.byte 0x3f
 
 40248a44 <raw_input>:
@@ -29853,10 +29846,10 @@ Disassembly of section .irom0.text:
 40248f4a:	dc3901        	l32r	a0, 40240030 <_irom0_text_start+0x30>
 40248f4d:	0000c0        	callx0	a0
 40248f50:	ffff06        	j	40248f50 <sys_arch_assert+0x10>
-40248f53:	99d800        	excw
+40248f53:	9a3800        	excw
 40248f56:	fe          	.byte 0xfe
 40248f57:	3f          	.byte 0x3f
-40248f58:	9a28      	l32i.n	a2, a10, 36
+40248f58:	9a88      	l32i.n	a8, a10, 36
 40248f5a:	fe          	.byte 0xfe
 40248f5b:	3f          	.byte 0x3f
 40248f5c:	0016d0        	excw
@@ -30287,10 +30280,10 @@ Disassembly of section .irom0.text:
 402493cb:	050c      	movi.n	a5, 0
 402493cd:	0006c0        	callx0	a6
 402493d0:	fff206        	j	4024939c <tcp_input+0x43c>
-402493d3:	99c000        	excw
+402493d3:	9a2000        	excw
 402493d6:	fe          	.byte 0xfe
 402493d7:	3f          	.byte 0x3f
-402493d8:	fe9a24        	excw
+402493d8:	fe9a84        	excw
 402493db:	3f          	.byte 0x3f
 402493dc:	f0c112        	addi	a1, a1, -16
 402493df:	fedd51        	l32r	a5, 40248f54 <sys_arch_assert+0x14>
@@ -30394,7 +30387,7 @@ Disassembly of section .irom0.text:
 402494e3:	010885        	call0	4024a56c <tcp_abandon>
 402494e6:	0128      	l32i.n	a2, a1, 0
 402494e8:	ffcf46        	j	40249429 <tcp_input+0x4c9>
-402494eb:	9a3400        	excw
+402494eb:	9a9400        	excw
 402494ee:	fe          	.byte 0xfe
 402494ef:	3f          	.byte 0x3f
 402494f0:	f0c112        	addi	a1, a1, -16
@@ -30443,7 +30436,7 @@ Disassembly of section .irom0.text:
 40249568:	10c112        	addi	a1, a1, 16
 4024956b:	f00d      	ret.n
 4024956d:	000000        	ill
-40249570:	fe9a20        	excw
+40249570:	fe9a80        	excw
 40249573:	3f          	.byte 0x3f
 40249574:	830c      	movi.n	a3, 8
 40249576:	f0c112        	addi	a1, a1, -16
@@ -31411,9 +31404,9 @@ Disassembly of section .irom0.text:
 40249fbc:	fff2c6        	j	40249f8b <tcp_input+0x102b>
 40249fbf:	551b      	addi.n	a5, a5, 1
 40249fc1:	fff186        	j	40249f8b <tcp_input+0x102b>
-40249fc4:	fe9a04        	excw
+40249fc4:	fe9a64        	excw
 40249fc7:	3f          	.byte 0x3f
-40249fc8:	9a0c      	movi.n	a10, 9
+40249fc8:	9a6c      	movi.n	a10, -23
 40249fca:	fe          	.byte 0xfe
 40249fcb:	3f          	.byte 0x3f
 40249fcc:	f0c112        	addi	a1, a1, -16
@@ -31626,7 +31619,7 @@ Disassembly of section .irom0.text:
 4024a1bf:	feb985        	call0	40248d58 <sys_mbox_post>
 4024a1c2:	020c      	movi.n	a2, 0
 4024a1c4:	fff786        	j	4024a1a6 <tcpip_untimeout+0x26>
-4024a1c7:	9a1000        	excw
+4024a1c7:	9a7000        	excw
 4024a1ca:	fe          	.byte 0xfe
 4024a1cb:	3f          	.byte 0x3f
 
@@ -31799,7 +31792,7 @@ Disassembly of section .irom0.text:
 
 4024a34c <tcp_init>:
 4024a34c:	f00d      	ret.n
-4024a34e:	180000        	excw
+4024a34e:	780000        	excw
 4024a351:	fe9a      	add.n	a15, a14, a9
 4024a353:	3f          	.byte 0x3f
 
@@ -34024,7 +34017,7 @@ Disassembly of section .irom0.text:
 4024b8e0:	20c112        	addi	a1, a1, 32
 4024b8e3:	f00d      	ret.n
 4024b8e5:	000000        	ill
-4024b8e8:	fe9a00        	excw
+4024b8e8:	fe9a60        	excw
 4024b8eb:	3f          	.byte 0x3f
 
 4024b8ec <tcp_output>:
@@ -34799,7 +34792,7 @@ Disassembly of section .irom0.text:
 4024c0d9:	0108      	l32i.n	a0, a1, 0
 4024c0db:	20c112        	addi	a1, a1, 32
 4024c0de:	f00d      	ret.n
-4024c0e0:	9a3c      	movi.n	a10, 57
+4024c0e0:	9a9c      	beqz.n	a10, 4024c0fd <tcp_zero_window_probe+0x109>
 4024c0e2:	fe          	.byte 0xfe
 4024c0e3:	3f          	.byte 0x3f
 4024c0e4:	c0e8      	l32i.n	a14, a0, 48
@@ -35068,7 +35061,7 @@ Disassembly of section .irom0.text:
 
 4024c360 <udp_init>:
 4024c360:	f00d      	ret.n
-4024c362:	440000        	extui	a0, a0, 0, 5
+4024c362:	a40000        	extui	a0, a0, 0, 11
 4024c365:	fe9a      	add.n	a15, a14, a9
 4024c367:	3f          	.byte 0x3f
 4024c368:	803c      	movi.n	a0, 56
@@ -35877,11 +35870,11 @@ Disassembly of section .irom0.text:
 
 4024cb14 <lwip_socket_init>:
 4024cb14:	f00d      	ret.n
-4024cb16:	f80000        	excw
-4024cb19:	8e          	.byte 0x8e
+4024cb16:	580000        	excw
+4024cb19:	8f          	.byte 0x8f
 4024cb1a:	fe          	.byte 0xfe
 4024cb1b:	3f          	.byte 0x3f
-4024cb1c:	fe9a60        	excw
+4024cb1c:	fe9ac0        	excw
 4024cb1f:	3f          	.byte 0x3f
 4024cb20:	950c      	movi.n	a5, 9
 4024cb22:	fffd41        	l32r	a4, 4024cb18 <lwip_socket_init+0x4>
@@ -35907,7 +35900,7 @@ Disassembly of section .irom0.text:
 4024cb55:	020c      	movi.n	a2, 0
 4024cb57:	f00d      	ret.n
 4024cb59:	000000        	ill
-4024cb5c:	fe9b50        	excw
+4024cb5c:	fe9bb0        	excw
 4024cb5f:	3f          	.byte 0x3f
 4024cb60:	e0c112        	addi	a1, a1, -32
 4024cb63:	026102        	s32i	a0, a1, 8
@@ -37069,7 +37062,7 @@ Disassembly of section .irom0.text:
 4024d67c:	61c8      	l32i.n	a12, a1, 24
 4024d67e:	50c112        	addi	a1, a1, 80
 4024d681:	f00d      	ret.n
-4024d683:	9a5000        	excw
+4024d683:	9ab000        	excw
 4024d686:	fe          	.byte 0xfe
 4024d687:	3f          	.byte 0x3f
 
@@ -40788,7 +40781,7 @@ Disassembly of section .irom0.text:
 4024fa17:	0108      	l32i.n	a0, a1, 0
 4024fa19:	20c112        	addi	a1, a1, 32
 4024fa1c:	f00d      	ret.n
-4024fa1e:	500000        	excw
+4024fa1e:	b00000        	addx8	a0, a0, a0
 4024fa21:	fe9b      	addi.n	a15, a14, 9
 4024fa23:	3f          	.byte 0x3f
 
@@ -41643,7 +41636,7 @@ Disassembly of section .irom0.text:
 40250237:	3108      	l32i.n	a0, a1, 12
 40250239:	30c112        	addi	a1, a1, 48
 4025023c:	f00d      	ret.n
-4025023e:	540000        	extui	a0, a0, 0, 6
+4025023e:	b40000        	extui	a0, a0, 0, 12
 40250241:	fe9b      	addi.n	a15, a14, 9
 40250243:	3f          	.byte 0x3f
 
@@ -42395,11 +42388,11 @@ Disassembly of section .irom0.text:
 4025094f:	f42c20        	extui	a2, a2, 12, 16
 40250952:	30c112        	addi	a1, a1, 48
 40250955:	f00d      	ret.n
-40250957:	9d5000        	excw
+40250957:	9db000        	excw
 4025095a:	fe          	.byte 0xfe
 4025095b:	3f          	.byte 0x3f
 4025095c:	000d33        	excw
-4025095f:	9b6c00        	excw
+4025095f:	9bcc00        	excw
 40250962:	fe          	.byte 0xfe
 40250963:	3f          	.byte 0x3f
 
@@ -42731,7 +42724,7 @@ Disassembly of section .irom0.text:
 40250c64:	0108      	l32i.n	a0, a1, 0
 40250c66:	10c112        	addi	a1, a1, 16
 40250c69:	f00d      	ret.n
-40250c6b:	187000        	excw
+40250c6b:	1c8000        	excw
 40250c6e:	124027        	ball	a0, a2, 40250c84 <wait_rfpll_cal_end+0x14>
 
 40250c70 <wait_rfpll_cal_end>:
@@ -43379,7 +43372,7 @@ Disassembly of section .irom0.text:
 40251307:	b4a2c2        	movi	a12, 0x2b4
 4025130a:	ffb986        	j	402511f4 <chip_60_set_channel+0xa8>
 4025130d:	000000        	ill
-40251310:	fe9dc4        	excw
+40251310:	fe9e24        	excw
 40251313:	3f          	.byte 0x3f
 
 40251314 <chip_v6_set_chan_offset>:
@@ -43404,9 +43397,9 @@ Disassembly of section .irom0.text:
 40251349:	0108      	l32i.n	a0, a1, 0
 4025134b:	10c112        	addi	a1, a1, 16
 4025134e:	f00d      	ret.n
-40251350:	fe9f10        	excw
+40251350:	fe9f70        	excw
 40251353:	3f          	.byte 0x3f
-40251354:	9ce8      	l32i.n	a14, a12, 36
+40251354:	9d48      	l32i.n	a4, a13, 36
 40251356:	fe          	.byte 0xfe
 40251357:	3f          	.byte 0x3f
 
@@ -43454,7 +43447,7 @@ Disassembly of section .irom0.text:
 402513c4:	052102        	l32i	a0, a1, 20
 402513c7:	20c112        	addi	a1, a1, 32
 402513ca:	f00d      	ret.n
-402513cc:	9cb9      	s32i.n	a11, a12, 36
+402513cc:	9d19      	s32i.n	a1, a13, 36
 402513ce:	fe          	.byte 0xfe
 402513cf:	3f          	.byte 0x3f
 
@@ -43748,8 +43741,8 @@ Disassembly of section .irom0.text:
 402516ab:	fe          	.byte 0xfe
 402516ac:	8f0000        	excw
 402516af:	000003        	excw
-402516b2:	900180        	addx2	a0, a1, a8
-402516b5:	2718      	l32i.n	a1, a7, 8
+402516b2:	a00180        	addx4	a0, a1, a8
+402516b5:	271c      	movi.n	a7, 18
 402516b7:	ffff40        	excw
 402516ba:	7f          	.byte 0x7f
 402516bb:	fe          	.byte 0xfe
@@ -43977,10 +43970,10 @@ Disassembly of section .irom0.text:
 4025190e:	202230        	or	a2, a2, a3
 40251911:	f00d      	ret.n
 40251913:	0ff400        	excw
-40251916:	5c0000        	excw
+40251916:	bc0000        	excw
 40251919:	fe9c      	beqz.n	a14, 4025193c <phy_get_check_flag+0x1c>
 4025191b:	3f          	.byte 0x3f
-4025191c:	fe9de4        	excw
+4025191c:	fe9e44        	excw
 4025191f:	3f          	.byte 0x3f
 
 40251920 <phy_get_check_flag>:
@@ -44383,13 +44376,13 @@ Disassembly of section .irom0.text:
 40251d08:	3108      	l32i.n	a0, a1, 12
 40251d0a:	20c112        	addi	a1, a1, 32
 40251d0d:	f00d      	ret.n
-40251d0f:	196000        	excw
-40251d12:	304027        	ball	a0, a2, 40251d46 <set_rx_gain_cal_iq+0x22>
-40251d15:	2719      	s32i.n	a1, a7, 8
-40251d17:	195040        	excw
-40251d1a:	004027        	ball	a0, a2, 40251d1e <set_cal_rxdc+0xb2>
-40251d1d:	2719      	s32i.n	a1, a7, 8
-40251d1f:	9b6040        	excw
+40251d0f:	1d7000        	excw
+40251d12:	404027        	ball	a0, a2, 40251d56 <set_rx_gain_cal_iq+0x32>
+40251d15:	271d      	excw
+40251d17:	1d6040        	excw
+40251d1a:	104027        	ball	a0, a2, 40251d2e <set_rx_gain_cal_iq+0xa>
+40251d1d:	271d      	excw
+40251d1f:	9bc040        	excw
 40251d22:	fe          	.byte 0xfe
 40251d23:	3f          	.byte 0x3f
 
@@ -44723,8 +44716,8 @@ Disassembly of section .irom0.text:
 4025206e:	174c      	movi.n	a7, 65
 40252070:	106172        	s32i	a7, a1, 64
 40252073:	ff51c6        	j	40251dbe <set_rx_gain_cal_iq+0x9a>
-40252076:	c00000        	sub	a0, a0, a0
-40252079:	2719      	s32i.n	a1, a7, 8
+40252076:	d00000        	subx2	a0, a0, a0
+40252079:	271d      	excw
 4025207b:	805040        	add	a5, a0, a4
 4025207e:	fe          	.byte 0xfe
 4025207f:	3f          	.byte 0x3f
@@ -45451,16 +45444,16 @@ Disassembly of section .irom0.text:
 40252793:	0108      	l32i.n	a0, a1, 0
 40252795:	10c112        	addi	a1, a1, 16
 40252798:	f00d      	ret.n
-4025279a:	8c0000        	excw
+4025279a:	ec0000        	excw
 4025279d:	fe9b      	addi.n	a15, a14, 9
 4025279f:	3f          	.byte 0x3f
-402527a0:	9bda      	add.n	a9, a11, a13
+402527a0:	9c3a      	add.n	a9, a12, a3
 402527a2:	fe          	.byte 0xfe
 402527a3:	3f          	.byte 0x3f
-402527a4:	fe9cd1        	l32r	a13, 40252214 <pbus_set_rxbbgain+0x54>
+402527a4:	fe9d31        	l32r	a3, 40252218 <pbus_set_rxbbgain+0x58>
 402527a7:	3f          	.byte 0x3f
 402527a8:	040000        	extui	a0, a0, 0, 1
-402527ab:	9c3c00        	excw
+402527ab:	9c9c00        	excw
 402527ae:	fe          	.byte 0xfe
 402527af:	3f          	.byte 0x3f
 
@@ -45658,13 +45651,13 @@ Disassembly of section .irom0.text:
 40252998:	004982        	s8i	a8, a9, 0
 4025299b:	ea6466        	bnei	a4, 6, 40252989 <target_power_add_backoff+0x29>
 4025299e:	f00d      	ret.n
-402529a0:	0e          	.byte 0xe
+402529a0:	6e          	.byte 0x6e
 402529a1:	fe9d      	excw
 402529a3:	3f          	.byte 0x3f
-402529a4:	9e          	.byte 0x9e
+402529a4:	fe          	.byte 0xfe
 402529a5:	fe9b      	addi.n	a15, a14, 9
 402529a7:	3f          	.byte 0x3f
-402529a8:	fe9ba4        	excw
+402529a8:	fe9c04        	excw
 402529ab:	3f          	.byte 0x3f
 402529ac:	000000        	ill
 402529af:	a06220        	addx4	a6, a2, a2
@@ -45801,13 +45794,13 @@ Disassembly of section .irom0.text:
 40252b04:	100c      	movi.n	a0, 1
 40252b06:	ffd346        	j	40252a57 <tx_pwctrl_init_cal+0xa7>
 40252b09:	000000        	ill
-40252b0c:	0f          	.byte 0xf
+40252b0c:	6f          	.byte 0x6f
 40252b0d:	9f          	.byte 0x9f
 40252b0e:	fe          	.byte 0xfe
 40252b0f:	3f          	.byte 0x3f
-40252b10:	fe9d33        	excw
+40252b10:	fe9d93        	excw
 40252b13:	3f          	.byte 0x3f
-40252b14:	9d7a      	add.n	a9, a13, a7
+40252b14:	9dda      	add.n	a9, a13, a13
 40252b16:	fe          	.byte 0xfe
 40252b17:	3f          	.byte 0x3f
 
@@ -46043,9 +46036,9 @@ Disassembly of section .irom0.text:
 40252d80:	050c      	movi.n	a5, 0
 40252d82:	ffa746        	j	40252c23 <tx_atten_set_interp+0x10b>
 40252d85:	000000        	ill
-40252d88:	fe9cc6        	j	402527ff <tx_cap_init+0x4f>
+40252d88:	fe9d26        	beqi	a13, 10, 40252d8a <tx_atten_set_interp+0x272>
 40252d8b:	3f          	.byte 0x3f
-40252d8c:	9f0c      	movi.n	a15, 9
+40252d8c:	9f6c      	movi.n	a15, -23
 40252d8e:	fe          	.byte 0xfe
 40252d8f:	3f          	.byte 0x3f
 40252d90:	100000        	and	a0, a0, a0
@@ -46260,12 +46253,12 @@ Disassembly of section .irom0.text:
 40252f9e:	f00d      	ret.n
 40252fa0:	ff          	.byte 0xff
 40252fa1:	fffff1        	l32r	a15, 40252fa0 <read_hw_noisefloor+0x1c>
-40252fa4:	9f08      	l32i.n	a0, a15, 36
+40252fa4:	9f68      	l32i.n	a6, a15, 36
 40252fa6:	fe          	.byte 0xfe
 40252fa7:	3f          	.byte 0x3f
-40252fa8:	fe9bc0        	excw
+40252fa8:	fe9c20        	excw
 40252fab:	3f          	.byte 0x3f
-40252fac:	9d4a      	add.n	a9, a13, a4
+40252fac:	9daa      	add.n	a9, a13, a10
 40252fae:	fe          	.byte 0xfe
 40252faf:	3f          	.byte 0x3f
 
@@ -46399,7 +46392,7 @@ Disassembly of section .irom0.text:
 40253106:	b30440        	movgez	a0, a4, a4
 40253109:	210200        	srai	a0, a0, 2
 4025310c:	ffda46        	j	40253079 <noise_check_loop+0xc9>
-4025310f:	9df800        	excw
+4025310f:	9e5800        	excw
 40253112:	fe          	.byte 0xfe
 40253113:	3f          	.byte 0x3f
 40253114:	ff          	.byte 0xff
@@ -46637,7 +46630,7 @@ Disassembly of section .irom0.text:
 40253360:	2108      	l32i.n	a0, a1, 8
 40253362:	10c112        	addi	a1, a1, 16
 40253365:	f00d      	ret.n
-40253367:	19f000        	excw
+40253367:	1e0000        	excw
 4025336a:	204027        	ball	a0, a2, 4025338e <sdt_on_noise_start+0x22>
 
 4025336c <sdt_on_noise_start>:
@@ -46689,7 +46682,7 @@ Disassembly of section .irom0.text:
 402533e3:	85a400        	extui	a10, a0, 20, 9
 402533e6:	fe          	.byte 0xfe
 402533e7:	3f          	.byte 0x3f
-402533e8:	fe9ce6        	bgei	a12, 10, 402533ea <sdt_on_noise_start+0x7e>
+402533e8:	fe9d46        	j	40252e61 <tx_pwctrl_init+0xcd>
 402533eb:	3f          	.byte 0x3f
 402533ec:	ff          	.byte 0xff
 402533ed:	fffc03        	excw
@@ -46874,7 +46867,7 @@ Disassembly of section .irom0.text:
 402535c8:	10c112        	addi	a1, a1, 16
 402535cb:	f00d      	ret.n
 402535cd:	000000        	ill
-402535d0:	fe9cf2        	l16si	a15, a12, 0x1fc
+402535d0:	fe9d52        	l16si	a5, a13, 0x1fc
 402535d3:	3f          	.byte 0x3f
 402535d4:	85a8      	l32i.n	a10, a5, 32
 402535d6:	fe          	.byte 0xfe
@@ -47487,7 +47480,7 @@ Disassembly of section .irom0.text:
 40253c07:	f00d      	ret.n
 40253c09:	000000        	ill
 40253c0c:	001400        	excw
-40253c0f:	9da100        	excw
+40253c0f:	9e0100        	excw
 40253c12:	fe          	.byte 0xfe
 40253c13:	3f          	.byte 0x3f
 40253c14:	ff          	.byte 0xff
@@ -47547,11 +47540,11 @@ Disassembly of section .irom0.text:
 40253c8b:	f7ff00        	excw
 40253c8e:	ff          	.byte 0xff
 40253c8f:	ff          	.byte 0xff
-40253c90:	fe9e00        	excw
+40253c90:	fe9e60        	excw
 40253c93:	3f          	.byte 0x3f
 40253c94:	fe8080        	excw
 40253c97:	3f          	.byte 0x3f
-40253c98:	fe9d53        	excw
+40253c98:	fe9db3        	excw
 40253c9b:	3f          	.byte 0x3f
 
 40253c9c <phy_bb_rx_cfg>:
@@ -48004,7 +47997,7 @@ Disassembly of section .irom0.text:
 40254176:	0020c0        	memw
 40254179:	e66322        	s32i	a2, a3, 0x398
 4025417c:	f00d      	ret.n
-4025417e:	070000        	excw
+4025417e:	670000        	excw
 40254181:	fe9d      	excw
 40254183:	3f          	.byte 0x3f
 40254184:	ff          	.byte 0xff
@@ -48304,7 +48297,7 @@ Disassembly of section .irom0.text:
 402544be:	0020c0        	memw
 402544c1:	4065a2        	s32i	a10, a5, 0x100
 402544c4:	ff8d06        	j	402542fc <phy_gpio_cfg+0x160>
-402544c7:	9d4c00        	excw
+402544c7:	9dac00        	excw
 402544ca:	fe          	.byte 0xfe
 402544cb:	3f          	.byte 0x3f
 402544cc:	e03f80        	subx4	a3, a15, a8
@@ -48419,7 +48412,7 @@ Disassembly of section .irom0.text:
 402545df:	10c112        	addi	a1, a1, 16
 402545e2:	f00d      	ret.n
 402545e4:	400000        	ssr	a0
-402545e7:	9d2800        	excw
+402545e7:	9d8800        	excw
 402545ea:	fe          	.byte 0xfe
 402545eb:	3f          	.byte 0x3f
 402545ec:	007800        	waiti	8
@@ -48558,16 +48551,16 @@ Disassembly of section .irom0.text:
 40254747:	120c      	movi.n	a2, 1
 40254749:	ffe805        	call0	402545cc <tx_cont_cfg>
 4025474c:	fffb06        	j	4025473c <chip_v6_initialize_bb+0x14c>
-4025474f:	9d9800        	excw
+4025474f:	9df800        	excw
 40254752:	fe          	.byte 0xfe
 40254753:	3f          	.byte 0x3f
-40254754:	fe9b70        	excw
+40254754:	fe9bd0        	excw
 40254757:	3f          	.byte 0x3f
 40254758:	ff          	.byte 0xff
 40254759:	ff          	.byte 0xff
 4025475a:	ef          	.byte 0xef
 4025475b:	ff          	.byte 0xff
-4025475c:	9bcc      	bnez.n	a11, 40254769 <periodic_cal+0x9>
+4025475c:	9c2c      	movi.n	a12, 41
 4025475e:	fe          	.byte 0xfe
 4025475f:	3f          	.byte 0x3f
 
@@ -48730,7 +48723,7 @@ Disassembly of section .irom0.text:
 402548f3:	1108      	l32i.n	a0, a1, 4
 402548f5:	10c112        	addi	a1, a1, 16
 402548f8:	f00d      	ret.n
-402548fa:	4b0000        	excw
+402548fa:	ab0000        	excw
 402548fd:	fe9d      	excw
 402548ff:	3f          	.byte 0x3f
 
@@ -48765,12 +48758,12 @@ Disassembly of section .irom0.text:
 4025494c:	1108      	l32i.n	a0, a1, 4
 4025494e:	10c112        	addi	a1, a1, 16
 40254951:	f00d      	ret.n
-40254953:	9d5400        	excw
+40254953:	9db400        	excw
 40254956:	fe          	.byte 0xfe
 40254957:	3f          	.byte 0x3f
-40254958:	fe9d56        	bnez	a13, 40254945 <periodic_cal_top+0x45>
+40254958:	fe9db6        	bltui	a13, 10, 4025495a <periodic_cal_top+0x5a>
 4025495b:	3f          	.byte 0x3f
-4025495c:	9d58      	l32i.n	a5, a13, 36
+4025495c:	9db8      	l32i.n	a11, a13, 36
 4025495e:	fe          	.byte 0xfe
 4025495f:	3f          	.byte 0x3f
 
@@ -49102,7 +49095,7 @@ Disassembly of section .irom0.text:
 40254ce5:	31c8      	l32i.n	a12, a1, 12
 40254ce7:	10c112        	addi	a1, a1, 16
 40254cea:	f00d      	ret.n
-40254cec:	fe9d03        	excw
+40254cec:	fe9d63        	excw
 40254cef:	3f          	.byte 0x3f
 
 40254cf0 <change_bbpll160>:
@@ -49154,7 +49147,7 @@ Disassembly of section .irom0.text:
 40254d68:	0108      	l32i.n	a0, a1, 0
 40254d6a:	10c112        	addi	a1, a1, 16
 40254d6d:	f00d      	ret.n
-40254d6f:	9d0600        	excw
+40254d6f:	9d6600        	excw
 40254d72:	fe          	.byte 0xfe
 40254d73:	3f          	.byte 0x3f
 40254d74:	010101        	l32r	a0, 40215178 <_lit4_end+0x10de78>
@@ -49330,7 +49323,7 @@ Disassembly of section .irom0.text:
 40254f2c:	10c112        	addi	a1, a1, 16
 40254f2f:	f00d      	ret.n
 40254f31:	000000        	ill
-40254f34:	9f0a      	add.n	a9, a15, a0
+40254f34:	9f6a      	add.n	a9, a15, a6
 40254f36:	fe          	.byte 0xfe
 40254f37:	3f          	.byte 0x3f
 40254f38:	250aa4        	excw
@@ -49351,12 +49344,12 @@ Disassembly of section .irom0.text:
 40254f62:	084025        	excw
 40254f65:	251c      	movi.n	a5, 18
 40254f67:	722c40        	excw
-40254f6a:	404010        	ssai	16
-40254f6d:	271a      	add.n	a2, a7, a1
-40254f6f:	9bc940        	excw
-40254f72:	fe          	.byte 0xfe
+40254f6a:	504010        	excw
+40254f6d:	1e          	.byte 0x1e
+40254f6e:	294027        	ball	a0, a2, 40254f9b <register_chipv6_phy+0x1b>
+40254f71:	fe9c      	beqz.n	a14, 40254f94 <register_chipv6_phy+0x14>
 40254f73:	3f          	.byte 0x3f
-40254f74:	271a60        	excw
+40254f74:	271e70        	excw
 40254f77:	000040        	excw
 40254f7a:	600164        	excw
 40254f7d:	101c      	movi.n	a0, 17
@@ -49616,7 +49609,7 @@ Disassembly of section .irom0.text:
 4025522b:	ffae46        	j	402550e8 <register_chipv6_phy+0x168>
 4025522e:	1d0c      	movi.n	a13, 1
 40255230:	fff286        	j	402551fe <register_chipv6_phy+0x27e>
-40255233:	9d4900        	excw
+40255233:	9da900        	excw
 40255236:	fe          	.byte 0xfe
 40255237:	3f          	.byte 0x3f
 
@@ -49875,7 +49868,7 @@ Disassembly of section .irom0.text:
 402554ac:	075d      	mov.n	a5, a7
 402554ae:	ffe346        	j	4025543f <set_most_pwr_reg+0x5b>
 402554b1:	000000        	ill
-402554b4:	fe9d62        	l16si	a6, a13, 0x1fc
+402554b4:	fe9dc2        	l16si	a12, a13, 0x1fc
 402554b7:	3f          	.byte 0x3f
 
 402554b8 <phy_set_most_tpw>:
@@ -49891,7 +49884,7 @@ Disassembly of section .irom0.text:
 402554d0:	10c112        	addi	a1, a1, 16
 402554d3:	f00d      	ret.n
 402554d5:	000000        	ill
-402554d8:	fe9d66        	bnei	a13, 10, 402554da <phy_set_most_tpw+0x22>
+402554d8:	fe9dc6        	j	40254f53 <deep_sleep_set_option+0x4b>
 402554db:	3f          	.byte 0x3f
 
 402554dc <phy_vdd33_set_tpw>:
@@ -50324,10 +50317,10 @@ Disassembly of section .irom0.text:
 40255902:	312020        	srai	a2, a2, 16
 40255905:	f00d      	ret.n
 40255907:	0bf000        	excw
-4025590a:	a30000        	movltz	a0, a0, a0
-4025590d:	fe9b      	addi.n	a15, a14, 9
+4025590a:	030000        	excw
+4025590d:	fe9c      	beqz.n	a14, 40255930 <cal_rf_ana_gain+0x1c>
 4025590f:	3f          	.byte 0x3f
-40255910:	fe9dc7        	bne	a13, a12, 40255912 <get_sar_dout+0x96>
+40255910:	fe9e27        	bne	a14, a2, 40255912 <get_sar_dout+0x96>
 40255913:	3f          	.byte 0x3f
 
 40255914 <cal_rf_ana_gain>:
@@ -50740,10 +50733,10 @@ Disassembly of section .irom0.text:
 40255d0c:	005922        	s16i	a2, a9, 0
 40255d0f:	10c112        	addi	a1, a1, 16
 40255d12:	f00d      	ret.n
-40255d14:	9b68      	l32i.n	a6, a11, 36
+40255d14:	9bc8      	l32i.n	a12, a11, 36
 40255d16:	fe          	.byte 0xfe
 40255d17:	3f          	.byte 0x3f
-40255d18:	271a70        	excw
+40255d18:	271e80        	excw
 40255d1b:	039d40        	excw
 
 40255d1c <txiq_cover>:
@@ -50954,9 +50947,10 @@ Disassembly of section .irom0.text:
 40255f23:	41d8      	l32i.n	a13, a1, 16
 40255f25:	50c112        	addi	a1, a1, 80
 40255f28:	f00d      	ret.n
-40255f2a:	800000        	add	a0, a0, a0
-40255f2d:	271a      	add.n	a2, a7, a1
-40255f2f:	ffff40        	excw
+40255f2a:	900000        	addx2	a0, a0, a0
+40255f2d:	1e          	.byte 0x1e
+40255f2e:	ff4027        	ball	a0, a2, 40255f31 <txiq_cover+0x215>
+40255f31:	ff          	.byte 0xff
 40255f32:	00e000        	excw
 40255f35:	000200        	excw
 
@@ -51387,7 +51381,7 @@ Disassembly of section .irom0.text:
 40256357:	ffef06        	j	40256317 <rc_cal+0x173>
 4025635a:	900000        	addx2	a0, a0, a0
 4025635d:	402563        	excw
-40256360:	9de8      	l32i.n	a14, a13, 36
+40256360:	9e48      	l32i.n	a4, a14, 36
 40256362:	fe          	.byte 0xfe
 40256363:	3f          	.byte 0x3f
 
@@ -51514,12 +51508,12 @@ Disassembly of section .irom0.text:
 402564ab:	012580        	slli	a2, a5, 24
 402564ae:	312820        	srai	a2, a2, 24
 402564b1:	fff946        	j	4025649a <get_pwctrl_correct+0x2e>
-402564b4:	271aa0        	excw
+402564b4:	271eb0        	excw
 402564b7:	0ff340        	excw
-402564ba:	ec0000        	excw
-402564bd:	fe9c      	beqz.n	a14, 402564e0 <tx_pwctrl_cal+0x1c>
+402564ba:	4c0000        	excw
+402564bd:	fe9d      	excw
 402564bf:	3f          	.byte 0x3f
-402564c0:	271ac0        	excw
+402564c0:	271ed0        	excw
 402564c3:	c11240        	mul16u	a1, a2, a4
 
 402564c4 <tx_pwctrl_cal>:
@@ -51866,15 +51860,15 @@ Disassembly of section .irom0.text:
 40256867:	0020c0        	memw
 4025686a:	d86322        	s32i	a2, a3, 0x360
 4025686d:	f00d      	ret.n
-4025686f:	9de700        	excw
+4025686f:	9e4700        	excw
 40256872:	fe          	.byte 0xfe
 40256873:	3f          	.byte 0x3f
-40256874:	fe9de6        	bgei	a13, 10, 40256876 <tx_pwctrl_bg_init+0x72>
+40256874:	fe9e46        	j	402562f1 <rc_cal+0x14d>
 40256877:	3f          	.byte 0x3f
-40256878:	9bbc      	beqz.n	a11, 402568b5 <tx_pwctrl_background+0x35>
+40256878:	9c1c      	movi.n	a12, 25
 4025687a:	fe          	.byte 0xfe
 4025687b:	3f          	.byte 0x3f
-4025687c:	271b30        	excw
+4025687c:	271f40        	excw
 4025687f:	c11240        	mul16u	a1, a2, a4
 
 40256880 <tx_pwctrl_background>:
@@ -52256,9 +52250,10 @@ Disassembly of section .irom0.text:
 40256c3e:	012280        	slli	a2, a2, 24
 40256c41:	312820        	srai	a2, a2, 24
 40256c44:	f00d      	ret.n
-40256c46:	500000        	excw
-40256c49:	271b      	addi.n	a2, a7, 1
-40256c4b:	1b7040        	excw
+40256c46:	600000        	neg	a0, a0
+40256c49:	1f          	.byte 0x1f
+40256c4a:	804027        	ball	a0, a2, 40256bce <ram_cal_tos_v60+0x18e>
+40256c4d:	1f          	.byte 0x1f
 40256c4e:	0c4027        	ball	a0, a2, 40256c5e <ram_rfcal_txcap+0xe>
 
 40256c50 <ram_rfcal_txcap>:
@@ -52447,9 +52442,9 @@ Disassembly of section .irom0.text:
 40256e05:	000772        	l8ui	a7, a7, 0
 40256e08:	0000c0        	callx0	a0
 40256e0b:	ffedc6        	j	40256dc6 <ram_rfcal_txcap+0x176>
-40256e0e:	900000        	addx2	a0, a0, a0
-40256e11:	271b      	addi.n	a2, a7, 1
-40256e13:	c11240        	mul16u	a1, a2, a4
+40256e0e:	a00000        	addx4	a0, a0, a0
+40256e11:	1f          	.byte 0x1f
+40256e12:	124027        	ball	a0, a2, 40256e28 <ram_rfcal_pwrctrl+0x14>
 
 40256e14 <ram_rfcal_pwrctrl>:
 40256e14:	a0c112        	addi	a1, a1, -96
@@ -52664,7 +52659,7 @@ Disassembly of section .irom0.text:
 40257030:	60c112        	addi	a1, a1, 96
 40257033:	f00d      	ret.n
 40257035:	000000        	ill
-40257038:	271be0        	excw
+40257038:	271ff0        	excw
 4025703b:	68e440        	excw
 4025703e:	824010        	mull	a4, a0, a1
 
@@ -53330,8 +53325,8 @@ Disassembly of section .irom0.text:
 4025768c <chip_v6_unset_chanfreq>:
 4025768c:	020c      	movi.n	a2, 0
 4025768e:	f00d      	ret.n
-40257690:	271c10        	excw
-40257693:	9cb840        	excw
+40257690:	272020        	excw
+40257693:	9d1840        	excw
 40257696:	fe          	.byte 0xfe
 40257697:	3f          	.byte 0x3f
 
@@ -53475,9 +53470,8 @@ Disassembly of section .irom0.text:
 402577ea:	0020c0        	memw
 402577ed:	c56322        	s32i	a2, a3, 0x314
 402577f0:	f00d      	ret.n
-402577f2:	200000        	or	a0, a0, a0
-402577f5:	271c      	movi.n	a7, 18
-402577f7:	ff2140        	excw
+402577f2:	300000        	xor	a0, a0, a0
+402577f5:	402720        	excw
 
 402577f8 <slop_test>:
 402577f8:	ffff21        	l32r	a2, 402577f4 <slop_wdt_feed+0x10>
@@ -53545,8 +53539,8 @@ Disassembly of section .irom0.text:
 40257899:	0108      	l32i.n	a0, a1, 0
 4025789b:	20c112        	addi	a1, a1, 32
 4025789e:	f00d      	ret.n
-402578a0:	271c30        	excw
-402578a3:	1c4040        	excw
+402578a0:	272040        	excw
+402578a3:	205040        	or	a5, a0, a4
 402578a6:	124027        	ball	a0, a2, 402578bc <wd_reset_cnt+0x14>
 
 402578a8 <wd_reset_cnt>:
@@ -53603,7 +53597,7 @@ Disassembly of section .irom0.text:
 40257928:	822230        	mull	a2, a2, a3
 4025792b:	412c20        	srli	a2, a2, 12
 4025792e:	f00d      	ret.n
-40257930:	fe9f14        	excw
+40257930:	fe9f74        	excw
 40257933:	3f          	.byte 0x3f
 
 40257934 <pm_set_sleep_cycles>:
@@ -53925,9 +53919,9 @@ Disassembly of section .irom0.text:
 40257c5c:	015652        	s16i	a5, a6, 2
 40257c5f:	f00d      	ret.n
 40257c61:	000000        	ill
-40257c64:	fe9de0        	excw
+40257c64:	fe9e40        	excw
 40257c67:	3f          	.byte 0x3f
-40257c68:	fe9de1        	l32r	a14, 402576dc <data_collect+0x44>
+40257c68:	fe9e41        	l32r	a4, 402576e0 <data_collect+0x48>
 40257c6b:	3f          	.byte 0x3f
 40257c6c:	ff          	.byte 0xff
 40257c6d:	cf          	.byte 0xcf
@@ -54514,10 +54508,11 @@ Disassembly of section .irom0.text:
 40258275:	000000        	ill
 40258278:	ff          	.byte 0xff
 40258279:	0f          	.byte 0xf
-4025827a:	ec8000        	excw
-4025827d:	fe9d      	excw
+4025827a:	4c8000        	excw
+4025827d:	9e          	.byte 0x9e
+4025827e:	fe          	.byte 0xfe
 4025827f:	3f          	.byte 0x3f
-40258280:	fe9dc6        	j	40257cfb <pm_goto_sleep+0x87>
+40258280:	fe9e26        	beqi	a14, 10, 40258282 <pm_unmask_bt+0x62>
 40258283:	3f          	.byte 0x3f
 
 40258284 <pm_wakeup_init>:
@@ -55197,7 +55192,7 @@ Disassembly of section .irom0.text:
 40258965:	ff6ad6        	bgez	a10, 4025895f <rom_iq_est_enable+0x43>
 40258968:	f00d      	ret.n
 4025896a:	b00000        	addx8	a0, a0, a0
-4025896d:	3ffe85        	call0	40298958 <_irom0_text_end+0x23bd0>
+4025896d:	3ffe85        	call0	40298958 <_irom0_text_end+0x2335f>
 
 40258970 <rom_linear_to_db>:
 40258970:	041c      	movi.n	a4, 16
@@ -55352,7 +55347,7 @@ Disassembly of section .irom0.text:
 40258ad4:	e20c      	movi.n	a2, 14
 40258ad6:	fff386        	j	40258aa8 <rom_mhz2ieee+0x2c>
 40258ad9:	000000        	ill
-40258adc:	271c50        	excw
+40258adc:	272060        	excw
 40258adf:	c11240        	mul16u	a1, a2, a4
 
 40258ae0 <rom_rxiq_get_mis>:
@@ -57601,14 +57596,13 @@ Disassembly of section .irom0.text:
 4025a0c4:	81c8      	l32i.n	a12, a1, 32
 4025a0c6:	fe          	.byte 0xfe
 4025a0c7:	3f          	.byte 0x3f
-4025a0c8:	271cc0        	excw
-4025a0cb:	1cd840        	excw
-4025a0ce:	804027        	ball	a0, a2, 4025a052 <rom_cal_tos_v50+0x126>
-4025a0d1:	271c      	movi.n	a7, 18
-4025a0d3:	1cd040        	excw
-4025a0d6:	e04027        	ball	a0, a2, 4025a0ba <rom_cal_tos_v50+0x18e>
-4025a0d9:	271c      	movi.n	a7, 18
-4025a0db:	028d40        	excw
+4025a0c8:	2720d0        	excw
+4025a0cb:	20e840        	or	a14, a8, a4
+4025a0ce:	904027        	ball	a0, a2, 4025a062 <rom_cal_tos_v50+0x136>
+4025a0d1:	402720        	excw
+4025a0d4:	2720e0        	excw
+4025a0d7:	20f040        	or	a15, a0, a4
+4025a0da:	8d4027        	ball	a0, a2, 4025a06b <rom_cal_tos_v50+0x13f>
 
 4025a0dc <rom_pbus_dco___SA2>:
 4025a0dc:	028d      	mov.n	a8, a2
@@ -57872,7 +57866,7 @@ Disassembly of section .irom0.text:
 4025a389:	7108      	l32i.n	a0, a1, 28
 4025a38b:	112a      	add.n	a1, a1, a2
 4025a38d:	f00d      	ret.n
-4025a38f:	1cf000        	excw
+4025a38f:	210000        	srai	a0, a0, 0
 4025a392:	124027        	ball	a0, a2, 4025a3a8 <rom_rfcal_pwrctrl+0x14>
 
 4025a394 <rom_rfcal_pwrctrl>:
@@ -58354,8 +58348,8 @@ Disassembly of section .irom0.text:
 4025a81c:	0c2d      	mov.n	a2, a12
 4025a81e:	fff4c6        	j	4025a7f5 <rom_rfcal_rxiq_set_reg+0xcd>
 4025a821:	000000        	ill
-4025a824:	271d50        	excw
-4025a827:	1d3040        	excw
+4025a824:	272160        	excw
+4025a827:	214040        	srai	a4, a4, 0
 4025a82a:	9d4027        	ball	a0, a2, 4025a7cb <rom_rfcal_rxiq_set_reg+0xa3>
 
 4025a82c <rom_rfcal_txcap>:
@@ -58607,9 +58601,8 @@ Disassembly of section .irom0.text:
 4025aa7e:	d178      	l32i.n	a7, a1, 52
 4025aa80:	0000c0        	callx0	a0
 4025aa83:	ffcec6        	j	4025a9c2 <rom_rfcal_txcap+0x196>
-4025aa86:	700000        	excw
-4025aa89:	271d      	excw
-4025aa8b:	039d40        	excw
+4025aa86:	800000        	add	a0, a0, a0
+4025aa89:	402721        	l32r	a2, 4022ab28 <_lit4_end+0x123828>
 
 4025aa8c <rom_rfcal_txiq>:
 4025aa8c:	039d      	mov.n	a9, a3
@@ -59071,12 +59064,11 @@ Disassembly of section .irom0.text:
 4025aef3:	81d8      	l32i.n	a13, a1, 32
 4025aef5:	50c112        	addi	a1, a1, 80
 4025aef8:	f00d      	ret.n
-4025aefa:	900000        	addx2	a0, a0, a0
-4025aefd:	271d      	excw
-4025aeff:	1d9840        	excw
-4025af02:	a04027        	ball	a0, a2, 4025aea6 <rom_rxiq_cover_mg_mp+0xee>
-4025af05:	271d      	excw
-4025af07:	c11240        	mul16u	a1, a2, a4
+4025aefa:	a00000        	addx4	a0, a0, a0
+4025aefd:	402721        	l32r	a2, 4022af9c <_lit4_end+0x123c9c>
+4025af00:	21a8      	l32i.n	a10, a1, 8
+4025af02:	b04027        	ball	a0, a2, 4025aeb6 <rom_rxiq_cover_mg_mp+0xfe>
+4025af05:	402721        	l32r	a2, 4022afa4 <_lit4_end+0x123ca4>
 
 4025af08 <rom_set_txbb_atten>:
 4025af08:	e0c112        	addi	a1, a1, -32
@@ -59218,7 +59210,7 @@ Disassembly of section .irom0.text:
 4025b063:	0108      	l32i.n	a0, a1, 0
 4025b065:	10c112        	addi	a1, a1, 16
 4025b068:	f00d      	ret.n
-4025b06a:	300000        	xor	a0, a0, a0
+4025b06a:	900000        	addx2	a0, a0, a0
 4025b06d:	9f          	.byte 0x9f
 4025b06e:	fe          	.byte 0xfe
 4025b06f:	3f          	.byte 0x3f
@@ -59237,7 +59229,7 @@ Disassembly of section .irom0.text:
 4025b084:	2539      	s32i.n	a3, a5, 8
 4025b086:	0c4542        	s8i	a4, a5, 12
 4025b089:	f00d      	ret.n
-4025b08b:	9f2000        	excw
+4025b08b:	9f8000        	excw
 4025b08e:	fe          	.byte 0xfe
 4025b08f:	3f          	.byte 0x3f
 
@@ -59380,11 +59372,11 @@ Disassembly of section .irom0.text:
 4025b1cf:	0108      	l32i.n	a0, a1, 0
 4025b1d1:	10c112        	addi	a1, a1, 16
 4025b1d4:	f00d      	ret.n
-4025b1d6:	b00000        	addx8	a0, a0, a0
-4025b1d9:	271d      	excw
-4025b1db:	c11240        	mul16u	a1, a2, a4
-4025b1de:	61c2f0        	xsr.eps2	a15
-4025b1e1:	010901        	l32r	a0, 4021b608 <_lit4_end+0x114308>
+4025b1d6:	c00000        	sub	a0, a0, a0
+4025b1d9:	402721        	l32r	a2, 4022b278 <_lit4_end+0x123f78>
+4025b1dc:	f0c112        	addi	a1, a1, -16
+4025b1df:	0161c2        	s32i	a12, a1, 4
+4025b1e2:	0109      	s32i.n	a0, a1, 0
 4025b1e4:	02cd      	mov.n	a12, a2
 4025b1e6:	fffc21        	l32r	a2, 4025b1d8 <ic_interface_is_p2p+0x40>
 4025b1e9:	0c3d      	mov.n	a3, a12
@@ -59403,8 +59395,8 @@ Disassembly of section .irom0.text:
 4025b209:	0108      	l32i.n	a0, a1, 0
 4025b20b:	10c112        	addi	a1, a1, 16
 4025b20e:	f00d      	ret.n
-4025b210:	271dc0        	excw
-4025b213:	1dd040        	excw
+4025b210:	2721d0        	excw
+4025b213:	21e040        	srai	a14, a4, 0
 4025b216:	124027        	ball	a0, a2, 4025b22c <ic_set_vif+0x14>
 
 4025b218 <ic_set_vif>:
@@ -59451,8 +59443,8 @@ Disassembly of section .irom0.text:
 4025b27c:	20c112        	addi	a1, a1, 32
 4025b27f:	f00d      	ret.n
 4025b281:	000000        	ill
-4025b284:	271de0        	excw
-4025b287:	ac8840        	excw
+4025b284:	2721f0        	excw
+4025b287:	ace840        	excw
 4025b28a:	fe          	.byte 0xfe
 4025b28b:	3f          	.byte 0x3f
 
@@ -59525,10 +59517,10 @@ Disassembly of section .irom0.text:
 4025b338:	1108      	l32i.n	a0, a1, 4
 4025b33a:	20c112        	addi	a1, a1, 32
 4025b33d:	f00d      	ret.n
-4025b33f:	1df000        	excw
-4025b342:	f84027        	ball	a0, a2, 4025b33e <ic_set_sta+0xb2>
-4025b345:	271d      	excw
-4025b347:	1de840        	excw
+4025b33f:	220000        	excw
+4025b342:	084027        	ball	a0, a2, 4025b34e <ic_bss_info_update+0x2>
+4025b345:	402722        	l32i	a2, a7, 0x100
+4025b348:	21f8      	l32i.n	a15, a1, 8
 4025b34a:	124027        	ball	a0, a2, 4025b360 <ic_bss_info_update+0x14>
 
 4025b34c <ic_bss_info_update>:
@@ -59614,7 +59606,7 @@ Disassembly of section .irom0.text:
 4025b40d:	002102        	l32i	a0, a1, 0
 4025b410:	10c112        	addi	a1, a1, 16
 4025b413:	000080        	ret
-4025b416:	800000        	add	a0, a0, a0
+4025b416:	e00000        	subx4	a0, a0, a0
 4025b419:	9f          	.byte 0x9f
 4025b41a:	fe          	.byte 0xfe
 4025b41b:	3f          	.byte 0x3f
@@ -59637,7 +59629,7 @@ Disassembly of section .irom0.text:
 4025b444:	8879      	s32i.n	a7, a8, 32
 4025b446:	f00d      	ret.n
 4025b448:	000bc0        	callx0	a11
-4025b44b:	9f5000        	excw
+4025b44b:	9fb000        	excw
 4025b44e:	fe          	.byte 0xfe
 4025b44f:	3f          	.byte 0x3f
 
@@ -59724,7 +59716,7 @@ Disassembly of section .irom0.text:
 4025b50c:	0d4642        	s8i	a4, a6, 13
 4025b50f:	0c4642        	s8i	a4, a6, 12
 4025b512:	f00d      	ret.n
-4025b514:	fea0a0        	excw
+4025b514:	fea100        	excw
 4025b517:	3f          	.byte 0x3f
 4025b518:	f0c112        	addi	a1, a1, -16
 4025b51b:	0109      	s32i.n	a0, a1, 0
@@ -59756,7 +59748,7 @@ Disassembly of section .irom0.text:
 4025b560:	014322        	s8i	a2, a3, 1
 4025b563:	f00d      	ret.n
 4025b565:	000000        	ill
-4025b568:	fea0a4        	excw
+4025b568:	fea104        	excw
 4025b56b:	3f          	.byte 0x3f
 4025b56c:	1cbc      	beqz.n	a12, 4025b5a1 <pm_rtc_clock_cali_proc+0x31>
 4025b56e:	224010        	excw
@@ -59797,11 +59789,11 @@ Disassembly of section .irom0.text:
 4025b5bd:	000000        	ill
 4025b5c0:	fe81d0        	excw
 4025b5c3:	3f          	.byte 0x3f
-4025b5c4:	271e30        	excw
-4025b5c7:	a22840        	excw
+4025b5c4:	272240        	excw
+4025b5c7:	a28840        	excw
 4025b5ca:	fe          	.byte 0xfe
 4025b5cb:	3f          	.byte 0x3f
-4025b5cc:	fea220        	excw
+4025b5cc:	fea280        	excw
 4025b5cf:	3f          	.byte 0x3f
 4025b5d0:	101d74        	excw
 4025b5d3:	c11240        	mul16u	a1, a2, a4
@@ -59911,14 +59903,12 @@ Disassembly of section .irom0.text:
 4025b6f0:	fdc442        	addi	a4, a4, -3
 4025b6f3:	832340        	moveqz	a2, a3, a4
 4025b6f6:	f00d      	ret.n
-4025b6f8:	271e40        	excw
-4025b6fb:	1e5040        	excw
-4025b6fe:	604027        	ball	a0, a2, 4025b762 <pm_set_sleep_type_from_upper+0x56>
-4025b701:	1e          	.byte 0x1e
-4025b702:	904027        	ball	a0, a2, 4025b696 <pm_set_sleep_time+0xf2>
-4025b705:	1e          	.byte 0x1e
-4025b706:	a04027        	ball	a0, a2, 4025b6aa <pm_set_sleep_time+0x106>
-4025b709:	1e          	.byte 0x1e
+4025b6f8:	272250        	excw
+4025b6fb:	226040        	excw
+4025b6fe:	704027        	ball	a0, a2, 4025b772 <pm_set_sleep_type_from_upper+0x66>
+4025b701:	402722        	l32i	a2, a7, 0x100
+4025b704:	2722a0        	excw
+4025b707:	22b040        	excw
 4025b70a:	124027        	ball	a0, a2, 4025b720 <pm_set_sleep_type_from_upper+0x14>
 
 4025b70c <pm_set_sleep_type_from_upper>:
@@ -59974,22 +59964,21 @@ Disassembly of section .irom0.text:
 4025b78b:	440b      	addi.n	a4, a4, -1
 4025b78d:	932340        	movnez	a2, a3, a4
 4025b790:	f00d      	ret.n
-4025b792:	b00000        	addx8	a0, a0, a0
-4025b795:	1e          	.byte 0x1e
-4025b796:	d44027        	ball	a0, a2, 4025b76e <pm_set_sleep_type_from_upper+0x62>
-4025b799:	3ffe85        	call0	4029b784 <_irom0_text_end+0x269fc>
-4025b79c:	8b4c      	movi.n	a11, 72
-4025b79e:	fe          	.byte 0xfe
+4025b792:	c00000        	sub	a0, a0, a0
+4025b795:	402722        	l32i	a2, a7, 0x100
+4025b798:	fe85d4        	excw
+4025b79b:	3f          	.byte 0x3f
+4025b79c:	fe8ba4        	excw
 4025b79f:	3f          	.byte 0x3f
 4025b7a0:	000a00        	excw
-4025b7a3:	a11000        	sll	a1, a0
+4025b7a3:	a17000        	sll	a7, a0
 4025b7a6:	fe          	.byte 0xfe
 4025b7a7:	3f          	.byte 0x3f
-4025b7a8:	271ed0        	excw
-4025b7ab:	a0f440        	addx4	a15, a4, a4
+4025b7a8:	2722e0        	excw
+4025b7ab:	a15440        	excw
 4025b7ae:	fe          	.byte 0xfe
 4025b7af:	3f          	.byte 0x3f
-4025b7b0:	1ed8      	l32i.n	a13, a14, 4
+4025b7b0:	22e8      	l32i.n	a14, a2, 8
 4025b7b2:	124027        	ball	a0, a2, 4025b7c8 <pm_get_sleep_type+0x48>
 4025b7b5:	d2f0c1        	l32r	a12, 40250378 <ram_pbus_set_rxgain+0x38>
 4025b7b8:	c20261        	l32r	a6, 4024bfc0 <tcp_keepalive+0x4c>
@@ -60083,12 +60072,11 @@ Disassembly of section .irom0.text:
 
 4025b8a0 <pm_suspend>:
 4025b8a0:	f00d      	ret.n
-4025b8a2:	e00000        	subx4	a0, a0, a0
-4025b8a5:	1e          	.byte 0x1e
-4025b8a6:	124027        	ball	a0, a2, 4025b8bc <pm_suspend+0x1c>
-4025b8a9:	02f0c1        	l32r	a12, 4021c46c <_lit4_end+0x11516c>
-4025b8ac:	850061        	l32r	a6, 4023ccac <_lit4_end+0x1359ac>
-4025b8af:	e8ba      	add.n	a14, a8, a11
+4025b8a2:	f00000        	subx8	a0, a0, a0
+4025b8a5:	402722        	l32i	a2, a7, 0x100
+4025b8a8:	f0c112        	addi	a1, a1, -16
+4025b8ab:	006102        	s32i	a0, a1, 0
+4025b8ae:	e8ba85        	call0	40244458 <vTaskSuspendAll>
 4025b8b1:	fffc21        	l32r	a2, 4025b8a4 <pm_suspend+0x4>
 4025b8b4:	91df01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
 4025b8b7:	0000c0        	callx0	a0
@@ -60103,14 +60091,12 @@ Disassembly of section .irom0.text:
 4025b8d1:	0108      	l32i.n	a0, a1, 0
 4025b8d3:	10c112        	addi	a1, a1, 16
 4025b8d6:	f00d      	ret.n
-4025b8d8:	271ef0        	excw
-4025b8db:	1f1040        	excw
-4025b8de:	184027        	ball	a0, a2, 4025b8fa <pm_suspend+0x5a>
-4025b8e1:	1f          	.byte 0x1f
-4025b8e2:	304027        	ball	a0, a2, 4025b916 <pm_suspend+0x76>
-4025b8e5:	1f          	.byte 0x1f
-4025b8e6:	384027        	ball	a0, a2, 4025b922 <pm_suspend+0x82>
-4025b8e9:	1f          	.byte 0x1f
+4025b8d8:	272300        	excw
+4025b8db:	232040        	excw
+4025b8de:	284027        	ball	a0, a2, 4025b90a <pm_suspend+0x6a>
+4025b8e1:	402723        	excw
+4025b8e4:	272340        	excw
+4025b8e7:	234840        	excw
 4025b8ea:	124027        	ball	a0, a2, 4025b900 <pm_suspend+0x60>
 4025b8ed:	c2e0c1        	l32r	a12, 4024c470 <udp_input+0xc0>
 4025b8f0:	d20161        	l32r	a6, 402500f4 <snprintf+0x558>
@@ -60213,14 +60199,13 @@ Disassembly of section .irom0.text:
 4025b9f8:	0108      	l32i.n	a0, a1, 0
 4025b9fa:	20c112        	addi	a1, a1, 32
 4025b9fd:	f00d      	ret.n
-4025b9ff:	1f4000        	excw
-4025ba02:	604027        	ball	a0, a2, 4025ba66 <pm_suspend+0x1c6>
-4025ba05:	1f          	.byte 0x1f
-4025ba06:	124027        	ball	a0, a2, 4025ba1c <pm_suspend+0x17c>
-4025ba09:	02f0c1        	l32r	a12, 4021c5cc <_lit4_end+0x1152cc>
-4025ba0c:	850061        	l32r	a6, 4023ce0c <_lit4_end+0x135b0c>
-4025ba0f:	05e8a4        	excw
-4025ba12:	ffcd      	excw
+4025b9ff:	235000        	excw
+4025ba02:	704027        	ball	a0, a2, 4025ba76 <pm_suspend+0x1d6>
+4025ba05:	402723        	excw
+4025ba08:	f0c112        	addi	a1, a1, -16
+4025ba0b:	006102        	s32i	a0, a1, 0
+4025ba0e:	e8a485        	call0	40244458 <vTaskSuspendAll>
+4025ba11:	ffcd05        	call0	4025b6e4 <pm_rf_is_closed>
 4025ba14:	024256        	bnez	a2, 4025ba3c <pm_suspend+0x19c>
 4025ba17:	fffa21        	l32r	a2, 4025ba00 <pm_suspend+0x160>
 4025ba1a:	918501        	l32r	a0, 40240030 <_irom0_text_start+0x30>
@@ -60247,18 +60232,16 @@ Disassembly of section .irom0.text:
 4025ba54:	10c112        	addi	a1, a1, 16
 4025ba57:	f00d      	ret.n
 4025ba59:	000000        	ill
-4025ba5c:	271f80        	excw
+4025ba5c:	272390        	excw
 4025ba5f:	0c0040        	excw
-4025ba62:	900000        	addx2	a0, a0, a0
-4025ba65:	1f          	.byte 0x1f
-4025ba66:	124027        	ball	a0, a2, 4025ba7c <pm_suspend+0x1dc>
-4025ba69:	02f0c1        	l32r	a12, 4021c62c <_lit4_end+0x11532c>
-4025ba6c:	850061        	l32r	a6, 4023ce6c <_lit4_end+0x135b6c>
-4025ba6f:	9e          	.byte 0x9e
-4025ba70:	05e8      	l32i.n	a14, a5, 0
-4025ba72:	56ffc7        	bbsi	a15, 28, 4025bacc <pm_suspend+0x22c>
-4025ba75:	210242        	l8ui	a4, a2, 33
-4025ba78:	fff9      	s32i.n	a15, a15, 60
+4025ba62:	a00000        	addx4	a0, a0, a0
+4025ba65:	402723        	excw
+4025ba68:	f0c112        	addi	a1, a1, -16
+4025ba6b:	006102        	s32i	a0, a1, 0
+4025ba6e:	e89e85        	call0	40244458 <vTaskSuspendAll>
+4025ba71:	ffc705        	call0	4025b6e4 <pm_rf_is_closed>
+4025ba74:	024256        	bnez	a2, 4025ba9c <pm_suspend+0x1fc>
+4025ba77:	fff921        	l32r	a2, 4025ba5c <pm_suspend+0x1bc>
 4025ba7a:	916d01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
 4025ba7d:	0000c0        	callx0	a0
 4025ba80:	00a022        	movi	a2, 0
@@ -60284,7 +60267,7 @@ Disassembly of section .irom0.text:
 4025bab7:	f00d      	ret.n
 4025bab9:	000000        	ill
 4025babc:	000e00        	excw
-4025babf:	1fb000        	excw
+4025babf:	23c000        	excw
 4025bac2:	124027        	ball	a0, a2, 4025bad8 <pm_suspend+0x238>
 4025bac5:	02f0c1        	l32r	a12, 4021c688 <_lit4_end+0x115388>
 4025bac8:	c50061        	l32r	a6, 4024cec8 <lwip_connect+0x64>
@@ -60318,12 +60301,11 @@ Disassembly of section .irom0.text:
 4025bb13:	bfff00        	excw
 4025bb16:	ff          	.byte 0xff
 4025bb17:	ff          	.byte 0xff
-4025bb18:	1fb8      	l32i.n	a11, a15, 4
-4025bb1a:	c04027        	ball	a0, a2, 4025bade <pm_suspend+0x23e>
-4025bb1d:	1f          	.byte 0x1f
-4025bb1e:	124027        	ball	a0, a2, 4025bb34 <pm_suspend+0x294>
-4025bb21:	31f0c1        	l32r	a12, 402282e4 <_lit4_end+0x120fe4>
-4025bb24:	fffc      	bnez.n	a15, 4025bb67 <pm_suspend+0x2c7>
+4025bb18:	23c8      	l32i.n	a12, a3, 8
+4025bb1a:	d04027        	ball	a0, a2, 4025baee <pm_suspend+0x24e>
+4025bb1d:	402723        	excw
+4025bb20:	f0c112        	addi	a1, a1, -16
+4025bb23:	fffc31        	l32r	a3, 4025bb14 <pm_suspend+0x274>
 4025bb26:	0161c2        	s32i	a12, a1, 4
 4025bb29:	fe7ac1        	l32r	a12, 4025b514 <lmacSetRetryLimit+0x1c>
 4025bb2c:	006102        	s32i	a0, a1, 0
@@ -60356,15 +60338,15 @@ Disassembly of section .irom0.text:
 4025bb75:	0000c0        	callx0	a0
 4025bb78:	ffeec5        	call0	4025ba68 <pm_suspend+0x1c8>
 4025bb7b:	fff9c6        	j	4025bb66 <pm_suspend+0x2c6>
-4025bb7e:	d00000        	subx2	a0, a0, a0
-4025bb81:	1f          	.byte 0x1f
-4025bb82:	ff4027        	ball	a0, a2, 4025bb85 <pm_suspend+0x2e5>
+4025bb7e:	e00000        	subx4	a0, a0, a0
+4025bb81:	402723        	excw
+4025bb84:	ff          	.byte 0xff
 4025bb85:	ef          	.byte 0xef
 4025bb86:	ff          	.byte 0xff
 4025bb87:	ff          	.byte 0xff
-4025bb88:	fea164        	excw
+4025bb88:	fea1c4        	excw
 4025bb8b:	3f          	.byte 0x3f
-4025bb8c:	271fe0        	excw
+4025bb8c:	2723f0        	excw
 4025bb8f:	465040        	excw
 4025bb92:	ff0000        	excw
 4025bb95:	df          	.byte 0xdf
@@ -60448,7 +60430,7 @@ Disassembly of section .irom0.text:
 4025bc59:	0108      	l32i.n	a0, a1, 0
 4025bc5b:	10c112        	addi	a1, a1, 16
 4025bc5e:	f00d      	ret.n
-4025bc60:	a148      	l32i.n	a4, a1, 40
+4025bc60:	a1a8      	l32i.n	a10, a1, 40
 4025bc62:	fe          	.byte 0xfe
 4025bc63:	3f          	.byte 0x3f
 
@@ -60476,9 +60458,9 @@ Disassembly of section .irom0.text:
 
 4025bc98 <pm_idle_sleep>:
 4025bc98:	f00d      	ret.n
-4025bc9a:	000000        	ill
-4025bc9d:	402720        	excw
-4025bca0:	fea0e1        	l32r	a14, 4025b720 <pm_set_sleep_type_from_upper+0x14>
+4025bc9a:	100000        	and	a0, a0, a0
+4025bc9d:	402724        	excw
+4025bca0:	fea141        	l32r	a4, 4025b724 <pm_set_sleep_type_from_upper+0x18>
 4025bca3:	3f          	.byte 0x3f
 
 4025bca4 <pm_open>:
@@ -60547,19 +60529,19 @@ Disassembly of section .irom0.text:
 4025bd4d:	90b801        	l32r	a0, 40240030 <_irom0_text_start+0x30>
 4025bd50:	0000c0        	callx0	a0
 4025bd53:	ffff06        	j	4025bd53 <pm_open+0xaf>
-4025bd56:	200000        	or	a0, a0, a0
-4025bd59:	402720        	excw
-4025bd5c:	272030        	excw
-4025bd5f:	204040        	or	a4, a0, a4
-4025bd62:	e44027        	ball	a0, a2, 4025bd4a <pm_open+0xa6>
-4025bd65:	3ffea1        	l32r	a10, 4022bd60 <_lit4_end+0x124a60>
-4025bd68:	fea1e5        	excw
+4025bd56:	300000        	xor	a0, a0, a0
+4025bd59:	402724        	excw
+4025bd5c:	272440        	excw
+4025bd5f:	245040        	extui	a5, a4, 0, 3
+4025bd62:	444027        	ball	a0, a2, 4025bdaa <pm_onBcnRx+0x2e>
+4025bd65:	3ffea2        	excw
+4025bd68:	fea245        	call0	4025a790 <rom_rfcal_rxiq_set_reg+0x68>
 4025bd6b:	3f          	.byte 0x3f
 4025bd6c:	81dc      	bnez.n	a1, 4025bd88 <pm_onBcnRx+0xc>
 4025bd6e:	fe          	.byte 0xfe
 4025bd6f:	3f          	.byte 0x3f
-4025bd70:	272070        	excw
-4025bd73:	206040        	or	a6, a0, a4
+4025bd70:	272480        	excw
+4025bd73:	247040        	extui	a7, a4, 0, 3
 4025bd76:	d04027        	ball	a0, a2, 4025bd4a <pm_open+0xa6>
 4025bd79:	106c      	movi.n	a0, -31
 4025bd7b:	c11240        	mul16u	a1, a2, a4
@@ -60823,7 +60805,7 @@ Disassembly of section .irom0.text:
 4025c02b:	ffd806        	j	4025bf8f <pm_onBcnRx+0x213>
 4025c02e:	014042        	s8i	a4, a0, 1
 4025c031:	ffd686        	j	4025bf8f <pm_onBcnRx+0x213>
-4025c034:	272080        	excw
+4025c034:	272490        	excw
 4025c037:	c11240        	mul16u	a1, a2, a4
 4025c03a:	0109f0        	slli	a0, a9, 17
 4025c03d:	fd3501        	l32r	a0, 4025b514 <lmacSetRetryLimit+0x1c>
@@ -60841,9 +60823,9 @@ Disassembly of section .irom0.text:
 4025c05f:	f00d      	ret.n
 4025c061:	ffa8c5        	call0	4025baf0 <pm_suspend+0x250>
 4025c064:	fffc86        	j	4025c05a <pm_onBcnRx+0x2de>
-4025c067:	20a000        	or	a10, a0, a0
-4025c06a:	904027        	ball	a0, a2, 4025bffe <pm_onBcnRx+0x282>
-4025c06d:	402720        	excw
+4025c067:	24b000        	extui	a11, a0, 0, 3
+4025c06a:	a04027        	ball	a0, a2, 4025c00e <pm_onBcnRx+0x292>
+4025c06d:	402724        	excw
 4025c070:	f0c112        	addi	a1, a1, -16
 4025c073:	0109      	s32i.n	a0, a1, 0
 4025c075:	fd2701        	l32r	a0, 4025b514 <lmacSetRetryLimit+0x1c>
@@ -60877,13 +60859,13 @@ Disassembly of section .irom0.text:
 4025c0c7:	0108      	l32i.n	a0, a1, 0
 4025c0c9:	10c112        	addi	a1, a1, 16
 4025c0cc:	f00d      	ret.n
-4025c0ce:	2c0000        	excw
+4025c0ce:	8c0000        	excw
 4025c0d1:	3ffea1        	l32r	a10, 4022c0cc <_lit4_end+0x124dcc>
-4025c0d4:	2720b0        	excw
-4025c0d7:	a1e740        	excw
+4025c0d4:	2724c0        	excw
+4025c0d7:	a24740        	excw
 4025c0da:	fe          	.byte 0xfe
 4025c0db:	3f          	.byte 0x3f
-4025c0dc:	2720d0        	excw
+4025c0dc:	2724e0        	excw
 4025c0df:	36af40        	excw
 4025c0e2:	200000        	or	a0, a0, a0
 4025c0e5:	122032        	l32i	a3, a0, 72
@@ -60967,8 +60949,8 @@ Disassembly of section .irom0.text:
 4025c1bb:	004032        	s8i	a3, a0, 0
 4025c1be:	003f45        	call0	4025c5b4 <pm_send_nullfunc>
 4025c1c1:	ffe7c6        	j	4025c164 <pm_onBcnRx+0x3e8>
-4025c1c4:	2720e0        	excw
-4025c1c7:	a1e840        	excw
+4025c1c4:	2724f0        	excw
+4025c1c7:	a24840        	excw
 4025c1ca:	fe          	.byte 0xfe
 4025c1cb:	3f          	.byte 0x3f
 4025c1cc:	204220        	or	a4, a2, a2
@@ -61055,7 +61037,7 @@ Disassembly of section .irom0.text:
 4025c2ab:	004052        	s8i	a5, a0, 0
 4025c2ae:	003045        	call0	4025c5b4 <pm_send_nullfunc>
 4025c2b1:	ffe246        	j	4025c23e <pm_onBcnRx+0x4c2>
-4025c2b4:	272100        	excw
+4025c2b4:	272510        	excw
 4025c2b7:	1e7840        	excw
 4025c2ba:	680000        	excw
 4025c2bd:	005b      	addi.n	a0, a0, 5
@@ -61123,8 +61105,8 @@ Disassembly of section .irom0.text:
 4025c367:	1108      	l32i.n	a0, a1, 4
 4025c369:	10c112        	addi	a1, a1, 16
 4025c36c:	f00d      	ret.n
-4025c36e:	100000        	and	a0, a0, a0
-4025c371:	402721        	l32r	a2, 4022c410 <_lit4_end+0x125110>
+4025c36e:	200000        	or	a0, a0, a0
+4025c371:	402725        	excw
 4025c374:	f0c112        	addi	a1, a1, -16
 4025c377:	0109      	s32i.n	a0, a1, 0
 4025c379:	201110        	or	a1, a1, a1
@@ -61196,7 +61178,7 @@ Disassembly of section .irom0.text:
 4025c436:	ffff06        	j	4025c436 <pm_onBcnRx+0x6ba>
 4025c439:	ff4b05        	call0	4025b8ec <pm_suspend+0x4c>
 4025c43c:	fff806        	j	4025c420 <pm_onBcnRx+0x6a4>
-4025c43f:	212000        	srai	a2, a0, 0
+4025c43f:	253000        	extui	a3, a0, 16, 3
 4025c442:	214027        	ball	a0, a2, 4025c467 <pm_onBcnRx+0x6eb>
 4025c445:	ff          	.byte 0xff
 4025c446:	ff          	.byte 0xff
@@ -61234,11 +61216,11 @@ Disassembly of section .irom0.text:
 4025c492:	444025        	excw
 4025c495:	4025c4        	excw
 4025c498:	bc98      	l32i.n	a9, a12, 44
-4025c49a:	504025        	excw
+4025c49a:	a84025        	excw
 4025c49d:	fe8b      	addi.n	a15, a14, 8
 4025c49f:	3f          	.byte 0x3f
 4025c4a0:	25c9b0        	extui	a12, a11, 25, 3
-4025c4a3:	215040        	srai	a5, a4, 0
+4025c4a3:	256040        	extui	a6, a4, 16, 3
 4025c4a6:	214027        	ball	a0, a2, 4025c4cb <pm_attach+0x23>
 
 4025c4a8 <pm_attach>:
@@ -61332,8 +61314,8 @@ Disassembly of section .irom0.text:
 4025c58f:	5108      	l32i.n	a0, a1, 20
 4025c591:	20c112        	addi	a1, a1, 32
 4025c594:	f00d      	ret.n
-4025c596:	a00000        	addx4	a0, a0, a0
-4025c599:	402721        	l32r	a2, 4022c638 <_lit4_end+0x125338>
+4025c596:	b00000        	addx8	a0, a0, a0
+4025c599:	402725        	excw
 4025c59c:	ff          	.byte 0xff
 4025c59d:	ff          	.byte 0xff
 4025c59e:	ff          	.byte 0xff
@@ -61347,7 +61329,7 @@ Disassembly of section .irom0.text:
 4025c5aa:	8f          	.byte 0x8f
 4025c5ab:	ff          	.byte 0xff
 4025c5ac:	fffff7        	bbsi	a15, 31, 4025c5af <pm_attach+0x107>
-4025c5af:	218003        	excw
+4025c5af:	259003        	excw
 4025c5b2:	0c4027        	ball	a0, a2, 4025c5c2 <pm_send_nullfunc+0xe>
 
 4025c5b4 <pm_send_nullfunc>:
@@ -61539,7 +61521,7 @@ Disassembly of section .irom0.text:
 4025c784:	440b      	addi.n	a4, a4, -1
 4025c786:	832340        	moveqz	a2, a3, a4
 4025c789:	f00d      	ret.n
-4025c78b:	21c000        	srai	a12, a0, 0
+4025c78b:	25d000        	extui	a13, a0, 16, 3
 4025c78e:	214027        	ball	a0, a2, 4025c7b3 <pm_scan_lock+0x23>
 
 4025c790 <pm_scan_lock>:
@@ -61567,7 +61549,7 @@ Disassembly of section .irom0.text:
 4025c7c4:	10c112        	addi	a1, a1, 16
 4025c7c7:	f00d      	ret.n
 4025c7c9:	000000        	ill
-4025c7cc:	21c8      	l32i.n	a12, a1, 8
+4025c7cc:	25d8      	l32i.n	a13, a5, 8
 4025c7ce:	214027        	ball	a0, a2, 4025c7f3 <pm_force_scan_unlock+0x23>
 
 4025c7d0 <pm_force_scan_unlock>:
@@ -61581,8 +61563,8 @@ Disassembly of section .irom0.text:
 4025c7e3:	0108      	l32i.n	a0, a1, 0
 4025c7e5:	10c112        	addi	a1, a1, 16
 4025c7e8:	f00d      	ret.n
-4025c7ea:	d00000        	subx2	a0, a0, a0
-4025c7ed:	402721        	l32r	a2, 4022c88c <_lit4_end+0x12558c>
+4025c7ea:	e00000        	subx4	a0, a0, a0
+4025c7ed:	402725        	excw
 4025c7f0:	ff          	.byte 0xff
 4025c7f1:	7f          	.byte 0x7f
 4025c7f2:	ff          	.byte 0xff
@@ -61710,14 +61692,14 @@ Disassembly of section .irom0.text:
 4025c918:	0108      	l32i.n	a0, a1, 0
 4025c91a:	10c112        	addi	a1, a1, 16
 4025c91d:	f00d      	ret.n
-4025c91f:	a1e000        	sll	a14, a0
+4025c91f:	a24000        	excw
 4025c922:	fe          	.byte 0xfe
 4025c923:	3f          	.byte 0x3f
-4025c924:	2721e0        	excw
-4025c927:	a17c40        	excw
+4025c924:	2725f0        	excw
+4025c927:	a1dc40        	excw
 4025c92a:	fe          	.byte 0xfe
 4025c92b:	3f          	.byte 0x3f
-4025c92c:	2721f0        	excw
+4025c92c:	272600        	excw
 4025c92f:	c11240        	mul16u	a1, a2, a4
 
 4025c930 <pm_post>:
@@ -61765,11 +61747,11 @@ Disassembly of section .irom0.text:
 4025c99d:	1108      	l32i.n	a0, a1, 4
 4025c99f:	10c112        	addi	a1, a1, 16
 4025c9a2:	f00d      	ret.n
-4025c9a4:	272210        	excw
-4025c9a7:	a17440        	excw
+4025c9a4:	272620        	excw
+4025c9a7:	a1d440        	excw
 4025c9aa:	fe          	.byte 0xfe
 4025c9ab:	3f          	.byte 0x3f
-4025c9ac:	272220        	excw
+4025c9ac:	272630        	excw
 4025c9af:	9fe140        	excw
 4025c9b2:	c18d      	excw
 4025c9b4:	fad8      	l32i.n	a13, a10, 60
@@ -61921,7 +61903,7 @@ Disassembly of section .irom0.text:
 4025cb43:	f0a022        	movi	a2, 240
 4025cb46:	fffc86        	j	4025cb3c <pm_get_idle_wait_time+0x34>
 4025cb49:	000000        	ill
-4025cb4c:	fea1f0        	excw
+4025cb4c:	fea250        	excw
 4025cb4f:	3f          	.byte 0x3f
 4025cb50:	186a00        	excw
 	...
@@ -62016,7 +61998,7 @@ Disassembly of section .irom0.text:
 4025cc2d:	0108      	l32i.n	a0, a1, 0
 4025cc2f:	10c112        	addi	a1, a1, 16
 4025cc32:	f00d      	ret.n
-4025cc34:	a33c      	movi.n	a3, 58
+4025cc34:	a39c      	beqz.n	a3, 4025cc52 <wdt_task+0x1a>
 4025cc36:	fe          	.byte 0xfe
 4025cc37:	3f          	.byte 0x3f
 
@@ -62087,7 +62069,7 @@ Disassembly of section .irom0.text:
 4025cce7:	0000c0        	callx0	a0
 4025ccea:	ffd686        	j	4025cc48 <wdt_task+0x10>
 4025cced:	000000        	ill
-4025ccf0:	feaae0        	excw
+4025ccf0:	feab40        	excw
 4025ccf3:	3f          	.byte 0x3f
 
 4025ccf4 <RxNodeNum>:
@@ -62135,7 +62117,7 @@ Disassembly of section .irom0.text:
 4025cd54:	0108      	l32i.n	a0, a1, 0
 4025cd56:	10c112        	addi	a1, a1, 16
 4025cd59:	f00d      	ret.n
-4025cd5b:	a20400        	excw
+4025cd5b:	a26400        	excw
 4025cd5e:	fe          	.byte 0xfe
 4025cd5f:	3f          	.byte 0x3f
 
@@ -62258,7 +62240,7 @@ Disassembly of section .irom0.text:
 4025ce84:	10c112        	addi	a1, a1, 16
 4025ce87:	f00d      	ret.n
 4025ce89:	000000        	ill
-4025ce8c:	a22c      	movi.n	a2, 42
+4025ce8c:	a28c      	beqz.n	a2, 4025ce9a <pp_disable_idle_timer+0xa>
 4025ce8e:	fe          	.byte 0xfe
 4025ce8f:	3f          	.byte 0x3f
 
@@ -62309,8 +62291,8 @@ Disassembly of section .irom0.text:
 4025ceff:	0108      	l32i.n	a0, a1, 0
 4025cf01:	10c112        	addi	a1, a1, 16
 4025cf04:	f00d      	ret.n
-4025cf06:	fc0000        	excw
-4025cf09:	3ffe90        	excw
+4025cf06:	5c0000        	excw
+4025cf09:	3ffe91        	l32r	a9, 4022cf04 <_lit4_end+0x125c04>
 
 4025cf0c <ppPeocessRxPktHdr>:
 4025cf0c:	f0c112        	addi	a1, a1, -16
@@ -62353,8 +62335,8 @@ Disassembly of section .irom0.text:
 4025cf6f:	f00d      	ret.n
 4025cf71:	c30c      	movi.n	a3, 12
 4025cf73:	fff646        	j	4025cf50 <ppPeocessRxPktHdr+0x44>
-4025cf76:	b00000        	addx8	a0, a0, a0
-4025cf79:	3ffea3        	excw
+4025cf76:	100000        	and	a0, a0, a0
+4025cf79:	3ffea4        	excw
 4025cf7c:	103364        	excw
 4025cf7f:	2bd140        	excw
 
@@ -62536,7 +62518,7 @@ Disassembly of section .irom0.text:
 4025d167:	004762        	s8i	a6, a7, 0
 4025d16a:	00b7c5        	call0	4025dce8 <pp_attach+0x10c>
 4025d16d:	ff92c6        	j	4025cfbc <ppTask+0x3c>
-4025d170:	272230        	excw
+4025d170:	272640        	excw
 4025d173:	240c40        	extui	a0, a4, 12, 3
 4025d176:	c90c      	movi.n	a9, 12
 4025d178:	f0c112        	addi	a1, a1, -16
@@ -62620,10 +62602,11 @@ Disassembly of section .irom0.text:
 4025d24d:	0509      	s32i.n	a0, a5, 0
 4025d24f:	fff7c6        	j	4025d232 <ppTask+0x2b2>
 4025d252:	d40000        	extui	a0, a0, 0, 14
-4025d255:	3ffe85        	call0	4029d240 <_irom0_text_end+0x284b8>
-4025d258:	fe8b54        	excw
+4025d255:	3ffe85        	call0	4029d240 <_irom0_text_end+0x27c47>
+4025d258:	8bac      	beqz.n	a11, 4025d284 <ppTxPkt+0x14>
+4025d25a:	fe          	.byte 0xfe
 4025d25b:	3f          	.byte 0x3f
-4025d25c:	272240        	excw
+4025d25c:	272650        	excw
 4025d25f:	432440        	excw
 4025d262:	404010        	ssai	16
 4025d265:	3f          	.byte 0x3f
@@ -63010,9 +62993,9 @@ Disassembly of section .irom0.text:
 4025d630:	0000c0        	callx0	a0
 4025d633:	020c      	movi.n	a2, 0
 4025d635:	ffec46        	j	4025d5ea <ppCheckTxIdle+0xee>
-4025d638:	fea580        	excw
+4025d638:	fea5e0        	excw
 4025d63b:	3f          	.byte 0x3f
-4025d63c:	f1ad      	excw
+4025d63c:	f20d      	ret.n
 4025d63e:	fe          	.byte 0xfe
 4025d63f:	3f          	.byte 0x3f
 4025d640:	080c      	movi.n	a8, 0
@@ -63148,7 +63131,7 @@ Disassembly of section .irom0.text:
 4025d79c:	20c112        	addi	a1, a1, 32
 4025d79f:	f00d      	ret.n
 4025d7a1:	000000        	ill
-4025d7a4:	f1ac      	beqz.n	a1, 4025d7d7 <ppCheckTxIdle+0x2db>
+4025d7a4:	f20c      	movi.n	a2, 15
 4025d7a6:	fe          	.byte 0xfe
 4025d7a7:	3f          	.byte 0x3f
 4025d7a8:	f0c112        	addi	a1, a1, -16
@@ -63551,11 +63534,11 @@ Disassembly of section .irom0.text:
 4025dbbf:	f00d      	ret.n
 4025dbc1:	000000        	ill
 4025dbc4:	0808      	l32i.n	a0, a8, 0
-4025dbc6:	580000        	excw
+4025dbc6:	b00000        	addx8	a0, a0, a0
 4025dbc9:	fe8b      	addi.n	a15, a14, 8
 4025dbcb:	3f          	.byte 0x3f
 4025dbcc:	25cf80        	extui	a12, a8, 31, 3
-4025dbcf:	225040        	excw
+4025dbcf:	266040        	excw
 4025dbd2:	4c4027        	ball	a0, a2, 4025dc22 <pp_attach+0x46>
 4025dbd5:	ce          	.byte 0xce
 4025dbd6:	c04025        	excw
@@ -63661,7 +63644,7 @@ Disassembly of section .irom0.text:
 4025dcd9:	5108      	l32i.n	a0, a1, 20
 4025dcdb:	20c112        	addi	a1, a1, 32
 4025dcde:	f00d      	ret.n
-4025dce0:	fea581        	l32r	a8, 4025d774 <ppCheckTxIdle+0x278>
+4025dce0:	fea5e1        	l32r	a14, 4025d774 <ppCheckTxIdle+0x278>
 4025dce3:	3f          	.byte 0x3f
 4025dce4:	39ac      	beqz.n	a9, 4025dd0b <pp_attach+0x12f>
 4025dce6:	124010        	excw
@@ -63966,7 +63949,7 @@ Disassembly of section .irom0.text:
 4025dff6:	103340        	and	a3, a3, a4
 4025dff9:	0639      	s32i.n	a3, a6, 0
 4025dffb:	ffdd06        	j	4025df73 <pp_attach+0x397>
-4025dffe:	900000        	addx2	a0, a0, a0
+4025dffe:	f00000        	subx8	a0, a0, a0
 4025e001:	3ffea5        	excw
 4025e004:	2e          	.byte 0x2e
 4025e005:	00ba      	add.n	a0, a0, a11
@@ -64298,7 +64281,7 @@ Disassembly of section .irom0.text:
 4025e382:	b92387        	blt	a3, a8, 4025e33f <rcUpdatePhyMode+0x7b>
 4025e385:	070d      	mov.n	a0, a7
 4025e387:	ffed06        	j	4025e33f <rcUpdatePhyMode+0x7b>
-4025e38a:	900000        	addx2	a0, a0, a0
+4025e38a:	f00000        	subx8	a0, a0, a0
 4025e38d:	3ffea6        	blti	a14, 0x100, 4025e3d0 <rcAttach+0x30>
 4025e390:	fe8360        	excw
 4025e393:	3f          	.byte 0x3f
@@ -64338,7 +64321,7 @@ Disassembly of section .irom0.text:
 4025e3e1:	0108      	l32i.n	a0, a1, 0
 4025e3e3:	10c112        	addi	a1, a1, 16
 4025e3e6:	f00d      	ret.n
-4025e3e8:	fea6a0        	excw
+4025e3e8:	fea700        	excw
 4025e3eb:	3f          	.byte 0x3f
 
 4025e3ec <rcGetTrc>:
@@ -64370,9 +64353,9 @@ Disassembly of section .irom0.text:
 4025e417:	103340        	and	a3, a3, a4
 4025e41a:	5239      	s32i.n	a3, a2, 20
 4025e41c:	f00d      	ret.n
-4025e41e:	e00000        	subx4	a0, a0, a0
-4025e421:	402722        	l32i	a2, a7, 0x100
-4025e424:	2722d0        	excw
+4025e41e:	f00000        	subx8	a0, a0, a0
+4025e421:	402726        	beqi	a7, 2, 4025e465 <rc_enable_trc+0x3d>
+4025e424:	2726e0        	excw
 4025e427:	190c40        	excw
 
 4025e428 <rc_enable_trc>:
@@ -64458,11 +64441,11 @@ Disassembly of section .irom0.text:
 4025e4f0:	ffa721        	l32r	a2, 4025e38c <rcUpdatePhyMode+0xc8>
 4025e4f3:	040222        	l8ui	a2, a2, 4
 4025e4f6:	f00d      	ret.n
-4025e4f8:	fea696        	bltz	a6, 4025e4e6 <rc_enable_trc+0xbe>
+4025e4f8:	fea6f6        	bgeui	a6, 12, 4025e4fa <rc_get_mask+0xa>
 4025e4fb:	3f          	.byte 0x3f
-4025e4fc:	22e8      	l32i.n	a14, a2, 8
-4025e4fe:	f04027        	ball	a0, a2, 4025e4f2 <rc_get_mask+0x2>
-4025e501:	402722        	l32i	a2, a7, 0x100
+4025e4fc:	26f8      	l32i.n	a15, a6, 8
+4025e4fe:	004027        	ball	a0, a2, 4025e502 <rc_get_mask+0x12>
+4025e501:	402727        	blt	a7, a2, 4025e545 <rc_disable_trc+0x41>
 
 4025e504 <rc_disable_trc>:
 4025e504:	170c      	movi.n	a7, 1
@@ -64781,17 +64764,17 @@ Disassembly of section .irom0.text:
 4025e817:	10c112        	addi	a1, a1, 16
 4025e81a:	f00d      	ret.n
 4025e81c:	2598      	l32i.n	a9, a5, 8
-4025e81e:	900000        	addx2	a0, a0, a0
+4025e81e:	f00000        	subx8	a0, a0, a0
 4025e821:	feac      	beqz.n	a14, 4025e854 <wDev_Get_Next_TBTT+0x6c>
 4025e823:	3f          	.byte 0x3f
-4025e824:	fed280        	excw
+4025e824:	fed2e0        	excw
 4025e827:	3f          	.byte 0x3f
-4025e828:	fed2e0        	excw
+4025e828:	fed340        	excw
 4025e82b:	3f          	.byte 0x3f
-4025e82c:	d278      	l32i.n	a7, a2, 52
+4025e82c:	d2d8      	l32i.n	a13, a2, 52
 4025e82e:	fe          	.byte 0xfe
 4025e82f:	3f          	.byte 0x3f
-4025e830:	feda40        	excw
+4025e830:	fedaa0        	excw
 4025e833:	3f          	.byte 0x3f
 4025e834:	004f40        	break	15, 4
 4025e837:	55e440        	extui	a14, a4, 20, 6
@@ -64999,7 +64982,7 @@ Disassembly of section .irom0.text:
 4025ea4f:	0108      	l32i.n	a0, a1, 0
 4025ea51:	10c112        	addi	a1, a1, 16
 4025ea54:	f00d      	ret.n
-4025ea56:	480000        	excw
+4025ea56:	a80000        	excw
 4025ea59:	fed8      	l32i.n	a13, a14, 60
 4025ea5b:	3f          	.byte 0x3f
 
@@ -65016,7 +64999,7 @@ Disassembly of section .irom0.text:
 4025ea77:	f00d      	ret.n
 4025ea79:	000000        	ill
 4025ea7c:	9f0300        	excw
-4025ea7f:	000c      	movi.n	a0, 0
+4025ea7f:	600c      	movi.n	a0, 6
 4025ea81:	feac      	beqz.n	a14, 4025eab4 <wDev_Initialize+0x30>
 4025ea83:	3f          	.byte 0x3f
 
@@ -65257,7 +65240,7 @@ Disassembly of section .irom0.text:
 4025ecfa:	0020c0        	memw
 4025ecfd:	8f6522        	s32i	a2, a5, 0x23c
 4025ed00:	f00d      	ret.n
-4025ed02:	840000        	extui	a0, a0, 0, 9
+4025ed02:	e40000        	extui	a0, a0, 0, 15
 4025ed05:	ef          	.byte 0xef
 4025ed06:	fe          	.byte 0xfe
 4025ed07:	3f          	.byte 0x3f
@@ -65722,7 +65705,7 @@ Disassembly of section .irom0.text:
 4025f1ac:	040c      	movi.n	a4, 0
 4025f1ae:	054342        	s8i	a4, a3, 5
 4025f1b1:	f00d      	ret.n
-4025f1b3:	da5000        	excw
+4025f1b3:	dab000        	excw
 4025f1b6:	fe          	.byte 0xfe
 4025f1b7:	3f          	.byte 0x3f
 
@@ -66215,16 +66198,16 @@ Disassembly of section .irom0.text:
 4025f6b2:	846b01        	l32r	a0, 40240860 <vApplicationTickHook+0x64>
 4025f6b5:	0000c0        	callx0	a0
 4025f6b8:	ffaa46        	j	4025f565 <esf_buf_recycle+0x119>
-4025f6bb:	e9b000        	excw
+4025f6bb:	ea1000        	excw
 4025f6be:	fe          	.byte 0xfe
 4025f6bf:	3f          	.byte 0x3f
-4025f6c0:	feda70        	excw
+4025f6c0:	fedad0        	excw
 4025f6c3:	3f          	.byte 0x3f
-4025f6c4:	fedef0        	excw
+4025f6c4:	fedf50        	excw
 4025f6c7:	3f          	.byte 0x3f
-4025f6c8:	fee750        	excw
+4025f6c8:	fee7b0        	excw
 4025f6cb:	3f          	.byte 0x3f
-4025f6cc:	feec10        	excw
+4025f6cc:	feec70        	excw
 4025f6cf:	3f          	.byte 0x3f
 
 4025f6d0 <esf_buf_setup>:
@@ -66529,17 +66512,17 @@ Disassembly of section .irom0.text:
 4025f9a8:	84c222        	addi	a2, a2, -124
 4025f9ab:	f00d      	ret.n
 4025f9ad:	000000        	ill
-4025f9b0:	2308      	l32i.n	a0, a3, 8
-4025f9b2:	184027        	ball	a0, a2, 4025f9ce <ieee80211_find_channel_byieee+0x4a>
-4025f9b5:	402723        	excw
-4025f9b8:	272320        	excw
-4025f9bb:	231040        	excw
-4025f9be:	704027        	ball	a0, a2, 4025fa32 <wifi_mode_set+0x62>
-4025f9c1:	402723        	excw
-4025f9c4:	2348      	l32i.n	a4, a3, 8
-4025f9c6:	504027        	ball	a0, a2, 4025fa1a <wifi_mode_set+0x4a>
-4025f9c9:	402723        	excw
-4025f9cc:	272340        	excw
+4025f9b0:	2718      	l32i.n	a1, a7, 8
+4025f9b2:	284027        	ball	a0, a2, 4025f9de <wifi_mode_set+0xe>
+4025f9b5:	402727        	blt	a7, a2, 4025f9f9 <wifi_mode_set+0x29>
+4025f9b8:	272730        	excw
+4025f9bb:	272040        	excw
+4025f9be:	804027        	ball	a0, a2, 4025f942 <ieee80211_ieee2mhz+0x2a>
+4025f9c1:	402727        	blt	a7, a2, 4025fa05 <wifi_mode_set+0x35>
+4025f9c4:	2758      	l32i.n	a5, a7, 8
+4025f9c6:	604027        	ball	a0, a2, 4025fa2a <wifi_mode_set+0x5a>
+4025f9c9:	402727        	blt	a7, a2, 4025fa0d <wifi_mode_set+0x3d>
+4025f9cc:	272750        	excw
 4025f9cf:	c11240        	mul16u	a1, a2, a4
 
 4025f9d0 <wifi_mode_set>:
@@ -66821,13 +66804,13 @@ Disassembly of section .irom0.text:
 4025fc78:	10c112        	addi	a1, a1, 16
 4025fc7b:	f00d      	ret.n
 4025fc7d:	000000        	ill
-4025fc80:	ee0c      	movi.n	a14, 14
+4025fc80:	ee6c      	movi.n	a14, -18
 4025fc82:	fe          	.byte 0xfe
 4025fc83:	3f          	.byte 0x3f
-4025fc84:	f18c      	beqz.n	a1, 4025fc97 <ieee80211_getmgtframe+0x5f>
+4025fc84:	f1ec      	bnez.n	a1, 4025fcb7 <ieee80211_getmgtframe+0x7f>
 4025fc86:	fe          	.byte 0xfe
 4025fc87:	3f          	.byte 0x3f
-4025fc88:	fef190        	excw
+4025fc88:	fef1f0        	excw
 4025fc8b:	3f          	.byte 0x3f
 4025fc8c:	e0c112        	addi	a1, a1, -32
 4025fc8f:	0461d2        	s32i	a13, a1, 16
@@ -68125,17 +68108,17 @@ Disassembly of section .irom0.text:
 402609c5:	7fa601        	l32r	a0, 40240860 <vApplicationTickHook+0x64>
 402609c8:	0000c0        	callx0	a0
 402609cb:	fff146        	j	40260994 <hostap_input+0x884>
-402609ce:	d80000        	excw
-402609d1:	8e          	.byte 0x8e
+402609ce:	380000        	excw
+402609d1:	8f          	.byte 0x8f
 402609d2:	fe          	.byte 0xfe
 402609d3:	3f          	.byte 0x3f
 402609d4:	a07c      	movi.n	a0, -6
 402609d6:	084024        	excw
 402609d9:	4026e5        	excw
-402609dc:	272380        	excw
-402609df:	23a040        	excw
-402609e2:	d04027        	ball	a0, a2, 402609b6 <hostap_input+0x8a6>
-402609e5:	402723        	excw
+402609dc:	272790        	excw
+402609df:	27b040        	excw
+402609e2:	e04027        	ball	a0, a2, 402609c6 <hostap_input+0x8b6>
+402609e5:	402727        	blt	a7, a2, 40260a29 <wifi_softap_start+0x41>
 
 402609e8 <wifi_softap_start>:
 402609e8:	c0c112        	addi	a1, a1, -64
@@ -68582,7 +68565,7 @@ Disassembly of section .irom0.text:
 40260e5c:	10c112        	addi	a1, a1, 16
 40260e5f:	f00d      	ret.n
 40260e61:	000000        	ill
-40260e64:	ee9c      	beqz.n	a14, 40260e86 <ieee80211_ht_updateparams+0x1a>
+40260e64:	eefc      	bnez.n	a14, 40260ea6 <ieee80211_ht_updateparams+0x3a>
 40260e66:	fe          	.byte 0xfe
 40260e67:	3f          	.byte 0x3f
 40260e68:	ff          	.byte 0xff
@@ -68688,7 +68671,7 @@ Disassembly of section .irom0.text:
 40260f71:	200040        	or	a0, a0, a4
 40260f74:	100030        	and	a0, a0, a3
 40260f77:	ffd006        	j	40260ebb <ieee80211_ht_updateparams+0x4f>
-40260f7a:	880000        	excw
+40260f7a:	e80000        	excw
 40260f7d:	feed      	excw
 40260f7f:	3f          	.byte 0x3f
 
@@ -68958,7 +68941,7 @@ Disassembly of section .irom0.text:
 4026121c:	0108      	l32i.n	a0, a1, 0
 4026121e:	20c112        	addi	a1, a1, 32
 40261221:	f00d      	ret.n
-40261223:	eea000        	excw
+40261223:	ef0000        	excw
 40261226:	fe          	.byte 0xfe
 40261227:	3f          	.byte 0x3f
 40261228:	fffd      	excw
@@ -69174,7 +69157,7 @@ Disassembly of section .irom0.text:
 4026143f:	1108      	l32i.n	a0, a1, 4
 40261441:	20c112        	addi	a1, a1, 32
 40261444:	f00d      	ret.n
-40261446:	700000        	excw
+40261446:	d00000        	subx2	a0, a0, a0
 40261449:	ee          	.byte 0xee
 4026144a:	fe          	.byte 0xfe
 4026144b:	3f          	.byte 0x3f
@@ -69306,7 +69289,7 @@ Disassembly of section .irom0.text:
 4026158d:	4108      	l32i.n	a0, a1, 16
 4026158f:	20c112        	addi	a1, a1, 32
 40261592:	f00d      	ret.n
-40261594:	2723e0        	excw
+40261594:	2727f0        	excw
 40261597:	722040        	excw
 4026159a:	833020        	moveqz	a3, a0, a2
 4026159d:	c11220        	mul16u	a1, a2, a2
@@ -70085,7 +70068,7 @@ Disassembly of section .irom0.text:
 40261d6a:	f00d      	ret.n
 40261d6c:	120c      	movi.n	a2, 1
 40261d6e:	f00d      	ret.n
-40261d70:	feedc0        	excw
+40261d70:	feee20        	excw
 40261d73:	3f          	.byte 0x3f
 
 40261d74 <ieee80211_parse_wpa>:
@@ -71343,8 +71326,8 @@ Disassembly of section .irom0.text:
 402629ad:	223b      	addi.n	a2, a2, 3
 402629af:	f00d      	ret.n
 402629b1:	000000        	ill
-402629b4:	272400        	excw
-402629b7:	ec9040        	excw
+402629b4:	272810        	excw
+402629b7:	ecf040        	excw
 402629ba:	fe          	.byte 0xfe
 402629bb:	3f          	.byte 0x3f
 
@@ -71536,11 +71519,12 @@ Disassembly of section .irom0.text:
 40262b8f:	f44040        	extui	a4, a4, 0, 16
 40262b92:	042d      	mov.n	a2, a4
 40262b94:	f00d      	ret.n
-40262b96:	c40000        	extui	a0, a0, 0, 13
-40262b99:	feed      	excw
+40262b96:	240000        	extui	a0, a0, 0, 3
+40262b99:	ee          	.byte 0xee
+40262b9a:	fe          	.byte 0xfe
 40262b9b:	3f          	.byte 0x3f
 40262b9c:	008010        	excw
-40262b9f:	242000        	extui	a2, a0, 0, 3
+40262b9f:	283000        	excw
 40262ba2:	1c4027        	ball	a0, a2, 40262bc2 <ieee80211_send_mgmt+0x1e>
 
 40262ba4 <ieee80211_send_mgmt>:
@@ -72650,9 +72634,10 @@ Disassembly of section .irom0.text:
 40263680:	220b      	addi.n	a2, a2, -1
 40263682:	932320        	movnez	a2, a3, a2
 40263685:	f00d      	ret.n
-40263687:	242800        	extui	a2, a0, 8, 3
-4026368a:	fc4027        	ball	a0, a2, 4026368a <ieee80211_phy_type_get+0x12>
-4026368d:	402724        	excw
+40263687:	283800        	excw
+4026368a:	0c4027        	ball	a0, a2, 4026369a <ieee80211_setup_ratetable+0xa>
+4026368d:	2729      	s32i.n	a2, a7, 8
+4026368f:	c11240        	mul16u	a1, a2, a4
 
 40263690 <ieee80211_setup_ratetable>:
 40263690:	f0c112        	addi	a1, a1, -16
@@ -72715,7 +72700,7 @@ Disassembly of section .irom0.text:
 
 4026371c <ieee80211_psq_cleanup>:
 4026371c:	f00d      	ret.n
-4026371e:	8c0000        	excw
+4026371e:	ec0000        	excw
 40263721:	feed      	excw
 40263723:	3f          	.byte 0x3f
 
@@ -72917,7 +72902,7 @@ Disassembly of section .irom0.text:
 402638fd:	7259      	s32i.n	a5, a2, 28
 402638ff:	f00d      	ret.n
 40263901:	000000        	ill
-40263904:	2725d0        	excw
+40263904:	2729e0        	excw
 40263907:	028240        	excw
 
 40263908 <ieee80211_iserp_rateset>:
@@ -72982,11 +72967,11 @@ Disassembly of section .irom0.text:
 4026398c:	2108      	l32i.n	a0, a1, 8
 4026398e:	10c112        	addi	a1, a1, 16
 40263991:	f00d      	ret.n
-40263993:	f1b400        	excw
+40263993:	f21400        	excw
 40263996:	fe          	.byte 0xfe
 40263997:	3f          	.byte 0x3f
 40263998:	264020        	excw
-4026399b:	f1d440        	excw
+4026399b:	f23440        	excw
 4026399e:	fe          	.byte 0xfe
 4026399f:	3f          	.byte 0x3f
 402639a0:	264010        	excw
@@ -73035,7 +73020,7 @@ Disassembly of section .irom0.text:
 40263a0f:	0108      	l32i.n	a0, a1, 0
 40263a11:	10c112        	addi	a1, a1, 16
 40263a14:	f00d      	ret.n
-40263a16:	740000        	extui	a0, a0, 0, 8
+40263a16:	d40000        	extui	a0, a0, 0, 14
 40263a19:	3ffef2        	excw
 40263a1c:	39f8      	l32i.n	a15, a9, 12
 40263a1e:	3c4026        	beqi	a0, 4, 40263a5e <scan_start+0x36>
@@ -73215,10 +73200,10 @@ Disassembly of section .irom0.text:
 40263be0:	0108      	l32i.n	a0, a1, 0
 40263be2:	10c112        	addi	a1, a1, 16
 40263be5:	f00d      	ret.n
-40263be7:	f1b800        	excw
+40263be7:	f21800        	excw
 40263bea:	fe          	.byte 0xfe
 40263beb:	3f          	.byte 0x3f
-40263bec:	edfc      	bnez.n	a13, 40263c2e <scan_pm_channel_op_cb+0x11e>
+40263bec:	ee5c      	movi.n	a14, 94
 40263bee:	fe          	.byte 0xfe
 40263bef:	3f          	.byte 0x3f
 40263bf0:	f0c112        	addi	a1, a1, -16
@@ -73313,12 +73298,12 @@ Disassembly of section .irom0.text:
 40263cdf:	0108      	l32i.n	a0, a1, 0
 40263ce1:	10c112        	addi	a1, a1, 16
 40263ce4:	f00d      	ret.n
-40263ce6:	f00000        	subx8	a0, a0, a0
-40263ce9:	402725        	excw
-40263cec:	edac      	beqz.n	a13, 40263d1e <scan_cancel+0x62>
+40263ce6:	000000        	ill
+40263ce9:	272a      	add.n	a2, a7, a2
+40263ceb:	ee0c40        	excw
 40263cee:	fe          	.byte 0xfe
 40263cef:	3f          	.byte 0x3f
-40263cf0:	fe90d4        	excw
+40263cf0:	fe9134        	excw
 40263cf3:	3f          	.byte 0x3f
 40263cf4:	fffd21        	l32r	a2, 40263ce8 <scan_cancel+0x2c>
 40263cf7:	c0c112        	addi	a1, a1, -64
@@ -73433,7 +73418,7 @@ Disassembly of section .irom0.text:
 40263e17:	040c      	movi.n	a4, 0
 40263e19:	dcc485        	call0	40240a64 <ets_timer_arm>
 40263e1c:	ffe146        	j	40263da5 <scan_cancel+0xe9>
-40263e1f:	f25800        	excw
+40263e1f:	f2b800        	excw
 40263e22:	fe          	.byte 0xfe
 40263e23:	3f          	.byte 0x3f
 
@@ -73689,8 +73674,9 @@ Disassembly of section .irom0.text:
 4026407b:	102320        	and	a2, a3, a2
 4026407e:	7429      	s32i.n	a2, a4, 28
 40264080:	f00d      	ret.n
-40264082:	000000        	ill
-40264085:	402726        	beqi	a7, 2, 402640c9 <scan_connect_state+0x41>
+40264082:	100000        	and	a0, a0, a0
+40264085:	272a      	add.n	a2, a7, a2
+40264087:	c11240        	mul16u	a1, a2, a4
 
 40264088 <scan_connect_state>:
 40264088:	f0c112        	addi	a1, a1, -16
@@ -73736,12 +73722,12 @@ Disassembly of section .irom0.text:
 402640e8:	f00d      	ret.n
 402640ea:	020c      	movi.n	a2, 0
 402640ec:	f00d      	ret.n
-402640ee:	3c0000        	excw
+402640ee:	9c0000        	excw
 402640f1:	ee          	.byte 0xee
 402640f2:	fe          	.byte 0xfe
 402640f3:	3f          	.byte 0x3f
-402640f4:	272610        	excw
-402640f7:	eea940        	excw
+402640f4:	272a20        	excw
+402640f7:	ef0940        	excw
 402640fa:	fe          	.byte 0xfe
 402640fb:	3f          	.byte 0x3f
 
@@ -75526,9 +75512,9 @@ Disassembly of section .irom0.text:
 40265357:	df11c5        	call0	40244474 <xTaskResumeAll>
 4026535a:	fff4c6        	j	40265331 <wifi_station_stop+0x19>
 4026535d:	000000        	ill
-40265360:	fef290        	excw
+40265360:	fef2f0        	excw
 40265363:	3f          	.byte 0x3f
-40265364:	fef2b0        	excw
+40265364:	fef310        	excw
 40265367:	3f          	.byte 0x3f
 40265368:	265544        	excw
 4026536b:	046c40        	extui	a6, a4, 12, 1
@@ -75664,7 +75650,7 @@ Disassembly of section .irom0.text:
 4026549e:	df6817        	bbci	a8, 1, 40265481 <chm_start_op+0x11>
 402654a1:	000085        	call0	402654ac <chm_start_op+0x3c>
 402654a4:	fff706        	j	40265484 <chm_start_op+0x14>
-402654a7:	f29400        	excw
+402654a7:	f2f400        	excw
 402654aa:	fe          	.byte 0xfe
 402654ab:	3f          	.byte 0x3f
 402654ac:	f0c112        	addi	a1, a1, -16
@@ -75867,9 +75853,9 @@ Disassembly of section .irom0.text:
 40265683:	120c      	movi.n	a2, 1
 40265685:	932340        	movnez	a2, a3, a4
 40265688:	f00d      	ret.n
-4026568a:	d80000        	excw
-4026568d:	3ffef2        	excw
-40265690:	fef5b4        	excw
+4026568a:	380000        	excw
+4026568d:	3ffef3        	excw
+40265690:	fef614        	excw
 40265693:	3f          	.byte 0x3f
 40265694:	59b8      	l32i.n	a11, a9, 20
 40265696:	324026        	beqi	a0, 4, 402656cc <cnx_attach+0x34>
@@ -76216,7 +76202,7 @@ Disassembly of section .irom0.text:
 402659fc:	10c112        	addi	a1, a1, 16
 402659ff:	f00d      	ret.n
 40265a01:	000000        	ill
-40265a04:	f5b8      	l32i.n	a11, a5, 60
+40265a04:	f618      	l32i.n	a1, a6, 60
 40265a06:	fe          	.byte 0xfe
 40265a07:	3f          	.byte 0x3f
 40265a08:	f0c112        	addi	a1, a1, -16
@@ -76238,7 +76224,7 @@ Disassembly of section .irom0.text:
 40265a31:	1108      	l32i.n	a0, a1, 4
 40265a33:	10c112        	addi	a1, a1, 16
 40265a36:	f00d      	ret.n
-40265a38:	272630        	excw
+40265a38:	272a40        	excw
 40265a3b:	c11240        	mul16u	a1, a2, a4
 
 40265a3c <cnx_connect_timeout>:
@@ -76290,7 +76276,7 @@ Disassembly of section .irom0.text:
 40265ab0:	10c112        	addi	a1, a1, 16
 40265ab3:	f00d      	ret.n
 40265ab5:	000000        	ill
-40265ab8:	272640        	excw
+40265ab8:	272a50        	excw
 40265abb:	031c40        	excw
 40265abe:	fef321        	l32r	a2, 4026568c <chm_check_same_channel+0x30>
 40265ac1:	c0c112        	addi	a1, a1, -64
@@ -76489,7 +76475,7 @@ Disassembly of section .irom0.text:
 40265cc3:	204550        	or	a4, a5, a5
 40265cc6:	ff7a85        	call0	40265470 <chm_start_op>
 40265cc9:	fff946        	j	40265cb2 <cnx_start_handoff_cb+0x20e>
-40265ccc:	fef5c4        	excw
+40265ccc:	fef624        	excw
 40265ccf:	3f          	.byte 0x3f
 40265cd0:	d0c112        	addi	a1, a1, -48
 40265cd3:	086102        	s32i	a0, a1, 32
@@ -76911,8 +76897,8 @@ Disassembly of section .irom0.text:
 402660d9:	740000        	extui	a0, a0, 0, 8
 402660dc:	7d4e02        	s8i	a0, a14, 125
 402660df:	ffef46        	j	402660a0 <cnx_remove_rc+0x30>
-402660e2:	b00000        	addx8	a0, a0, a0
-402660e5:	3ffef5        	excw
+402660e2:	100000        	and	a0, a0, a0
+402660e5:	3ffef6        	bgeui	a14, 0x100, 40266128 <cnx_remove_rc+0xb8>
 402660e8:	e0c112        	addi	a1, a1, -32
 402660eb:	31e9      	s32i.n	a14, a1, 12
 402660ed:	11c9      	s32i.n	a12, a1, 4
@@ -77082,7 +77068,7 @@ Disassembly of section .irom0.text:
 40266281:	1108      	l32i.n	a0, a1, 4
 40266283:	10c112        	addi	a1, a1, 16
 40266286:	f00d      	ret.n
-40266288:	fef270        	excw
+40266288:	fef2d0        	excw
 4026628b:	3f          	.byte 0x3f
 
 4026628c <cnx_update_bss_more>:
@@ -77329,7 +77315,7 @@ Disassembly of section .irom0.text:
 402664f8:	30c112        	addi	a1, a1, 48
 402664fb:	f00d      	ret.n
 402664fd:	000000        	ill
-40266500:	272670        	excw
+40266500:	272a80        	excw
 40266503:	ff2140        	excw
 40266506:	ff          	.byte 0xff
 40266507:	f0c112        	addi	a1, a1, -16
@@ -77547,8 +77533,8 @@ Disassembly of section .irom0.text:
 4026670b:	242ff2        	l32i	a15, a15, 144
 4026670e:	fff986        	j	402666f8 <cnx_node_search+0x58>
 40266711:	000000        	ill
-40266714:	272680        	excw
-40266717:	26c040        	excw
+40266714:	272a90        	excw
+40266717:	2ad040        	excw
 4026671a:	124027        	ball	a0, a2, 40266730 <cnx_node_leave+0x14>
 
 4026671c <cnx_node_leave>:
@@ -77631,10 +77617,10 @@ Disassembly of section .irom0.text:
 402667ee:	102102        	l32i	a0, a1, 64
 402667f1:	50c112        	addi	a1, a1, 80
 402667f4:	f00d      	ret.n
-402667f6:	e00000        	subx4	a0, a0, a0
-402667f9:	402726        	beqi	a7, 2, 4026683d <cnx_node_join+0x3d>
-402667fc:	272700        	excw
-402667ff:	c11240        	mul16u	a1, a2, a4
+402667f6:	f00000        	subx8	a0, a0, a0
+402667f9:	272a      	add.n	a2, a7, a2
+402667fb:	2b1040        	excw
+402667fe:	124027        	ball	a0, a2, 40266814 <cnx_node_join+0x14>
 
 40266800 <cnx_node_join>:
 40266800:	b0c112        	addi	a1, a1, -80
@@ -78670,10 +78656,10 @@ Disassembly of section .irom0.text:
 40267190:	f27c      	movi.n	a2, -1
 40267192:	fffac6        	j	40267181 <pbkdf2_sha1+0x51>
 40267195:	000000        	ill
-40267198:	3268      	l32i.n	a6, a2, 12
-4026719a:	504027        	ball	a0, a2, 402671ee <pbkdf2_sha1+0xbe>
-4026719d:	402732        	l32i	a3, a7, 0x100
-402671a0:	273280        	excw
+40267198:	3678      	l32i.n	a7, a6, 12
+4026719a:	604027        	ball	a0, a2, 402671fe <pbkdf2_sha1+0xce>
+4026719d:	402736        	excw
+402671a0:	273690        	excw
 402671a3:	c11240        	mul16u	a1, a2, a4
 402671a6:	61e2b0        	excw
 402671a9:	61f211        	l32r	a1, 4023f974 <_lit4_end+0x138674>
@@ -78819,7 +78805,7 @@ Disassembly of section .irom0.text:
 4026731b:	030c      	movi.n	a3, 0
 4026731d:	fff041        	l32r	a4, 402672e0 <wpa_auth_for_each_sta+0xc>
 40267320:	060c      	movi.n	a6, 0
-40267322:	0b4cc5        	call0	402727f0 <eloop_register_timeout>
+40267322:	0b8dc5        	call0	40272c00 <eloop_register_timeout>
 40267325:	11c8      	l32i.n	a12, a1, 4
 40267327:	21d8      	l32i.n	a13, a1, 8
 40267329:	31e8      	l32i.n	a14, a1, 12
@@ -78839,7 +78825,7 @@ Disassembly of section .irom0.text:
 40267349:	0108      	l32i.n	a0, a1, 0
 4026734b:	10c112        	addi	a1, a1, 16
 4026734e:	f00d      	ret.n
-40267350:	272760        	excw
+40267350:	272b70        	excw
 40267353:	533040        	excw
 40267356:	c11220        	mul16u	a1, a2, a2
 40267359:	612280        	excw
@@ -79332,7 +79318,7 @@ Disassembly of section .irom0.text:
 40267814:	0c4d      	mov.n	a4, a12
 40267816:	100c      	movi.n	a0, 1
 40267818:	116c02        	s32i	a0, a12, 68
-4026781b:	0afd05        	call0	402727ec <eloop_cancel_timeout>
+4026781b:	0b3e05        	call0	40272bfc <eloop_cancel_timeout>
 4026781e:	020c      	movi.n	a2, 0
 40267820:	666c22        	s32i	a2, a12, 0x198
 40267823:	f138      	l32i.n	a3, a1, 60
@@ -79409,7 +79395,7 @@ Disassembly of section .irom0.text:
 402678df:	fe8021        	l32r	a2, 402672e0 <wpa_auth_for_each_sta+0xc>
 402678e2:	0d3d      	mov.n	a3, a13
 402678e4:	040c      	movi.n	a4, 0
-402678e6:	0af045        	call0	402727ec <eloop_cancel_timeout>
+402678e6:	0b3145        	call0	40272bfc <eloop_cancel_timeout>
 402678e9:	0d2d      	mov.n	a2, a13
 402678eb:	030c      	movi.n	a3, 0
 402678ed:	ff9f45        	call0	402672e4 <wpa_auth_for_each_sta+0x10>
@@ -79837,7 +79823,7 @@ Disassembly of section .irom0.text:
 40267d52:	00a142        	movi	a4, 0x100
 40267d55:	a158      	l32i.n	a5, a1, 40
 40267d57:	142162        	l32i	a6, a1, 80
-40267d5a:	0aafc5        	call0	40272858 <rc4_skip>
+40267d5a:	0af0c5        	call0	40272c68 <rc4_skip>
 40267d5d:	0f2d      	mov.n	a2, a15
 40267d5f:	142142        	l32i	a4, a1, 80
 40267d62:	624c42        	s8i	a4, a12, 98
@@ -80007,7 +79993,7 @@ Disassembly of section .irom0.text:
 40267f12:	0d2d      	mov.n	a2, a13
 40267f14:	823340        	mull	a3, a3, a4
 40267f17:	fdd941        	l32r	a4, 4026767c <wpa_auth_sta_deinit+0xcc>
-40267f1a:	0a8d45        	call0	402727f0 <eloop_register_timeout>
+40267f1a:	0ace45        	call0	40272c00 <eloop_register_timeout>
 40267f1d:	51c8      	l32i.n	a12, a1, 20
 40267f1f:	61d8      	l32i.n	a13, a1, 24
 40267f21:	71e8      	l32i.n	a14, a1, 28
@@ -80099,7 +80085,7 @@ Disassembly of section .irom0.text:
 40267fec:	3c6c22        	s32i	a2, a12, 240
 40267fef:	fff021        	l32r	a2, 40267fb0 <__wpa_send_eapol+0x4e4>
 40267ff2:	51c8      	l32i.n	a12, a1, 20
-40267ff4:	0a7f45        	call0	402727ec <eloop_cancel_timeout>
+40267ff4:	0ac045        	call0	40272bfc <eloop_cancel_timeout>
 40267ff7:	4108      	l32i.n	a0, a1, 16
 40267ff9:	20c112        	addi	a1, a1, 32
 40267ffc:	f00d      	ret.n
@@ -80443,11 +80429,11 @@ Disassembly of section .irom0.text:
 4026833b:	c108      	l32i.n	a0, a1, 48
 4026833d:	40c112        	addi	a1, a1, 64
 40268340:	f00d      	ret.n
-40268342:	700000        	excw
-40268345:	402727        	blt	a7, a2, 40268389 <wpa_auth_sm_event+0x389>
-40268348:	30a052        	movi	a5, 48
-4026834b:	206330        	or	a6, a3, a3
-4026834e:	047d      	mov.n	a7, a4
+40268342:	800000        	add	a0, a0, a0
+40268345:	272b      	addi.n	a2, a7, 2
+40268347:	a05240        	addx4	a5, a2, a4
+4026834a:	633030        	excw
+4026834d:	047d20        	extui	a7, a2, 13, 1
 40268350:	b0c112        	addi	a1, a1, -80
 40268353:	841c      	movi.n	a4, 24
 40268355:	d1c9      	s32i.n	a12, a1, 52
@@ -80550,7 +80536,7 @@ Disassembly of section .irom0.text:
 40268453:	0c4d      	mov.n	a4, a12
 40268455:	666c32        	s32i	a3, a12, 0x198
 40268458:	0c38      	l32i.n	a3, a12, 0
-4026845a:	0a3905        	call0	402727ec <eloop_cancel_timeout>
+4026845a:	0a7a05        	call0	40272bfc <eloop_cancel_timeout>
 4026845d:	652c22        	l32i	a2, a12, 0x194
 40268460:	ff0e01        	l32r	a0, 40268098 <wpa_auth_sm_event+0x98>
 40268463:	0000c0        	callx0	a0
@@ -80782,13 +80768,13 @@ Disassembly of section .irom0.text:
 402686b1:	469c      	beqz.n	a6, 402686c9 <wpa_auth_sm_event+0x6c9>
 402686b3:	fe3f21        	l32r	a2, 40267fb0 <__wpa_send_eapol+0x4e4>
 402686b6:	0c4d      	mov.n	a4, a12
-402686b8:	0a1305        	call0	402727ec <eloop_cancel_timeout>
+402686b8:	0a5405        	call0	40272bfc <eloop_cancel_timeout>
 402686bb:	030c      	movi.n	a3, 0
 402686bd:	fe3c41        	l32r	a4, 40267fb0 <__wpa_send_eapol+0x4e4>
 402686c0:	0c58      	l32i.n	a5, a12, 0
 402686c2:	0c6d      	mov.n	a6, a12
 402686c4:	8528      	l32i.n	a2, a5, 32
-402686c6:	0a1285        	call0	402727f0 <eloop_register_timeout>
+402686c6:	0a5385        	call0	40272c00 <eloop_register_timeout>
 402686c9:	652c22        	l32i	a2, a12, 0x194
 402686cc:	fe7301        	l32r	a0, 40268098 <wpa_auth_sm_event+0x98>
 402686cf:	0000c0        	callx0	a0
@@ -81213,7 +81199,7 @@ Disassembly of section .irom0.text:
 40268aec:	030c      	movi.n	a3, 0
 40268aee:	ffdd85        	call0	402688c8 <wpa_auth_sm_event+0x8c8>
 40268af1:	ffe5c6        	j	40268a8c <wpa_auth_sm_event+0xa8c>
-40268af4:	272790        	excw
+40268af4:	272ba0        	excw
 40268af7:	a04240        	addx4	a4, a2, a4
 40268afa:	c11220        	mul16u	a1, a2, a2
 40268afd:	6102c0        	excw
@@ -81867,7 +81853,7 @@ Disassembly of section .irom0.text:
 4026913a:	0f          	.byte 0xf
 4026913b:	027200        	excw
 4026913e:	025201        	l32r	a0, 40229a88 <_lit4_end+0x122788>
-40269141:	27cc05        	call0	40290e04 <_irom0_text_end+0x1c07c>
+40269141:	27cc05        	call0	40290e04 <_irom0_text_end+0x1b80b>
 40269144:	120c      	movi.n	a2, 1
 40269146:	f00d      	ret.n
 40269148:	3767b6        	bltui	a7, 6, 40269183 <wpa_validate_wpa_ie+0x177>
@@ -82333,7 +82319,7 @@ Disassembly of section .irom0.text:
 402695c7:	044762        	s8i	a6, a7, 4
 402695ca:	ffd686        	j	40269528 <wpa_auth_uses_mfp+0x284>
 402695cd:	000000        	ill
-402695d0:	2727b0        	excw
+402695d0:	272bc0        	excw
 402695d3:	a06240        	addx4	a6, a2, a4
 402695d6:	744030        	extui	a4, a3, 0, 8
 402695d9:	c11220        	mul16u	a1, a2, a2
@@ -82505,13 +82491,13 @@ Disassembly of section .irom0.text:
 40269785:	203cc0        	or	a3, a12, a12
 40269788:	ffe821        	l32r	a2, 40269728 <wpa_auth_uses_mfp+0x484>
 4026978b:	040c      	movi.n	a4, 0
-4026978d:	0905c5        	call0	402727ec <eloop_cancel_timeout>
+4026978d:	0946c5        	call0	40272bfc <eloop_cancel_timeout>
 40269790:	0c5d      	mov.n	a5, a12
 40269792:	ffe541        	l32r	a4, 40269728 <wpa_auth_uses_mfp+0x484>
 40269795:	512c22        	l32i	a2, a12, 0x144
 40269798:	030c      	movi.n	a3, 0
 4026979a:	060c      	movi.n	a6, 0
-4026979c:	090505        	call0	402727f0 <eloop_register_timeout>
+4026979c:	094605        	call0	40272c00 <eloop_register_timeout>
 4026979f:	020c      	movi.n	a2, 0
 402697a1:	51c8      	l32i.n	a12, a1, 20
 402697a3:	4108      	l32i.n	a0, a1, 16
@@ -83213,7 +83199,7 @@ Disassembly of section .irom0.text:
 40269e8a:	012d      	mov.n	a2, a1
 40269e8c:	032c      	movi.n	a3, 32
 40269e8e:	00a142        	movi	a4, 0x100
-40269e91:	089c45        	call0	40272858 <rc4_skip>
+40269e91:	08dd45        	call0	40272c68 <rc4_skip>
 40269e94:	f40256        	bnez	a2, 40269dd8 <wpa_auth_uses_mfp+0xb34>
 40269e97:	ffda06        	j	40269e03 <wpa_auth_uses_mfp+0xb5f>
 40269e9a:	120000        	excw
@@ -83575,13 +83561,13 @@ Disassembly of section .irom0.text:
 4026a21b:	032c      	movi.n	a3, 32
 4026a21d:	00a142        	movi	a4, 0x100
 4026a220:	8168      	l32i.n	a6, a1, 32
-4026a222:	086345        	call0	40272858 <rc4_skip>
+4026a222:	08a445        	call0	40272c68 <rc4_skip>
 4026a225:	f75256        	bnez	a2, 4026a19e <wpa_auth_uses_mfp+0xefa>
 4026a228:	ffee86        	j	4026a1e6 <wpa_auth_uses_mfp+0xf42>
 4026a22b:	f00d00        	subx8	a0, a13, a0
-4026a22e:	700000        	excw
+4026a22e:	d00000        	subx2	a0, a0, a0
 4026a231:	3ffef6        	bgeui	a14, 0x100, 4026a274 <wpa_sm_rx_eapol+0x38>
-4026a234:	fef760        	excw
+4026a234:	fef7c0        	excw
 4026a237:	3f          	.byte 0x3f
 4026a238:	002080        	excw
 	...
@@ -83731,7 +83717,7 @@ Disassembly of section .irom0.text:
 4026a3a7:	2138      	l32i.n	a3, a1, 8
 4026a3a9:	ff2945        	call0	40269640 <wpa_auth_uses_mfp+0x39c>
 4026a3ac:	ffbc46        	j	4026a2a1 <wpa_sm_rx_eapol+0x65>
-4026a3af:	f73000        	excw
+4026a3af:	f79000        	excw
 4026a3b2:	fe          	.byte 0xfe
 4026a3b3:	3f          	.byte 0x3f
 
@@ -83776,12 +83762,13 @@ Disassembly of section .irom0.text:
 4026a409:	0108      	l32i.n	a0, a1, 0
 4026a40b:	10c112        	addi	a1, a1, 16
 4026a40e:	f00d      	ret.n
-4026a410:	f7b8      	l32i.n	a11, a7, 60
+4026a410:	f818      	l32i.n	a1, a8, 60
 4026a412:	fe          	.byte 0xfe
 4026a413:	3f          	.byte 0x3f
-4026a414:	be          	.byte 0xbe
-4026a415:	3ffef7        	bbsi	a14, 31, 4026a458 <wpa_set_bss+0x3c>
-4026a418:	fef8c0        	excw
+4026a414:	1e          	.byte 0x1e
+4026a415:	fef8      	l32i.n	a15, a14, 60
+4026a417:	3f          	.byte 0x3f
+4026a418:	fef920        	excw
 4026a41b:	3f          	.byte 0x3f
 
 4026a41c <wpa_set_bss>:
@@ -83834,7 +83821,7 @@ Disassembly of section .irom0.text:
 4026a497:	4108      	l32i.n	a0, a1, 16
 4026a499:	20c112        	addi	a1, a1, 32
 4026a49c:	f00d      	ret.n
-4026a49e:	880000        	excw
+4026a49e:	e80000        	excw
 4026a4a1:	ee          	.byte 0xee
 4026a4a2:	fe          	.byte 0xfe
 4026a4a3:	3f          	.byte 0x3f
@@ -83974,9 +83961,9 @@ Disassembly of section .irom0.text:
 4026a5f0:	10c112        	addi	a1, a1, 16
 4026a5f3:	f00d      	ret.n
 4026a5f5:	000000        	ill
-4026a5f8:	fef824        	excw
+4026a5f8:	fef884        	excw
 4026a5fb:	3f          	.byte 0x3f
-4026a5fc:	f78c      	beqz.n	a7, 4026a60f <pp_michael_mic_failure+0x7>
+4026a5fc:	f7ec      	bnez.n	a7, 4026a62f <pp_michael_mic_failure+0x27>
 4026a5fe:	fe          	.byte 0xfe
 4026a5ff:	3f          	.byte 0x3f
 4026a600:	26a5d4        	excw
@@ -84682,9 +84669,10 @@ Disassembly of section .irom0.text:
 4026acef:	1b2102        	l32i	a0, a1, 108
 4026acf2:	801120        	add	a1, a1, a2
 4026acf5:	f00d      	ret.n
-4026acf7:	27d000        	excw
-4026acfa:	e04027        	ball	a0, a2, 4026acde <wpa_pmk_to_ptk+0xca>
-4026acfd:	402727        	blt	a7, a2, 4026ad41 <rsn_pmkid+0x41>
+4026acf7:	2be000        	excw
+4026acfa:	f04027        	ball	a0, a2, 4026acee <wpa_pmk_to_ptk+0xda>
+4026acfd:	272b      	addi.n	a2, a7, 2
+4026acff:	c11240        	mul16u	a1, a2, a4
 
 4026ad00 <rsn_pmkid>:
 4026ad00:	a0c112        	addi	a1, a1, -96
@@ -85381,13 +85369,13 @@ Disassembly of section .irom0.text:
 4026b3df:	250c      	movi.n	a5, 2
 4026b3e1:	ca4452        	s8i	a5, a4, 202
 4026b3e4:	f00d      	ret.n
-4026b3e6:	000000        	ill
-4026b3e9:	2728      	l32i.n	a2, a7, 8
+4026b3e6:	100000        	and	a0, a0, a0
+4026b3e9:	272c      	movi.n	a7, 34
 4026b3eb:	b3c840        	movgez	a12, a8, a4
 4026b3ee:	254026        	beqi	a0, 4, 4026b417 <eagle_auth_done+0x1b>
 4026b3f1:	3ffe80        	excw
-4026b3f4:	272820        	excw
-4026b3f7:	284040        	excw
+4026b3f4:	272c30        	excw
+4026b3f7:	2c5040        	excw
 4026b3fa:	124027        	ball	a0, a2, 4026b410 <eagle_auth_done+0x14>
 
 4026b3fc <eagle_auth_done>:
@@ -86258,7 +86246,7 @@ Disassembly of section .irom0.text:
 4026bc36:	ef          	.byte 0xef
 4026bc37:	ff          	.byte 0xff
 4026bc38:	845dd1        	l32r	a13, 4024cdac <lwip_bind+0x20>
-4026bc3b:	7e4f85        	call0	402ea134 <_irom0_text_end+0x753ac>
+4026bc3b:	7e4f85        	call0	402ea134 <_irom0_text_end+0x74b3b>
 4026bc3e:	6fa8      	l32i.n	a10, a15, 24
 4026bc40:	2ce6e0        	excw
 4026bc43:	fe          	.byte 0xfe
@@ -88969,8 +88957,7 @@ Disassembly of section .irom0.text:
 4026d85c:	20c112        	addi	a1, a1, 32
 4026d85f:	f00d      	ret.n
 4026d861:	000000        	ill
-4026d864:	8b6c      	movi.n	a11, -24
-4026d866:	fe          	.byte 0xfe
+4026d864:	fe8bc4        	excw
 4026d867:	3f          	.byte 0x3f
 4026d868:	fe85d0        	excw
 4026d86b:	3f          	.byte 0x3f
@@ -89066,10 +89053,9 @@ Disassembly of section .irom0.text:
 4026d944:	2108      	l32i.n	a0, a1, 8
 4026d946:	20c112        	addi	a1, a1, 32
 4026d949:	f00d      	ret.n
-4026d94b:	294000        	excw
-4026d94e:	504027        	ball	a0, a2, 4026d9a2 <rijndaelKeySetupDec+0x4e>
-4026d951:	272d      	excw
-4026d953:	c11240        	mul16u	a1, a2, a4
+4026d94b:	2d5000        	excw
+4026d94e:	604027        	ball	a0, a2, 4026d9b2 <rijndaelKeySetupDec+0x5e>
+4026d951:	402731        	l32r	a3, 4023d9f0 <_lit4_end+0x1366f0>
 
 4026d954 <rijndaelKeySetupDec>:
 4026d954:	f0c112        	addi	a1, a1, -16
@@ -89173,8 +89159,8 @@ Disassembly of section .irom0.text:
 4026da47:	2108      	l32i.n	a0, a1, 8
 4026da49:	10c112        	addi	a1, a1, 16
 4026da4c:	f00d      	ret.n
-4026da4e:	500000        	excw
-4026da51:	402731        	l32r	a3, 4023daf0 <_lit4_end+0x1367f0>
+4026da4e:	600000        	neg	a0, a0
+4026da51:	402735        	excw
 4026da54:	0c5d      	mov.n	a5, a12
 4026da56:	c0c112        	addi	a1, a1, -64
 4026da59:	02cd      	mov.n	a12, a2
@@ -90020,7 +90006,7 @@ Disassembly of section .irom0.text:
 4026e334:	10c112        	addi	a1, a1, 16
 4026e337:	f00d      	ret.n
 4026e339:	000000        	ill
-4026e33c:	272d40        	excw
+4026e33c:	273150        	excw
 4026e33f:	c11240        	mul16u	a1, a2, a4
 
 4026e340 <rijndaelKeySetupEnc>:
@@ -90188,10 +90174,10 @@ Disassembly of section .irom0.text:
 4026e4f0:	0108      	l32i.n	a0, a1, 0
 4026e4f2:	10c112        	addi	a1, a1, 16
 4026e4f5:	f00d      	ret.n
-4026e4f7:	8b7000        	excw
+4026e4f7:	8bc800        	excw
 4026e4fa:	fe          	.byte 0xfe
 4026e4fb:	3f          	.byte 0x3f
-4026e4fc:	fef8e0        	excw
+4026e4fc:	fef940        	excw
 4026e4ff:	3f          	.byte 0x3f
 4026e500:	247610        	extui	a7, a1, 6, 3
 4026e503:	e47040        	extui	a7, a4, 0, 15
@@ -90400,7 +90386,7 @@ Disassembly of section .irom0.text:
 4026e71d:	246242        	s32i	a4, a2, 144
 4026e720:	120c      	movi.n	a2, 1
 4026e722:	f00d      	ret.n
-4026e724:	fef8f0        	excw
+4026e724:	fef950        	excw
 4026e727:	3f          	.byte 0x3f
 4026e728:	f0c112        	addi	a1, a1, -16
 4026e72b:	1388      	l32i.n	a8, a3, 4
@@ -90531,9 +90517,9 @@ Disassembly of section .irom0.text:
 4026e86f:	000500        	excw
 4026e872:	050204        	excw
 4026e875:	020505        	call0	402708c8 <index_html+0x94>
-4026e878:	040005        	call0	4027287c <rc4_skip+0x24>
-4026e87b:	040505        	call0	402728cc <rc4_skip+0x74>
-4026e87e:	040505        	call0	402728d0 <rc4_skip+0x78>
+4026e878:	040005        	call0	4027287c <ieee80211_opcap+0x16c>
+4026e87b:	040505        	call0	402728cc <ieee80211_opcap+0x1bc>
+4026e87e:	040505        	call0	402728d0 <ieee80211_opcap+0x1c0>
 4026e881:	fe          	.byte 0xfe
 4026e882:	fffd      	excw
 4026e884:	f0f0f0        	subx8	a15, a0, a15
@@ -90555,7 +90541,7 @@ Disassembly of section .irom0.text:
 4026e8ba:	439301        	l32r	a0, 4023f708 <_lit4_end+0x138408>
 	...
 4026e8ed:	000000        	ill
-4026e8f0:	726946        	j	4028b299 <_irom0_text_end+0x16511>
+4026e8f0:	726946        	j	4028b299 <_irom0_text_end+0x15ca0>
 4026e8f3:	776d      	excw
 4026e8f5:	657261        	l32r	a6, 40247ec0 <ip_input+0xd4>
 4026e8f8:	4e4f20        	excw
@@ -90575,7 +90561,7 @@ Disassembly of section .irom0.text:
 4026e927:	0a7074        	excw
 4026e92a:	000000        	ill
 4026e92d:	000000        	ill
-4026e930:	746146        	j	4028bab9 <_irom0_text_end+0x16d31>
+4026e930:	746146        	j	4028bab9 <_irom0_text_end+0x164c0>
 4026e933:	206c61        	l32r	a6, 40236ae4 <_lit4_end+0x12f7e4>
 4026e936:	637865        	excw
 4026e939:	747065        	excw
@@ -90737,7 +90723,7 @@ Disassembly of section .irom0.text:
 4026eaff:	495400        	excw
 4026eb02:	514d      	excw
 4026eb04:	5f          	.byte 0x5f
-4026eb05:	3a4c46        	j	4027d43a <_irom0_text_end+0x86b2>
+4026eb05:	3a4c46        	j	4027d43a <_irom0_text_end+0x7e41>
 4026eb08:	216425        	excw
 4026eb0b:	000021        	l32r	a2, 4022eb0c <_lit4_end+0x12780c>
 4026eb0e:	660000        	excw
@@ -90942,10 +90928,10 @@ Disassembly of section .irom0.text:
 4026efd0:	646574 00000a 000000 000000 000000 637400     ted.............
 4026efe0:	706374 5f7069 736174 685f6b 206c64 25203a     tcpip_task_hdl :
 4026eff0:	782520 70202c 6f6972 64253a 74732c 6b6361      %x, prio:%d,sta
-4026f000:	3a6b63 0a6425 000000 000000 000000 9a3000     ck:%d...........
+4026f000:	3a6b63 0a6425 000000 000000 000000 9a9000     ck:%d...........
 
 4026f010 <tcp_pcb_lists>:
-4026f010:	fe9a30 9a2c3f 1c3ffe 3ffe9a fe9a28 06033f     0..?,..?...?(..?
+4026f010:	fe9a90 9a8c3f 7c3ffe 3ffe9a fe9a88 06033f     ...?...?|..?...?
 
 4026f020 <tcp_persist_backoff>:
 4026f020:	0c0603 603018 000078 000000 000000 020100     ....0`x.........
@@ -91683,4931 +91669,5617 @@ Disassembly of section .irom0.text:
 40270ca4:	09 09 09 09 09 3c 2f 66 6f 72 6d 3e 0a 09 09 09     .....</form>....
 40270cb4:	09 09 3c 68 31 3e 49 6e 73 74 61 6e 74 20 70 6c     ..<h1>Instant pl
 40270cc4:	61 79 3c 2f 68 31 3e 0a 09 09 09 09 09 3c 66 6f     ay</h1>......<fo
-40270cd4:	72 6d 20 61 63 74 69 6f 6e 3d 22 69 6e 73 74 61     rm action="insta
-40270ce4:	6e 74 5f 70 6c 61 79 22 20 6d 65 74 68 6f 64 3d     nt_play" method=
-40270cf4:	22 50 4f 53 54 22 3e 0a 09 09 09 09 09 09 3c 70     "POST">.......<p
-40270d04:	3e 0a 09 09 09 09 09 09 3c 73 70 61 6e 20 63 6c     >.......<span cl
-40270d14:	61 73 73 3d 22 62 6f 6c 64 22 3e 55 52 4c 3a 20     ass="bold">URL: 
-40270d24:	3c 2f 73 70 61 6e 3e 3c 69 6e 70 75 74 20 74 79     </span><input ty
-40270d34:	70 65 3d 22 74 65 78 74 22 20 6e 61 6d 65 3d 22     pe="text" name="
-40270d44:	75 72 6c 22 3e 3c 62 72 3e 0a 09 09 09 09 09 09     url"><br>.......
-40270d54:	3c 73 70 61 6e 20 63 6c 61 73 73 3d 22 62 6f 6c     <span class="bol
-40270d64:	64 22 3e 50 6f 72 74 3a 20 3c 2f 73 70 61 6e 3e     d">Port: </span>
-40270d74:	3c 69 6e 70 75 74 20 74 79 70 65 3d 22 74 65 78     <input type="tex
-40270d84:	74 22 20 6e 61 6d 65 3d 22 70 6f 72 74 22 20 76     t" name="port" v
-40270d94:	61 6c 75 65 3d 22 38 30 22 3e 3c 62 72 3e 0a 09     alue="80"><br>..
-40270da4:	09 09 09 09 09 3c 73 70 61 6e 20 63 6c 61 73 73     .....<span class
-40270db4:	3d 22 62 6f 6c 64 22 3e 50 61 74 68 3a 20 3c 2f     ="bold">Path: </
-40270dc4:	73 70 61 6e 3e 3c 69 6e 70 75 74 20 74 79 70 65     span><input type
-40270dd4:	3d 22 74 65 78 74 22 20 6e 61 6d 65 3d 22 70 61     ="text" name="pa
-40270de4:	74 68 22 20 76 61 6c 75 65 3d 22 2f 22 3e 3c 62     th" value="/"><b
-40270df4:	72 3e 0a 09 09 09 09 09 09 3c 69 6e 70 75 74 20     r>.......<input 
-40270e04:	74 79 70 65 3d 22 73 75 62 6d 69 74 22 20 76 61     type="submit" va
-40270e14:	6c 75 65 3d 22 50 6c 61 79 22 3e 0a 09 09 09 09     lue="Play">.....
-40270e24:	09 09 3c 2f 70 3e 0a 09 09 09 09 09 3c 2f 66 6f     ..</p>......</fo
-40270e34:	72 6d 3e 0a 09 09 09 09 3c 2f 64 69 76 3e 0a 09     rm>.....</div>..
-40270e44:	09 09 09 3c 2f 6c 69 3e 0a 09 09 09 09 3c 6c 69     ...</li>.....<li
-40270e54:	3e 0a 09 09 09 09 09 3c 69 6e 70 75 74 20 74 79     >......<input ty
-40270e64:	70 65 3d 22 72 61 64 69 6f 22 20 6e 61 6d 65 3d     pe="radio" name=
-40270e74:	22 74 61 62 73 22 20 69 64 3d 22 74 61 62 32 22     "tabs" id="tab2"
-40270e84:	20 2f 3e 0a 09 09 09 09 09 3c 6c 61 62 65 6c 20      />......<label 
-40270e94:	66 6f 72 3d 22 74 61 62 32 22 3e 4d 61 6e 61 67     for="tab2">Manag
-40270ea4:	65 20 73 74 61 74 69 6f 6e 73 3c 2f 6c 61 62 65     e stations</labe
-40270eb4:	6c 3e 0a 09 09 09 09 09 3c 64 69 76 20 69 64 3d     l>......<div id=
-40270ec4:	22 74 61 62 2d 63 6f 6e 74 65 6e 74 32 22 20 63     "tab-content2" c
-40270ed4:	6c 61 73 73 3d 22 74 61 62 2d 63 6f 6e 74 65 6e     lass="tab-conten
-40270ee4:	74 22 3e 0a 09 09 09 09 09 20 20 3c 70 3e 22 53     t">......  <p>"S
-40270ef4:	65 64 20 75 74 20 70 65 72 73 70 69 63 69 61 74     ed ut perspiciat
-40270f04:	69 73 20 75 6e 64 65 20 6f 6d 6e 69 73 20 69 73     is unde omnis is
-40270f14:	74 65 20 6e 61 74 75 73 20 65 72 72 6f 72 20 73     te natus error s
-40270f24:	69 74 20 76 6f 6c 75 70 74 61 74 65 6d 20 61 63     it voluptatem ac
-40270f34:	63 75 73 61 6e 74 69 75 6d 20 64 6f 6c 6f 72 65     cusantium dolore
-40270f44:	6d 71 75 65 20 6c 61 75 64 61 6e 74 69 75 6d 2c     mque laudantium,
-40270f54:	20 74 6f 74 61 6d 20 72 65 6d 20 61 70 65 72 69      totam rem aperi
-40270f64:	61 6d 2c 20 65 61 71 75 65 20 69 70 73 61 20 71     am, eaque ipsa q
-40270f74:	75 61 65 20 61 62 20 69 6c 6c 6f 20 69 6e 76 65     uae ab illo inve
-40270f84:	6e 74 6f 72 65 20 76 65 72 69 74 61 74 69 73 20     ntore veritatis 
-40270f94:	65 74 20 71 75 61 73 69 20 61 72 63 68 69 74 65     et quasi archite
-40270fa4:	63 74 6f 20 62 65 61 74 61 65 20 76 69 74 61 65     cto beatae vitae
-40270fb4:	20 64 69 63 74 61 20 73 75 6e 74 20 65 78 70 6c      dicta sunt expl
-40270fc4:	69 63 61 62 6f 2e 20 4e 65 6d 6f 20 65 6e 69 6d     icabo. Nemo enim
-40270fd4:	20 69 70 73 61 6d 20 76 6f 6c 75 70 74 61 74 65      ipsam voluptate
-40270fe4:	6d 20 71 75 69 61 20 76 6f 6c 75 70 74 61 73 20     m quia voluptas 
-40270ff4:	73 69 74 20 61 73 70 65 72 6e 61 74 75 72 20 61     sit aspernatur a
-40271004:	75 74 20 6f 64 69 74 20 61 75 74 20 66 75 67 69     ut odit aut fugi
-40271014:	74 2c 20 73 65 64 20 71 75 69 61 20 63 6f 6e 73     t, sed quia cons
-40271024:	65 71 75 75 6e 74 75 72 20 6d 61 67 6e 69 20 64     equuntur magni d
-40271034:	6f 6c 6f 72 65 73 20 65 6f 73 20 71 75 69 20 72     olores eos qui r
-40271044:	61 74 69 6f 6e 65 20 76 6f 6c 75 70 74 61 74 65     atione voluptate
-40271054:	6d 20 73 65 71 75 69 20 6e 65 73 63 69 75 6e 74     m sequi nesciunt
-40271064:	2e 20 4e 65 71 75 65 20 70 6f 72 72 6f 20 71 75     . Neque porro qu
-40271074:	69 73 71 75 61 6d 20 65 73 74 2c 20 71 75 69 20     isquam est, qui 
-40271084:	64 6f 6c 6f 72 65 6d 20 69 70 73 75 6d 20 71 75     dolorem ipsum qu
-40271094:	69 61 20 64 6f 6c 6f 72 20 73 69 74 20 61 6d 65     ia dolor sit ame
-402710a4:	74 2c 20 63 6f 6e 73 65 63 74 65 74 75 72 2c 20     t, consectetur, 
-402710b4:	61 64 69 70 69 73 63 69 20 76 65 6c 69 74 2c 20     adipisci velit, 
-402710c4:	73 65 64 20 71 75 69 61 20 6e 6f 6e 20 6e 75 6d     sed quia non num
-402710d4:	71 75 61 6d 20 65 69 75 73 20 6d 6f 64 69 20 74     quam eius modi t
-402710e4:	65 6d 70 6f 72 61 20 69 6e 63 69 64 75 6e 74 20     empora incidunt 
-402710f4:	75 74 20 6c 61 62 6f 72 65 20 65 74 20 64 6f 6c     ut labore et dol
-40271104:	6f 72 65 20 6d 61 67 6e 61 6d 20 61 6c 69 71 75     ore magnam aliqu
-40271114:	61 6d 20 71 75 61 65 72 61 74 20 76 6f 6c 75 70     am quaerat volup
-40271124:	74 61 74 65 6d 2e 20 55 74 20 65 6e 69 6d 20 61     tatem. Ut enim a
-40271134:	64 20 6d 69 6e 69 6d 61 20 76 65 6e 69 61 6d 2c     d minima veniam,
-40271144:	20 71 75 69 73 20 6e 6f 73 74 72 75 6d 20 65 78      quis nostrum ex
-40271154:	65 72 63 69 74 61 74 69 6f 6e 65 6d 20 75 6c 6c     ercitationem ull
-40271164:	61 6d 20 63 6f 72 70 6f 72 69 73 20 73 75 73 63     am corporis susc
-40271174:	69 70 69 74 20 6c 61 62 6f 72 69 6f 73 61 6d 2c     ipit laboriosam,
-40271184:	20 6e 69 73 69 20 75 74 20 61 6c 69 71 75 69 64      nisi ut aliquid
-40271194:	20 65 78 20 65 61 20 63 6f 6d 6d 6f 64 69 20 63      ex ea commodi c
-402711a4:	6f 6e 73 65 71 75 61 74 75 72 3f 20 51 75 69 73     onsequatur? Quis
-402711b4:	20 61 75 74 65 6d 20 76 65 6c 20 65 75 6d 20 69      autem vel eum i
-402711c4:	75 72 65 20 72 65 70 72 65 68 65 6e 64 65 72 69     ure reprehenderi
-402711d4:	74 20 71 75 69 20 69 6e 20 65 61 20 76 6f 6c 75     t qui in ea volu
-402711e4:	70 74 61 74 65 20 76 65 6c 69 74 20 65 73 73 65     ptate velit esse
-402711f4:	20 71 75 61 6d 20 6e 69 68 69 6c 20 6d 6f 6c 65      quam nihil mole
-40271204:	73 74 69 61 65 20 63 6f 6e 73 65 71 75 61 74 75     stiae consequatu
-40271214:	72 2c 20 76 65 6c 20 69 6c 6c 75 6d 20 71 75 69     r, vel illum qui
-40271224:	20 64 6f 6c 6f 72 65 6d 20 65 75 6d 20 66 75 67      dolorem eum fug
-40271234:	69 61 74 20 71 75 6f 20 76 6f 6c 75 70 74 61 73     iat quo voluptas
-40271244:	20 6e 75 6c 6c 61 3f 3c 2f 70 3e 0a 09 09 09 09      nulla?</p>.....
-40271254:	09 3c 2f 64 69 76 3e 0a 09 09 09 09 3c 2f 6c 69     .</div>.....</li
-40271264:	3e 0a 09 09 09 09 3c 6c 69 3e 0a 09 09 09 09 09     >.....<li>......
-40271274:	3c 69 6e 70 75 74 20 74 79 70 65 3d 22 72 61 64     <input type="rad
-40271284:	69 6f 22 20 6e 61 6d 65 3d 22 74 61 62 73 22 20     io" name="tabs" 
-40271294:	69 64 3d 22 74 61 62 33 22 20 2f 3e 0a 09 09 09     id="tab3" />....
-402712a4:	09 09 3c 6c 61 62 65 6c 20 66 6f 72 3d 22 74 61     ..<label for="ta
-402712b4:	62 33 22 3e 53 6f 75 6e 64 20 73 65 74 74 69 6e     b3">Sound settin
-402712c4:	67 73 3c 2f 6c 61 62 65 6c 3e 0a 09 09 09 09 09     gs</label>......
-402712d4:	3c 64 69 76 20 69 64 3d 22 74 61 62 2d 63 6f 6e     <div id="tab-con
-402712e4:	74 65 6e 74 33 22 20 63 6c 61 73 73 3d 22 74 61     tent3" class="ta
-402712f4:	62 2d 63 6f 6e 74 65 6e 74 22 3e 0a 09 09 09 09     b-content">.....
-40271304:	09 3c 68 31 3e 53 6f 75 6e 64 20 73 65 74 74 69     .<h1>Sound setti
-40271314:	6e 67 73 3c 2f 68 31 3e 0a 09 09 09 09 09 3c 66     ngs</h1>......<f
-40271324:	6f 72 6d 20 61 63 74 69 6f 6e 3d 22 73 6f 75 6e     orm action="soun
-40271334:	64 22 20 6d 65 74 68 6f 64 3d 22 50 4f 53 54 22     d" method="POST"
-40271344:	3e 0a 09 09 09 09 09 09 3c 70 3e 0a 09 09 09 09     >.......<p>.....
-40271354:	09 09 3c 73 70 61 6e 20 63 6c 61 73 73 3d 22 62     ..<span class="b
-40271364:	6f 6c 64 22 3e 54 72 65 62 6c 65 20 63 6f 6e 74     old">Treble cont
-40271374:	72 6f 6c 3a 20 3c 2f 73 70 61 6e 3e 3c 69 6e 70     rol: </span><inp
-40271384:	75 74 20 74 79 70 65 3d 22 72 61 6e 67 65 22 20     ut type="range" 
-40271394:	69 64 3d 22 74 72 65 62 6c 65 5f 72 61 6e 67 65     id="treble_range
-402713a4:	22 20 6e 61 6d 65 3d 22 74 72 65 62 6c 65 22 20     " name="treble" 
-402713b4:	6f 6e 43 68 61 6e 67 65 3d 22 6f 6e 52 61 6e 67     onChange="onRang
-402713c4:	65 43 68 61 6e 67 65 28 27 74 72 65 62 6c 65 5f     eChange('treble_
-402713d4:	72 61 6e 67 65 27 2c 20 27 74 72 65 62 6c 65 5f     range', 'treble_
-402713e4:	73 70 61 6e 27 2c 20 31 2e 35 2c 20 66 61 6c 73     span', 1.5, fals
-402713f4:	65 29 22 20 6d 69 6e 3d 30 20 6d 61 78 3d 38 20     e)" min=0 max=8 
-40271404:	76 61 6c 75 65 3d 32 3e 3c 73 70 61 6e 20 69 64     value=2><span id
-40271414:	3d 22 74 72 65 62 6c 65 5f 73 70 61 6e 22 3e 3c     ="treble_span"><
-40271424:	2f 73 70 61 6e 3e 3c 62 72 3e 0a 09 09 09 09 09     /span><br>......
-40271434:	09 3c 73 70 61 6e 20 63 6c 61 73 73 3d 22 62 6f     .<span class="bo
-40271444:	6c 64 22 3e 42 61 73 73 20 65 6e 68 61 6e 63 65     ld">Bass enhance
-40271454:	3a 20 3c 2f 73 70 61 6e 3e 3c 69 6e 70 75 74 20     : </span><input 
-40271464:	74 79 70 65 3d 22 72 61 6e 67 65 22 20 20 69 64     type="range"  id
-40271474:	3d 22 62 61 73 73 5f 72 61 6e 67 65 22 20 6e 61     ="bass_range" na
-40271484:	6d 65 3d 22 62 61 73 73 22 20 6f 6e 43 68 61 6e     me="bass" onChan
-40271494:	67 65 3d 22 6f 6e 52 61 6e 67 65 43 68 61 6e 67     ge="onRangeChang
-402714a4:	65 28 27 62 61 73 73 5f 72 61 6e 67 65 27 2c 20     e('bass_range', 
-402714b4:	27 62 61 73 73 5f 73 70 61 6e 27 2c 20 31 2c 20     'bass_span', 1, 
-402714c4:	66 61 6c 73 65 29 22 20 6d 69 6e 3d 30 20 6d 61     false)" min=0 ma
-402714d4:	78 3d 31 35 20 76 61 6c 75 65 3d 33 3e 3c 73 70     x=15 value=3><sp
-402714e4:	61 6e 20 69 64 3d 22 62 61 73 73 5f 73 70 61 6e     an id="bass_span
-402714f4:	22 3e 3c 2f 73 70 61 6e 3e 3c 62 72 3e 0a 09 09     "></span><br>...
-40271504:	09 09 09 09 3c 73 70 61 6e 20 63 6c 61 73 73 3d     ....<span class=
-40271514:	22 62 6f 6c 64 22 3e 56 6f 6c 75 6d 65 3a 20 3c     "bold">Volume: <
-40271524:	2f 73 70 61 6e 3e 3c 69 6e 70 75 74 20 74 79 70     /span><input typ
-40271534:	65 3d 22 72 61 6e 67 65 22 20 69 64 3d 22 76 6f     e="range" id="vo
-40271544:	6c 5f 72 61 6e 67 65 22 20 6e 61 6d 65 3d 22 76     l_range" name="v
-40271554:	6f 6c 22 20 6f 6e 43 68 61 6e 67 65 3d 22 6f 6e     ol" onChange="on
-40271564:	52 61 6e 67 65 43 68 61 6e 67 65 28 27 76 6f 6c     RangeChange('vol
-40271574:	5f 72 61 6e 67 65 27 2c 20 27 76 6f 6c 5f 73 70     _range', 'vol_sp
-40271584:	61 6e 27 2c 20 2d 30 2e 35 2c 20 74 72 75 65 29     an', -0.5, true)
-40271594:	22 20 6d 69 6e 3d 30 20 6d 61 78 3d 32 35 34 20     " min=0 max=254 
-402715a4:	76 61 6c 75 65 3d 35 30 3e 3c 73 70 61 6e 20 69     value=50><span i
-402715b4:	64 3d 22 76 6f 6c 5f 73 70 61 6e 22 3e 3c 2f 73     d="vol_span"></s
-402715c4:	70 61 6e 3e 3c 62 72 3e 0a 09 09 09 09 09 09 3c     pan><br>.......<
-402715d4:	69 6e 70 75 74 20 74 79 70 65 3d 22 73 75 62 6d     input type="subm
-402715e4:	69 74 22 20 76 61 6c 75 65 3d 22 50 6c 61 79 22     it" value="Play"
-402715f4:	3e 0a 09 09 09 09 09 09 3c 2f 70 3e 0a 09 09 09     >.......</p>....
-40271604:	09 09 3c 2f 66 6f 72 6d 3e 0a 09 09 09 09 09 3c     ..</form>......<
-40271614:	2f 64 69 76 3e 0a 09 09 09 09 3c 2f 6c 69 3e 0a     /div>.....</li>.
-40271624:	09 09 09 09 3c 2f 75 6c 3e 0a 09 09 09 3c 2f 64     ....</ul>....</d
-40271634:	69 76 3e 0a 09 09 3c 2f 64 69 76 3e 0a 09 09 3c     iv>...</div>...<
-40271644:	73 63 72 69 70 74 3e 0a 09 09 09 66 75 6e 63 74     script>....funct
-40271654:	69 6f 6e 20 6f 6e 52 61 6e 67 65 43 68 61 6e 67     ion onRangeChang
-40271664:	65 28 24 72 61 6e 67 65 2c 20 24 73 70 61 6e 69     e($range, $spani
-40271674:	64 2c 20 24 6d 75 6c 2c 20 24 72 6f 74 61 74 65     d, $mul, $rotate
-40271684:	29 20 7b 0a 09 09 09 09 76 61 72 20 76 61 6c 20     ) {.....var val 
-40271694:	3d 20 64 6f 63 75 6d 65 6e 74 2e 67 65 74 45 6c     = document.getEl
-402716a4:	65 6d 65 6e 74 42 79 49 64 28 24 72 61 6e 67 65     ementById($range
-402716b4:	29 2e 76 61 6c 75 65 3b 0a 09 09 09 09 69 66 28     ).value;.....if(
-402716c4:	24 72 6f 74 61 74 65 29 20 76 61 6c 20 3d 20 64     $rotate) val = d
-402716d4:	6f 63 75 6d 65 6e 74 2e 67 65 74 45 6c 65 6d 65     ocument.getEleme
-402716e4:	6e 74 42 79 49 64 28 24 72 61 6e 67 65 29 2e 6d     ntById($range).m
-402716f4:	61 78 20 2d 20 76 61 6c 3b 0a 09 09 09 09 64 6f     ax - val;.....do
-40271704:	63 75 6d 65 6e 74 2e 67 65 74 45 6c 65 6d 65 6e     cument.getElemen
-40271714:	74 42 79 49 64 28 24 73 70 61 6e 69 64 29 2e 69     tById($spanid).i
-40271724:	6e 6e 65 72 48 54 4d 4c 20 3d 20 28 76 61 6c 20     nnerHTML = (val 
-40271734:	2a 20 24 6d 75 6c 29 20 2b 20 22 20 64 42 22 3b     * $mul) + " dB";
-40271744:	0a 09 09 09 7d 0a 09 09 09 64 6f 63 75 6d 65 6e     ....}....documen
-40271754:	74 2e 61 64 64 45 76 65 6e 74 4c 69 73 74 65 6e     t.addEventListen
-40271764:	65 72 28 22 44 4f 4d 43 6f 6e 74 65 6e 74 4c 6f     er("DOMContentLo
-40271774:	61 64 65 64 22 2c 20 66 75 6e 63 74 69 6f 6e 28     aded", function(
-40271784:	65 76 65 6e 74 29 20 7b 20 0a 09 09 09 20 20 6f     event) { ....  o
-40271794:	6e 52 61 6e 67 65 43 68 61 6e 67 65 28 27 74 72     nRangeChange('tr
-402717a4:	65 62 6c 65 5f 72 61 6e 67 65 27 2c 20 27 74 72     eble_range', 'tr
-402717b4:	65 62 6c 65 5f 73 70 61 6e 27 2c 20 31 2e 35 2c     eble_span', 1.5,
-402717c4:	20 66 61 6c 73 65 29 3b 0a 09 09 09 20 20 6f 6e      false);....  on
-402717d4:	52 61 6e 67 65 43 68 61 6e 67 65 28 27 62 61 73     RangeChange('bas
-402717e4:	73 5f 72 61 6e 67 65 27 2c 20 27 62 61 73 73 5f     s_range', 'bass_
-402717f4:	73 70 61 6e 27 2c 20 31 2c 20 66 61 6c 73 65 29     span', 1, false)
-40271804:	3b 0a 09 09 09 20 20 6f 6e 52 61 6e 67 65 43 68     ;....  onRangeCh
-40271814:	61 6e 67 65 28 27 76 6f 6c 5f 72 61 6e 67 65 27     ange('vol_range'
-40271824:	2c 20 27 76 6f 6c 5f 73 70 61 6e 27 2c 20 2d 30     , 'vol_span', -0
-40271834:	2e 35 2c 20 74 72 75 65 29 3b 0a 09 09 09 7d 29     .5, true);....})
-40271844:	3b 0a 09 09 3c 2f 73 63 72 69 70 74 3e 0a 09 3c     ;...</script>..<
-40271854:	2f 62 6f 64 79 3e 0a 3c 2f 48 54 4d 4c 3e 0a 00     /body>.</HTML>..
+40270cd4:	72 6d 3e 0a 09 09 09 09 09 09 3c 70 3e 0a 09 09     rm>.......<p>...
+40270ce4:	09 09 09 09 3c 73 70 61 6e 20 63 6c 61 73 73 3d     ....<span class=
+40270cf4:	22 62 6f 6c 64 22 3e 55 52 4c 3a 20 3c 2f 73 70     "bold">URL: </sp
+40270d04:	61 6e 3e 3c 69 6e 70 75 74 20 74 79 70 65 3d 22     an><input type="
+40270d14:	74 65 78 74 22 20 69 64 3d 22 69 6e 73 74 61 6e     text" id="instan
+40270d24:	74 5f 75 72 6c 22 20 6e 61 6d 65 3d 22 75 72 6c     t_url" name="url
+40270d34:	22 3e 3c 62 72 3e 0a 09 09 09 09 09 09 3c 73 70     "><br>.......<sp
+40270d44:	61 6e 20 63 6c 61 73 73 3d 22 62 6f 6c 64 22 3e     an class="bold">
+40270d54:	50 6f 72 74 3a 20 3c 2f 73 70 61 6e 3e 3c 69 6e     Port: </span><in
+40270d64:	70 75 74 20 74 79 70 65 3d 22 74 65 78 74 22 20     put type="text" 
+40270d74:	69 64 3d 22 69 6e 73 74 61 6e 74 5f 70 6f 72 74     id="instant_port
+40270d84:	22 20 6e 61 6d 65 3d 22 70 6f 72 74 22 20 76 61     " name="port" va
+40270d94:	6c 75 65 3d 22 38 30 22 3e 3c 62 72 3e 0a 09 09     lue="80"><br>...
+40270da4:	09 09 09 09 3c 73 70 61 6e 20 63 6c 61 73 73 3d     ....<span class=
+40270db4:	22 62 6f 6c 64 22 3e 50 61 74 68 3a 20 3c 2f 73     "bold">Path: </s
+40270dc4:	70 61 6e 3e 3c 69 6e 70 75 74 20 74 79 70 65 3d     pan><input type=
+40270dd4:	22 74 65 78 74 22 20 69 64 3d 22 69 6e 73 74 61     "text" id="insta
+40270de4:	6e 74 5f 70 61 74 68 22 20 6e 61 6d 65 3d 22 70     nt_path" name="p
+40270df4:	61 74 68 22 20 76 61 6c 75 65 3d 22 2f 22 3e 3c     ath" value="/"><
+40270e04:	62 72 3e 0a 09 09 09 09 09 09 3c 69 6e 70 75 74     br>.......<input
+40270e14:	20 74 79 70 65 3d 22 62 75 74 74 6f 6e 22 20 76      type="button" v
+40270e24:	61 6c 75 65 3d 22 50 6c 61 79 22 20 6f 6e 43 6c     alue="Play" onCl
+40270e34:	69 63 6b 3d 22 69 6e 73 74 61 6e 74 50 6c 61 79     ick="instantPlay
+40270e44:	28 29 22 3e 0a 09 09 09 09 09 09 3c 2f 70 3e 0a     ()">.......</p>.
+40270e54:	09 09 09 09 09 3c 2f 66 6f 72 6d 3e 0a 09 09 09     .....</form>....
+40270e64:	09 3c 2f 64 69 76 3e 0a 09 09 09 09 3c 2f 6c 69     .</div>.....</li
+40270e74:	3e 0a 09 09 09 09 3c 6c 69 3e 0a 09 09 09 09 09     >.....<li>......
+40270e84:	3c 69 6e 70 75 74 20 74 79 70 65 3d 22 72 61 64     <input type="rad
+40270e94:	69 6f 22 20 6e 61 6d 65 3d 22 74 61 62 73 22 20     io" name="tabs" 
+40270ea4:	69 64 3d 22 74 61 62 32 22 20 2f 3e 0a 09 09 09     id="tab2" />....
+40270eb4:	09 09 3c 6c 61 62 65 6c 20 66 6f 72 3d 22 74 61     ..<label for="ta
+40270ec4:	62 32 22 3e 4d 61 6e 61 67 65 20 73 74 61 74 69     b2">Manage stati
+40270ed4:	6f 6e 73 3c 2f 6c 61 62 65 6c 3e 0a 09 09 09 09     ons</label>.....
+40270ee4:	09 3c 64 69 76 20 69 64 3d 22 74 61 62 2d 63 6f     .<div id="tab-co
+40270ef4:	6e 74 65 6e 74 32 22 20 63 6c 61 73 73 3d 22 74     ntent2" class="t
+40270f04:	61 62 2d 63 6f 6e 74 65 6e 74 22 3e 0a 09 09 09     ab-content">....
+40270f14:	09 09 20 20 3c 70 3e 22 53 65 64 20 75 74 20 70     ..  <p>"Sed ut p
+40270f24:	65 72 73 70 69 63 69 61 74 69 73 20 75 6e 64 65     erspiciatis unde
+40270f34:	20 6f 6d 6e 69 73 20 69 73 74 65 20 6e 61 74 75      omnis iste natu
+40270f44:	73 20 65 72 72 6f 72 20 73 69 74 20 76 6f 6c 75     s error sit volu
+40270f54:	70 74 61 74 65 6d 20 61 63 63 75 73 61 6e 74 69     ptatem accusanti
+40270f64:	75 6d 20 64 6f 6c 6f 72 65 6d 71 75 65 20 6c 61     um doloremque la
+40270f74:	75 64 61 6e 74 69 75 6d 2c 20 74 6f 74 61 6d 20     udantium, totam 
+40270f84:	72 65 6d 20 61 70 65 72 69 61 6d 2c 20 65 61 71     rem aperiam, eaq
+40270f94:	75 65 20 69 70 73 61 20 71 75 61 65 20 61 62 20     ue ipsa quae ab 
+40270fa4:	69 6c 6c 6f 20 69 6e 76 65 6e 74 6f 72 65 20 76     illo inventore v
+40270fb4:	65 72 69 74 61 74 69 73 20 65 74 20 71 75 61 73     eritatis et quas
+40270fc4:	69 20 61 72 63 68 69 74 65 63 74 6f 20 62 65 61     i architecto bea
+40270fd4:	74 61 65 20 76 69 74 61 65 20 64 69 63 74 61 20     tae vitae dicta 
+40270fe4:	73 75 6e 74 20 65 78 70 6c 69 63 61 62 6f 2e 20     sunt explicabo. 
+40270ff4:	4e 65 6d 6f 20 65 6e 69 6d 20 69 70 73 61 6d 20     Nemo enim ipsam 
+40271004:	76 6f 6c 75 70 74 61 74 65 6d 20 71 75 69 61 20     voluptatem quia 
+40271014:	76 6f 6c 75 70 74 61 73 20 73 69 74 20 61 73 70     voluptas sit asp
+40271024:	65 72 6e 61 74 75 72 20 61 75 74 20 6f 64 69 74     ernatur aut odit
+40271034:	20 61 75 74 20 66 75 67 69 74 2c 20 73 65 64 20      aut fugit, sed 
+40271044:	71 75 69 61 20 63 6f 6e 73 65 71 75 75 6e 74 75     quia consequuntu
+40271054:	72 20 6d 61 67 6e 69 20 64 6f 6c 6f 72 65 73 20     r magni dolores 
+40271064:	65 6f 73 20 71 75 69 20 72 61 74 69 6f 6e 65 20     eos qui ratione 
+40271074:	76 6f 6c 75 70 74 61 74 65 6d 20 73 65 71 75 69     voluptatem sequi
+40271084:	20 6e 65 73 63 69 75 6e 74 2e 20 4e 65 71 75 65      nesciunt. Neque
+40271094:	20 70 6f 72 72 6f 20 71 75 69 73 71 75 61 6d 20      porro quisquam 
+402710a4:	65 73 74 2c 20 71 75 69 20 64 6f 6c 6f 72 65 6d     est, qui dolorem
+402710b4:	20 69 70 73 75 6d 20 71 75 69 61 20 64 6f 6c 6f      ipsum quia dolo
+402710c4:	72 20 73 69 74 20 61 6d 65 74 2c 20 63 6f 6e 73     r sit amet, cons
+402710d4:	65 63 74 65 74 75 72 2c 20 61 64 69 70 69 73 63     ectetur, adipisc
+402710e4:	69 20 76 65 6c 69 74 2c 20 73 65 64 20 71 75 69     i velit, sed qui
+402710f4:	61 20 6e 6f 6e 20 6e 75 6d 71 75 61 6d 20 65 69     a non numquam ei
+40271104:	75 73 20 6d 6f 64 69 20 74 65 6d 70 6f 72 61 20     us modi tempora 
+40271114:	69 6e 63 69 64 75 6e 74 20 75 74 20 6c 61 62 6f     incidunt ut labo
+40271124:	72 65 20 65 74 20 64 6f 6c 6f 72 65 20 6d 61 67     re et dolore mag
+40271134:	6e 61 6d 20 61 6c 69 71 75 61 6d 20 71 75 61 65     nam aliquam quae
+40271144:	72 61 74 20 76 6f 6c 75 70 74 61 74 65 6d 2e 20     rat voluptatem. 
+40271154:	55 74 20 65 6e 69 6d 20 61 64 20 6d 69 6e 69 6d     Ut enim ad minim
+40271164:	61 20 76 65 6e 69 61 6d 2c 20 71 75 69 73 20 6e     a veniam, quis n
+40271174:	6f 73 74 72 75 6d 20 65 78 65 72 63 69 74 61 74     ostrum exercitat
+40271184:	69 6f 6e 65 6d 20 75 6c 6c 61 6d 20 63 6f 72 70     ionem ullam corp
+40271194:	6f 72 69 73 20 73 75 73 63 69 70 69 74 20 6c 61     oris suscipit la
+402711a4:	62 6f 72 69 6f 73 61 6d 2c 20 6e 69 73 69 20 75     boriosam, nisi u
+402711b4:	74 20 61 6c 69 71 75 69 64 20 65 78 20 65 61 20     t aliquid ex ea 
+402711c4:	63 6f 6d 6d 6f 64 69 20 63 6f 6e 73 65 71 75 61     commodi consequa
+402711d4:	74 75 72 3f 20 51 75 69 73 20 61 75 74 65 6d 20     tur? Quis autem 
+402711e4:	76 65 6c 20 65 75 6d 20 69 75 72 65 20 72 65 70     vel eum iure rep
+402711f4:	72 65 68 65 6e 64 65 72 69 74 20 71 75 69 20 69     rehenderit qui i
+40271204:	6e 20 65 61 20 76 6f 6c 75 70 74 61 74 65 20 76     n ea voluptate v
+40271214:	65 6c 69 74 20 65 73 73 65 20 71 75 61 6d 20 6e     elit esse quam n
+40271224:	69 68 69 6c 20 6d 6f 6c 65 73 74 69 61 65 20 63     ihil molestiae c
+40271234:	6f 6e 73 65 71 75 61 74 75 72 2c 20 76 65 6c 20     onsequatur, vel 
+40271244:	69 6c 6c 75 6d 20 71 75 69 20 64 6f 6c 6f 72 65     illum qui dolore
+40271254:	6d 20 65 75 6d 20 66 75 67 69 61 74 20 71 75 6f     m eum fugiat quo
+40271264:	20 76 6f 6c 75 70 74 61 73 20 6e 75 6c 6c 61 3f      voluptas nulla?
+40271274:	3c 2f 70 3e 0a 09 09 09 09 09 3c 2f 64 69 76 3e     </p>......</div>
+40271284:	0a 09 09 09 09 3c 2f 6c 69 3e 0a 09 09 09 09 3c     .....</li>.....<
+40271294:	6c 69 3e 0a 09 09 09 09 09 3c 69 6e 70 75 74 20     li>......<input 
+402712a4:	74 79 70 65 3d 22 72 61 64 69 6f 22 20 6e 61 6d     type="radio" nam
+402712b4:	65 3d 22 74 61 62 73 22 20 69 64 3d 22 74 61 62     e="tabs" id="tab
+402712c4:	33 22 20 2f 3e 0a 09 09 09 09 09 3c 6c 61 62 65     3" />......<labe
+402712d4:	6c 20 66 6f 72 3d 22 74 61 62 33 22 3e 53 6f 75     l for="tab3">Sou
+402712e4:	6e 64 20 73 65 74 74 69 6e 67 73 3c 2f 6c 61 62     nd settings</lab
+402712f4:	65 6c 3e 0a 09 09 09 09 09 3c 64 69 76 20 69 64     el>......<div id
+40271304:	3d 22 74 61 62 2d 63 6f 6e 74 65 6e 74 33 22 20     ="tab-content3" 
+40271314:	63 6c 61 73 73 3d 22 74 61 62 2d 63 6f 6e 74 65     class="tab-conte
+40271324:	6e 74 22 3e 0a 09 09 09 09 09 3c 68 31 3e 53 6f     nt">......<h1>So
+40271334:	75 6e 64 20 73 65 74 74 69 6e 67 73 3c 2f 68 31     und settings</h1
+40271344:	3e 0a 09 09 09 09 09 3c 66 6f 72 6d 3e 0a 09 09     >......<form>...
+40271354:	09 09 09 09 3c 70 3e 0a 09 09 09 09 09 09 3c 73     ....<p>.......<s
+40271364:	70 61 6e 20 63 6c 61 73 73 3d 22 62 6f 6c 64 22     pan class="bold"
+40271374:	3e 54 72 65 62 6c 65 20 63 6f 6e 74 72 6f 6c 3a     >Treble control:
+40271384:	20 3c 2f 73 70 61 6e 3e 3c 69 6e 70 75 74 20 74      </span><input t
+40271394:	79 70 65 3d 22 72 61 6e 67 65 22 20 69 64 3d 22     ype="range" id="
+402713a4:	74 72 65 62 6c 65 5f 72 61 6e 67 65 22 20 6e 61     treble_range" na
+402713b4:	6d 65 3d 22 74 72 65 62 6c 65 22 20 6f 6e 43 68     me="treble" onCh
+402713c4:	61 6e 67 65 3d 22 6f 6e 52 61 6e 67 65 43 68 61     ange="onRangeCha
+402713d4:	6e 67 65 28 27 74 72 65 62 6c 65 5f 72 61 6e 67     nge('treble_rang
+402713e4:	65 27 2c 20 27 74 72 65 62 6c 65 5f 73 70 61 6e     e', 'treble_span
+402713f4:	27 2c 20 31 2e 35 2c 20 66 61 6c 73 65 29 22 20     ', 1.5, false)" 
+40271404:	6d 69 6e 3d 30 20 6d 61 78 3d 38 20 76 61 6c 75     min=0 max=8 valu
+40271414:	65 3d 23 53 4f 55 4e 44 2d 54 52 45 42 4c 45 23     e=#SOUND-TREBLE#
+40271424:	3e 3c 73 70 61 6e 20 69 64 3d 22 74 72 65 62 6c     ><span id="trebl
+40271434:	65 5f 73 70 61 6e 22 3e 3c 2f 73 70 61 6e 3e 3c     e_span"></span><
+40271444:	62 72 3e 0a 09 09 09 09 09 09 3c 73 70 61 6e 20     br>.......<span 
+40271454:	63 6c 61 73 73 3d 22 62 6f 6c 64 22 3e 42 61 73     class="bold">Bas
+40271464:	73 20 65 6e 68 61 6e 63 65 3a 20 3c 2f 73 70 61     s enhance: </spa
+40271474:	6e 3e 3c 69 6e 70 75 74 20 74 79 70 65 3d 22 72     n><input type="r
+40271484:	61 6e 67 65 22 20 20 69 64 3d 22 62 61 73 73 5f     ange"  id="bass_
+40271494:	72 61 6e 67 65 22 20 6e 61 6d 65 3d 22 62 61 73     range" name="bas
+402714a4:	73 22 20 6f 6e 43 68 61 6e 67 65 3d 22 6f 6e 52     s" onChange="onR
+402714b4:	61 6e 67 65 43 68 61 6e 67 65 28 27 62 61 73 73     angeChange('bass
+402714c4:	5f 72 61 6e 67 65 27 2c 20 27 62 61 73 73 5f 73     _range', 'bass_s
+402714d4:	70 61 6e 27 2c 20 31 2c 20 66 61 6c 73 65 29 22     pan', 1, false)"
+402714e4:	20 6d 69 6e 3d 30 20 6d 61 78 3d 31 35 20 76 61      min=0 max=15 va
+402714f4:	6c 75 65 3d 23 53 4f 55 4e 44 2d 42 41 53 53 23     lue=#SOUND-BASS#
+40271504:	3e 3c 73 70 61 6e 20 69 64 3d 22 62 61 73 73 5f     ><span id="bass_
+40271514:	73 70 61 6e 22 3e 3c 2f 73 70 61 6e 3e 3c 62 72     span"></span><br
+40271524:	3e 0a 09 09 09 09 09 09 3c 73 70 61 6e 20 63 6c     >.......<span cl
+40271534:	61 73 73 3d 22 62 6f 6c 64 22 3e 56 6f 6c 75 6d     ass="bold">Volum
+40271544:	65 3a 20 3c 2f 73 70 61 6e 3e 3c 69 6e 70 75 74     e: </span><input
+40271554:	20 74 79 70 65 3d 22 72 61 6e 67 65 22 20 69 64      type="range" id
+40271564:	3d 22 76 6f 6c 5f 72 61 6e 67 65 22 20 6e 61 6d     ="vol_range" nam
+40271574:	65 3d 22 76 6f 6c 22 20 6f 6e 43 68 61 6e 67 65     e="vol" onChange
+40271584:	3d 22 6f 6e 52 61 6e 67 65 43 68 61 6e 67 65 28     ="onRangeChange(
+40271594:	27 76 6f 6c 5f 72 61 6e 67 65 27 2c 20 27 76 6f     'vol_range', 'vo
+402715a4:	6c 5f 73 70 61 6e 27 2c 20 2d 30 2e 35 2c 20 74     l_span', -0.5, t
+402715b4:	72 75 65 29 22 20 6d 69 6e 3d 30 20 6d 61 78 3d     rue)" min=0 max=
+402715c4:	32 35 34 20 76 61 6c 75 65 3d 23 53 4f 55 4e 44     254 value=#SOUND
+402715d4:	2d 56 4f 4c 23 3e 3c 73 70 61 6e 20 69 64 3d 22     -VOL#><span id="
+402715e4:	76 6f 6c 5f 73 70 61 6e 22 3e 3c 2f 73 70 61 6e     vol_span"></span
+402715f4:	3e 3c 62 72 3e 0a 09 09 09 09 09 09 3c 69 6e 70     ><br>.......<inp
+40271604:	75 74 20 74 79 70 65 3d 22 62 75 74 74 6f 6e 22     ut type="button"
+40271614:	20 6f 6e 43 6c 69 63 6b 3d 22 73 61 76 65 53 6f      onClick="saveSo
+40271624:	75 6e 64 53 65 74 74 69 6e 67 73 28 29 22 20 76     undSettings()" v
+40271634:	61 6c 75 65 3d 22 53 61 76 65 22 3e 0a 09 09 09     alue="Save">....
+40271644:	09 09 09 3c 2f 70 3e 0a 09 09 09 09 09 3c 2f 66     ...</p>......</f
+40271654:	6f 72 6d 3e 0a 09 09 09 09 09 3c 2f 64 69 76 3e     orm>......</div>
+40271664:	0a 09 09 09 09 3c 2f 6c 69 3e 0a 09 09 09 09 3c     .....</li>.....<
+40271674:	2f 75 6c 3e 0a 09 09 09 3c 2f 64 69 76 3e 0a 09     /ul>....</div>..
+40271684:	09 3c 2f 64 69 76 3e 0a 09 09 3c 73 63 72 69 70     .</div>...<scrip
+40271694:	74 3e 0a 09 09 09 66 75 6e 63 74 69 6f 6e 20 72     t>....function r
+402716a4:	65 6c 6f 61 64 41 66 74 65 72 28 24 73 65 63 6f     eloadAfter($seco
+402716b4:	6e 64 73 29 20 7b 0a 09 09 09 09 73 65 74 54 69     nds) {.....setTi
+402716c4:	6d 65 6f 75 74 28 66 75 6e 63 74 69 6f 6e 28 29     meout(function()
+402716d4:	7b 0a 09 09 09 09 20 20 20 77 69 6e 64 6f 77 2e     {.....   window.
+402716e4:	6c 6f 63 61 74 69 6f 6e 2e 72 65 70 6c 61 63 65     location.replace
+402716f4:	28 22 2f 22 29 3b 0a 09 09 09 09 7d 2c 20 24 73     ("/");.....}, $s
+40271704:	65 63 6f 6e 64 73 2a 31 30 30 30 29 3b 0a 09 09     econds*1000);...
+40271714:	09 7d 0a 09 09 09 66 75 6e 63 74 69 6f 6e 20 6f     .}....function o
+40271724:	6e 52 61 6e 67 65 43 68 61 6e 67 65 28 24 72 61     nRangeChange($ra
+40271734:	6e 67 65 2c 20 24 73 70 61 6e 69 64 2c 20 24 6d     nge, $spanid, $m
+40271744:	75 6c 2c 20 24 72 6f 74 61 74 65 29 20 7b 0a 09     ul, $rotate) {..
+40271754:	09 09 09 76 61 72 20 76 61 6c 20 3d 20 64 6f 63     ...var val = doc
+40271764:	75 6d 65 6e 74 2e 67 65 74 45 6c 65 6d 65 6e 74     ument.getElement
+40271774:	42 79 49 64 28 24 72 61 6e 67 65 29 2e 76 61 6c     ById($range).val
+40271784:	75 65 3b 0a 09 09 09 09 69 66 28 24 72 6f 74 61     ue;.....if($rota
+40271794:	74 65 29 20 76 61 6c 20 3d 20 64 6f 63 75 6d 65     te) val = docume
+402717a4:	6e 74 2e 67 65 74 45 6c 65 6d 65 6e 74 42 79 49     nt.getElementByI
+402717b4:	64 28 24 72 61 6e 67 65 29 2e 6d 61 78 20 2d 20     d($range).max - 
+402717c4:	76 61 6c 3b 0a 09 09 09 09 64 6f 63 75 6d 65 6e     val;.....documen
+402717d4:	74 2e 67 65 74 45 6c 65 6d 65 6e 74 42 79 49 64     t.getElementById
+402717e4:	28 24 73 70 61 6e 69 64 29 2e 69 6e 6e 65 72 48     ($spanid).innerH
+402717f4:	54 4d 4c 20 3d 20 28 76 61 6c 20 2a 20 24 6d 75     TML = (val * $mu
+40271804:	6c 29 20 2b 20 22 20 64 42 22 3b 0a 09 09 09 7d     l) + " dB";....}
+40271814:	0a 09 09 09 66 75 6e 63 74 69 6f 6e 20 69 6e 73     ....function ins
+40271824:	74 61 6e 74 50 6c 61 79 28 29 20 7b 0a 09 09 09     tantPlay() {....
+40271834:	09 78 6d 6c 68 74 74 70 20 3d 20 6e 65 77 20 58     .xmlhttp = new X
+40271844:	4d 4c 48 74 74 70 52 65 71 75 65 73 74 28 29 3b     MLHttpRequest();
+40271854:	0a 09 09 09 09 78 6d 6c 68 74 74 70 2e 6f 70 65     .....xmlhttp.ope
+40271864:	6e 28 22 50 4f 53 54 22 2c 22 69 6e 73 74 61 6e     n("POST","instan
+40271874:	74 5f 70 6c 61 79 22 2c 66 61 6c 73 65 29 3b 0a     t_play",false);.
+40271884:	09 09 09 09 78 6d 6c 68 74 74 70 2e 73 65 74 52     ....xmlhttp.setR
+40271894:	65 71 75 65 73 74 48 65 61 64 65 72 28 22 43 6f     equestHeader("Co
+402718a4:	6e 74 65 6e 74 2d 74 79 70 65 22 2c 22 61 70 70     ntent-type","app
+402718b4:	6c 69 63 61 74 69 6f 6e 2f 78 2d 77 77 77 2d 66     lication/x-www-f
+402718c4:	6f 72 6d 2d 75 72 6c 65 6e 63 6f 64 65 64 22 29     orm-urlencoded")
+402718d4:	3b 0a 09 09 09 09 78 6d 6c 68 74 74 70 2e 73 65     ;.....xmlhttp.se
+402718e4:	6e 64 28 22 75 72 6c 3d 22 20 2b 20 64 6f 63 75     nd("url=" + docu
+402718f4:	6d 65 6e 74 2e 67 65 74 45 6c 65 6d 65 6e 74 42     ment.getElementB
+40271904:	79 49 64 28 27 69 6e 73 74 61 6e 74 5f 75 72 6c     yId('instant_url
+40271914:	27 29 2e 76 61 6c 75 65 20 2b 20 22 26 70 6f 72     ').value + "&por
+40271924:	74 3d 22 20 2b 20 64 6f 63 75 6d 65 6e 74 2e 67     t=" + document.g
+40271934:	65 74 45 6c 65 6d 65 6e 74 42 79 49 64 28 27 69     etElementById('i
+40271944:	6e 73 74 61 6e 74 5f 70 6f 72 74 27 29 2e 76 61     nstant_port').va
+40271954:	6c 75 65 20 2b 20 22 26 70 61 74 68 3d 22 20 2b     lue + "&path=" +
+40271964:	20 64 6f 63 75 6d 65 6e 74 2e 67 65 74 45 6c 65      document.getEle
+40271974:	6d 65 6e 74 42 79 49 64 28 27 69 6e 73 74 61 6e     mentById('instan
+40271984:	74 5f 70 61 74 68 27 29 2e 76 61 6c 75 65 29 3b     t_path').value);
+40271994:	0a 09 09 09 09 77 69 6e 64 6f 77 2e 6c 6f 63 61     .....window.loca
+402719a4:	74 69 6f 6e 2e 72 65 70 6c 61 63 65 28 22 2f 22     tion.replace("/"
+402719b4:	29 3b 0a 09 09 09 7d 0a 09 09 09 66 75 6e 63 74     );....}....funct
+402719c4:	69 6f 6e 20 73 61 76 65 53 6f 75 6e 64 53 65 74     ion saveSoundSet
+402719d4:	74 69 6e 67 73 28 29 20 7b 0a 09 09 09 09 78 6d     tings() {.....xm
+402719e4:	6c 68 74 74 70 20 3d 20 6e 65 77 20 58 4d 4c 48     lhttp = new XMLH
+402719f4:	74 74 70 52 65 71 75 65 73 74 28 29 3b 0a 09 09     ttpRequest();...
+40271a04:	09 09 78 6d 6c 68 74 74 70 2e 6f 70 65 6e 28 22     ..xmlhttp.open("
+40271a14:	50 4f 53 54 22 2c 22 73 6f 75 6e 64 22 2c 66 61     POST","sound",fa
+40271a24:	6c 73 65 29 3b 0a 09 09 09 09 78 6d 6c 68 74 74     lse);.....xmlhtt
+40271a34:	70 2e 73 65 74 52 65 71 75 65 73 74 48 65 61 64     p.setRequestHead
+40271a44:	65 72 28 22 43 6f 6e 74 65 6e 74 2d 74 79 70 65     er("Content-type
+40271a54:	22 2c 22 61 70 70 6c 69 63 61 74 69 6f 6e 2f 78     ","application/x
+40271a64:	2d 77 77 77 2d 66 6f 72 6d 2d 75 72 6c 65 6e 63     -www-form-urlenc
+40271a74:	6f 64 65 64 22 29 3b 0a 09 09 09 09 78 6d 6c 68     oded");.....xmlh
+40271a84:	74 74 70 2e 73 65 6e 64 28 22 76 6f 6c 3d 22 20     ttp.send("vol=" 
+40271a94:	2b 20 64 6f 63 75 6d 65 6e 74 2e 67 65 74 45 6c     + document.getEl
+40271aa4:	65 6d 65 6e 74 42 79 49 64 28 27 76 6f 6c 5f 72     ementById('vol_r
+40271ab4:	61 6e 67 65 27 29 2e 76 61 6c 75 65 20 2b 20 22     ange').value + "
+40271ac4:	26 62 61 73 73 3d 22 20 2b 20 64 6f 63 75 6d 65     &bass=" + docume
+40271ad4:	6e 74 2e 67 65 74 45 6c 65 6d 65 6e 74 42 79 49     nt.getElementByI
+40271ae4:	64 28 27 62 61 73 73 5f 72 61 6e 67 65 27 29 2e     d('bass_range').
+40271af4:	76 61 6c 75 65 20 2b 20 22 26 74 72 65 62 6c 65     value + "&treble
+40271b04:	3d 22 20 2b 20 64 6f 63 75 6d 65 6e 74 2e 67 65     =" + document.ge
+40271b14:	74 45 6c 65 6d 65 6e 74 42 79 49 64 28 27 74 72     tElementById('tr
+40271b24:	65 62 6c 65 5f 72 61 6e 67 65 27 29 2e 76 61 6c     eble_range').val
+40271b34:	75 65 29 3b 0a 09 09 09 09 77 69 6e 64 6f 77 2e     ue);.....window.
+40271b44:	6c 6f 63 61 74 69 6f 6e 2e 72 65 70 6c 61 63 65     location.replace
+40271b54:	28 22 2f 22 29 3b 0a 09 09 09 7d 0a 09 09 09 64     ("/");....}....d
+40271b64:	6f 63 75 6d 65 6e 74 2e 61 64 64 45 76 65 6e 74     ocument.addEvent
+40271b74:	4c 69 73 74 65 6e 65 72 28 22 44 4f 4d 43 6f 6e     Listener("DOMCon
+40271b84:	74 65 6e 74 4c 6f 61 64 65 64 22 2c 20 66 75 6e     tentLoaded", fun
+40271b94:	63 74 69 6f 6e 28 65 76 65 6e 74 29 20 7b 20 0a     ction(event) { .
+40271ba4:	09 09 09 20 20 6f 6e 52 61 6e 67 65 43 68 61 6e     ...  onRangeChan
+40271bb4:	67 65 28 27 74 72 65 62 6c 65 5f 72 61 6e 67 65     ge('treble_range
+40271bc4:	27 2c 20 27 74 72 65 62 6c 65 5f 73 70 61 6e 27     ', 'treble_span'
+40271bd4:	2c 20 31 2e 35 2c 20 66 61 6c 73 65 29 3b 0a 09     , 1.5, false);..
+40271be4:	09 09 20 20 6f 6e 52 61 6e 67 65 43 68 61 6e 67     ..  onRangeChang
+40271bf4:	65 28 27 62 61 73 73 5f 72 61 6e 67 65 27 2c 20     e('bass_range', 
+40271c04:	27 62 61 73 73 5f 73 70 61 6e 27 2c 20 31 2c 20     'bass_span', 1, 
+40271c14:	66 61 6c 73 65 29 3b 0a 09 09 09 20 20 6f 6e 52     false);....  onR
+40271c24:	61 6e 67 65 43 68 61 6e 67 65 28 27 76 6f 6c 5f     angeChange('vol_
+40271c34:	72 61 6e 67 65 27 2c 20 27 76 6f 6c 5f 73 70 61     range', 'vol_spa
+40271c44:	6e 27 2c 20 2d 30 2e 35 2c 20 74 72 75 65 29 3b     n', -0.5, true);
+40271c54:	0a 09 09 09 7d 29 3b 0a 09 09 3c 2f 73 63 72 69     ....});...</scri
+40271c64:	70 74 3e 0a 09 3c 2f 62 6f 64 79 3e 0a 3c 2f 48     pt>..</body>.</H
+40271c74:	54 4d 4c 3e 0a 00 00 00 00 00 00 00 65 72 72 6f     TML>........erro
+40271c84:	72 3a 20 70 6c 6c 5f 63 61 6c 20 65 78 63 65 65     r: pll_cal excee
+40271c94:	64 73 20 32 6d 73 21 21 21 0a 00 00 25 64 2c 20     ds 2ms!!!...%d, 
+40271ca4:	00 00 00 00 25 64 2c 20 00 00 00 00 25 64 2c 20     ....%d, ....%d, 
 	...
-40271870:	65 72 72 6f 72 3a 20 70 6c 6c 5f 63 61 6c 20 65     error: pll_cal e
-40271880:	78 63 65 65 64 73 20 32 6d 73 21 21 21 0a 00 00     xceeds 2ms!!!...
-40271890:	25 64 2c 20 00 00 00 00 25 64 2c 20 00 00 00 00     %d, ....%d, ....
-402718a0:	25 64 2c 20 00 00 00 00 00 00 00 00 00 00 00 00     %d, ............
-402718b0:	25 64 2c 20 25 64 2c 20 00 00 00 00 00 00 00 00     %d, %d, ........
-402718c0:	25 64 2c 20 25 64 2c 20 00 00 00 00 00 00 00 00     %d, %d, ........
-402718d0:	25 64 2c 20 25 64 2c 20 00 00 00 00 00 00 00 00     %d, %d, ........
-402718e0:	25 64 2c 20 25 64 2c 20 00 00 00 00 00 00 00 00     %d, %d, ........
-402718f0:	25 64 2c 20 00 00 00 00 00 00 00 00 00 00 00 00     %d, ............
-40271900:	72 78 69 71 5f 72 65 67 3a 20 69 3d 25 64 2c 20     rxiq_reg: i=%d, 
-40271910:	61 5f 6d 69 73 3d 25 64 2c 20 70 5f 6d 69 73 3d     a_mis=%d, p_mis=
-40271920:	25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     %d..............
-40271930:	74 6f 74 61 6c 5f 70 77 72 3d 25 6c 64 2c 20 6d     total_pwr=%ld, m
-40271940:	61 78 3d 25 6c 64 2c 20 0a 00 00 00 00 00 00 00     ax=%ld, ........
-40271950:	25 64 5f 25 64 5f 25 64 0a 00 00 00 00 00 00 00     %d_%d_%d........
-40271960:	73 65 74 5f 72 78 5f 67 61 69 6e 3a 20 72 66 74     set_rx_gain: rft
-40271970:	78 3d 25 78 2c 20 72 66 72 78 3d 78 25 78 2c 20     x=%x, rfrx=x%x, 
-40271980:	61 74 74 3d 25 64 2c 20 74 78 62 62 3d 30 78 25     att=%d, txbb=0x%
-40271990:	78 2c 20 62 62 72 78 31 3d 30 78 25 78 2c 20 62     x, bbrx1=0x%x, b
-402719a0:	62 72 78 32 3d 30 78 25 78 2c 20 74 64 63 3a 25     brx2=0x%x, tdc:%
-402719b0:	64 2c 25 64 0a 00 00 00 00 00 00 00 00 00 00 00     d,%d............
-402719c0:	69 6e 64 65 78 3a 20 25 64 20 76 61 6c 75 65 3a     index: %d value:
-402719d0:	20 30 78 25 78 20 30 78 25 78 20 30 78 25 78 20      0x%x 0x%x 0x%x 
-402719e0:	30 78 25 78 0a 00 00 00 00 00 00 00 00 00 00 00     0x%x............
-402719f0:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
-40271a00:	42 4b 3a 25 64 2c 25 64 2c 25 64 2c 25 64 2c 30     BK:%d,%d,%d,%d,0
-40271a10:	78 25 78 0a 00 00 00 00 00 00 00 00 00 00 00 00     x%x.............
-40271a20:	74 78 64 63 3a 25 64 2c 25 64 3b 20 72 78 64 63     txdc:%d,%d; rxdc
-40271a30:	3a 25 64 2c 25 64 2c 25 64 2c 25 64 0a 00 00 00     :%d,%d,%d,%d....
-40271a40:	52 54 43 20 4d 45 4d 20 43 48 45 43 4b 20 46 41     RTC MEM CHECK FA
-40271a50:	49 4c 21 21 21 0a 00 00 00 00 00 00 00 00 00 00     IL!!!...........
-40271a60:	64 73 3a 20 25 64 2c 20 25 64 2c 20 25 78 0a 00     ds: %d, %d, %x..
-40271a70:	25 33 64 2c 25 33 64 3b 20 00 00 00 00 00 00 00     %3d,%3d; .......
-40271a80:	74 78 69 71 5f 67 61 69 6e 3d 25 64 2c 20 74 78     txiq_gain=%d, tx
-40271a90:	69 71 5f 70 68 61 73 65 3d 25 64 0a 00 00 00 00     iq_phase=%d.....
-40271aa0:	54 58 50 57 31 2c 20 25 64 2c 20 25 64 2c 20 25     TXPW1, %d, %d, %
-40271ab0:	64 2c 20 25 64 2c 20 25 64 2c 20 25 64 0a 00 00     d, %d, %d, %d...
-40271ac0:	54 58 5f 50 57 43 54 52 4c 2c 20 74 6f 74 5f 70     TX_PWCTRL, tot_p
-40271ad0:	3d 25 64 2c 20 64 6f 63 61 6c 5f 70 3d 25 64 2c     =%d, docal_p=%d,
-40271ae0:	20 63 6f 61 74 74 3d 25 64 2c 20 61 74 74 3d 25      coatt=%d, att=%
-40271af0:	64 2c 20 72 66 5f 67 3d 25 78 2c 20 65 72 72 6f     d, rf_g=%x, erro
-40271b00:	72 3d 25 64 2c 20 25 64 2c 20 25 64 2c 20 25 64     r=%d, %d, %d, %d
-40271b10:	2c 20 25 64 2c 20 68 70 63 3d 25 64 2c 20 25 64     , %d, hpc=%d, %d
-40271b20:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
-40271b30:	70 65 72 69 6f 64 69 63 5f 63 61 6c 20 6e 75 6d     periodic_cal num
-40271b40:	3a 20 25 64 0a 00 00 00 00 00 00 00 00 00 00 00     : %d............
-40271b50:	6e 75 6d 5f 6b 3d 25 64 2c 20 70 6f 77 65 72 5f     num_k=%d, power_
-40271b60:	6f 75 74 3d 25 64 2c 20 00 00 00 00 00 00 00 00     out=%d, ........
-40271b70:	72 65 67 5f 69 3d 25 64 2c 20 69 6e 64 61 74 61     reg_i=%d, indata
-40271b80:	3d 25 64 2c 20 00 00 00 00 00 00 00 00 00 00 00     =%d, ...........
-40271b90:	70 77 63 74 72 6c 3a 20 72 61 74 65 5f 69 3d 25     pwctrl: rate_i=%
-40271ba0:	64 2c 20 74 61 72 67 65 74 5f 70 6f 77 65 72 3d     d, target_power=
-40271bb0:	25 64 2c 20 64 65 74 65 63 74 5f 70 6f 77 65 72     %d, detect_power
-40271bc0:	3d 25 64 2c 20 72 61 74 65 5f 61 74 74 65 6e 3d     =%d, rate_atten=
-40271bd0:	25 64 2c 20 00 00 00 00 00 00 00 00 00 00 00 00     %d, ............
-40271be0:	72 78 69 71 5f 67 65 74 5f 6d 69 73 3a 20 74 6f     rxiq_get_mis: to
-40271bf0:	74 61 6c 5f 70 77 72 3d 25 64 2c 20 25 64 2d 25     tal_pwr=%d, %d-%
-40271c00:	64 2c 20 00 00 00 00 00 00 00 00 00 00 00 00 00     d, .............
-40271c10:	64 63 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     dc..............
-40271c20:	73 6c 6f 70 5f 74 65 73 74 0a 00 00 00 00 00 00     slop_test.......
-40271c30:	77 64 5f 72 65 73 65 74 20 25 64 0a 00 00 00 00     wd_reset %d.....
-40271c40:	77 64 5f 72 65 73 65 74 20 25 64 0a 00 00 00 00     wd_reset %d.....
-40271c50:	72 78 69 71 5f 67 65 74 5f 6d 69 73 3a 20 73 5f     rxiq_get_mis: s_
-40271c60:	70 77 72 3d 25 6c 6c 64 2c 20 25 64 2d 25 64 2c     pwr=%lld, %d-%d,
-40271c70:	20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00      ...............
-40271c80:	73 74 61 67 65 20 25 64 3a 20 43 47 41 49 4e 3d     stage %d: CGAIN=
-40271c90:	25 64 20 46 47 41 49 4e 3d 25 64 2c 20 44 43 5f     %d FGAIN=%d, DC_
-40271ca0:	4f 53 3d 28 25 64 2c 25 64 29 2c 20 44 41 43 3d     OS=(%d,%d), DAC=
-40271cb0:	28 25 64 2c 25 64 29 20 0a 00 00 00 00 00 00 00     (%d,%d) ........
-40271cc0:	20 28 25 64 2c 25 64 29 20 00 00 00 00 00 00 00      (%d,%d) .......
-40271cd0:	0a 00 00 00 00 00 00 00 25 64 2c 25 64 20 00 00     ........%d,%d ..
-40271ce0:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
-40271cf0:	70 77 63 74 72 6c 3a 20 72 61 74 65 5f 69 3d 25     pwctrl: rate_i=%
-40271d00:	64 2c 20 74 61 72 67 65 74 5f 70 6f 77 65 72 3d     d, target_power=
-40271d10:	25 64 2c 20 64 65 74 65 63 74 5f 70 6f 77 65 72     %d, detect_power
-40271d20:	3d 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     =%d.............
-40271d30:	72 65 67 5f 69 3d 25 64 2c 20 69 6e 64 61 74 61     reg_i=%d, indata
-40271d40:	3d 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     =%d.............
-40271d50:	6e 75 6d 5f 6b 3d 25 64 2c 20 70 6f 77 65 72 5f     num_k=%d, power_
-40271d60:	6f 75 74 3d 25 64 2c 20 00 00 00 00 00 00 00 00     out=%d, ........
-40271d70:	74 78 69 71 3a 20 74 6f 6e 65 5f 61 74 74 65 6e     txiq: tone_atten
-40271d80:	3d 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     =%d.............
-40271d90:	62 74 2c 20 00 00 00 00 25 64 2c 20 00 00 00 00     bt, ....%d, ....
-40271da0:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
-40271db0:	64 65 6c 20 69 66 25 64 0a 00 00 00 00 00 00 00     del if%d........
-40271dc0:	63 68 67 20 69 66 25 64 0a 00 00 00 00 00 00 00     chg if%d........
-40271dd0:	61 64 64 20 69 66 25 64 0a 00 00 00 00 00 00 00     add if%d........
-40271de0:	61 69 64 20 25 64 0a 00 62 63 6e 20 25 64 0a 00     aid %d..bcn %d..
-40271df0:	63 6e 74 20 0a 00 00 00 75 6e 63 6e 74 20 0a 00     cnt ....uncnt ..
-40271e00:	74 78 20 72 74 73 20 65 72 72 6f 72 20 30 78 25     tx rts error 0x%
-40271e10:	78 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     x...............
-40271e20:	74 78 20 65 72 72 6f 72 20 30 78 25 78 0a 00 00     tx error 0x%x...
-40271e30:	77 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     w...............
-40271e40:	73 6c 65 65 70 20 64 69 73 61 62 6c 65 00 00 00     sleep disable...
-40271e50:	73 6c 65 65 70 20 65 6e 61 62 6c 65 00 00 00 00     sleep enable....
-40271e60:	0a 20 6c 69 67 68 74 20 73 6c 65 65 70 20 69 73     . light sleep is
-40271e70:	20 6e 6f 74 20 73 75 70 70 6f 72 74 65 64 20 6e      not supported n
-40271e80:	6f 77 20 0a 00 00 00 00 00 00 00 00 00 00 00 00     ow .............
-40271e90:	2c 74 79 70 65 3a 20 25 64 00 00 00 00 00 00 00     ,type: %d.......
-40271ea0:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
-40271eb0:	70 6d 20 77 61 6b 65 75 70 20 73 74 3a 20 25 64     pm wakeup st: %d
-40271ec0:	2c 20 63 61 75 73 65 3a 20 25 64 0a 00 00 00 00     , cause: %d.....
-40271ed0:	63 5f 64 74 31 0a 00 00 6f 5f 64 74 31 0a 00 00     c_dt1...o_dt1...
-40271ee0:	53 45 54 20 49 44 4c 45 20 43 42 0a 00 00 00 00     SET IDLE CB.....
-40271ef0:	77 68 79 20 25 75 20 25 75 20 25 75 20 25 75 0a     why %u %u %u %u.
+40271cc0:	25 64 2c 20 25 64 2c 20 00 00 00 00 00 00 00 00     %d, %d, ........
+40271cd0:	25 64 2c 20 25 64 2c 20 00 00 00 00 00 00 00 00     %d, %d, ........
+40271ce0:	25 64 2c 20 25 64 2c 20 00 00 00 00 00 00 00 00     %d, %d, ........
+40271cf0:	25 64 2c 20 25 64 2c 20 00 00 00 00 00 00 00 00     %d, %d, ........
+40271d00:	25 64 2c 20 00 00 00 00 00 00 00 00 00 00 00 00     %d, ............
+40271d10:	72 78 69 71 5f 72 65 67 3a 20 69 3d 25 64 2c 20     rxiq_reg: i=%d, 
+40271d20:	61 5f 6d 69 73 3d 25 64 2c 20 70 5f 6d 69 73 3d     a_mis=%d, p_mis=
+40271d30:	25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     %d..............
+40271d40:	74 6f 74 61 6c 5f 70 77 72 3d 25 6c 64 2c 20 6d     total_pwr=%ld, m
+40271d50:	61 78 3d 25 6c 64 2c 20 0a 00 00 00 00 00 00 00     ax=%ld, ........
+40271d60:	25 64 5f 25 64 5f 25 64 0a 00 00 00 00 00 00 00     %d_%d_%d........
+40271d70:	73 65 74 5f 72 78 5f 67 61 69 6e 3a 20 72 66 74     set_rx_gain: rft
+40271d80:	78 3d 25 78 2c 20 72 66 72 78 3d 78 25 78 2c 20     x=%x, rfrx=x%x, 
+40271d90:	61 74 74 3d 25 64 2c 20 74 78 62 62 3d 30 78 25     att=%d, txbb=0x%
+40271da0:	78 2c 20 62 62 72 78 31 3d 30 78 25 78 2c 20 62     x, bbrx1=0x%x, b
+40271db0:	62 72 78 32 3d 30 78 25 78 2c 20 74 64 63 3a 25     brx2=0x%x, tdc:%
+40271dc0:	64 2c 25 64 0a 00 00 00 00 00 00 00 00 00 00 00     d,%d............
+40271dd0:	69 6e 64 65 78 3a 20 25 64 20 76 61 6c 75 65 3a     index: %d value:
+40271de0:	20 30 78 25 78 20 30 78 25 78 20 30 78 25 78 20      0x%x 0x%x 0x%x 
+40271df0:	30 78 25 78 0a 00 00 00 00 00 00 00 00 00 00 00     0x%x............
+40271e00:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+40271e10:	42 4b 3a 25 64 2c 25 64 2c 25 64 2c 25 64 2c 30     BK:%d,%d,%d,%d,0
+40271e20:	78 25 78 0a 00 00 00 00 00 00 00 00 00 00 00 00     x%x.............
+40271e30:	74 78 64 63 3a 25 64 2c 25 64 3b 20 72 78 64 63     txdc:%d,%d; rxdc
+40271e40:	3a 25 64 2c 25 64 2c 25 64 2c 25 64 0a 00 00 00     :%d,%d,%d,%d....
+40271e50:	52 54 43 20 4d 45 4d 20 43 48 45 43 4b 20 46 41     RTC MEM CHECK FA
+40271e60:	49 4c 21 21 21 0a 00 00 00 00 00 00 00 00 00 00     IL!!!...........
+40271e70:	64 73 3a 20 25 64 2c 20 25 64 2c 20 25 78 0a 00     ds: %d, %d, %x..
+40271e80:	25 33 64 2c 25 33 64 3b 20 00 00 00 00 00 00 00     %3d,%3d; .......
+40271e90:	74 78 69 71 5f 67 61 69 6e 3d 25 64 2c 20 74 78     txiq_gain=%d, tx
+40271ea0:	69 71 5f 70 68 61 73 65 3d 25 64 0a 00 00 00 00     iq_phase=%d.....
+40271eb0:	54 58 50 57 31 2c 20 25 64 2c 20 25 64 2c 20 25     TXPW1, %d, %d, %
+40271ec0:	64 2c 20 25 64 2c 20 25 64 2c 20 25 64 0a 00 00     d, %d, %d, %d...
+40271ed0:	54 58 5f 50 57 43 54 52 4c 2c 20 74 6f 74 5f 70     TX_PWCTRL, tot_p
+40271ee0:	3d 25 64 2c 20 64 6f 63 61 6c 5f 70 3d 25 64 2c     =%d, docal_p=%d,
+40271ef0:	20 63 6f 61 74 74 3d 25 64 2c 20 61 74 74 3d 25      coatt=%d, att=%
+40271f00:	64 2c 20 72 66 5f 67 3d 25 78 2c 20 65 72 72 6f     d, rf_g=%x, erro
+40271f10:	72 3d 25 64 2c 20 25 64 2c 20 25 64 2c 20 25 64     r=%d, %d, %d, %d
+40271f20:	2c 20 25 64 2c 20 68 70 63 3d 25 64 2c 20 25 64     , %d, hpc=%d, %d
+40271f30:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+40271f40:	70 65 72 69 6f 64 69 63 5f 63 61 6c 20 6e 75 6d     periodic_cal num
+40271f50:	3a 20 25 64 0a 00 00 00 00 00 00 00 00 00 00 00     : %d............
+40271f60:	6e 75 6d 5f 6b 3d 25 64 2c 20 70 6f 77 65 72 5f     num_k=%d, power_
+40271f70:	6f 75 74 3d 25 64 2c 20 00 00 00 00 00 00 00 00     out=%d, ........
+40271f80:	72 65 67 5f 69 3d 25 64 2c 20 69 6e 64 61 74 61     reg_i=%d, indata
+40271f90:	3d 25 64 2c 20 00 00 00 00 00 00 00 00 00 00 00     =%d, ...........
+40271fa0:	70 77 63 74 72 6c 3a 20 72 61 74 65 5f 69 3d 25     pwctrl: rate_i=%
+40271fb0:	64 2c 20 74 61 72 67 65 74 5f 70 6f 77 65 72 3d     d, target_power=
+40271fc0:	25 64 2c 20 64 65 74 65 63 74 5f 70 6f 77 65 72     %d, detect_power
+40271fd0:	3d 25 64 2c 20 72 61 74 65 5f 61 74 74 65 6e 3d     =%d, rate_atten=
+40271fe0:	25 64 2c 20 00 00 00 00 00 00 00 00 00 00 00 00     %d, ............
+40271ff0:	72 78 69 71 5f 67 65 74 5f 6d 69 73 3a 20 74 6f     rxiq_get_mis: to
+40272000:	74 61 6c 5f 70 77 72 3d 25 64 2c 20 25 64 2d 25     tal_pwr=%d, %d-%
+40272010:	64 2c 20 00 00 00 00 00 00 00 00 00 00 00 00 00     d, .............
+40272020:	64 63 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     dc..............
+40272030:	73 6c 6f 70 5f 74 65 73 74 0a 00 00 00 00 00 00     slop_test.......
+40272040:	77 64 5f 72 65 73 65 74 20 25 64 0a 00 00 00 00     wd_reset %d.....
+40272050:	77 64 5f 72 65 73 65 74 20 25 64 0a 00 00 00 00     wd_reset %d.....
+40272060:	72 78 69 71 5f 67 65 74 5f 6d 69 73 3a 20 73 5f     rxiq_get_mis: s_
+40272070:	70 77 72 3d 25 6c 6c 64 2c 20 25 64 2d 25 64 2c     pwr=%lld, %d-%d,
+40272080:	20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00      ...............
+40272090:	73 74 61 67 65 20 25 64 3a 20 43 47 41 49 4e 3d     stage %d: CGAIN=
+402720a0:	25 64 20 46 47 41 49 4e 3d 25 64 2c 20 44 43 5f     %d FGAIN=%d, DC_
+402720b0:	4f 53 3d 28 25 64 2c 25 64 29 2c 20 44 41 43 3d     OS=(%d,%d), DAC=
+402720c0:	28 25 64 2c 25 64 29 20 0a 00 00 00 00 00 00 00     (%d,%d) ........
+402720d0:	20 28 25 64 2c 25 64 29 20 00 00 00 00 00 00 00      (%d,%d) .......
+402720e0:	0a 00 00 00 00 00 00 00 25 64 2c 25 64 20 00 00     ........%d,%d ..
+402720f0:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+40272100:	70 77 63 74 72 6c 3a 20 72 61 74 65 5f 69 3d 25     pwctrl: rate_i=%
+40272110:	64 2c 20 74 61 72 67 65 74 5f 70 6f 77 65 72 3d     d, target_power=
+40272120:	25 64 2c 20 64 65 74 65 63 74 5f 70 6f 77 65 72     %d, detect_power
+40272130:	3d 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     =%d.............
+40272140:	72 65 67 5f 69 3d 25 64 2c 20 69 6e 64 61 74 61     reg_i=%d, indata
+40272150:	3d 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     =%d.............
+40272160:	6e 75 6d 5f 6b 3d 25 64 2c 20 70 6f 77 65 72 5f     num_k=%d, power_
+40272170:	6f 75 74 3d 25 64 2c 20 00 00 00 00 00 00 00 00     out=%d, ........
+40272180:	74 78 69 71 3a 20 74 6f 6e 65 5f 61 74 74 65 6e     txiq: tone_atten
+40272190:	3d 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     =%d.............
+402721a0:	62 74 2c 20 00 00 00 00 25 64 2c 20 00 00 00 00     bt, ....%d, ....
+402721b0:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+402721c0:	64 65 6c 20 69 66 25 64 0a 00 00 00 00 00 00 00     del if%d........
+402721d0:	63 68 67 20 69 66 25 64 0a 00 00 00 00 00 00 00     chg if%d........
+402721e0:	61 64 64 20 69 66 25 64 0a 00 00 00 00 00 00 00     add if%d........
+402721f0:	61 69 64 20 25 64 0a 00 62 63 6e 20 25 64 0a 00     aid %d..bcn %d..
+40272200:	63 6e 74 20 0a 00 00 00 75 6e 63 6e 74 20 0a 00     cnt ....uncnt ..
+40272210:	74 78 20 72 74 73 20 65 72 72 6f 72 20 30 78 25     tx rts error 0x%
+40272220:	78 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     x...............
+40272230:	74 78 20 65 72 72 6f 72 20 30 78 25 78 0a 00 00     tx error 0x%x...
+40272240:	77 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     w...............
+40272250:	73 6c 65 65 70 20 64 69 73 61 62 6c 65 00 00 00     sleep disable...
+40272260:	73 6c 65 65 70 20 65 6e 61 62 6c 65 00 00 00 00     sleep enable....
+40272270:	0a 20 6c 69 67 68 74 20 73 6c 65 65 70 20 69 73     . light sleep is
+40272280:	20 6e 6f 74 20 73 75 70 70 6f 72 74 65 64 20 6e      not supported n
+40272290:	6f 77 20 0a 00 00 00 00 00 00 00 00 00 00 00 00     ow .............
+402722a0:	2c 74 79 70 65 3a 20 25 64 00 00 00 00 00 00 00     ,type: %d.......
+402722b0:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+402722c0:	70 6d 20 77 61 6b 65 75 70 20 73 74 3a 20 25 64     pm wakeup st: %d
+402722d0:	2c 20 63 61 75 73 65 3a 20 25 64 0a 00 00 00 00     , cause: %d.....
+402722e0:	63 5f 64 74 31 0a 00 00 6f 5f 64 74 31 0a 00 00     c_dt1...o_dt1...
+402722f0:	53 45 54 20 49 44 4c 45 20 43 42 0a 00 00 00 00     SET IDLE CB.....
+40272300:	77 68 79 20 25 75 20 25 75 20 25 75 20 25 75 0a     why %u %u %u %u.
 	...
-40271f10:	63 5f 64 74 32 0a 00 00 6f 5f 64 74 32 0a 00 00     c_dt2...o_dt2...
-40271f20:	25 75 20 25 75 20 25 75 20 25 75 0a 00 00 00 00     %u %u %u %u.....
-40271f30:	63 5f 64 74 33 0a 00 00 6f 5f 64 74 33 0a 00 00     c_dt3...o_dt3...
-40271f40:	53 45 4e 44 20 4e 55 4c 4c 20 53 6c 65 65 70 0a     SEND NULL Sleep.
+40272320:	63 5f 64 74 32 0a 00 00 6f 5f 64 74 32 0a 00 00     c_dt2...o_dt2...
+40272330:	25 75 20 25 75 20 25 75 20 25 75 0a 00 00 00 00     %u %u %u %u.....
+40272340:	63 5f 64 74 33 0a 00 00 6f 5f 64 74 33 0a 00 00     c_dt3...o_dt3...
+40272350:	53 45 4e 44 20 4e 55 4c 4c 20 53 6c 65 65 70 0a     SEND NULL Sleep.
 	...
-40271f60:	72 66 20 63 6c 6f 73 65 2c 6e 75 6c 6c 64 61 74     rf close,nulldat
-40271f70:	61 5f 73 65 6e 64 20 66 61 69 6c 00 00 00 00 00     a_send fail.....
-40271f80:	53 45 4e 44 20 4e 55 4c 4c 20 57 61 6b 65 0a 00     SEND NULL Wake..
-40271f90:	72 66 20 63 6c 6f 73 65 2c 6e 75 6c 6c 64 61 74     rf close,nulldat
-40271fa0:	61 5f 66 61 6c 73 65 00 00 00 00 00 00 00 00 00     a_false.........
-40271fb0:	57 61 6b 65 64 0a 00 00 63 5f 64 74 34 0a 00 00     Waked...c_dt4...
-40271fc0:	53 54 41 52 54 20 57 41 4b 45 20 55 50 0a 00 00     START WAKE UP...
-40271fd0:	63 5f 64 74 35 0a 00 00 00 00 00 00 00 00 00 00     c_dt5...........
-40271fe0:	70 6d 20 63 6c 6f 73 65 20 25 64 20 25 64 20 25     pm close %d %d %
-40271ff0:	75 2f 25 75 0a 00 00 00 00 00 00 00 00 00 00 00     u/%u............
-40272000:	70 6d 20 6f 70 65 6e 20 70 68 79 5f 32 2c 74 79     pm open phy_2,ty
-40272010:	70 65 3a 25 64 20 25 64 20 25 64 0a 00 00 00 00     pe:%d %d %d.....
-40272020:	6e 6f 54 49 4d 21 21 0a 00 00 00 00 00 00 00 00     noTIM!!.........
-40272030:	63 5f 64 74 0a 00 00 00 00 00 00 00 00 00 00 00     c_dt............
-40272040:	77 68 79 20 63 68 61 6e 67 65 20 25 64 20 25 64     why change %d %d
-40272050:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
-40272060:	62 63 6e 5f 67 6f 5f 73 6c 70 31 0a 00 00 00 00     bcn_go_slp1.....
-40272070:	62 63 6e 5f 67 6f 5f 73 6c 70 32 0a 00 00 00 00     bcn_go_slp2.....
-40272080:	6f 66 66 53 54 25 64 00 00 00 00 00 00 00 00 00     offST%d.........
-40272090:	47 4f 5f 54 4f 5f 53 4c 45 45 50 0a 00 00 00 00     GO_TO_SLEEP.....
-402720a0:	6f 6e 53 54 25 64 0a 00 00 00 00 00 00 00 00 00     onST%d..........
-402720b0:	4e 55 4c 4c 20 53 6c 65 65 70 20 53 45 4e 54 20     NULL Sleep SENT 
-402720c0:	43 42 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     CB..............
-402720d0:	31 74 78 5f 73 74 3a 25 64 2c 25 78 0a 00 00 00     1tx_st:%d,%x....
-402720e0:	4e 55 4c 4c 20 57 61 6b 65 20 53 45 4e 54 20 43     NULL Wake SENT C
-402720f0:	42 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     B...............
-40272100:	4d 49 53 53 20 42 43 4e 0a 00 00 00 00 00 00 00     MISS BCN........
-40272110:	64 72 65 61 6d 5f 74 69 6d 6f 75 74 0a 00 00 00     dream_timout....
-40272120:	6e 75 6c 6c 20 64 61 74 61 20 74 69 6d 65 6f 75     null data timeou
-40272130:	74 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     t...............
-40272140:	74 31 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     t1..............
-40272150:	70 6d 5f 74 61 73 6b 5f 68 64 6c 20 3a 20 25 78     pm_task_hdl : %x
-40272160:	2c 20 70 72 69 6f 3a 25 64 2c 20 73 74 61 63 6b     , prio:%d, stack
-40272170:	3a 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     :%d.............
-40272180:	4e 55 4c 4c 20 53 6c 65 65 70 20 53 45 4e 44 20     NULL Sleep SEND 
-40272190:	64 6f 6e 65 0a 00 00 00 00 00 00 00 00 00 00 00     done............
-402721a0:	4e 55 4c 4c 20 57 61 6b 65 20 53 45 4e 44 20 64     NULL Wake SEND d
-402721b0:	6f 6e 65 0a 00 00 00 00 00 00 00 00 00 00 00 00     one.............
-402721c0:	73 6c 0a 00 00 00 00 00 75 73 6c 0a 00 00 00 00     sl......usl.....
-402721d0:	73 75 6c 20 25 64 20 25 64 0a 00 00 00 00 00 00     sul %d %d.......
-402721e0:	70 6d 20 65 76 74 31 20 4e 55 4c 4c 0a 00 00 00     pm evt1 NULL....
-402721f0:	50 4d 51 46 00 00 00 00 00 00 00 00 00 00 00 00     PMQF............
-40272200:	70 6d 5f 73 69 67 3a 20 25 78 0a 00 00 00 00 00     pm_sig: %x......
-40272210:	53 4c 45 45 50 20 53 49 47 0a 00 00 00 00 00 00     SLEEP SIG.......
-40272220:	57 41 4b 45 20 53 49 47 0a 00 00 00 00 00 00 00     WAKE SIG........
-40272230:	79 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     y...............
-40272240:	6d 61 70 20 66 61 69 6c 0a 00 00 00 00 00 00 00     map fail........
-40272250:	70 70 5f 74 61 73 6b 5f 68 64 6c 20 3a 20 25 78     pp_task_hdl : %x
-40272260:	2c 20 70 72 69 6f 3a 25 64 2c 20 73 74 61 63 6b     , prio:%d, stack
-40272270:	3a 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     :%d.............
-40272280:	70 20 65 32 20 6d 20 66 0a 00 00 00 00 00 00 00     p e2 m f........
-40272290:	45 5f 51 46 3a 25 64 21 21 00 00 00 00 00 00 00     E_QF:%d!!.......
-402722a0:	70 20 65 31 20 6d 20 66 0a 00 00 00 00 00 00 00     p e1 m f........
-402722b0:	45 5f 55 46 21 21 21 00 00 00 00 00 00 00 00 00     E_UF!!!.........
-402722c0:	3d 3d 64 6c 0a 00 00 00 00 00 00 00 00 00 00 00     ==dl............
-402722d0:	61 64 64 20 6d 69 73 6d 61 74 63 68 0a 00 00 00     add mismatch....
-402722e0:	61 64 64 20 25 64 0a 00 72 6d 20 25 64 0a 00 00     add %d..rm %d...
-402722f0:	72 6d 20 6d 69 73 0a 00 00 00 00 00 00 00 00 00     rm mis..........
+40272370:	72 66 20 63 6c 6f 73 65 2c 6e 75 6c 6c 64 61 74     rf close,nulldat
+40272380:	61 5f 73 65 6e 64 20 66 61 69 6c 00 00 00 00 00     a_send fail.....
+40272390:	53 45 4e 44 20 4e 55 4c 4c 20 57 61 6b 65 0a 00     SEND NULL Wake..
+402723a0:	72 66 20 63 6c 6f 73 65 2c 6e 75 6c 6c 64 61 74     rf close,nulldat
+402723b0:	61 5f 66 61 6c 73 65 00 00 00 00 00 00 00 00 00     a_false.........
+402723c0:	57 61 6b 65 64 0a 00 00 63 5f 64 74 34 0a 00 00     Waked...c_dt4...
+402723d0:	53 54 41 52 54 20 57 41 4b 45 20 55 50 0a 00 00     START WAKE UP...
+402723e0:	63 5f 64 74 35 0a 00 00 00 00 00 00 00 00 00 00     c_dt5...........
+402723f0:	70 6d 20 63 6c 6f 73 65 20 25 64 20 25 64 20 25     pm close %d %d %
+40272400:	75 2f 25 75 0a 00 00 00 00 00 00 00 00 00 00 00     u/%u............
+40272410:	70 6d 20 6f 70 65 6e 20 70 68 79 5f 32 2c 74 79     pm open phy_2,ty
+40272420:	70 65 3a 25 64 20 25 64 20 25 64 0a 00 00 00 00     pe:%d %d %d.....
+40272430:	6e 6f 54 49 4d 21 21 0a 00 00 00 00 00 00 00 00     noTIM!!.........
+40272440:	63 5f 64 74 0a 00 00 00 00 00 00 00 00 00 00 00     c_dt............
+40272450:	77 68 79 20 63 68 61 6e 67 65 20 25 64 20 25 64     why change %d %d
+40272460:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+40272470:	62 63 6e 5f 67 6f 5f 73 6c 70 31 0a 00 00 00 00     bcn_go_slp1.....
+40272480:	62 63 6e 5f 67 6f 5f 73 6c 70 32 0a 00 00 00 00     bcn_go_slp2.....
+40272490:	6f 66 66 53 54 25 64 00 00 00 00 00 00 00 00 00     offST%d.........
+402724a0:	47 4f 5f 54 4f 5f 53 4c 45 45 50 0a 00 00 00 00     GO_TO_SLEEP.....
+402724b0:	6f 6e 53 54 25 64 0a 00 00 00 00 00 00 00 00 00     onST%d..........
+402724c0:	4e 55 4c 4c 20 53 6c 65 65 70 20 53 45 4e 54 20     NULL Sleep SENT 
+402724d0:	43 42 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     CB..............
+402724e0:	31 74 78 5f 73 74 3a 25 64 2c 25 78 0a 00 00 00     1tx_st:%d,%x....
+402724f0:	4e 55 4c 4c 20 57 61 6b 65 20 53 45 4e 54 20 43     NULL Wake SENT C
+40272500:	42 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     B...............
+40272510:	4d 49 53 53 20 42 43 4e 0a 00 00 00 00 00 00 00     MISS BCN........
+40272520:	64 72 65 61 6d 5f 74 69 6d 6f 75 74 0a 00 00 00     dream_timout....
+40272530:	6e 75 6c 6c 20 64 61 74 61 20 74 69 6d 65 6f 75     null data timeou
+40272540:	74 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     t...............
+40272550:	74 31 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     t1..............
+40272560:	70 6d 5f 74 61 73 6b 5f 68 64 6c 20 3a 20 25 78     pm_task_hdl : %x
+40272570:	2c 20 70 72 69 6f 3a 25 64 2c 20 73 74 61 63 6b     , prio:%d, stack
+40272580:	3a 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     :%d.............
+40272590:	4e 55 4c 4c 20 53 6c 65 65 70 20 53 45 4e 44 20     NULL Sleep SEND 
+402725a0:	64 6f 6e 65 0a 00 00 00 00 00 00 00 00 00 00 00     done............
+402725b0:	4e 55 4c 4c 20 57 61 6b 65 20 53 45 4e 44 20 64     NULL Wake SEND d
+402725c0:	6f 6e 65 0a 00 00 00 00 00 00 00 00 00 00 00 00     one.............
+402725d0:	73 6c 0a 00 00 00 00 00 75 73 6c 0a 00 00 00 00     sl......usl.....
+402725e0:	73 75 6c 20 25 64 20 25 64 0a 00 00 00 00 00 00     sul %d %d.......
+402725f0:	70 6d 20 65 76 74 31 20 4e 55 4c 4c 0a 00 00 00     pm evt1 NULL....
+40272600:	50 4d 51 46 00 00 00 00 00 00 00 00 00 00 00 00     PMQF............
+40272610:	70 6d 5f 73 69 67 3a 20 25 78 0a 00 00 00 00 00     pm_sig: %x......
+40272620:	53 4c 45 45 50 20 53 49 47 0a 00 00 00 00 00 00     SLEEP SIG.......
+40272630:	57 41 4b 45 20 53 49 47 0a 00 00 00 00 00 00 00     WAKE SIG........
+40272640:	79 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     y...............
+40272650:	6d 61 70 20 66 61 69 6c 0a 00 00 00 00 00 00 00     map fail........
+40272660:	70 70 5f 74 61 73 6b 5f 68 64 6c 20 3a 20 25 78     pp_task_hdl : %x
+40272670:	2c 20 70 72 69 6f 3a 25 64 2c 20 73 74 61 63 6b     , prio:%d, stack
+40272680:	3a 25 64 0a 00 00 00 00 00 00 00 00 00 00 00 00     :%d.............
+40272690:	70 20 65 32 20 6d 20 66 0a 00 00 00 00 00 00 00     p e2 m f........
+402726a0:	45 5f 51 46 3a 25 64 21 21 00 00 00 00 00 00 00     E_QF:%d!!.......
+402726b0:	70 20 65 31 20 6d 20 66 0a 00 00 00 00 00 00 00     p e1 m f........
+402726c0:	45 5f 55 46 21 21 21 00 00 00 00 00 00 00 00 00     E_UF!!!.........
+402726d0:	3d 3d 64 6c 0a 00 00 00 00 00 00 00 00 00 00 00     ==dl............
+402726e0:	61 64 64 20 6d 69 73 6d 61 74 63 68 0a 00 00 00     add mismatch....
+402726f0:	61 64 64 20 25 64 0a 00 72 6d 20 25 64 0a 00 00     add %d..rm %d...
+40272700:	72 6d 20 6d 69 73 0a 00 00 00 00 00 00 00 00 00     rm mis..........
 
-40272300 <ieee80211_opcap>:
-40272300:	01 00 00 00 00 04 00 00 6d 6f 64 65 20 3a 20 00     ........mode : .
-40272310:	6e 75 6c 6c 00 00 00 00 73 74 61 00 00 00 00 00     null....sta.....
-40272320:	28 25 30 32 78 3a 25 30 32 78 3a 25 30 32 78 3a     (%02x:%02x:%02x:
-40272330:	25 30 32 78 3a 25 30 32 78 3a 25 30 32 78 29 00     %02x:%02x:%02x).
-40272340:	20 2b 20 00 00 00 00 00 73 6f 66 74 41 50 00 00      + .....softAP..
-40272350:	28 25 30 32 78 3a 25 30 32 78 3a 25 30 32 78 3a     (%02x:%02x:%02x:
-40272360:	25 30 32 78 3a 25 30 32 78 3a 25 30 32 78 29 00     %02x:%02x:%02x).
-40272370:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
-40272380:	64 68 63 70 20 73 65 72 76 65 72 20 73 74 61 72     dhcp server star
-40272390:	74 3a 28 00 00 00 00 00 00 00 00 00 00 00 00 00     t:(.............
-402723a0:	69 70 3a 25 64 2e 25 64 2e 25 64 2e 25 64 2c 6d     ip:%d.%d.%d.%d,m
-402723b0:	61 73 6b 3a 25 64 2e 25 64 2e 25 64 2e 25 64 2c     ask:%d.%d.%d.%d,
-402723c0:	67 77 3a 25 64 2e 25 64 2e 25 64 2e 25 64 00 00     gw:%d.%d.%d.%d..
-402723d0:	29 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     )...............
-402723e0:	6e 6f 20 62 75 66 20 66 6f 72 20 61 63 74 69 6f     no buf for actio
-402723f0:	6e 20 66 72 61 6d 65 0a 00 00 00 00 00 00 00 00     n frame.........
-40272400:	6e 6f 20 62 75 66 20 66 6f 72 20 70 72 6f 62 65     no buf for probe
-40272410:	2c 20 69 65 20 6c 65 6e 20 25 64 0a 00 00 00 00     , ie len %d.....
-40272420:	65 62 20 25 64 0a 00 00 04 00 00 00 00 00 00 00     eb %d...........
+40272710 <ieee80211_opcap>:
+40272710:	01 00 00 00 00 04 00 00 6d 6f 64 65 20 3a 20 00     ........mode : .
+40272720:	6e 75 6c 6c 00 00 00 00 73 74 61 00 00 00 00 00     null....sta.....
+40272730:	28 25 30 32 78 3a 25 30 32 78 3a 25 30 32 78 3a     (%02x:%02x:%02x:
+40272740:	25 30 32 78 3a 25 30 32 78 3a 25 30 32 78 29 00     %02x:%02x:%02x).
+40272750:	20 2b 20 00 00 00 00 00 73 6f 66 74 41 50 00 00      + .....softAP..
+40272760:	28 25 30 32 78 3a 25 30 32 78 3a 25 30 32 78 3a     (%02x:%02x:%02x:
+40272770:	25 30 32 78 3a 25 30 32 78 3a 25 30 32 78 29 00     %02x:%02x:%02x).
+40272780:	0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+40272790:	64 68 63 70 20 73 65 72 76 65 72 20 73 74 61 72     dhcp server star
+402727a0:	74 3a 28 00 00 00 00 00 00 00 00 00 00 00 00 00     t:(.............
+402727b0:	69 70 3a 25 64 2e 25 64 2e 25 64 2e 25 64 2c 6d     ip:%d.%d.%d.%d,m
+402727c0:	61 73 6b 3a 25 64 2e 25 64 2e 25 64 2e 25 64 2c     ask:%d.%d.%d.%d,
+402727d0:	67 77 3a 25 64 2e 25 64 2e 25 64 2e 25 64 00 00     gw:%d.%d.%d.%d..
+402727e0:	29 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00     )...............
+402727f0:	6e 6f 20 62 75 66 20 66 6f 72 20 61 63 74 69 6f     no buf for actio
+40272800:	6e 20 66 72 61 6d 65 0a 00 00 00 00 00 00 00 00     n frame.........
+40272810:	6e 6f 20 62 75 66 20 66 6f 72 20 70 72 6f 62 65     no buf for probe
+40272820:	2c 20 69 65 20 6c 65 6e 20 25 64 0a 00 00 00 00     , ie len %d.....
+40272830:	65 62 20 25 64 0a 00 00 04 00 00 00 00 00 00 00     eb %d...........
 	...
-40272440:	e8 03 00 00 00 00 82 00 3a 01 3a 01 00 00 00 00     ........:.:.....
-40272450:	d0 07 00 00 04 01 84 01 02 01 a2 00 00 00 00 00     ................
-40272460:	7c 15 00 00 04 02 8b 01 df 00 7f 00 00 00 00 00     |...............
-40272470:	f8 2a 00 00 04 03 96 01 d5 00 75 00 00 00 00 00     .*........u.....
+40272850:	e8 03 00 00 00 00 82 00 3a 01 3a 01 00 00 00 00     ........:.:.....
+40272860:	d0 07 00 00 04 01 84 01 02 01 a2 00 00 00 00 00     ................
+40272870:	7c 15 00 00 04 02 8b 01 df 00 7f 00 00 00 00 00     |...............
+40272880:	f8 2a 00 00 04 03 96 01 d5 00 75 00 00 00 00 00     .*........u.....
 	...
-402724fc:	0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+4027290c:	0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
 	...
-40272514:	e8 03 00 00 00 00 82 00 3a 01 3a 01 00 00 00 00     ........:.:.....
-40272524:	d0 07 00 00 04 01 84 01 02 01 a2 00 00 00 00 00     ................
-40272534:	7c 15 00 00 04 02 8b 02 df 00 7f 00 00 00 00 00     |...............
-40272544:	f8 2a 00 00 04 03 96 03 d5 00 75 00 01 00 00 00     .*........u.....
-40272554:	70 17 00 00 00 0b 0c 04 3c 00 3c 00 01 00 00 00     p.......<.<.....
-40272564:	28 23 00 00 00 0f 12 04 3c 00 3c 00 01 00 00 00     (#......<.<.....
-40272574:	e0 2e 00 00 00 0a 18 06 30 00 30 00 01 00 00 00     ........0.0.....
-40272584:	50 46 00 00 00 0e 24 06 30 00 30 00 01 00 00 00     PF....$.0.0.....
-40272594:	c0 5d 00 00 00 09 30 08 2c 00 2c 00 01 00 00 00     .]....0.,.,.....
-402725a4:	a0 8c 00 00 00 0d 48 08 2c 00 2c 00 01 00 00 00     ......H.,.,.....
-402725b4:	80 bb 00 00 00 08 60 08 2c 00 2c 00 01 00 00 00     ......`.,.,.....
-402725c4:	f0 d2 00 00 00 0c 6c 08 2c 00 2c 00 02 00 00 00     ......l.,.,.....
-402725d4:	04 00 00 00 0b 00 00 00 16 00 00 00 0c 00 00 00     ................
-402725e4:	18 00 00 00 30 00 00 00 00 00 00 00 73 63 61 6e     ....0.......scan
-402725f4:	64 6f 6e 65 0a 00 00 00 00 00 00 00 62 67 0a 00     done........bg..
+40272924:	e8 03 00 00 00 00 82 00 3a 01 3a 01 00 00 00 00     ........:.:.....
+40272934:	d0 07 00 00 04 01 84 01 02 01 a2 00 00 00 00 00     ................
+40272944:	7c 15 00 00 04 02 8b 02 df 00 7f 00 00 00 00 00     |...............
+40272954:	f8 2a 00 00 04 03 96 03 d5 00 75 00 01 00 00 00     .*........u.....
+40272964:	70 17 00 00 00 0b 0c 04 3c 00 3c 00 01 00 00 00     p.......<.<.....
+40272974:	28 23 00 00 00 0f 12 04 3c 00 3c 00 01 00 00 00     (#......<.<.....
+40272984:	e0 2e 00 00 00 0a 18 06 30 00 30 00 01 00 00 00     ........0.0.....
+40272994:	50 46 00 00 00 0e 24 06 30 00 30 00 01 00 00 00     PF....$.0.0.....
+402729a4:	c0 5d 00 00 00 09 30 08 2c 00 2c 00 01 00 00 00     .]....0.,.,.....
+402729b4:	a0 8c 00 00 00 0d 48 08 2c 00 2c 00 01 00 00 00     ......H.,.,.....
+402729c4:	80 bb 00 00 00 08 60 08 2c 00 2c 00 01 00 00 00     ......`.,.,.....
+402729d4:	f0 d2 00 00 00 0c 6c 08 2c 00 2c 00 02 00 00 00     ......l.,.,.....
+402729e4:	04 00 00 00 0b 00 00 00 16 00 00 00 0c 00 00 00     ................
+402729f4:	18 00 00 00 30 00 00 00 00 00 00 00 73 63 61 6e     ....0.......scan
+40272a04:	64 6f 6e 65 0a 00 00 00 00 00 00 00 62 67 0a 00     done........bg..
 	...
-40272610:	49 6e 76 61 6c 69 64 20 57 45 50 20 6b 65 79 20     Invalid WEP key 
-40272620:	25 73 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     %s..............
-40272630:	72 65 63 6f 6e 6e 65 63 74 0a 00 00 00 00 00 00     reconnect.......
-40272640:	6e 6f 20 25 73 20 66 6f 75 6e 64 2c 20 72 65 63     no %s found, rec
-40272650:	6f 6e 6e 65 63 74 20 61 66 74 65 72 20 31 73 0a     onnect after 1s.
+40272a20:	49 6e 76 61 6c 69 64 20 57 45 50 20 6b 65 79 20     Invalid WEP key 
+40272a30:	25 73 0a 00 00 00 00 00 00 00 00 00 00 00 00 00     %s..............
+40272a40:	72 65 63 6f 6e 6e 65 63 74 0a 00 00 00 00 00 00     reconnect.......
+40272a50:	6e 6f 20 25 73 20 66 6f 75 6e 64 2c 20 72 65 63     no %s found, rec
+40272a60:	6f 6e 6e 65 63 74 20 61 66 74 65 72 20 31 73 0a     onnect after 1s.
 	...
-40272670:	62 65 61 63 6f 6e 20 74 69 6d 65 6f 75 74 0a 00     beacon timeout..
-40272680:	73 74 61 74 69 6f 6e 3a 20 25 30 32 78 3a 25 30     station: %02x:%0
-40272690:	32 78 3a 25 30 32 78 3a 25 30 32 78 3a 25 30 32     2x:%02x:%02x:%02
-402726a0:	78 3a 25 30 32 78 20 6c 65 61 76 65 2c 20 41 49     x:%02x leave, AI
-402726b0:	44 20 3d 20 25 64 0a 00 00 00 00 00 00 00 00 00     D = %d..........
-402726c0:	6d 61 78 20 63 6f 6e 6e 65 63 74 69 6f 6e 21 0a     max connection!.
+40272a80:	62 65 61 63 6f 6e 20 74 69 6d 65 6f 75 74 0a 00     beacon timeout..
+40272a90:	73 74 61 74 69 6f 6e 3a 20 25 30 32 78 3a 25 30     station: %02x:%0
+40272aa0:	32 78 3a 25 30 32 78 3a 25 30 32 78 3a 25 30 32     2x:%02x:%02x:%02
+40272ab0:	78 3a 25 30 32 78 20 6c 65 61 76 65 2c 20 41 49     x:%02x leave, AI
+40272ac0:	44 20 3d 20 25 64 0a 00 00 00 00 00 00 00 00 00     D = %d..........
+40272ad0:	6d 61 78 20 63 6f 6e 6e 65 63 74 69 6f 6e 21 0a     max connection!.
 	...
-402726e0:	6d 61 78 20 63 6f 6e 6e 65 63 74 69 6f 6e 21 0a     max connection!.
+40272af0:	6d 61 78 20 63 6f 6e 6e 65 63 74 69 6f 6e 21 0a     max connection!.
 	...
-40272700:	73 74 61 74 69 6f 6e 3a 20 25 30 32 78 3a 25 30     station: %02x:%0
-40272710:	32 78 3a 25 30 32 78 3a 25 30 32 78 3a 25 30 32     2x:%02x:%02x:%02
-40272720:	78 3a 25 30 32 78 20 6a 6f 69 6e 2c 20 41 49 44     x:%02x join, AID
-40272730:	20 3d 20 25 64 0a 00 00 00 00 00 00 00 00 00 00      = %d...........
-40272740:	64 00 00 00 f4 01 00 00 e8 03 00 00 04 00 00 00     d...............
-40272750:	04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
-40272760:	49 6e 69 74 20 43 6f 75 6e 74 65 72 00 00 00 00     Init Counter....
-40272770:	50 61 69 72 77 69 73 65 20 6b 65 79 20 65 78 70     Pairwise key exp
-40272780:	61 6e 73 69 6f 6e 00 00 00 00 00 00 00 00 00 00     ansion..........
-40272790:	47 72 6f 75 70 20 6b 65 79 20 65 78 70 61 6e 73     Group key expans
-402727a0:	69 6f 6e 00 00 00 00 00 00 00 00 00 00 00 00 00     ion.............
-402727b0:	50 61 69 72 77 69 73 65 20 6b 65 79 20 65 78 70     Pairwise key exp
-402727c0:	61 6e 73 69 6f 6e 00 00 00 00 00 00 00 00 00 00     ansion..........
-402727d0:	50 4d 4b 20 4e 61 6d 65 00 00 00 00 00 00 00 00     PMK Name........
-402727e0:	08 00 00 00 06 00 00 00 06 00 00 00                 ............
+40272b10:	73 74 61 74 69 6f 6e 3a 20 25 30 32 78 3a 25 30     station: %02x:%0
+40272b20:	32 78 3a 25 30 32 78 3a 25 30 32 78 3a 25 30 32     2x:%02x:%02x:%02
+40272b30:	78 3a 25 30 32 78 20 6a 6f 69 6e 2c 20 41 49 44     x:%02x join, AID
+40272b40:	20 3d 20 25 64 0a 00 00 00 00 00 00 00 00 00 00      = %d...........
+40272b50:	64 00 00 00 f4 01 00 00 e8 03 00 00 04 00 00 00     d...............
+40272b60:	04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00     ................
+40272b70:	49 6e 69 74 20 43 6f 75 6e 74 65 72 00 00 00 00     Init Counter....
+40272b80:	50 61 69 72 77 69 73 65 20 6b 65 79 20 65 78 70     Pairwise key exp
+40272b90:	61 6e 73 69 6f 6e 00 00 00 00 00 00 00 00 00 00     ansion..........
+40272ba0:	47 72 6f 75 70 20 6b 65 79 20 65 78 70 61 6e 73     Group key expans
+40272bb0:	69 6f 6e 00 00 00 00 00 00 00 00 00 00 00 00 00     ion.............
+40272bc0:	50 61 69 72 77 69 73 65 20 6b 65 79 20 65 78 70     Pairwise key exp
+40272bd0:	61 6e 73 69 6f 6e 00 00 00 00 00 00 00 00 00 00     ansion..........
+40272be0:	50 4d 4b 20 4e 61 6d 65 00 00 00 00 00 00 00 00     PMK Name........
+40272bf0:	08 00 00 00 06 00 00 00 06 00 00 00                 ............
 
-402727ec <eloop_cancel_timeout>:
-402727ec:	020c      	movi.n	a2, 0
-402727ee:	f00d      	ret.n
+40272bfc <eloop_cancel_timeout>:
+40272bfc:	020c      	movi.n	a2, 0
+40272bfe:	f00d      	ret.n
 
-402727f0 <eloop_register_timeout>:
-402727f0:	020c      	movi.n	a2, 0
-402727f2:	f00d      	ret.n
+40272c00 <eloop_register_timeout>:
+40272c00:	020c      	movi.n	a2, 0
+40272c02:	f00d      	ret.n
 	...
-40272800:	630a      	add.n	a6, a3, a0
-40272802:	6f          	.byte 0x6f
-40272803:	6e          	.byte 0x6e
-40272804:	6e          	.byte 0x6e
-40272805:	746365        	excw
-40272808:	206465        	excw
-4027280b:	746977        	bbci	a9, 7, 40272883 <rc4_skip+0x2b>
-4027280e:	2068      	l32i.n	a6, a0, 8
-40272810:	2c7325        	excw
-40272813:	686320        	excw
-40272816:	6e6e61        	l32r	a6, 4024e1d0 <netconn_getaddr+0x1c>
-40272819:	206c65        	excw
-4027281c:	0a6425        	excw
-4027281f:	686400        	excw
-40272822:	207063        	excw
-40272825:	696c63        	excw
-40272828:	746e65        	excw
-4027282b:	747320        	extui	a7, a2, 3, 8
-4027282e:	747261        	l32r	a6, 4024f9f8 <strtok_r+0x2c>
-40272831:	2e          	.byte 0x2e
-40272832:	2e          	.byte 0x2e
-40272833:	2e          	.byte 0x2e
-40272834:	000a      	add.n	a0, a0, a0
+40272c10:	630a      	add.n	a6, a3, a0
+40272c12:	6f          	.byte 0x6f
+40272c13:	6e          	.byte 0x6e
+40272c14:	6e          	.byte 0x6e
+40272c15:	746365        	excw
+40272c18:	206465        	excw
+40272c1b:	746977        	bbci	a9, 7, 40272c93 <rc4_skip+0x2b>
+40272c1e:	2068      	l32i.n	a6, a0, 8
+40272c20:	2c7325        	excw
+40272c23:	686320        	excw
+40272c26:	6e6e61        	l32r	a6, 4024e5e0 <netconn_recved+0x14>
+40272c29:	206c65        	excw
+40272c2c:	0a6425        	excw
+40272c2f:	686400        	excw
+40272c32:	207063        	excw
+40272c35:	696c63        	excw
+40272c38:	746e65        	excw
+40272c3b:	747320        	extui	a7, a2, 3, 8
+40272c3e:	747261        	l32r	a6, 4024fe08 <snprintf+0x26c>
+40272c41:	2e          	.byte 0x2e
+40272c42:	2e          	.byte 0x2e
+40272c43:	2e          	.byte 0x2e
+40272c44:	000a      	add.n	a0, a0, a0
 	...
-4027283e:	630000        	excw
-40272841:	6568      	l32i.n	a6, a5, 24
-40272843:	206b63        	excw
-40272846:	6f79      	s32i.n	a7, a15, 24
-40272848:	207275        	excw
-4027284b:	617473        	excw
-4027284e:	636974        	excw
-40272851:	706920        	excw
-40272854:	000a21        	l32r	a2, 4023287c <_lit4_end+0x12b57c>
-	...
-
-40272858 <rc4_skip>:
-40272858:	0a0c      	movi.n	a10, 0
-4027285a:	090c      	movi.n	a9, 0
-4027285c:	20a172        	movi	a7, 0x120
-4027285f:	c01170        	sub	a1, a1, a7
-40272862:	4261c2        	s32i	a12, a1, 0x108
-40272865:	4461e2        	s32i	a14, a1, 0x110
-40272868:	4361d2        	s32i	a13, a1, 0x10c
-4027286b:	406152        	s32i	a5, a1, 0x100
-4027286e:	416102        	s32i	a0, a1, 0x104
-40272871:	010d      	mov.n	a0, a1
-40272873:	0040a2        	s8i	a10, a0, 0
-40272876:	001b      	addi.n	a0, a0, 1
-40272878:	aa1b      	addi.n	a10, a10, 1
-4027287a:	f5fa66        	bnei	a10, 0x100, 40272873 <rc4_skip+0x1b>
-4027287d:	050c      	movi.n	a5, 0
-4027287f:	01dd      	mov.n	a13, a1
-40272881:	01d1e2        	addmi	a14, a1, 0x100
-40272884:	010d      	mov.n	a0, a1
-40272886:	0a0c      	movi.n	a10, 0
-40272888:	c2aa      	add.n	a12, a2, a10
-4027288a:	0000b2        	l8ui	a11, a0, 0
-4027288d:	000cc2        	l8ui	a12, a12, 0
-40272890:	9b9a      	add.n	a9, a11, a9
-40272892:	9c9a      	add.n	a9, a12, a9
-40272894:	ca1b      	addi.n	a12, a10, 1
-40272896:	749090        	extui	a9, a9, 0, 8
-40272899:	05ad      	mov.n	a10, a5
-4027289b:	79da      	add.n	a7, a9, a13
-4027289d:	000782        	l8ui	a8, a7, 0
-402728a0:	004082        	s8i	a8, a0, 0
-402728a3:	0047b2        	s8i	a11, a7, 0
-402728a6:	001b      	addi.n	a0, a0, 1
-402728a8:	01bc37        	bgeu	a12, a3, 402728ad <rc4_skip+0x55>
-402728ab:	0cad      	mov.n	a10, a12
-402728ad:	c2aa      	add.n	a12, a2, a10
-402728af:	d790e7        	bne	a0, a14, 4027288a <rc4_skip+0x32>
-402728b2:	402152        	l32i	a5, a1, 0x100
-402728b5:	64ac      	beqz.n	a4, 402728df <rc4_skip+0x87>
-402728b7:	0a0c      	movi.n	a10, 0
-402728b9:	090c      	movi.n	a9, 0
-402728bb:	000c      	movi.n	a0, 0
-402728bd:	aa1b      	addi.n	a10, a10, 1
-402728bf:	74a0a0        	extui	a10, a10, 0, 8
-402728c2:	2ada      	add.n	a2, a10, a13
-402728c4:	0002b2        	l8ui	a11, a2, 0
-402728c7:	001b      	addi.n	a0, a0, 1
-402728c9:	9b9a      	add.n	a9, a11, a9
-402728cb:	749090        	extui	a9, a9, 0, 8
-402728ce:	c9da      	add.n	a12, a9, a13
-402728d0:	000ce2        	l8ui	a14, a12, 0
-402728d3:	0042e2        	s8i	a14, a2, 0
-402728d6:	004cb2        	s8i	a11, a12, 0
-402728d9:	e09407        	bne	a4, a0, 402728bd <rc4_skip+0x65>
-402728dc:	0000c6        	j	402728e3 <rc4_skip+0x8b>
-402728df:	090c      	movi.n	a9, 0
-402728e1:	0a0c      	movi.n	a10, 0
-402728e3:	76bc      	beqz.n	a6, 4027291e <rc4_skip+0xc6>
-402728e5:	000c      	movi.n	a0, 0
-402728e7:	aa1b      	addi.n	a10, a10, 1
-402728e9:	74a0a0        	extui	a10, a10, 0, 8
-402728ec:	cada      	add.n	a12, a10, a13
-402728ee:	000ce2        	l8ui	a14, a12, 0
-402728f1:	9e9a      	add.n	a9, a14, a9
-402728f3:	749090        	extui	a9, a9, 0, 8
-402728f6:	29da      	add.n	a2, a9, a13
-402728f8:	000232        	l8ui	a3, a2, 0
-402728fb:	004c32        	s8i	a3, a12, 0
-402728fe:	0042e2        	s8i	a14, a2, 0
-40272901:	000cc2        	l8ui	a12, a12, 0
-40272904:	0005b2        	l8ui	a11, a5, 0
-40272907:	ccea      	add.n	a12, a12, a14
-40272909:	74c0c0        	extui	a12, a12, 0, 8
-4027290c:	cdca      	add.n	a12, a13, a12
-4027290e:	000cc2        	l8ui	a12, a12, 0
-40272911:	001b      	addi.n	a0, a0, 1
-40272913:	30bbc0        	xor	a11, a11, a12
-40272916:	0045b2        	s8i	a11, a5, 0
-40272919:	551b      	addi.n	a5, a5, 1
-4027291b:	c89607        	bne	a6, a0, 402728e7 <rc4_skip+0x8f>
-4027291e:	020c      	movi.n	a2, 0
-40272920:	4221c2        	l32i	a12, a1, 0x108
-40272923:	4321d2        	l32i	a13, a1, 0x10c
-40272926:	4421e2        	l32i	a14, a1, 0x110
-40272929:	20a132        	movi	a3, 0x120
-4027292c:	412102        	l32i	a0, a1, 0x104
-4027292f:	113a      	add.n	a1, a1, a3
-40272931:	f00d      	ret.n
+40272c4e:	630000        	excw
+40272c51:	6568      	l32i.n	a6, a5, 24
+40272c53:	206b63        	excw
+40272c56:	6f79      	s32i.n	a7, a15, 24
+40272c58:	207275        	excw
+40272c5b:	617473        	excw
+40272c5e:	636974        	excw
+40272c61:	706920        	excw
+40272c64:	000a21        	l32r	a2, 40232c8c <_lit4_end+0x12b98c>
 	...
 
-40272940 <Te0>:
-40272940:	63a5 c663 7c84 f87c 7799 ee77 7b8d f67b     .cc..||..ww..{{.
-40272950:	f20d fff2 6bbd d66b 6fb1 de6f c554 91c5     .....kk..oo.T...
-40272960:	3050 6030 0103 0201 67a9 ce67 2b7d 562b     P00`.....gg.}++V
-40272970:	fe19 e7fe d762 b5d7 abe6 4dab 769a ec76     ....b......M.vv.
-40272980:	ca45 8fca 829d 1f82 c940 89c9 7d87 fa7d     E.......@....}}.
-40272990:	fa15 effa 59eb b259 47c9 8e47 f00b fbf0     .....YY..GG.....
-402729a0:	adec 41ad d467 b3d4 a2fd 5fa2 afea 45af     ...Ag......_...E
-402729b0:	9cbf 239c a4f7 53a4 7296 e472 c05b 9bc0     ...#...S.rr.[...
-402729c0:	b7c2 75b7 fd1c e1fd 93ae 3d93 266a 4c26     ...u.......=j&&L
-402729d0:	365a 6c36 3f41 7e3f f702 f5f7 cc4f 83cc     Z66lA??~....O...
-402729e0:	345c 6834 a5f4 51a5 e534 d1e5 f108 f9f1     \44h...Q4.......
-402729f0:	7193 e271 d873 abd8 3153 6231 153f 2a15     .qq.s...S11b?..*
-40272a00:	040c 0804 c752 95c7 2365 4623 c35e 9dc3     ....R...e##F^...
-40272a10:	1828 3018 96a1 3796 050f 0a05 9ab5 2f9a     (..0...7......./
-40272a20:	0709 0e07 1236 2412 809b 1b80 e23d dfe2     ....6..$....=...
-40272a30:	eb26 cdeb 2769 4e27 b2cd 7fb2 759f ea75     &...i''N.....uu.
-40272a40:	091b 1209 839e 1d83 2c74 582c 1a2e 341a     ........t,,X...4
-40272a50:	1b2d 361b 6eb2 dc6e 5aee b45a a0fb 5ba0     -..6.nn..ZZ....[
-40272a60:	52f6 a452 3b4d 763b d661 b7d6 b3ce 7db3     .RR.M;;va......}
-40272a70:	297b 5229 e33e dde3 2f71 5e2f 8497 1384     {))R>...q//^....
-40272a80:	53f5 a653 d168 b9d1 0000 0000 ed2c c1ed     .SS.h.......,...
-40272a90:	2060 4020 fc1f e3fc b1c8 79b1 5bed b65b     `  @.......y.[[.
-40272aa0:	6abe d46a cb46 8dcb bed9 67be 394b 7239     .jj.F......gK99r
-40272ab0:	4ade 944a 4cd4 984c 58e8 b058 cf4a 85cf     .JJ..LL..XX.J...
-40272ac0:	d06b bbd0 ef2a c5ef aae5 4faa fb16 edfb     k...*......O....
-40272ad0:	43c5 8643 4dd7 9a4d 3355 6633 8594 1185     .CC..MM.U33f....
-40272ae0:	45cf 8a45 f910 e9f9 0206 0402 7f81 fe7f     .EE.............
-40272af0:	50f0 a050 3c44 783c 9fba 259f a8e3 4ba8     .PP.D<<x...%...K
-40272b00:	51f3 a251 a3fe 5da3 40c0 8040 8f8a 058f     .QQ....].@@.....
-40272b10:	92ad 3f92 9dbc 219d 3848 7038 f504 f1f5     ...?...!H88p....
-40272b20:	bcdf 63bc b6c1 77b6 da75 afda 2163 4221     ...c...wu...c!!B
-40272b30:	1030 2010 ff1a e5ff f30e fdf3 d26d bfd2     0.. ........m...
-40272b40:	cd4c 81cd 0c14 180c 1335 2613 ec2f c3ec     L.......5..&/...
-40272b50:	5fe1 be5f 97a2 3597 44cc 8844 1739 2e17     .__....5.DD.9...
-40272b60:	c457 93c4 a7f2 55a7 7e82 fc7e 3d47 7a3d     W......U.~~.G==z
-40272b70:	64ac c864 5de7 ba5d 192b 3219 7395 e673     .dd..]].+..2.ss.
-40272b80:	60a0 c060 8198 1981 4fd1 9e4f dc7f a3dc     .``......OO.....
-40272b90:	2266 4422 2a7e 542a 90ab 3b90 8883 0b88     f""D~**T...;....
-40272ba0:	46ca 8c46 ee29 c7ee b8d3 6bb8 143c 2814     .FF.)......k<..(
-40272bb0:	de79 a7de 5ee2 bc5e 0b1d 160b db76 addb     y....^^.....v...
-40272bc0:	e03b dbe0 3256 6432 3a4e 743a 0a1e 140a     ;...V22dN::t....
-40272bd0:	49db 9249 060a 0c06 246c 4824 5ce4 b85c     .II.....l$$H.\\.
-40272be0:	c25d 9fc2 d36e bdd3 acef 43ac 62a6 c462     ]...n......C.bb.
-40272bf0:	91a8 3991 95a4 3195 e437 d3e4 798b f279     ...9...17....yy.
-40272c00:	e732 d5e7 c843 8bc8 3759 6e37 6db7 da6d     2...C...Y77n.mm.
-40272c10:	8d8c 018d d564 b1d5 4ed2 9c4e a9e0 49a9     ....d....NN....I
-40272c20:	6cb4 d86c 56fa ac56 f407 f3f4 ea25 cfea     .ll..VV.....%...
-40272c30:	65af ca65 7a8e f47a aee9 47ae 0818 1008     .ee..zz....G....
-40272c40:	bad5 6fba 7888 f078 256f 4a25 2e72 5c2e     ...o.xx.o%%Jr..\
-40272c50:	1c24 381c a6f1 57a6 b4c7 73b4 c651 97c6     $..8...W...sQ...
-40272c60:	e823 cbe8 dd7c a1dd 749c e874 1f21 3e1f     #...|....tt.!..>
-40272c70:	4bdd 964b bddc 61bd 8b86 0d8b 8a85 0f8a     .KK....a........
-40272c80:	7090 e070 3e42 7c3e b5c4 71b5 66aa cc66     .pp.B>>|...q.ff.
-40272c90:	48d8 9048 0305 0603 f601 f7f6 0e12 1c0e     .HH.............
-40272ca0:	61a3 c261 355f 6a35 57f9 ae57 b9d0 69b9     .aa._55j.WW....i
-40272cb0:	8691 1786 c158 99c1 1d27 3a1d 9eb9 279e     ....X...'..:...'
-40272cc0:	e138 d9e1 f813 ebf8 98b3 2b98 1133 2211     8..........+3.."
-40272cd0:	69bb d269 d970 a9d9 8e89 078e 94a7 3394     .ii.p..........3
-40272ce0:	9bb6 2d9b 1e22 3c1e 8792 1587 e920 c9e9     ...-"..<.... ...
-40272cf0:	ce49 87ce 55ff aa55 2878 5028 df7a a5df     I....UU.x((Pz...
-40272d00:	8c8f 038c a1f8 59a1 8980 0989 0d17 1a0d     .......Y........
-40272d10:	bfda 65bf e631 d7e6 42c6 8442 68b8 d068     ...e1....BB..hh.
-40272d20:	41c3 8241 99b0 2999 2d77 5a2d 0f11 1e0f     .AA....)w--Z....
-40272d30:	b0cb 7bb0 54fc a854 bbd6 6dbb 163a 2c16     ...{.TT....m:..,
+40272c68 <rc4_skip>:
+40272c68:	0a0c      	movi.n	a10, 0
+40272c6a:	090c      	movi.n	a9, 0
+40272c6c:	20a172        	movi	a7, 0x120
+40272c6f:	c01170        	sub	a1, a1, a7
+40272c72:	4261c2        	s32i	a12, a1, 0x108
+40272c75:	4461e2        	s32i	a14, a1, 0x110
+40272c78:	4361d2        	s32i	a13, a1, 0x10c
+40272c7b:	406152        	s32i	a5, a1, 0x100
+40272c7e:	416102        	s32i	a0, a1, 0x104
+40272c81:	010d      	mov.n	a0, a1
+40272c83:	0040a2        	s8i	a10, a0, 0
+40272c86:	001b      	addi.n	a0, a0, 1
+40272c88:	aa1b      	addi.n	a10, a10, 1
+40272c8a:	f5fa66        	bnei	a10, 0x100, 40272c83 <rc4_skip+0x1b>
+40272c8d:	050c      	movi.n	a5, 0
+40272c8f:	01dd      	mov.n	a13, a1
+40272c91:	01d1e2        	addmi	a14, a1, 0x100
+40272c94:	010d      	mov.n	a0, a1
+40272c96:	0a0c      	movi.n	a10, 0
+40272c98:	c2aa      	add.n	a12, a2, a10
+40272c9a:	0000b2        	l8ui	a11, a0, 0
+40272c9d:	000cc2        	l8ui	a12, a12, 0
+40272ca0:	9b9a      	add.n	a9, a11, a9
+40272ca2:	9c9a      	add.n	a9, a12, a9
+40272ca4:	ca1b      	addi.n	a12, a10, 1
+40272ca6:	749090        	extui	a9, a9, 0, 8
+40272ca9:	05ad      	mov.n	a10, a5
+40272cab:	79da      	add.n	a7, a9, a13
+40272cad:	000782        	l8ui	a8, a7, 0
+40272cb0:	004082        	s8i	a8, a0, 0
+40272cb3:	0047b2        	s8i	a11, a7, 0
+40272cb6:	001b      	addi.n	a0, a0, 1
+40272cb8:	01bc37        	bgeu	a12, a3, 40272cbd <rc4_skip+0x55>
+40272cbb:	0cad      	mov.n	a10, a12
+40272cbd:	c2aa      	add.n	a12, a2, a10
+40272cbf:	d790e7        	bne	a0, a14, 40272c9a <rc4_skip+0x32>
+40272cc2:	402152        	l32i	a5, a1, 0x100
+40272cc5:	64ac      	beqz.n	a4, 40272cef <rc4_skip+0x87>
+40272cc7:	0a0c      	movi.n	a10, 0
+40272cc9:	090c      	movi.n	a9, 0
+40272ccb:	000c      	movi.n	a0, 0
+40272ccd:	aa1b      	addi.n	a10, a10, 1
+40272ccf:	74a0a0        	extui	a10, a10, 0, 8
+40272cd2:	2ada      	add.n	a2, a10, a13
+40272cd4:	0002b2        	l8ui	a11, a2, 0
+40272cd7:	001b      	addi.n	a0, a0, 1
+40272cd9:	9b9a      	add.n	a9, a11, a9
+40272cdb:	749090        	extui	a9, a9, 0, 8
+40272cde:	c9da      	add.n	a12, a9, a13
+40272ce0:	000ce2        	l8ui	a14, a12, 0
+40272ce3:	0042e2        	s8i	a14, a2, 0
+40272ce6:	004cb2        	s8i	a11, a12, 0
+40272ce9:	e09407        	bne	a4, a0, 40272ccd <rc4_skip+0x65>
+40272cec:	0000c6        	j	40272cf3 <rc4_skip+0x8b>
+40272cef:	090c      	movi.n	a9, 0
+40272cf1:	0a0c      	movi.n	a10, 0
+40272cf3:	76bc      	beqz.n	a6, 40272d2e <rc4_skip+0xc6>
+40272cf5:	000c      	movi.n	a0, 0
+40272cf7:	aa1b      	addi.n	a10, a10, 1
+40272cf9:	74a0a0        	extui	a10, a10, 0, 8
+40272cfc:	cada      	add.n	a12, a10, a13
+40272cfe:	000ce2        	l8ui	a14, a12, 0
+40272d01:	9e9a      	add.n	a9, a14, a9
+40272d03:	749090        	extui	a9, a9, 0, 8
+40272d06:	29da      	add.n	a2, a9, a13
+40272d08:	000232        	l8ui	a3, a2, 0
+40272d0b:	004c32        	s8i	a3, a12, 0
+40272d0e:	0042e2        	s8i	a14, a2, 0
+40272d11:	000cc2        	l8ui	a12, a12, 0
+40272d14:	0005b2        	l8ui	a11, a5, 0
+40272d17:	ccea      	add.n	a12, a12, a14
+40272d19:	74c0c0        	extui	a12, a12, 0, 8
+40272d1c:	cdca      	add.n	a12, a13, a12
+40272d1e:	000cc2        	l8ui	a12, a12, 0
+40272d21:	001b      	addi.n	a0, a0, 1
+40272d23:	30bbc0        	xor	a11, a11, a12
+40272d26:	0045b2        	s8i	a11, a5, 0
+40272d29:	551b      	addi.n	a5, a5, 1
+40272d2b:	c89607        	bne	a6, a0, 40272cf7 <rc4_skip+0x8f>
+40272d2e:	020c      	movi.n	a2, 0
+40272d30:	4221c2        	l32i	a12, a1, 0x108
+40272d33:	4321d2        	l32i	a13, a1, 0x10c
+40272d36:	4421e2        	l32i	a14, a1, 0x110
+40272d39:	20a132        	movi	a3, 0x120
+40272d3c:	412102        	l32i	a0, a1, 0x104
+40272d3f:	113a      	add.n	a1, a1, a3
+40272d41:	f00d      	ret.n
+	...
 
-40272d40 <rcons>:
-40272d40:	0201 0804 2010 8040 361b 0000 0000 0000     ..... @..6......
+40272d50 <Te0>:
+40272d50:	63a5 c663 7c84 f87c 7799 ee77 7b8d f67b     .cc..||..ww..{{.
+40272d60:	f20d fff2 6bbd d66b 6fb1 de6f c554 91c5     .....kk..oo.T...
+40272d70:	3050 6030 0103 0201 67a9 ce67 2b7d 562b     P00`.....gg.}++V
+40272d80:	fe19 e7fe d762 b5d7 abe6 4dab 769a ec76     ....b......M.vv.
+40272d90:	ca45 8fca 829d 1f82 c940 89c9 7d87 fa7d     E.......@....}}.
+40272da0:	fa15 effa 59eb b259 47c9 8e47 f00b fbf0     .....YY..GG.....
+40272db0:	adec 41ad d467 b3d4 a2fd 5fa2 afea 45af     ...Ag......_...E
+40272dc0:	9cbf 239c a4f7 53a4 7296 e472 c05b 9bc0     ...#...S.rr.[...
+40272dd0:	b7c2 75b7 fd1c e1fd 93ae 3d93 266a 4c26     ...u.......=j&&L
+40272de0:	365a 6c36 3f41 7e3f f702 f5f7 cc4f 83cc     Z66lA??~....O...
+40272df0:	345c 6834 a5f4 51a5 e534 d1e5 f108 f9f1     \44h...Q4.......
+40272e00:	7193 e271 d873 abd8 3153 6231 153f 2a15     .qq.s...S11b?..*
+40272e10:	040c 0804 c752 95c7 2365 4623 c35e 9dc3     ....R...e##F^...
+40272e20:	1828 3018 96a1 3796 050f 0a05 9ab5 2f9a     (..0...7......./
+40272e30:	0709 0e07 1236 2412 809b 1b80 e23d dfe2     ....6..$....=...
+40272e40:	eb26 cdeb 2769 4e27 b2cd 7fb2 759f ea75     &...i''N.....uu.
+40272e50:	091b 1209 839e 1d83 2c74 582c 1a2e 341a     ........t,,X...4
+40272e60:	1b2d 361b 6eb2 dc6e 5aee b45a a0fb 5ba0     -..6.nn..ZZ....[
+40272e70:	52f6 a452 3b4d 763b d661 b7d6 b3ce 7db3     .RR.M;;va......}
+40272e80:	297b 5229 e33e dde3 2f71 5e2f 8497 1384     {))R>...q//^....
+40272e90:	53f5 a653 d168 b9d1 0000 0000 ed2c c1ed     .SS.h.......,...
+40272ea0:	2060 4020 fc1f e3fc b1c8 79b1 5bed b65b     `  @.......y.[[.
+40272eb0:	6abe d46a cb46 8dcb bed9 67be 394b 7239     .jj.F......gK99r
+40272ec0:	4ade 944a 4cd4 984c 58e8 b058 cf4a 85cf     .JJ..LL..XX.J...
+40272ed0:	d06b bbd0 ef2a c5ef aae5 4faa fb16 edfb     k...*......O....
+40272ee0:	43c5 8643 4dd7 9a4d 3355 6633 8594 1185     .CC..MM.U33f....
+40272ef0:	45cf 8a45 f910 e9f9 0206 0402 7f81 fe7f     .EE.............
+40272f00:	50f0 a050 3c44 783c 9fba 259f a8e3 4ba8     .PP.D<<x...%...K
+40272f10:	51f3 a251 a3fe 5da3 40c0 8040 8f8a 058f     .QQ....].@@.....
+40272f20:	92ad 3f92 9dbc 219d 3848 7038 f504 f1f5     ...?...!H88p....
+40272f30:	bcdf 63bc b6c1 77b6 da75 afda 2163 4221     ...c...wu...c!!B
+40272f40:	1030 2010 ff1a e5ff f30e fdf3 d26d bfd2     0.. ........m...
+40272f50:	cd4c 81cd 0c14 180c 1335 2613 ec2f c3ec     L.......5..&/...
+40272f60:	5fe1 be5f 97a2 3597 44cc 8844 1739 2e17     .__....5.DD.9...
+40272f70:	c457 93c4 a7f2 55a7 7e82 fc7e 3d47 7a3d     W......U.~~.G==z
+40272f80:	64ac c864 5de7 ba5d 192b 3219 7395 e673     .dd..]].+..2.ss.
+40272f90:	60a0 c060 8198 1981 4fd1 9e4f dc7f a3dc     .``......OO.....
+40272fa0:	2266 4422 2a7e 542a 90ab 3b90 8883 0b88     f""D~**T...;....
+40272fb0:	46ca 8c46 ee29 c7ee b8d3 6bb8 143c 2814     .FF.)......k<..(
+40272fc0:	de79 a7de 5ee2 bc5e 0b1d 160b db76 addb     y....^^.....v...
+40272fd0:	e03b dbe0 3256 6432 3a4e 743a 0a1e 140a     ;...V22dN::t....
+40272fe0:	49db 9249 060a 0c06 246c 4824 5ce4 b85c     .II.....l$$H.\\.
+40272ff0:	c25d 9fc2 d36e bdd3 acef 43ac 62a6 c462     ]...n......C.bb.
+40273000:	91a8 3991 95a4 3195 e437 d3e4 798b f279     ...9...17....yy.
+40273010:	e732 d5e7 c843 8bc8 3759 6e37 6db7 da6d     2...C...Y77n.mm.
+40273020:	8d8c 018d d564 b1d5 4ed2 9c4e a9e0 49a9     ....d....NN....I
+40273030:	6cb4 d86c 56fa ac56 f407 f3f4 ea25 cfea     .ll..VV.....%...
+40273040:	65af ca65 7a8e f47a aee9 47ae 0818 1008     .ee..zz....G....
+40273050:	bad5 6fba 7888 f078 256f 4a25 2e72 5c2e     ...o.xx.o%%Jr..\
+40273060:	1c24 381c a6f1 57a6 b4c7 73b4 c651 97c6     $..8...W...sQ...
+40273070:	e823 cbe8 dd7c a1dd 749c e874 1f21 3e1f     #...|....tt.!..>
+40273080:	4bdd 964b bddc 61bd 8b86 0d8b 8a85 0f8a     .KK....a........
+40273090:	7090 e070 3e42 7c3e b5c4 71b5 66aa cc66     .pp.B>>|...q.ff.
+402730a0:	48d8 9048 0305 0603 f601 f7f6 0e12 1c0e     .HH.............
+402730b0:	61a3 c261 355f 6a35 57f9 ae57 b9d0 69b9     .aa._55j.WW....i
+402730c0:	8691 1786 c158 99c1 1d27 3a1d 9eb9 279e     ....X...'..:...'
+402730d0:	e138 d9e1 f813 ebf8 98b3 2b98 1133 2211     8..........+3.."
+402730e0:	69bb d269 d970 a9d9 8e89 078e 94a7 3394     .ii.p..........3
+402730f0:	9bb6 2d9b 1e22 3c1e 8792 1587 e920 c9e9     ...-"..<.... ...
+40273100:	ce49 87ce 55ff aa55 2878 5028 df7a a5df     I....UU.x((Pz...
+40273110:	8c8f 038c a1f8 59a1 8980 0989 0d17 1a0d     .......Y........
+40273120:	bfda 65bf e631 d7e6 42c6 8442 68b8 d068     ...e1....BB..hh.
+40273130:	41c3 8241 99b0 2999 2d77 5a2d 0f11 1e0f     .AA....)w--Z....
+40273140:	b0cb 7bb0 54fc a854 bbd6 6dbb 163a 2c16     ...{.TT....m:..,
 
-40272d50 <Td0>:
-40272d50:	a750 51f4 6553 7e41 a4c3 1a17 5e96 3a27     P..QSeA~.....^':
-40272d60:	6bcb 3bab 45f1 1f9d 58ab acfa 0393 4be3     .k.;.E...X.....K
-40272d70:	fa55 2030 6df6 ad76 7691 88cc 4c25 f502     U.0 .mv..v..%L..
-40272d80:	d7fc 4fe5 cbd7 c52a 4480 2635 a38f b562     ...O..*..D5&..b.
-40272d90:	5a49 deb1 1b67 25ba 0e98 45ea c0e1 5dfe     IZ..g..%...E...]
-40272da0:	7502 c32f f012 814c 97a3 8d46 f9c6 6bd3     .u/...L...F....k
-40272db0:	5fe7 038f 9c95 1592 7aeb bf6d 59da 9552     ._.......zm..YR.
-40272dc0:	832d d4be 21d3 5874 6929 49e0 c844 8ec9     -....!tX)i.ID...
-40272dd0:	896a 75c2 7978 f48e 3e6b 9958 71dd 27b9     j..uxy..k>X..q.'
-40272de0:	4fb6 bee1 ad17 f088 ac66 c920 3ab4 7dce     .O......f. ..:.}
-40272df0:	4a18 63df 3182 e51a 3360 9751 7f45 6253     .J.c.1..`3Q.E.Sb
-40272e00:	77e0 b164 ae84 bb6b a01c fe81 2b94 f908     .wd...k......+..
-40272e10:	6858 7048 fd19 8f45 6c87 94de f8b7 527b     XhHp..E..l....{R
-40272e20:	d323 ab73 02e2 724b 8f57 e31f ab2a 6655     #.s...KrW...*.Uf
-40272e30:	2807 b2eb c203 2fb5 7b9a 86c5 08a5 d337     .(...../.{....7.
-40272e40:	87f2 3028 a5b2 23bf 6aba 0203 825c ed16     ..(0...#.j..\...
-40272e50:	1c2b 8acf b492 a779 f2f0 f307 e2a1 4e69     +.....y.......iN
-40272e60:	f4cd 65da bed5 0605 621f d134 fe8a c4a6     ...e.....b4.....
-40272e70:	539d 342e 55a0 a2f3 e132 058a eb75 a4f6     .S.4.U..2...u...
-40272e80:	ec39 0b83 efaa 4060 9f06 5e71 1051 bd6e     9.....`@..q^Q.n.
-40272e90:	8af9 3e21 063d 96dd 05ae dd3e bd46 4de6     ..!>=.....>.F..M
-40272ea0:	8db5 9154 5d05 71c4 d46f 0406 15ff 6050     ..T..].qo.....P`
-40272eb0:	fb24 1998 e997 d6bd 43cc 8940 9e77 67d9     $........C@.w..g
-40272ec0:	42bd b0e8 8b88 0789 5b38 e719 eedb 79c8     .B......8[.....y
-40272ed0:	0a47 a17c 0fe9 7c42 1ec9 f884 0000 0000     G.|...B|........
-40272ee0:	8683 0980 ed48 322b 70ac 1e11 724e 6c5a     ....H.+2.p..NrZl
-40272ef0:	fffb fd0e 3856 0f85 d51e 3dae 3927 362d     ....V8.....='9-6
-40272f00:	d964 0a0f a621 685c 54d1 9b5b 2e3a 2436     d...!.\h.T[.:.6$
-40272f10:	67b1 0c0a e70f 9357 96d2 b4ee 919e 1b9b     .g....W.........
-40272f20:	c54f 80c0 20a2 61dc 4b69 5a77 1a16 1c12     O.... .aiKwZ....
-40272f30:	ba0a e293 2ae5 c0a0 e043 3c22 171d 121b     .....*..C."<....
-40272f40:	0d0b 0e09 c7ad f28b a8b9 2db6 a9c8 141e     ...........-....
-40272f50:	1985 57f1 074c af75 ddbb ee99 60fd a37f     ...WL.u......`..
-40272f60:	269f f701 f5bc 5c72 3bc5 4466 7e34 5bfb     .&....r\.;fD4~.[
-40272f70:	2976 8b43 c6dc cb23 fc68 b6ed f163 b8e4     v)C...#.h...c...
-40272f80:	dcca d731 8510 4263 2240 1397 1120 84c6     ..1...cB@".. ...
-40272f90:	247d 854a 3df8 d2bb 3211 aef9 a16d c729     }$J..=...2..m.).
-40272fa0:	2f4b 1d9e 30f3 dcb2 52ec 0d86 e3d0 77c1     K/...0...R.....w
-40272fb0:	166c 2bb3 b999 a970 48fa 1194 6422 47e9     l..+..p..H.."d.G
-40272fc0:	8cc4 a8fc 3f1a a0f0 2cd8 567d 90ef 2233     .....?...,}V..3"
-40272fd0:	4ec7 8749 d1c1 d938 a2fe 8cca 0b36 98d4     .NI...8.....6...
-40272fe0:	81cf a6f5 de28 a57a 8e26 dab7 bfa4 3fad     ....(.z.&......?
-40272ff0:	9de4 2c3a 920d 5078 cc9b 6a5f 4662 547e     ..:,..xP.._jbF~T
-40273000:	13c2 f68d b8e8 90d8 f75e 2e39 aff5 82c3     ........^.9.....
-40273010:	80be 9f5d 937c 69d0 2da9 6fd5 12b3 cf25     ..].|..i.-.o..%.
-40273020:	993b c8ac 7da7 1018 636e e89c bb7b db3b     ;....}..nc..{.;.
-40273030:	7809 cd26 18f4 6e59 b701 ec9a 9aa8 834f     .x&...Yn......O.
-40273040:	6e65 e695 e67e aaff cf08 21bc e8e6 ef15     en..~......!....
-40273050:	9bd9 bae7 36ce 4a6f 09d4 ea9f 7cd6 29b0     .....6oJ.....|.)
-40273060:	b2af 31a4 2331 2a3f 9430 c6a5 66c0 35a2     ...11#?*0....f.5
-40273070:	bc37 744e caa6 fc82 d0b0 e090 d815 33a7     7.Nt...........3
-40273080:	984a f104 daf7 41ec 500e 7fcd f62f 1791     J......A.P../...
-40273090:	d68d 764d b04d 43ef 4d54 ccaa 04df e496     ..MvM..CTM......
-402730a0:	b5e3 9ed1 881b 4c6a 1fb8 c12c 517f 4665     ......jL..,..QeF
-402730b0:	ea04 9d5e 355d 018c 7473 fa87 412e fb0b     ..^.]5..st...A..
-402730c0:	1d5a b367 d252 92db 5633 e910 4713 6dd6     Z.g.R...3V...G.m
-402730d0:	618c 9ad7 0c7a 37a1 148e 59f8 3c89 eb13     .a..z..7...Y.<..
-402730e0:	27ee cea9 c935 b761 e5ed e11c b13c 7a47     .'..5.a.....<.Gz
-402730f0:	df59 9cd2 733f 55f2 ce79 1814 37bf 73c7     Y...?s.Uy....7.s
-40273100:	cdea 53f7 aa5b 5ffd 6f14 df3d db86 7844     ...S[.._.o=...Dx
-40273110:	f381 caaf c43e b968 342c 3824 405f c2a3     ....>.h.,4$8_@..
-40273120:	c372 161d 250c bce2 498b 283c 9541 ff0d     r....%...I<(A...
-40273130:	0171 39a8 b3de 080c e49c d8b4 c190 6456     q..9..........Vd
-40273140:	8461 7bcb b670 d532 5c74 486c 5742 d0b8     a..{p.2.t\lHBW..
+40273150 <rcons>:
+40273150:	0201 0804 2010 8040 361b 0000 0000 0000     ..... @..6......
 
-40273150 <Td4s_rom>:
-40273150:	0952 d56a 3630 38a5 40bf 9ea3 f381 fbd7     R.j.06.8.@......
-40273160:	e37c 8239 2f9b 87ff 8e34 4443 dec4 cbe9     |.9../..4.CD....
-40273170:	7b54 3294 c2a6 3d23 4cee 0b95 fa42 4ec3     T{.2..#=.L..B..N
-40273180:	2e08 66a1 d928 b224 5b76 49a2 8b6d 25d1     ...f(.$.v[.Im..%
-40273190:	f872 64f6 6886 1698 a4d4 cc5c 655d 92b6     r..d.h....\.]e..
-402731a0:	706c 5048 edfd dab9 155e 5746 8da7 849d     lpHP....^.FW....
-402731b0:	d890 00ab bc8c 0ad3 e4f7 0558 b3b8 0645     ..........X...E.
-402731c0:	2cd0 8f1e 3fca 020f afc1 03bd 1301 6b8a     .,...?.........k
-402731d0:	913a 4111 674f eadc f297 cecf b4f0 73e6     :..AOg.........s
-402731e0:	ac96 2274 ade7 8535 f9e2 e837 751c 6edf     ..t"..5...7..u.n
-402731f0:	f147 711a 291d 89c5 b76f 0e62 18aa 1bbe     G..q.)..o.b.....
-40273200:	56fc 4b3e d2c6 2079 db9a fec0 cd78 f45a     .V>K..y ....x.Z.
-40273210:	dd1f 33a8 0788 31c7 12b1 5910 8027 5fec     ...3...1...Y'.._
-40273220:	5160 a97f b519 0d4a e52d 9f7a c993 ef9c     `Q....J.-.z.....
-40273230:	e0a0 4d3b 2aae b0f5 ebc8 3cbb 5383 6199     ..;M.*.....<.S.a
-40273240:	2b17 7e04 77ba 26d6 69e1 6314 2155 7d0c     .+.~.w.&.i.cU!.}
+40273160 <Td0>:
+40273160:	a750 51f4 6553 7e41 a4c3 1a17 5e96 3a27     P..QSeA~.....^':
+40273170:	6bcb 3bab 45f1 1f9d 58ab acfa 0393 4be3     .k.;.E...X.....K
+40273180:	fa55 2030 6df6 ad76 7691 88cc 4c25 f502     U.0 .mv..v..%L..
+40273190:	d7fc 4fe5 cbd7 c52a 4480 2635 a38f b562     ...O..*..D5&..b.
+402731a0:	5a49 deb1 1b67 25ba 0e98 45ea c0e1 5dfe     IZ..g..%...E...]
+402731b0:	7502 c32f f012 814c 97a3 8d46 f9c6 6bd3     .u/...L...F....k
+402731c0:	5fe7 038f 9c95 1592 7aeb bf6d 59da 9552     ._.......zm..YR.
+402731d0:	832d d4be 21d3 5874 6929 49e0 c844 8ec9     -....!tX)i.ID...
+402731e0:	896a 75c2 7978 f48e 3e6b 9958 71dd 27b9     j..uxy..k>X..q.'
+402731f0:	4fb6 bee1 ad17 f088 ac66 c920 3ab4 7dce     .O......f. ..:.}
+40273200:	4a18 63df 3182 e51a 3360 9751 7f45 6253     .J.c.1..`3Q.E.Sb
+40273210:	77e0 b164 ae84 bb6b a01c fe81 2b94 f908     .wd...k......+..
+40273220:	6858 7048 fd19 8f45 6c87 94de f8b7 527b     XhHp..E..l....{R
+40273230:	d323 ab73 02e2 724b 8f57 e31f ab2a 6655     #.s...KrW...*.Uf
+40273240:	2807 b2eb c203 2fb5 7b9a 86c5 08a5 d337     .(...../.{....7.
+40273250:	87f2 3028 a5b2 23bf 6aba 0203 825c ed16     ..(0...#.j..\...
+40273260:	1c2b 8acf b492 a779 f2f0 f307 e2a1 4e69     +.....y.......iN
+40273270:	f4cd 65da bed5 0605 621f d134 fe8a c4a6     ...e.....b4.....
+40273280:	539d 342e 55a0 a2f3 e132 058a eb75 a4f6     .S.4.U..2...u...
+40273290:	ec39 0b83 efaa 4060 9f06 5e71 1051 bd6e     9.....`@..q^Q.n.
+402732a0:	8af9 3e21 063d 96dd 05ae dd3e bd46 4de6     ..!>=.....>.F..M
+402732b0:	8db5 9154 5d05 71c4 d46f 0406 15ff 6050     ..T..].qo.....P`
+402732c0:	fb24 1998 e997 d6bd 43cc 8940 9e77 67d9     $........C@.w..g
+402732d0:	42bd b0e8 8b88 0789 5b38 e719 eedb 79c8     .B......8[.....y
+402732e0:	0a47 a17c 0fe9 7c42 1ec9 f884 0000 0000     G.|...B|........
+402732f0:	8683 0980 ed48 322b 70ac 1e11 724e 6c5a     ....H.+2.p..NrZl
+40273300:	fffb fd0e 3856 0f85 d51e 3dae 3927 362d     ....V8.....='9-6
+40273310:	d964 0a0f a621 685c 54d1 9b5b 2e3a 2436     d...!.\h.T[.:.6$
+40273320:	67b1 0c0a e70f 9357 96d2 b4ee 919e 1b9b     .g....W.........
+40273330:	c54f 80c0 20a2 61dc 4b69 5a77 1a16 1c12     O.... .aiKwZ....
+40273340:	ba0a e293 2ae5 c0a0 e043 3c22 171d 121b     .....*..C."<....
+40273350:	0d0b 0e09 c7ad f28b a8b9 2db6 a9c8 141e     ...........-....
+40273360:	1985 57f1 074c af75 ddbb ee99 60fd a37f     ...WL.u......`..
+40273370:	269f f701 f5bc 5c72 3bc5 4466 7e34 5bfb     .&....r\.;fD4~.[
+40273380:	2976 8b43 c6dc cb23 fc68 b6ed f163 b8e4     v)C...#.h...c...
+40273390:	dcca d731 8510 4263 2240 1397 1120 84c6     ..1...cB@".. ...
+402733a0:	247d 854a 3df8 d2bb 3211 aef9 a16d c729     }$J..=...2..m.).
+402733b0:	2f4b 1d9e 30f3 dcb2 52ec 0d86 e3d0 77c1     K/...0...R.....w
+402733c0:	166c 2bb3 b999 a970 48fa 1194 6422 47e9     l..+..p..H.."d.G
+402733d0:	8cc4 a8fc 3f1a a0f0 2cd8 567d 90ef 2233     .....?...,}V..3"
+402733e0:	4ec7 8749 d1c1 d938 a2fe 8cca 0b36 98d4     .NI...8.....6...
+402733f0:	81cf a6f5 de28 a57a 8e26 dab7 bfa4 3fad     ....(.z.&......?
+40273400:	9de4 2c3a 920d 5078 cc9b 6a5f 4662 547e     ..:,..xP.._jbF~T
+40273410:	13c2 f68d b8e8 90d8 f75e 2e39 aff5 82c3     ........^.9.....
+40273420:	80be 9f5d 937c 69d0 2da9 6fd5 12b3 cf25     ..].|..i.-.o..%.
+40273430:	993b c8ac 7da7 1018 636e e89c bb7b db3b     ;....}..nc..{.;.
+40273440:	7809 cd26 18f4 6e59 b701 ec9a 9aa8 834f     .x&...Yn......O.
+40273450:	6e65 e695 e67e aaff cf08 21bc e8e6 ef15     en..~......!....
+40273460:	9bd9 bae7 36ce 4a6f 09d4 ea9f 7cd6 29b0     .....6oJ.....|.)
+40273470:	b2af 31a4 2331 2a3f 9430 c6a5 66c0 35a2     ...11#?*0....f.5
+40273480:	bc37 744e caa6 fc82 d0b0 e090 d815 33a7     7.Nt...........3
+40273490:	984a f104 daf7 41ec 500e 7fcd f62f 1791     J......A.P../...
+402734a0:	d68d 764d b04d 43ef 4d54 ccaa 04df e496     ..MvM..CTM......
+402734b0:	b5e3 9ed1 881b 4c6a 1fb8 c12c 517f 4665     ......jL..,..QeF
+402734c0:	ea04 9d5e 355d 018c 7473 fa87 412e fb0b     ..^.]5..st...A..
+402734d0:	1d5a b367 d252 92db 5633 e910 4713 6dd6     Z.g.R...3V...G.m
+402734e0:	618c 9ad7 0c7a 37a1 148e 59f8 3c89 eb13     .a..z..7...Y.<..
+402734f0:	27ee cea9 c935 b761 e5ed e11c b13c 7a47     .'..5.a.....<.Gz
+40273500:	df59 9cd2 733f 55f2 ce79 1814 37bf 73c7     Y...?s.Uy....7.s
+40273510:	cdea 53f7 aa5b 5ffd 6f14 df3d db86 7844     ...S[.._.o=...Dx
+40273520:	f381 caaf c43e b968 342c 3824 405f c2a3     ....>.h.,4$8_@..
+40273530:	c372 161d 250c bce2 498b 283c 9541 ff0d     r....%...I<(A...
+40273540:	0171 39a8 b3de 080c e49c d8b4 c190 6456     q..9..........Vd
+40273550:	8461 7bcb b670 d532 5c74 486c 5742 d0b8     a..{p.2.t\lHBW..
 
-40273250 <ccmp>:
-40273250:	0003 0000 0008 0000 0008 0000 0000 0000     ................
-40273260:	e560 4026 e5dc 4026                         `.&@..&@
+40273560 <Td4s_rom>:
+40273560:	0952 d56a 3630 38a5 40bf 9ea3 f381 fbd7     R.j.06.8.@......
+40273570:	e37c 8239 2f9b 87ff 8e34 4443 dec4 cbe9     |.9../..4.CD....
+40273580:	7b54 3294 c2a6 3d23 4cee 0b95 fa42 4ec3     T{.2..#=.L..B..N
+40273590:	2e08 66a1 d928 b224 5b76 49a2 8b6d 25d1     ...f(.$.v[.Im..%
+402735a0:	f872 64f6 6886 1698 a4d4 cc5c 655d 92b6     r..d.h....\.]e..
+402735b0:	706c 5048 edfd dab9 155e 5746 8da7 849d     lpHP....^.FW....
+402735c0:	d890 00ab bc8c 0ad3 e4f7 0558 b3b8 0645     ..........X...E.
+402735d0:	2cd0 8f1e 3fca 020f afc1 03bd 1301 6b8a     .,...?.........k
+402735e0:	913a 4111 674f eadc f297 cecf b4f0 73e6     :..AOg.........s
+402735f0:	ac96 2274 ade7 8535 f9e2 e837 751c 6edf     ..t"..5...7..u.n
+40273600:	f147 711a 291d 89c5 b76f 0e62 18aa 1bbe     G..q.)..o.b.....
+40273610:	56fc 4b3e d2c6 2079 db9a fec0 cd78 f45a     .V>K..y ....x.Z.
+40273620:	dd1f 33a8 0788 31c7 12b1 5910 8027 5fec     ...3...1...Y'.._
+40273630:	5160 a97f b519 0d4a e52d 9f7a c993 ef9c     `Q....J.-.z.....
+40273640:	e0a0 4d3b 2aae b0f5 ebc8 3cbb 5383 6199     ..;M.*.....<.S.a
+40273650:	2b17 7e04 77ba 26d6 69e1 6314 2155 7d0c     .+.~.w.&.i.cU!.}
 
-40273268 <tkip>:
-40273268:	0002 0000 0008 0000 000c 0000 0008 0000     ................
-40273278:	e694 4026 e728 4026                         ..&@(.&@
+40273660 <ccmp>:
+40273660:	0003 0000 0008 0000 0008 0000 0000 0000     ................
+40273670:	e560 4026 e5dc 4026                         `.&@..&@
 
-40273280 <wep>:
-40273280:	0001 0000 0004 0000 0004 0000 0000 0000     ................
-40273290:	e7f0 4026 e84c 4026 8620 3ffe 0a98 4010     ..&@L.&@ ..?...@
+40273678 <tkip>:
+40273678:	0002 0000 0008 0000 000c 0000 0008 0000     ................
+40273688:	e694 4026 e728 4026                         ..&@(.&@
 
-402732a0 <uartInterfaceTask>:
+40273690 <wep>:
+40273690:	0001 0000 0004 0000 0004 0000 0000 0000     ................
+402736a0:	e7f0 4026 e84c 4026 8620 3ffe 0a98 4010     ..&@L.&@ ..?...@
+
+402736b0 <uartInterfaceTask>:
 	}
 }
 
 UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
 	uart_div_modify(uart_no, UART_CLK_FREQ / baud_rate);
 }
-402732a0:	b0c112        	addi	a1, a1, -80
-402732a3:	020c      	movi.n	a2, 0
-402732a5:	136102        	s32i	a0, a1, 76
-402732a8:	1261c2        	s32i	a12, a1, 72
-402732ab:	1161d2        	s32i	a13, a1, 68
-402732ae:	204220        	or	a4, a2, a2
-402732b1:	312a      	add.n	a3, a1, a2
-402732b3:	004342        	s8i	a4, a3, 0
-402732b6:	221b      	addi.n	a2, a2, 1
-402732b8:	f5d266        	bnei	a2, 64, 402732b1 <uartInterfaceTask+0x11>
-402732bb:	0114c5        	call0	40274408 <uart_rx_init>
-402732be:	fff621        	l32r	a2, 40273298 <wep+0x18>
-402732c1:	0c0c      	movi.n	a12, 0
-402732c3:	fff601        	l32r	a0, 4027329c <wep+0x1c>
-402732c6:	0000c0        	callx0	a0
-402732c9:	dd0c      	movi.n	a13, 13
-402732cb:	f27c      	movi.n	a2, -1
-402732cd:	011005        	call0	402743d0 <uart_getchar_ms>
-402732d0:	742020        	extui	a2, a2, 0, 8
-402732d3:	0d12d7        	beq	a2, a13, 402732e4 <uartInterfaceTask+0x44>
-402732d6:	0a9226        	beqi	a2, 10, 402732e4 <uartInterfaceTask+0x44>
-402732d9:	31ca      	add.n	a3, a1, a12
-402732db:	004322        	s8i	a2, a3, 0
-402732de:	cc1b      	addi.n	a12, a12, 1
-402732e0:	fff9c6        	j	402732cb <uartInterfaceTask+0x2b>
-402732e3:	2cc000        	excw
-402732e6:	311020        	srai	a1, a2, 16
-402732e9:	5c4520        	excw
-402732ec:	a02201        	l32r	a0, 4025b374 <ic_bss_info_update+0x28>
-402732ef:	024d00        	excw
-402732f2:	803120        	add	a3, a1, a2
-402732f5:	004342        	s8i	a4, a3, 0
-402732f8:	01c222        	addi	a2, a2, 1
-402732fb:	f3d266        	bnei	a2, 64, 402732f2 <uartInterfaceTask+0x52>
-402732fe:	19a022        	movi	a2, 25
-40273301:	d0dcc5        	call0	402440d0 <vTaskDelay>
-40273304:	0c0c      	movi.n	a12, 0
-40273306:	fff046        	j	402732cb <uartInterfaceTask+0x2b>
-40273309:	000000        	ill
-4027330c:	fe8634        	excw
-4027330f:	3f          	.byte 0x3f
-40273310:	863c      	movi.n	a6, 56
-40273312:	fe          	.byte 0xfe
-40273313:	3f          	.byte 0x3f
-40273314:	8648      	l32i.n	a4, a6, 32
-40273316:	fe          	.byte 0xfe
-40273317:	3f          	.byte 0x3f
-40273318:	219c      	beqz.n	a1, 4027332e <uartInterfaceTask+0x8e>
-4027331a:	640000        	extui	a0, a0, 0, 7
-4027331d:	3ffe86        	j	4028331b <_irom0_text_end+0xe593>
-40273320:	2732a0        	excw
-40273323:	866840        	excw
-40273326:	fe          	.byte 0xfe
-40273327:	3f          	.byte 0x3f
-40273328:	2742a0        	excw
-4027332b:	866c40        	excw
-4027332e:	fe          	.byte 0xfe
-4027332f:	3f          	.byte 0x3f
-40273330:	273b90        	excw
-40273333:	867040        	excw
-40273336:	fe          	.byte 0xfe
-40273337:	3f          	.byte 0x3f
-40273338:	3b28      	l32i.n	a2, a11, 12
-4027333a:	744027        	ball	a0, a2, 402733b2 <user_init+0x72>
-4027333d:	3ffe86        	j	4028333b <_irom0_text_end+0xe5b3>
+402736b0:	b0c112        	addi	a1, a1, -80
+402736b3:	020c      	movi.n	a2, 0
+402736b5:	136102        	s32i	a0, a1, 76
+402736b8:	1261c2        	s32i	a12, a1, 72
+402736bb:	1161d2        	s32i	a13, a1, 68
+402736be:	204220        	or	a4, a2, a2
+402736c1:	312a      	add.n	a3, a1, a2
+402736c3:	004342        	s8i	a4, a3, 0
+402736c6:	221b      	addi.n	a2, a2, 1
+402736c8:	f5d266        	bnei	a2, 64, 402736c1 <uartInterfaceTask+0x11>
+402736cb:	015305        	call0	40274bfc <uart_rx_init>
+402736ce:	fff621        	l32r	a2, 402736a8 <wep+0x18>
+402736d1:	0c0c      	movi.n	a12, 0
+402736d3:	fff601        	l32r	a0, 402736ac <wep+0x1c>
+402736d6:	0000c0        	callx0	a0
+402736d9:	dd0c      	movi.n	a13, 13
+402736db:	f27c      	movi.n	a2, -1
+402736dd:	014e45        	call0	40274bc4 <uart_getchar_ms>
+402736e0:	742020        	extui	a2, a2, 0, 8
+402736e3:	0d12d7        	beq	a2, a13, 402736f4 <uartInterfaceTask+0x44>
+402736e6:	0a9226        	beqi	a2, 10, 402736f4 <uartInterfaceTask+0x44>
+402736e9:	31ca      	add.n	a3, a1, a12
+402736eb:	004322        	s8i	a2, a3, 0
+402736ee:	cc1b      	addi.n	a12, a12, 1
+402736f0:	fff9c6        	j	402736db <uartInterfaceTask+0x2b>
+402736f3:	2cc000        	excw
+402736f6:	311020        	srai	a1, a2, 16
+402736f9:	9a8520        	excw
+402736fc:	a02201        	l32r	a0, 4025b784 <pm_get_sleep_type+0x4>
+402736ff:	024d00        	excw
+40273702:	803120        	add	a3, a1, a2
+40273705:	004342        	s8i	a4, a3, 0
+40273708:	01c222        	addi	a2, a2, 1
+4027370b:	f3d266        	bnei	a2, 64, 40273702 <uartInterfaceTask+0x52>
+4027370e:	19a022        	movi	a2, 25
+40273711:	d09bc5        	call0	402440d0 <vTaskDelay>
+40273714:	0c0c      	movi.n	a12, 0
+40273716:	fff046        	j	402736db <uartInterfaceTask+0x2b>
+40273719:	000000        	ill
+4027371c:	fe8634        	excw
+4027371f:	3f          	.byte 0x3f
+40273720:	863c      	movi.n	a6, 56
+40273722:	fe          	.byte 0xfe
+40273723:	3f          	.byte 0x3f
+40273724:	8648      	l32i.n	a4, a6, 32
+40273726:	fe          	.byte 0xfe
+40273727:	3f          	.byte 0x3f
+40273728:	219c      	beqz.n	a1, 4027373e <uartInterfaceTask+0x8e>
+4027372a:	640000        	extui	a0, a0, 0, 7
+4027372d:	3ffe86        	j	4028372b <_irom0_text_end+0xe132>
+40273730:	8668      	l32i.n	a6, a6, 32
+40273732:	fe          	.byte 0xfe
+40273733:	3f          	.byte 0x3f
+40273734:	2736b0        	excw
+40273737:	867840        	excw
+4027373a:	fe          	.byte 0xfe
+4027373b:	3f          	.byte 0x3f
+4027373c:	274a94        	excw
+4027373f:	867c40        	excw
+40273742:	fe          	.byte 0xfe
+40273743:	3f          	.byte 0x3f
+40273744:	274274        	excw
+40273747:	868040        	excw
+4027374a:	fe          	.byte 0xfe
+4027374b:	3f          	.byte 0x3f
+4027374c:	420c      	movi.n	a2, 4
+4027374e:	844027        	ball	a0, a2, 402736d6 <uartInterfaceTask+0x26>
+40273751:	3ffe86        	j	4028374f <_irom0_text_end+0xe156>
 
-40273340 <user_init>:
+40273754 <user_init>:
  * Description  : entry of user application, init user function here
  * Parameters   : none
  * Returns      : none
 *******************************************************************************/
 void user_init(void)
 {
-40273340:	e0c112        	addi	a1, a1, -32
+40273754:	e0c112        	addi	a1, a1, -32
 		vTaskDelay(25); // 250ms
 	}
 }
 
 UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
 	uart_div_modify(uart_no, UART_CLK_FREQ / baud_rate);
-40273343:	ada032        	movi	a3, 173
-40273346:	020c      	movi.n	a2, 0
+40273757:	ada032        	movi	a3, 173
+4027375a:	020c      	movi.n	a2, 0
  * Description  : entry of user application, init user function here
  * Parameters   : none
  * Returns      : none
 *******************************************************************************/
 void user_init(void)
 {
-40273348:	7109      	s32i.n	a0, a1, 28
-4027334a:	61c9      	s32i.n	a12, a1, 24
+4027375c:	7109      	s32i.n	a0, a1, 28
+4027375e:	61c9      	s32i.n	a12, a1, 24
 		vTaskDelay(25); // 250ms
 	}
 }
 
 UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
 	uart_div_modify(uart_no, UART_CLK_FREQ / baud_rate);
-4027334c:	cdbb45        	call0	40240f04 <uart_div_modify>
+40273760:	cd7a05        	call0	40240f04 <uart_div_modify>
  * Returns      : none
 *******************************************************************************/
 void user_init(void)
 {
 	UART_SetBaudrate(0,460800);
 	wifi_set_opmode(STATION_MODE);
-4027334f:	120c      	movi.n	a2, 1
-40273351:	cea685        	call0	40241dbc <wifi_set_opmode>
+40273763:	120c      	movi.n	a2, 1
+40273765:	ce6545        	call0	40241dbc <wifi_set_opmode>
+	
+	clientInit();
+40273768:	006c85        	call0	40273e34 <clientInit>
 	
 	//DEBUG
 	struct station_config *config = (struct station_config *)zalloc(sizeof(struct station_config));
-40273354:	67a022        	movi	a2, 103
-40273357:	346901        	l32r	a0, 402404fc <user_init_task+0xc0>
-4027335a:	0000c0        	callx0	a0
+4027376b:	67a022        	movi	a2, 103
+4027376e:	336301        	l32r	a0, 402404fc <user_init_task+0xc0>
+40273771:	0000c0        	callx0	a0
 	sprintf(config->ssid, "linksys@Pogodna8");
-4027335d:	ffeb31        	l32r	a3, 4027330c <uartInterfaceTask+0x6c>
-{
-	UART_SetBaudrate(0,460800);
+40273774:	ffea31        	l32r	a3, 4027371c <uartInterfaceTask+0x6c>
 	wifi_set_opmode(STATION_MODE);
 	
+	clientInit();
+	
 	//DEBUG
 	struct station_config *config = (struct station_config *)zalloc(sizeof(struct station_config));
-40273360:	02cd      	mov.n	a12, a2
+40273777:	02cd      	mov.n	a12, a2
 	sprintf(config->ssid, "linksys@Pogodna8");
-40273362:	cd92c5        	call0	40240c90 <strcpy>
+40273779:	cd5145        	call0	40240c90 <strcpy>
 	sprintf(config->password, "Pogodna8");
-40273365:	ffea31        	l32r	a3, 40273310 <uartInterfaceTask+0x70>
-40273368:	20cc22        	addi	a2, a12, 32
-4027336b:	cd9245        	call0	40240c90 <strcpy>
+4027377c:	ffe931        	l32r	a3, 40273720 <uartInterfaceTask+0x70>
+4027377f:	20cc22        	addi	a2, a12, 32
+40273782:	cd50c5        	call0	40240c90 <strcpy>
 	wifi_station_set_config(config);
-4027336e:	0c2d      	mov.n	a2, a12
-40273370:	cf0b85        	call0	4024242c <wifi_station_set_config>
+40273785:	0c2d      	mov.n	a2, a12
+40273787:	ceca45        	call0	4024242c <wifi_station_set_config>
     free(config);
-40273373:	0c2d      	mov.n	a2, a12
-40273375:	346401        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273378:	0000c0        	callx0	a0
+4027378a:	0c2d      	mov.n	a2, a12
+4027378c:	335f01        	l32r	a0, 40240508 <user_init_task+0xcc>
+4027378f:	0000c0        	callx0	a0
 	clientSetURL("ant-kat-01.cdn.eurozet.pl"); // Without http:// !!!
-4027337b:	ffe621        	l32r	a2, 40273314 <uartInterfaceTask+0x74>
-	VS1053_Start();
+40273792:	ffe421        	l32r	a2, 40273724 <uartInterfaceTask+0x74>
 	VS1053_SetVolume(70);
+	printf("\n\nVOLUME: %d\n\n", VS1053_GetVolume());
 
 	VS1053_SPI_SpeedUp();
 
 	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 1, NULL);
-4027337e:	0c0c      	movi.n	a12, 0
+40273795:	0c0c      	movi.n	a12, 0
 	struct station_config *config = (struct station_config *)zalloc(sizeof(struct station_config));
 	sprintf(config->ssid, "linksys@Pogodna8");
 	sprintf(config->password, "Pogodna8");
 	wifi_station_set_config(config);
     free(config);
 	clientSetURL("ant-kat-01.cdn.eurozet.pl"); // Without http:// !!!
-40273380:	005e05        	call0	40273964 <clientSetURL>
+40273797:	008845        	call0	4027401c <clientSetURL>
 	clientSetPort(8604);
-40273383:	ffe521        	l32r	a2, 40273318 <uartInterfaceTask+0x78>
-40273386:	006845        	call0	40273a0c <clientSetPort>
+4027379a:	ffe321        	l32r	a2, 40273728 <uartInterfaceTask+0x78>
+4027379d:	009245        	call0	402740c4 <clientSetPort>
 	clientSetPath("/");
-40273389:	ffe421        	l32r	a2, 4027331c <uartInterfaceTask+0x7c>
-4027338c:	006285        	call0	402739b8 <clientSetPath>
+402737a0:	ffe321        	l32r	a2, 4027372c <uartInterfaceTask+0x7c>
+402737a3:	008cc5        	call0	40274070 <clientSetPath>
 	//DEBUG
 	
 	VS1053_HW_init();
-4027338f:	000845        	call0	40273414 <VS1053_HW_init>
+402737a6:	000945        	call0	4027383c <VS1053_HW_init>
 	VS1053_Start();
-40273392:	002685        	call0	402735fc <VS1053_Start>
+402737a9:	003385        	call0	40273ae4 <VS1053_Start>
 	VS1053_SetVolume(70);
-40273395:	624c      	movi.n	a2, 70
-40273397:	003205        	call0	402736b8 <VS1053_SetVolume>
+402737ac:	624c      	movi.n	a2, 70
+402737ae:	004105        	call0	40273bc0 <VS1053_SetVolume>
+	printf("\n\nVOLUME: %d\n\n", VS1053_GetVolume());
+402737b1:	003f45        	call0	40273ba8 <VS1053_GetVolume>
+402737b4:	023d      	mov.n	a3, a2
+402737b6:	ffde21        	l32r	a2, 40273730 <uartInterfaceTask+0x80>
+402737b9:	321d01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+402737bc:	0000c0        	callx0	a0
 
 	VS1053_SPI_SpeedUp();
-4027339a:	000ec5        	call0	40273488 <VS1053_SPI_SpeedUp>
+402737bf:	000f05        	call0	402738b0 <VS1053_SPI_SpeedUp>
 
 	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 1, NULL);
-4027339d:	ffe131        	l32r	a3, 40273324 <uartInterfaceTask+0x84>
-402733a0:	ffe021        	l32r	a2, 40273320 <uartInterfaceTask+0x80>
-402733a3:	01c9      	s32i.n	a12, a1, 0
-402733a5:	11c9      	s32i.n	a12, a1, 4
-402733a7:	0c5d      	mov.n	a5, a12
-402733a9:	0c7d      	mov.n	a7, a12
-402733ab:	00a142        	movi	a4, 0x100
-402733ae:	160c      	movi.n	a6, 1
-402733b0:	d0b305        	call0	40243ee4 <xTaskGenericCreate>
+402737c2:	ffdd31        	l32r	a3, 40273738 <uartInterfaceTask+0x88>
+402737c5:	ffdb21        	l32r	a2, 40273734 <uartInterfaceTask+0x84>
+402737c8:	01c9      	s32i.n	a12, a1, 0
+402737ca:	11c9      	s32i.n	a12, a1, 4
+402737cc:	0c5d      	mov.n	a5, a12
+402737ce:	207cc0        	or	a7, a12, a12
+402737d1:	00a142        	movi	a4, 0x100
+402737d4:	160c      	movi.n	a6, 1
+402737d6:	d070c5        	call0	40243ee4 <xTaskGenericCreate>
 	xTaskCreate(serverTask, "t2", 256, NULL, 1, NULL);
-402733b3:	ffde31        	l32r	a3, 4027332c <uartInterfaceTask+0x8c>
-402733b6:	ffdc21        	l32r	a2, 40273328 <uartInterfaceTask+0x88>
-402733b9:	01c9      	s32i.n	a12, a1, 0
-402733bb:	11c9      	s32i.n	a12, a1, 4
-402733bd:	0c5d      	mov.n	a5, a12
-402733bf:	0c7d      	mov.n	a7, a12
-402733c1:	00a142        	movi	a4, 0x100
-402733c4:	160c      	movi.n	a6, 1
-402733c6:	d0b1c5        	call0	40243ee4 <xTaskGenericCreate>
+402737d9:	ffd931        	l32r	a3, 40273740 <uartInterfaceTask+0x90>
+402737dc:	ffd821        	l32r	a2, 4027373c <uartInterfaceTask+0x8c>
+402737df:	01c9      	s32i.n	a12, a1, 0
+402737e1:	11c9      	s32i.n	a12, a1, 4
+402737e3:	0c5d      	mov.n	a5, a12
+402737e5:	0c7d      	mov.n	a7, a12
+402737e7:	00a142        	movi	a4, 0x100
+402737ea:	160c      	movi.n	a6, 1
+402737ec:	d06f45        	call0	40243ee4 <xTaskGenericCreate>
 	xTaskCreate(clientTask, "t3", 256, NULL, 2, NULL);
-402733c9:	ffda31        	l32r	a3, 40273334 <uartInterfaceTask+0x94>
-402733cc:	ffd921        	l32r	a2, 40273330 <uartInterfaceTask+0x90>
-402733cf:	01c9      	s32i.n	a12, a1, 0
-402733d1:	11c9      	s32i.n	a12, a1, 4
-402733d3:	0c5d      	mov.n	a5, a12
-402733d5:	0c7d      	mov.n	a7, a12
-402733d7:	00a142        	movi	a4, 0x100
-402733da:	260c      	movi.n	a6, 2
-402733dc:	d0b045        	call0	40243ee4 <xTaskGenericCreate>
+402737ef:	ffd631        	l32r	a3, 40273748 <uartInterfaceTask+0x98>
+402737f2:	ffd421        	l32r	a2, 40273744 <uartInterfaceTask+0x94>
+402737f5:	01c9      	s32i.n	a12, a1, 0
+402737f7:	11c9      	s32i.n	a12, a1, 4
+402737f9:	205cc0        	or	a5, a12, a12
+402737fc:	0c7d      	mov.n	a7, a12
+402737fe:	00a142        	movi	a4, 0x100
+40273801:	02a062        	movi	a6, 2
+40273804:	d06dc5        	call0	40243ee4 <xTaskGenericCreate>
 	xTaskCreate(vsTask, "t4", 512, NULL, 2, NULL);
-402733df:	ffd621        	l32r	a2, 40273338 <uartInterfaceTask+0x98>
-402733e2:	ffd631        	l32r	a3, 4027333c <uartInterfaceTask+0x9c>
-402733e5:	01c9      	s32i.n	a12, a1, 0
-402733e7:	11c9      	s32i.n	a12, a1, 4
-402733e9:	0c5d      	mov.n	a5, a12
-402733eb:	0c7d      	mov.n	a7, a12
-402733ed:	00a242        	movi	a4, 0x200
-402733f0:	260c      	movi.n	a6, 2
-402733f2:	d0af05        	call0	40243ee4 <xTaskGenericCreate>
+40273807:	ffd121        	l32r	a2, 4027374c <uartInterfaceTask+0x9c>
+4027380a:	ffd131        	l32r	a3, 40273750 <uartInterfaceTask+0xa0>
+4027380d:	01c9      	s32i.n	a12, a1, 0
+4027380f:	11c9      	s32i.n	a12, a1, 4
+40273811:	0c5d      	mov.n	a5, a12
+40273813:	0c7d      	mov.n	a7, a12
+40273815:	00a242        	movi	a4, 0x200
+40273818:	260c      	movi.n	a6, 2
+4027381a:	d06c85        	call0	40243ee4 <xTaskGenericCreate>
 }
-402733f5:	7108      	l32i.n	a0, a1, 28
-402733f7:	61c8      	l32i.n	a12, a1, 24
-402733f9:	20c112        	addi	a1, a1, 32
-402733fc:	f00d      	ret.n
-402733fe:	100000        	and	a0, a0, a0
-40273401:	0008      	l32i.n	a0, a0, 0
-40273403:	031060        	excw
-40273406:	216000        	srai	a6, a0, 0
-40273409:	000080        	ret
-4027340c:	000314        	excw
-4027340f:	030460        	excw
-40273412:	126000        	excw
+4027381d:	7108      	l32i.n	a0, a1, 28
+4027381f:	61c8      	l32i.n	a12, a1, 24
+40273821:	20c112        	addi	a1, a1, 32
+40273824:	f00d      	ret.n
+40273826:	100000        	and	a0, a0, a0
+40273829:	0008      	l32i.n	a0, a0, 0
+4027382b:	031060        	excw
+4027382e:	216000        	srai	a6, a0, 0
+40273831:	000080        	ret
+40273834:	000314        	excw
+40273837:	030460        	excw
+4027383a:	126000        	excw
 
-40273414 <VS1053_HW_init>:
-	VS1053_WriteRegister(SPI_MODE,0x00,0x04);
-}
-
-uint8_t VS1053_GetVolume(){
-	return ( VS1053_ReadRegister(SPI_VOL) & 0x00FF );
-}
-40273414:	f0c112        	addi	a1, a1, -16
-40273417:	01a022        	movi	a2, 1
-4027341a:	036102        	s32i	a0, a1, 12
-4027341d:	017805        	call0	40274ba0 <spi_init>
-40273420:	120c      	movi.n	a2, 1
-40273422:	430c      	movi.n	a3, 4
-40273424:	a40c      	movi.n	a4, 10
-40273426:	016bc5        	call0	40274ae4 <spi_clock>
-40273429:	fff521        	l32r	a2, 40273400 <user_init+0xc0>
-4027342c:	cfae32        	movi	a3, 0xfffffecf
-4027342f:	0020c0        	memw
-40273432:	0248      	l32i.n	a4, a2, 0
-40273434:	3108      	l32i.n	a0, a1, 12
-40273436:	103430        	and	a3, a4, a3
-40273439:	0020c0        	memw
-4027343c:	0239      	s32i.n	a3, a2, 0
-4027343e:	0020c0        	memw
-40273441:	0248      	l32i.n	a4, a2, 0
-40273443:	033c      	movi.n	a3, 48
-40273445:	203430        	or	a3, a4, a3
-40273448:	0020c0        	memw
-4027344b:	0239      	s32i.n	a3, a2, 0
-4027344d:	ffed21        	l32r	a2, 40273404 <user_init+0xc4>
-40273450:	ffee31        	l32r	a3, 40273408 <user_init+0xc8>
-40273453:	0020c0        	memw
-40273456:	0248      	l32i.n	a4, a2, 0
-40273458:	10c112        	addi	a1, a1, 16
-4027345b:	204430        	or	a4, a4, a3
-4027345e:	0020c0        	memw
-40273461:	0249      	s32i.n	a4, a2, 0
-40273463:	ffea21        	l32r	a2, 4027340c <user_init+0xcc>
-40273466:	041c      	movi.n	a4, 16
-40273468:	0020c0        	memw
-4027346b:	0258      	l32i.n	a5, a2, 0
-4027346d:	204540        	or	a4, a5, a4
-40273470:	0020c0        	memw
-40273473:	0249      	s32i.n	a4, a2, 0
-40273475:	ffe621        	l32r	a2, 40273410 <user_init+0xd0>
-40273478:	0020c0        	memw
-4027347b:	0248      	l32i.n	a4, a2, 0
-4027347d:	203430        	or	a3, a4, a3
-40273480:	0020c0        	memw
-40273483:	0239      	s32i.n	a3, a2, 0
-40273485:	f00d      	ret.n
-	...
-
-40273488 <VS1053_SPI_SpeedUp>:
-40273488:	f0c112        	addi	a1, a1, -16
-4027348b:	01a022        	movi	a2, 1
-4027348e:	04a032        	movi	a3, 4
-40273491:	02a042        	movi	a4, 2
-40273494:	3109      	s32i.n	a0, a1, 12
-40273496:	0164c5        	call0	40274ae4 <spi_clock>
-40273499:	3108      	l32i.n	a0, a1, 12
-4027349b:	10c112        	addi	a1, a1, 16
-4027349e:	f00d      	ret.n
-402734a0:	000100        	excw
-402734a3:	a06260        	addx4	a6, a2, a6
-
-402734a4 <SPIPutChar>:
-402734a4:	00a062        	movi	a6, 0
-402734a7:	e0c112        	addi	a1, a1, -32
-402734aa:	742020        	extui	a2, a2, 0, 8
-402734ad:	006122        	s32i	a2, a1, 0
-402734b0:	204660        	or	a4, a6, a6
-402734b3:	1169      	s32i.n	a6, a1, 4
-402734b5:	2169      	s32i.n	a6, a1, 8
-402734b7:	120c      	movi.n	a2, 1
-402734b9:	063d      	mov.n	a3, a6
-402734bb:	065d      	mov.n	a5, a6
-402734bd:	870c      	movi.n	a7, 8
-402734bf:	7109      	s32i.n	a0, a1, 28
-402734c1:	017405        	call0	40274c04 <spi_transaction>
-402734c4:	fff741        	l32r	a4, 402734a0 <VS1053_SPI_SpeedUp+0x18>
-402734c7:	7cb821        	l32r	a2, 402527a8 <chip_v6_set_chanfreq+0x30>
-402734ca:	0020c0        	memw
-402734cd:	0438      	l32i.n	a3, a4, 0
-402734cf:	f78327        	bany	a3, a2, 402734ca <SPIPutChar+0x26>
-402734d2:	7108      	l32i.n	a0, a1, 28
-402734d4:	20c112        	addi	a1, a1, 32
-402734d7:	f00d      	ret.n
-402734d9:	000000        	ill
-402734dc:	0308      	l32i.n	a0, a3, 0
-402734de:	206000        	or	a6, a0, a0
-
-402734e0 <ControlReset>:
-402734e0:	742020        	extui	a2, a2, 0, 8
-402734e3:	130c      	movi.n	a3, 1
-402734e5:	428c      	beqz.n	a2, 402734ed <ControlReset+0xd>
-402734e7:	fffd21        	l32r	a2, 402734dc <SPIPutChar+0x38>
-402734ea:	000086        	j	402734f0 <ControlReset+0x10>
-402734ed:	ffc821        	l32r	a2, 40273410 <user_init+0xd0>
-402734f0:	0020c0        	memw
-402734f3:	0248      	l32i.n	a4, a2, 0
-402734f5:	203430        	or	a3, a4, a3
-402734f8:	0020c0        	memw
-402734fb:	0239      	s32i.n	a3, a2, 0
-402734fd:	f00d      	ret.n
-	...
-
-40273500 <SCI_ChipSelect>:
-40273500:	742020        	extui	a2, a2, 0, 8
-40273503:	37fd31        	l32r	a3, 402414f8 <system_upgrade_flag_check+0x10>
-40273506:	628c      	beqz.n	a2, 40273510 <SCI_ChipSelect+0x10>
-40273508:	fff521        	l32r	a2, 402734dc <SPIPutChar+0x38>
-4027350b:	000106        	j	40273513 <SCI_ChipSelect+0x13>
-4027350e:	210000        	srai	a0, a0, 0
-40273511:	c0ffc0        	sub	a15, a15, a12
-40273514:	480020        	excw
-40273517:	343002        	excw
-4027351a:	20c020        	or	a12, a0, a2
-4027351d:	023900        	excw
-40273520:	f00d      	ret.n
-	...
-
-40273524 <SDI_ChipSelect>:
-40273524:	742020        	extui	a2, a2, 0, 8
-40273527:	032c      	movi.n	a3, 32
-40273529:	428c      	beqz.n	a2, 40273531 <SDI_ChipSelect+0xd>
-4027352b:	ffec21        	l32r	a2, 402734dc <SPIPutChar+0x38>
-4027352e:	000086        	j	40273534 <SDI_ChipSelect+0x10>
-40273531:	ffb721        	l32r	a2, 40273410 <user_init+0xd0>
-40273534:	0020c0        	memw
-40273537:	0248      	l32i.n	a4, a2, 0
-40273539:	203430        	or	a3, a4, a3
-4027353c:	0020c0        	memw
-4027353f:	0239      	s32i.n	a3, a2, 0
-40273541:	f00d      	ret.n
-40273543:	031800        	excw
-40273546:	216000        	srai	a6, a0, 0
-
-40273548 <VS1053_checkDREQ>:
-40273548:	ffff21        	l32r	a2, 40273544 <SDI_ChipSelect+0x20>
-4027354b:	0020c0        	memw
-4027354e:	0228      	l32i.n	a2, a2, 0
-40273550:	042420        	extui	a2, a2, 4, 1
-40273553:	f00d      	ret.n
-40273555:	000000        	ill
-
-40273558 <VS1053_WriteRegister>:
-40273558:	f0c112        	addi	a1, a1, -16
-4027355b:	0061e2        	s32i	a14, a1, 0
-4027355e:	74e020        	extui	a14, a2, 0, 8
-40273561:	00a022        	movi	a2, 0
-40273564:	0261c2        	s32i	a12, a1, 8
-40273567:	11d9      	s32i.n	a13, a1, 4
-40273569:	3109      	s32i.n	a0, a1, 12
-4027356b:	74d030        	extui	a13, a3, 0, 8
-4027356e:	74c040        	extui	a12, a4, 0, 8
-40273571:	fffb05        	call0	40273524 <SDI_ChipSelect>
-40273574:	fffd05        	call0	40273548 <VS1053_checkDREQ>
-40273577:	ff9216        	beqz	a2, 40273574 <VS1053_WriteRegister+0x1c>
-4027357a:	ffd851        	l32r	a5, 402734dc <SPIPutChar+0x38>
-4027357d:	37de21        	l32r	a2, 402414f8 <system_upgrade_flag_check+0x10>
-40273580:	0020c0        	memw
-40273583:	002532        	l32i	a3, a5, 0
-40273586:	202320        	or	a2, a3, a2
-40273589:	0020c0        	memw
-4027358c:	006522        	s32i	a2, a5, 0
-4027358f:	02a022        	movi	a2, 2
-40273592:	fff105        	call0	402734a4 <SPIPutChar>
-40273595:	0e2d      	mov.n	a2, a14
-40273597:	fff0c5        	call0	402734a4 <SPIPutChar>
-4027359a:	0d2d      	mov.n	a2, a13
-4027359c:	fff045        	call0	402734a4 <SPIPutChar>
-4027359f:	0c2d      	mov.n	a2, a12
-402735a1:	fff005        	call0	402734a4 <SPIPutChar>
-402735a4:	fffa05        	call0	40273548 <VS1053_checkDREQ>
-402735a7:	ff9216        	beqz	a2, 402735a4 <VS1053_WriteRegister+0x4c>
-402735aa:	00a022        	movi	a2, 0
-402735ad:	fff505        	call0	40273500 <SCI_ChipSelect>
-402735b0:	032102        	l32i	a0, a1, 12
-402735b3:	21c8      	l32i.n	a12, a1, 8
-402735b5:	11d8      	l32i.n	a13, a1, 4
-402735b7:	01e8      	l32i.n	a14, a1, 0
-402735b9:	10c112        	addi	a1, a1, 16
-402735bc:	f00d      	ret.n
-	...
-
-402735c0 <VS1053_ResetChip>:
-402735c0:	ffc721        	l32r	a2, 402734dc <SPIPutChar+0x38>
-402735c3:	f0c112        	addi	a1, a1, -16
-402735c6:	0020c0        	memw
-402735c9:	0248      	l32i.n	a4, a2, 0
-402735cb:	130c      	movi.n	a3, 1
-402735cd:	3109      	s32i.n	a0, a1, 12
-402735cf:	203430        	or	a3, a4, a3
-402735d2:	0020c0        	memw
-402735d5:	0239      	s32i.n	a3, a2, 0
-402735d7:	ffa022        	movi	a2, 255
-402735da:	ffec85        	call0	402734a4 <SPIPutChar>
-402735dd:	020c      	movi.n	a2, 0
-402735df:	fff205        	call0	40273500 <SCI_ChipSelect>
-402735e2:	020c      	movi.n	a2, 0
-402735e4:	fff3c5        	call0	40273524 <SDI_ChipSelect>
-402735e7:	020c      	movi.n	a2, 0
-402735e9:	ffef45        	call0	402734e0 <ControlReset>
-402735ec:	fff585        	call0	40273548 <VS1053_checkDREQ>
-402735ef:	ff9216        	beqz	a2, 402735ec <VS1053_ResetChip+0x2c>
-402735f2:	3108      	l32i.n	a0, a1, 12
-402735f4:	10c112        	addi	a1, a1, 16
-402735f7:	f00d      	ret.n
-402735f9:	000000        	ill
-
-402735fc <VS1053_Start>:
-402735fc:	f0c112        	addi	a1, a1, -16
-402735ff:	3109      	s32i.n	a0, a1, 12
-40273601:	fffbc5        	call0	402735c0 <VS1053_ResetChip>
-40273604:	fff405        	call0	40273548 <VS1053_checkDREQ>
-40273607:	ff9216        	beqz	a2, 40273604 <VS1053_Start+0x8>
-4027360a:	03a022        	movi	a2, 3
-4027360d:	60a032        	movi	a3, 96
-40273610:	040c      	movi.n	a4, 0
-40273612:	fff445        	call0	40273558 <VS1053_WriteRegister>
-40273615:	020c      	movi.n	a2, 0
-40273617:	08a032        	movi	a3, 8
-4027361a:	02a042        	movi	a4, 2
-4027361d:	fff385        	call0	40273558 <VS1053_WriteRegister>
-40273620:	fff245        	call0	40273548 <VS1053_checkDREQ>
-40273623:	ff9216        	beqz	a2, 40273620 <VS1053_Start+0x24>
-40273626:	3108      	l32i.n	a0, a1, 12
-40273628:	10c112        	addi	a1, a1, 16
-4027362b:	f00d      	ret.n
-4027362d:	000000        	ill
-
-40273630 <VS1053_SendMusicBytes>:
-40273630:	d0c112        	addi	a1, a1, -48
-40273633:	a1c9      	s32i.n	a12, a1, 40
-40273635:	0129      	s32i.n	a2, a1, 0
-40273637:	b109      	s32i.n	a0, a1, 44
-40273639:	91d9      	s32i.n	a13, a1, 36
-4027363b:	81e9      	s32i.n	a14, a1, 32
-4027363d:	0761f2        	s32i	a15, a1, 28
-40273640:	f4c030        	extui	a12, a3, 0, 16
-40273643:	020c      	movi.n	a2, 0
-40273645:	5d1c27        	beq	a12, a2, 402736a6 <VS1053_SendMusicBytes+0x76>
-40273648:	ffefc5        	call0	40273548 <VS1053_checkDREQ>
-4027364b:	ff9216        	beqz	a2, 40273648 <VS1053_SendMusicBytes+0x18>
-4027364e:	ffa321        	l32r	a2, 402734dc <SPIPutChar+0x38>
-40273651:	20a0f2        	movi	a15, 32
-40273654:	0020c0        	memw
-40273657:	002232        	l32i	a3, a2, 0
-4027365a:	00a0d2        	movi	a13, 0
-4027365d:	2033f0        	or	a3, a3, a15
-40273660:	0020c0        	memw
-40273663:	0239      	s32i.n	a3, a2, 0
-40273665:	0000c6        	j	4027366c <VS1053_SendMusicBytes+0x3c>
-40273668:	dd0000        	excw
-4027366b:	0e          	.byte 0xe
-4027366c:	ffed85        	call0	40273548 <VS1053_checkDREQ>
-4027366f:	ff9216        	beqz	a2, 4027366c <VS1053_SendMusicBytes+0x3c>
-40273672:	204cc0        	or	a4, a12, a12
-40273675:	02afc7        	bge	a15, a12, 4027367b <VS1053_SendMusicBytes+0x4b>
-40273678:	20a042        	movi	a4, 32
-4027367b:	80ed40        	add	a14, a13, a4
-4027367e:	000446        	j	40273693 <VS1053_SendMusicBytes+0x63>
-40273681:	002132        	l32i	a3, a1, 0
-40273684:	8023d0        	add	a2, a3, a13
-40273687:	000222        	l8ui	a2, a2, 0
-4027368a:	1149      	s32i.n	a4, a1, 4
-4027368c:	ffe145        	call0	402734a4 <SPIPutChar>
-4027368f:	1148      	l32i.n	a4, a1, 4
-40273691:	dd1b      	addi.n	a13, a13, 1
-40273693:	ea2de7        	blt	a13, a14, 40273681 <VS1053_SendMusicBytes+0x51>
-40273696:	c0cc40        	sub	a12, a12, a4
-40273699:	f4c0c0        	extui	a12, a12, 0, 16
-4027369c:	fcac56        	bnez	a12, 4027366a <VS1053_SendMusicBytes+0x3a>
-4027369f:	0c2d      	mov.n	a2, a12
-402736a1:	ffe805        	call0	40273524 <SDI_ChipSelect>
-402736a4:	0e2d      	mov.n	a2, a14
-402736a6:	b108      	l32i.n	a0, a1, 44
-402736a8:	a1c8      	l32i.n	a12, a1, 40
-402736aa:	91d8      	l32i.n	a13, a1, 36
-402736ac:	81e8      	l32i.n	a14, a1, 32
-402736ae:	71f8      	l32i.n	a15, a1, 28
-402736b0:	30c112        	addi	a1, a1, 48
-402736b3:	f00d      	ret.n
-402736b5:	000000        	ill
-
-402736b8 <VS1053_SetVolume>:
-/**
- * Function sets the same volume level to both channels.
- * @param xMinusHalfdB describes damping level as a multiple
- * 		of 0.5dB. Maximum volume is 0 and silence is 0xFEFE.
+4027383c <VS1053_HW_init>:
  */
-void VS1053_SetVolume(uint8_t xMinusHalfdB){
-402736b8:	744020        	extui	a4, a2, 0, 8
-402736bb:	f0c112        	addi	a1, a1, -16
-	VS1053_WriteRegister(SPI_VOL,xMinusHalfdB,xMinusHalfdB);
-402736be:	0ba022        	movi	a2, 11
-402736c1:	203440        	or	a3, a4, a4
-/**
- * Function sets the same volume level to both channels.
- * @param xMinusHalfdB describes damping level as a multiple
- * 		of 0.5dB. Maximum volume is 0 and silence is 0xFEFE.
- */
-void VS1053_SetVolume(uint8_t xMinusHalfdB){
-402736c4:	036102        	s32i	a0, a1, 12
-	VS1053_WriteRegister(SPI_VOL,xMinusHalfdB,xMinusHalfdB);
-402736c7:	ffe905        	call0	40273558 <VS1053_WriteRegister>
+void VS1053_SetTrebleFreq(uint8_t xkHz){
+	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
+	if ( xkHz <= 15 )
+		VS1053_WriteRegister( SPI_BASS, MaskAndShiftRight(bassReg,0xF000,8) | xkHz, bassReg & 0x00FF );
 }
-402736ca:	3108      	l32i.n	a0, a1, 12
-402736cc:	10c112        	addi	a1, a1, 16
-402736cf:	f00d      	ret.n
-402736d1:	000000        	ill
-402736d4:	f8fa      	add.n	a15, a8, a15
-402736d6:	fe          	.byte 0xfe
-402736d7:	3f          	.byte 0x3f
-402736d8:	f8f8      	l32i.n	a15, a8, 60
-402736da:	fe          	.byte 0xfe
-402736db:	3f          	.byte 0x3f
-402736dc:	fe8484        	excw
-402736df:	3f          	.byte 0x3f
+4027383c:	f0c112        	addi	a1, a1, -16
+4027383f:	01a022        	movi	a2, 1
+40273842:	036102        	s32i	a0, a1, 12
+40273845:	01ba05        	call0	402753e8 <spi_init>
+40273848:	120c      	movi.n	a2, 1
+4027384a:	430c      	movi.n	a3, 4
+4027384c:	a40c      	movi.n	a4, 10
+4027384e:	01adc5        	call0	4027532c <spi_clock>
+40273851:	fff521        	l32r	a2, 40273828 <user_init+0xd4>
+40273854:	cfae32        	movi	a3, 0xfffffecf
+40273857:	0020c0        	memw
+4027385a:	0248      	l32i.n	a4, a2, 0
+4027385c:	3108      	l32i.n	a0, a1, 12
+4027385e:	103430        	and	a3, a4, a3
+40273861:	0020c0        	memw
+40273864:	0239      	s32i.n	a3, a2, 0
+40273866:	0020c0        	memw
+40273869:	0248      	l32i.n	a4, a2, 0
+4027386b:	033c      	movi.n	a3, 48
+4027386d:	203430        	or	a3, a4, a3
+40273870:	0020c0        	memw
+40273873:	0239      	s32i.n	a3, a2, 0
+40273875:	ffed21        	l32r	a2, 4027382c <user_init+0xd8>
+40273878:	ffee31        	l32r	a3, 40273830 <user_init+0xdc>
+4027387b:	0020c0        	memw
+4027387e:	0248      	l32i.n	a4, a2, 0
+40273880:	10c112        	addi	a1, a1, 16
+40273883:	204430        	or	a4, a4, a3
+40273886:	0020c0        	memw
+40273889:	0249      	s32i.n	a4, a2, 0
+4027388b:	ffea21        	l32r	a2, 40273834 <user_init+0xe0>
+4027388e:	041c      	movi.n	a4, 16
+40273890:	0020c0        	memw
+40273893:	0258      	l32i.n	a5, a2, 0
+40273895:	204540        	or	a4, a5, a4
+40273898:	0020c0        	memw
+4027389b:	0249      	s32i.n	a4, a2, 0
+4027389d:	ffe621        	l32r	a2, 40273838 <user_init+0xe4>
+402738a0:	0020c0        	memw
+402738a3:	0248      	l32i.n	a4, a2, 0
+402738a5:	203430        	or	a3, a4, a3
+402738a8:	0020c0        	memw
+402738ab:	0239      	s32i.n	a3, a2, 0
+402738ad:	f00d      	ret.n
+	...
 
-402736e0 <getBufferFree>:
+402738b0 <VS1053_SPI_SpeedUp>:
+402738b0:	f0c112        	addi	a1, a1, -16
+402738b3:	01a022        	movi	a2, 1
+402738b6:	04a032        	movi	a3, 4
+402738b9:	02a042        	movi	a4, 2
+402738bc:	3109      	s32i.n	a0, a1, 12
+402738be:	01a6c5        	call0	4027532c <spi_clock>
+402738c1:	3108      	l32i.n	a0, a1, 12
+402738c3:	10c112        	addi	a1, a1, 16
+402738c6:	f00d      	ret.n
+
+402738c8 <VS1053_SPI_SpeedDown>:
+402738c8:	f0c112        	addi	a1, a1, -16
+402738cb:	01a022        	movi	a2, 1
+402738ce:	04a032        	movi	a3, 4
+402738d1:	0aa042        	movi	a4, 10
+402738d4:	3109      	s32i.n	a0, a1, 12
+402738d6:	01a545        	call0	4027532c <spi_clock>
+402738d9:	3108      	l32i.n	a0, a1, 12
+402738db:	10c112        	addi	a1, a1, 16
+402738de:	f00d      	ret.n
+402738e0:	000100        	excw
+402738e3:	a06260        	addx4	a6, a2, a6
+
+402738e4 <SPIPutChar>:
+402738e4:	00a062        	movi	a6, 0
+402738e7:	e0c112        	addi	a1, a1, -32
+402738ea:	742020        	extui	a2, a2, 0, 8
+402738ed:	006122        	s32i	a2, a1, 0
+402738f0:	204660        	or	a4, a6, a6
+402738f3:	1169      	s32i.n	a6, a1, 4
+402738f5:	2169      	s32i.n	a6, a1, 8
+402738f7:	120c      	movi.n	a2, 1
+402738f9:	063d      	mov.n	a3, a6
+402738fb:	065d      	mov.n	a5, a6
+402738fd:	870c      	movi.n	a7, 8
+402738ff:	7109      	s32i.n	a0, a1, 28
+40273901:	01b705        	call0	40275474 <spi_transaction>
+40273904:	fff741        	l32r	a4, 402738e0 <VS1053_SPI_SpeedDown+0x18>
+40273907:	7ba821        	l32r	a2, 402527a8 <chip_v6_set_chanfreq+0x30>
+4027390a:	0020c0        	memw
+4027390d:	0438      	l32i.n	a3, a4, 0
+4027390f:	f78327        	bany	a3, a2, 4027390a <SPIPutChar+0x26>
+40273912:	7108      	l32i.n	a0, a1, 28
+40273914:	20c112        	addi	a1, a1, 32
+40273917:	f00d      	ret.n
+40273919:	000000        	ill
+
+4027391c <SPIGetChar>:
+4027391c:	e0c112        	addi	a1, a1, -32
+4027391f:	fff031        	l32r	a3, 402738e0 <VS1053_SPI_SpeedDown+0x18>
+40273922:	7ba121        	l32r	a2, 402527a8 <chip_v6_set_chanfreq+0x30>
+40273925:	076102        	s32i	a0, a1, 28
+40273928:	0020c0        	memw
+4027392b:	0378      	l32i.n	a7, a3, 0
+4027392d:	107720        	and	a7, a7, a2
+40273930:	ff4756        	bnez	a7, 40273928 <SPIGetChar+0xc>
+40273933:	820c      	movi.n	a2, 8
+40273935:	1129      	s32i.n	a2, a1, 4
+40273937:	0179      	s32i.n	a7, a1, 0
+40273939:	2179      	s32i.n	a7, a1, 8
+4027393b:	120c      	movi.n	a2, 1
+4027393d:	073d      	mov.n	a3, a7
+4027393f:	074d      	mov.n	a4, a7
+40273941:	075d      	mov.n	a5, a7
+40273943:	076d      	mov.n	a6, a7
+40273945:	01b2c5        	call0	40275474 <spi_transaction>
+40273948:	7108      	l32i.n	a0, a1, 28
+4027394a:	742020        	extui	a2, a2, 0, 8
+4027394d:	20c112        	addi	a1, a1, 32
+40273950:	f00d      	ret.n
+40273952:	080000        	excw
+40273955:	600003        	excw
+
+40273958 <ControlReset>:
+40273958:	742020        	extui	a2, a2, 0, 8
+4027395b:	130c      	movi.n	a3, 1
+4027395d:	428c      	beqz.n	a2, 40273965 <ControlReset+0xd>
+4027395f:	fffd21        	l32r	a2, 40273954 <SPIGetChar+0x38>
+40273962:	000086        	j	40273968 <ControlReset+0x10>
+40273965:	ffb421        	l32r	a2, 40273838 <user_init+0xe4>
+40273968:	0020c0        	memw
+4027396b:	0248      	l32i.n	a4, a2, 0
+4027396d:	203430        	or	a3, a4, a3
+40273970:	0020c0        	memw
+40273973:	0239      	s32i.n	a3, a2, 0
+40273975:	f00d      	ret.n
+	...
+
+40273978 <SCI_ChipSelect>:
+40273978:	742020        	extui	a2, a2, 0, 8
+4027397b:	36df31        	l32r	a3, 402414f8 <system_upgrade_flag_check+0x10>
+4027397e:	628c      	beqz.n	a2, 40273988 <SCI_ChipSelect+0x10>
+40273980:	fff521        	l32r	a2, 40273954 <SPIGetChar+0x38>
+40273983:	000106        	j	4027398b <SCI_ChipSelect+0x13>
+40273986:	210000        	srai	a0, a0, 0
+40273989:	ffac      	beqz.n	a15, 402739bc <SDI_ChipSelect+0x20>
+4027398b:	0020c0        	memw
+4027398e:	0248      	l32i.n	a4, a2, 0
+40273990:	203430        	or	a3, a4, a3
+40273993:	0020c0        	memw
+40273996:	0239      	s32i.n	a3, a2, 0
+40273998:	f00d      	ret.n
+	...
+
+4027399c <SDI_ChipSelect>:
+4027399c:	742020        	extui	a2, a2, 0, 8
+4027399f:	032c      	movi.n	a3, 32
+402739a1:	428c      	beqz.n	a2, 402739a9 <SDI_ChipSelect+0xd>
+402739a3:	ffec21        	l32r	a2, 40273954 <SPIGetChar+0x38>
+402739a6:	000086        	j	402739ac <SDI_ChipSelect+0x10>
+402739a9:	ffa321        	l32r	a2, 40273838 <user_init+0xe4>
+402739ac:	0020c0        	memw
+402739af:	0248      	l32i.n	a4, a2, 0
+402739b1:	203430        	or	a3, a4, a3
+402739b4:	0020c0        	memw
+402739b7:	0239      	s32i.n	a3, a2, 0
+402739b9:	f00d      	ret.n
+402739bb:	031800        	excw
+402739be:	216000        	srai	a6, a0, 0
+
+402739c0 <VS1053_checkDREQ>:
+402739c0:	ffff21        	l32r	a2, 402739bc <SDI_ChipSelect+0x20>
+402739c3:	0020c0        	memw
+402739c6:	0228      	l32i.n	a2, a2, 0
+402739c8:	042420        	extui	a2, a2, 4, 1
+402739cb:	f00d      	ret.n
+402739cd:	000000        	ill
+
+402739d0 <VS1053_WriteRegister>:
+402739d0:	f0c112        	addi	a1, a1, -16
+402739d3:	3109      	s32i.n	a0, a1, 12
+402739d5:	21c9      	s32i.n	a12, a1, 8
+402739d7:	0161d2        	s32i	a13, a1, 4
+402739da:	0061e2        	s32i	a14, a1, 0
+402739dd:	74d030        	extui	a13, a3, 0, 8
+402739e0:	74c040        	extui	a12, a4, 0, 8
+402739e3:	74e020        	extui	a14, a2, 0, 8
+402739e6:	017d85        	call0	402751c0 <spi_take_semaphore>
+402739e9:	ffedc5        	call0	402738c8 <VS1053_SPI_SpeedDown>
+402739ec:	020c      	movi.n	a2, 0
+402739ee:	fffac5        	call0	4027399c <SDI_ChipSelect>
+402739f1:	fffcc5        	call0	402739c0 <VS1053_checkDREQ>
+402739f4:	ff9216        	beqz	a2, 402739f1 <VS1053_WriteRegister+0x21>
+402739f7:	ffd751        	l32r	a5, 40273954 <SPIGetChar+0x38>
+402739fa:	36bf21        	l32r	a2, 402414f8 <system_upgrade_flag_check+0x10>
+402739fd:	0020c0        	memw
+40273a00:	0538      	l32i.n	a3, a5, 0
+40273a02:	202320        	or	a2, a3, a2
+40273a05:	0020c0        	memw
+40273a08:	0529      	s32i.n	a2, a5, 0
+40273a0a:	220c      	movi.n	a2, 2
+40273a0c:	ffed45        	call0	402738e4 <SPIPutChar>
+40273a0f:	0e2d      	mov.n	a2, a14
+40273a11:	ffed05        	call0	402738e4 <SPIPutChar>
+40273a14:	0d2d      	mov.n	a2, a13
+40273a16:	ffecc5        	call0	402738e4 <SPIPutChar>
+40273a19:	0c2d      	mov.n	a2, a12
+40273a1b:	ffec85        	call0	402738e4 <SPIPutChar>
+40273a1e:	fffa05        	call0	402739c0 <VS1053_checkDREQ>
+40273a21:	ff9216        	beqz	a2, 40273a1e <VS1053_WriteRegister+0x4e>
+40273a24:	00a022        	movi	a2, 0
+40273a27:	fff505        	call0	40273978 <SCI_ChipSelect>
+40273a2a:	ffe845        	call0	402738b0 <VS1053_SPI_SpeedUp>
+40273a2d:	017c05        	call0	402751f0 <spi_give_semaphore>
+40273a30:	3108      	l32i.n	a0, a1, 12
+40273a32:	21c8      	l32i.n	a12, a1, 8
+40273a34:	11d8      	l32i.n	a13, a1, 4
+40273a36:	01e8      	l32i.n	a14, a1, 0
+40273a38:	10c112        	addi	a1, a1, 16
+40273a3b:	f00d      	ret.n
+40273a3d:	000000        	ill
+
+40273a40 <VS1053_ReadRegister>:
+40273a40:	f0c112        	addi	a1, a1, -16
+40273a43:	3109      	s32i.n	a0, a1, 12
+40273a45:	21c9      	s32i.n	a12, a1, 8
+40273a47:	74c020        	extui	a12, a2, 0, 8
+40273a4a:	017745        	call0	402751c0 <spi_take_semaphore>
+40273a4d:	ffe785        	call0	402738c8 <VS1053_SPI_SpeedDown>
+40273a50:	020c      	movi.n	a2, 0
+40273a52:	fff485        	call0	4027399c <SDI_ChipSelect>
+40273a55:	fff685        	call0	402739c0 <VS1053_checkDREQ>
+40273a58:	ff9216        	beqz	a2, 40273a55 <VS1053_ReadRegister+0x15>
+40273a5b:	ffbe31        	l32r	a3, 40273954 <SPIGetChar+0x38>
+40273a5e:	36a621        	l32r	a2, 402414f8 <system_upgrade_flag_check+0x10>
+40273a61:	0020c0        	memw
+40273a64:	0348      	l32i.n	a4, a3, 0
+40273a66:	202420        	or	a2, a4, a2
+40273a69:	0020c0        	memw
+40273a6c:	0329      	s32i.n	a2, a3, 0
+40273a6e:	320c      	movi.n	a2, 3
+40273a70:	ffe705        	call0	402738e4 <SPIPutChar>
+40273a73:	0c2d      	mov.n	a2, a12
+40273a75:	ffe6c5        	call0	402738e4 <SPIPutChar>
+40273a78:	ffea05        	call0	4027391c <SPIGetChar>
+40273a7b:	112280        	slli	a2, a2, 8
+40273a7e:	f4c020        	extui	a12, a2, 0, 16
+40273a81:	ffe985        	call0	4027391c <SPIGetChar>
+40273a84:	202c20        	or	a2, a12, a2
+40273a87:	f4c020        	extui	a12, a2, 0, 16
+40273a8a:	fff345        	call0	402739c0 <VS1053_checkDREQ>
+40273a8d:	ff9216        	beqz	a2, 40273a8a <VS1053_ReadRegister+0x4a>
+40273a90:	00a022        	movi	a2, 0
+40273a93:	ffee45        	call0	40273978 <SCI_ChipSelect>
+40273a96:	ffe185        	call0	402738b0 <VS1053_SPI_SpeedUp>
+40273a99:	017545        	call0	402751f0 <spi_give_semaphore>
+40273a9c:	3108      	l32i.n	a0, a1, 12
+40273a9e:	0c2d      	mov.n	a2, a12
+40273aa0:	21c8      	l32i.n	a12, a1, 8
+40273aa2:	10c112        	addi	a1, a1, 16
+40273aa5:	f00d      	ret.n
+	...
+
+40273aa8 <VS1053_ResetChip>:
+40273aa8:	ffab21        	l32r	a2, 40273954 <SPIGetChar+0x38>
+40273aab:	f0c112        	addi	a1, a1, -16
+40273aae:	0020c0        	memw
+40273ab1:	0248      	l32i.n	a4, a2, 0
+40273ab3:	130c      	movi.n	a3, 1
+40273ab5:	3109      	s32i.n	a0, a1, 12
+40273ab7:	203430        	or	a3, a4, a3
+40273aba:	0020c0        	memw
+40273abd:	0239      	s32i.n	a3, a2, 0
+40273abf:	ffa022        	movi	a2, 255
+40273ac2:	ffe205        	call0	402738e4 <SPIPutChar>
+40273ac5:	020c      	movi.n	a2, 0
+40273ac7:	ffeb05        	call0	40273978 <SCI_ChipSelect>
+40273aca:	020c      	movi.n	a2, 0
+40273acc:	ffecc5        	call0	4027399c <SDI_ChipSelect>
+40273acf:	020c      	movi.n	a2, 0
+40273ad1:	ffe845        	call0	40273958 <ControlReset>
+40273ad4:	ffee85        	call0	402739c0 <VS1053_checkDREQ>
+40273ad7:	ff9216        	beqz	a2, 40273ad4 <VS1053_ResetChip+0x2c>
+40273ada:	3108      	l32i.n	a0, a1, 12
+40273adc:	10c112        	addi	a1, a1, 16
+40273adf:	f00d      	ret.n
+40273ae1:	000000        	ill
+
+40273ae4 <VS1053_Start>:
+40273ae4:	f0c112        	addi	a1, a1, -16
+40273ae7:	3109      	s32i.n	a0, a1, 12
+40273ae9:	fffbc5        	call0	40273aa8 <VS1053_ResetChip>
+40273aec:	ffed05        	call0	402739c0 <VS1053_checkDREQ>
+40273aef:	ff9216        	beqz	a2, 40273aec <VS1053_Start+0x8>
+40273af2:	03a022        	movi	a2, 3
+40273af5:	60a032        	movi	a3, 96
+40273af8:	040c      	movi.n	a4, 0
+40273afa:	ffed45        	call0	402739d0 <VS1053_WriteRegister>
+40273afd:	020c      	movi.n	a2, 0
+40273aff:	08a032        	movi	a3, 8
+40273b02:	02a042        	movi	a4, 2
+40273b05:	ffec85        	call0	402739d0 <VS1053_WriteRegister>
+40273b08:	ffeb45        	call0	402739c0 <VS1053_checkDREQ>
+40273b0b:	ff9216        	beqz	a2, 40273b08 <VS1053_Start+0x24>
+40273b0e:	3108      	l32i.n	a0, a1, 12
+40273b10:	10c112        	addi	a1, a1, 16
+40273b13:	f00d      	ret.n
+40273b15:	000000        	ill
+
+40273b18 <VS1053_SendMusicBytes>:
+40273b18:	d0c112        	addi	a1, a1, -48
+40273b1b:	a1c9      	s32i.n	a12, a1, 40
+40273b1d:	0129      	s32i.n	a2, a1, 0
+40273b1f:	b109      	s32i.n	a0, a1, 44
+40273b21:	91d9      	s32i.n	a13, a1, 36
+40273b23:	81e9      	s32i.n	a14, a1, 32
+40273b25:	0761f2        	s32i	a15, a1, 28
+40273b28:	f4c030        	extui	a12, a3, 0, 16
+40273b2b:	020c      	movi.n	a2, 0
+40273b2d:	671c27        	beq	a12, a2, 40273b98 <VS1053_SendMusicBytes+0x80>
+40273b30:	201110        	or	a1, a1, a1
+40273b33:	0168c5        	call0	402751c0 <spi_take_semaphore>
+40273b36:	ff6216        	beqz	a2, 40273b30 <VS1053_SendMusicBytes+0x18>
+40273b39:	ffe845        	call0	402739c0 <VS1053_checkDREQ>
+40273b3c:	ff9216        	beqz	a2, 40273b39 <VS1053_SendMusicBytes+0x21>
+40273b3f:	ff8521        	l32r	a2, 40273954 <SPIGetChar+0x38>
+40273b42:	20a0f2        	movi	a15, 32
+40273b45:	0020c0        	memw
+40273b48:	002232        	l32i	a3, a2, 0
+40273b4b:	00a0d2        	movi	a13, 0
+40273b4e:	2033f0        	or	a3, a3, a15
+40273b51:	0020c0        	memw
+40273b54:	0239      	s32i.n	a3, a2, 0
+40273b56:	000086        	j	40273b5c <VS1053_SendMusicBytes+0x44>
+40273b59:	0edd00        	excw
+40273b5c:	ffe605        	call0	402739c0 <VS1053_checkDREQ>
+40273b5f:	ff9216        	beqz	a2, 40273b5c <VS1053_SendMusicBytes+0x44>
+40273b62:	204cc0        	or	a4, a12, a12
+40273b65:	02afc7        	bge	a15, a12, 40273b6b <VS1053_SendMusicBytes+0x53>
+40273b68:	20a042        	movi	a4, 32
+40273b6b:	80ed40        	add	a14, a13, a4
+40273b6e:	000406        	j	40273b82 <VS1053_SendMusicBytes+0x6a>
+40273b71:	002132        	l32i	a3, a1, 0
+40273b74:	23da      	add.n	a2, a3, a13
+40273b76:	000222        	l8ui	a2, a2, 0
+40273b79:	1149      	s32i.n	a4, a1, 4
+40273b7b:	ffd685        	call0	402738e4 <SPIPutChar>
+40273b7e:	1148      	l32i.n	a4, a1, 4
+40273b80:	dd1b      	addi.n	a13, a13, 1
+40273b82:	eb2de7        	blt	a13, a14, 40273b71 <VS1053_SendMusicBytes+0x59>
+40273b85:	c0cc40        	sub	a12, a12, a4
+40273b88:	f4c0c0        	extui	a12, a12, 0, 16
+40273b8b:	fcbc56        	bnez	a12, 40273b5a <VS1053_SendMusicBytes+0x42>
+40273b8e:	0c2d      	mov.n	a2, a12
+40273b90:	ffe085        	call0	4027399c <SDI_ChipSelect>
+40273b93:	0165c5        	call0	402751f0 <spi_give_semaphore>
+40273b96:	0e2d      	mov.n	a2, a14
+40273b98:	b108      	l32i.n	a0, a1, 44
+40273b9a:	a1c8      	l32i.n	a12, a1, 40
+40273b9c:	91d8      	l32i.n	a13, a1, 36
+40273b9e:	81e8      	l32i.n	a14, a1, 32
+40273ba0:	71f8      	l32i.n	a15, a1, 28
+40273ba2:	30c112        	addi	a1, a1, 48
+40273ba5:	f00d      	ret.n
+	...
+
+40273ba8 <VS1053_GetVolume>:
+40273ba8:	f0c112        	addi	a1, a1, -16
+40273bab:	0ba022        	movi	a2, 11
+40273bae:	036102        	s32i	a0, a1, 12
+40273bb1:	ffe8c5        	call0	40273a40 <VS1053_ReadRegister>
+40273bb4:	032102        	l32i	a0, a1, 12
+40273bb7:	742020        	extui	a2, a2, 0, 8
+40273bba:	10c112        	addi	a1, a1, 16
+40273bbd:	f00d      	ret.n
+	...
+
+40273bc0 <VS1053_SetVolume>:
+40273bc0:	744020        	extui	a4, a2, 0, 8
+40273bc3:	f0c112        	addi	a1, a1, -16
+40273bc6:	0ba022        	movi	a2, 11
+40273bc9:	203440        	or	a3, a4, a4
+40273bcc:	036102        	s32i	a0, a1, 12
+40273bcf:	ffe005        	call0	402739d0 <VS1053_WriteRegister>
+40273bd2:	3108      	l32i.n	a0, a1, 12
+40273bd4:	10c112        	addi	a1, a1, 16
+40273bd7:	f00d      	ret.n
+40273bd9:	000000        	ill
+
+40273bdc <VS1053_GetTreble>:
+40273bdc:	f0c112        	addi	a1, a1, -16
+40273bdf:	02a022        	movi	a2, 2
+40273be2:	036102        	s32i	a0, a1, 12
+40273be5:	ffe585        	call0	40273a40 <VS1053_ReadRegister>
+40273be8:	032102        	l32i	a0, a1, 12
+40273beb:	742c20        	extui	a2, a2, 12, 8
+40273bee:	10c112        	addi	a1, a1, 16
+40273bf1:	f00d      	ret.n
+	...
+
+40273bf4 <VS1053_SetTreble>:
+40273bf4:	f0c112        	addi	a1, a1, -16
+40273bf7:	0261c2        	s32i	a12, a1, 8
+40273bfa:	74c020        	extui	a12, a2, 0, 8
+40273bfd:	02a022        	movi	a2, 2
+40273c00:	036102        	s32i	a0, a1, 12
+40273c03:	ffe3c5        	call0	40273a40 <VS1053_ReadRegister>
+40273c06:	830c      	movi.n	a3, 8
+40273c08:	744020        	extui	a4, a2, 0, 8
+40273c0b:	1133c7        	bltu	a3, a12, 40273c20 <VS1053_SetTreble+0x2c>
+40273c0e:	342820        	extui	a2, a2, 8, 4
+40273c11:	11ccc0        	slli	a12, a12, 4
+40273c14:	2032c0        	or	a3, a2, a12
+40273c17:	743030        	extui	a3, a3, 0, 8
+40273c1a:	220c      	movi.n	a2, 2
+40273c1c:	000306        	j	40273c2c <VS1053_SetTreble+0x38>
+40273c1f:	582000        	excw
+40273c22:	a03234        	excw
+40273c25:	a02280        	addx4	a2, a2, a8
+40273c28:	353002        	excw
+40273c2b:	da0520        	excw
+40273c2e:	ff          	.byte 0xff
+40273c2f:	032102        	l32i	a0, a1, 12
+40273c32:	0221c2        	l32i	a12, a1, 8
+40273c35:	10c112        	addi	a1, a1, 16
+40273c38:	f00d      	ret.n
+	...
+
+40273c3c <VS1053_GetBass>:
+
+/**
+ * Returns level of bass boost in dB.
+ * @return Value of bass enhancement from 0 (off) to 15(dB).
+ */
+uint8_t	VS1053_GetBass(){
+40273c3c:	f0c112        	addi	a1, a1, -16
+	return ( (VS1053_ReadRegister(SPI_BASS) & 0x00F0) >> 4);
+40273c3f:	02a022        	movi	a2, 2
+
+/**
+ * Returns level of bass boost in dB.
+ * @return Value of bass enhancement from 0 (off) to 15(dB).
+ */
+uint8_t	VS1053_GetBass(){
+40273c42:	036102        	s32i	a0, a1, 12
+	return ( (VS1053_ReadRegister(SPI_BASS) & 0x00F0) >> 4);
+40273c45:	ffdf85        	call0	40273a40 <VS1053_ReadRegister>
+}
+40273c48:	032102        	l32i	a0, a1, 12
+40273c4b:	342420        	extui	a2, a2, 4, 4
+40273c4e:	10c112        	addi	a1, a1, 16
+40273c51:	f00d      	ret.n
+	...
+
+40273c54 <VS1053_SetBass>:
+ * Sets bass enhancement level (in dB).
+ * @note If xdB is greater than max value, bass enhancement is set to its max (15dB).
+ * @param xdB Value of bass enhancement from 0 (off) to 15(dB).
+ * @return void
+ */
+void VS1053_SetBass(uint8_t xdB){
+40273c54:	f0c112        	addi	a1, a1, -16
+40273c57:	0261c2        	s32i	a12, a1, 8
+40273c5a:	74c020        	extui	a12, a2, 0, 8
+	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
+40273c5d:	02a022        	movi	a2, 2
+ * Sets bass enhancement level (in dB).
+ * @note If xdB is greater than max value, bass enhancement is set to its max (15dB).
+ * @param xdB Value of bass enhancement from 0 (off) to 15(dB).
+ * @return void
+ */
+void VS1053_SetBass(uint8_t xdB){
+40273c60:	036102        	s32i	a0, a1, 12
+	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
+40273c63:	ffddc5        	call0	40273a40 <VS1053_ReadRegister>
+	if (xdB <= 15)
+40273c66:	f40c      	movi.n	a4, 15
+40273c68:	413820        	srli	a3, a2, 8
+40273c6b:	0b34c7        	bltu	a4, a12, 40273c7a <VS1053_SetBass+0x26>
+		VS1053_WriteRegister(SPI_BASS, (bassReg & 0xFF00) >> 8, (bassReg & 0x000F) | (xdB << 4) );
+40273c6e:	102240        	and	a2, a2, a4
+40273c71:	11ccc0        	slli	a12, a12, 4
+40273c74:	2042c0        	or	a4, a2, a12
+40273c77:	000146        	j	40273c80 <VS1053_SetBass+0x2c>
+	else
+		VS1053_WriteRegister(SPI_BASS, (bassReg & 0xFF00) >> 8, (bassReg & 0x000F) | 0xF0 );
+40273c7a:	f0af42        	movi	a4, -16
+40273c7d:	204240        	or	a4, a2, a4
+40273c80:	02a022        	movi	a2, 2
+40273c83:	743030        	extui	a3, a3, 0, 8
+40273c86:	744040        	extui	a4, a4, 0, 8
+40273c89:	ffd445        	call0	402739d0 <VS1053_WriteRegister>
+}
+40273c8c:	032102        	l32i	a0, a1, 12
+40273c8f:	21c8      	l32i.n	a12, a1, 8
+40273c91:	10c112        	addi	a1, a1, 16
+40273c94:	f00d      	ret.n
+40273c96:	5a0000        	excw
+40273c99:	fef9      	s32i.n	a15, a14, 60
+40273c9b:	3f          	.byte 0x3f
+40273c9c:	f958      	l32i.n	a5, a9, 60
+40273c9e:	fe          	.byte 0xfe
+40273c9f:	3f          	.byte 0x3f
+40273ca0:	8488      	l32i.n	a8, a4, 32
+40273ca2:	fe          	.byte 0xfe
+40273ca3:	3f          	.byte 0x3f
+
+40273ca4 <getBufferFree>:
 		// DEBUG
 		printf("\n");
 		printf(header.members.single.metadata);
 	}
 	return processed;
 }
-402736e0:	fffd21        	l32r	a2, 402736d4 <VS1053_SetVolume+0x1c>
-402736e3:	001232        	l16ui	a3, a2, 0
-402736e6:	fffc21        	l32r	a2, 402736d8 <VS1053_SetVolume+0x20>
-402736e9:	001222        	l16ui	a2, a2, 0
-402736ec:	05b237        	bgeu	a2, a3, 402736f5 <getBufferFree+0x15>
-402736ef:	28d222        	addmi	a2, a2, 0x2800
-402736f2:	000086        	j	402736f8 <getBufferFree+0x18>
-402736f5:	07b327        	bgeu	a3, a2, 40273700 <getBufferFree+0x20>
-402736f8:	c02230        	sub	a2, a2, a3
-402736fb:	f42020        	extui	a2, a2, 0, 16
-402736fe:	f00d      	ret.n
-40273700:	fff721        	l32r	a2, 402736dc <VS1053_SetVolume+0x24>
-40273703:	cfdd31        	l32r	a3, 40267678 <wpa_auth_sta_deinit+0xc8>
-40273706:	000242        	l8ui	a4, a2, 0
-40273709:	020c      	movi.n	a2, 0
-4027370b:	932340        	movnez	a2, a3, a4
-4027370e:	f00d      	ret.n
+40273ca4:	fffd21        	l32r	a2, 40273c98 <VS1053_SetBass+0x44>
+40273ca7:	001232        	l16ui	a3, a2, 0
+40273caa:	fffc21        	l32r	a2, 40273c9c <VS1053_SetBass+0x48>
+40273cad:	001222        	l16ui	a2, a2, 0
+40273cb0:	05b237        	bgeu	a2, a3, 40273cb9 <getBufferFree+0x15>
+40273cb3:	28d222        	addmi	a2, a2, 0x2800
+40273cb6:	000086        	j	40273cbc <getBufferFree+0x18>
+40273cb9:	07b327        	bgeu	a3, a2, 40273cc4 <getBufferFree+0x20>
+40273cbc:	c02230        	sub	a2, a2, a3
+40273cbf:	f42020        	extui	a2, a2, 0, 16
+40273cc2:	f00d      	ret.n
+40273cc4:	fff721        	l32r	a2, 40273ca0 <VS1053_SetBass+0x4c>
+40273cc7:	ce6c31        	l32r	a3, 40267678 <wpa_auth_sta_deinit+0xc8>
+40273cca:	000242        	l8ui	a4, a2, 0
+40273ccd:	020c      	movi.n	a2, 0
+40273ccf:	932340        	movnez	a2, a3, a4
+40273cd2:	f00d      	ret.n
 
-40273710 <getBufferFilled>:
-40273710:	f0c112        	addi	a1, a1, -16
-40273713:	3109      	s32i.n	a0, a1, 12
-40273715:	fffc85        	call0	402736e0 <getBufferFree>
-40273718:	cfd831        	l32r	a3, 40267678 <wpa_auth_sta_deinit+0xc8>
-4027371b:	3108      	l32i.n	a0, a1, 12
-4027371d:	c02320        	sub	a2, a3, a2
-40273720:	f42020        	extui	a2, a2, 0, 16
-40273723:	10c112        	addi	a1, a1, 16
-40273726:	f00d      	ret.n
-40273728:	fef934        	excw
-4027372b:	3f          	.byte 0x3f
+40273cd4 <getBufferFilled>:
+40273cd4:	f0c112        	addi	a1, a1, -16
+40273cd7:	3109      	s32i.n	a0, a1, 12
+40273cd9:	fffc85        	call0	40273ca4 <getBufferFree>
+40273cdc:	ce6731        	l32r	a3, 40267678 <wpa_auth_sta_deinit+0xc8>
+40273cdf:	3108      	l32i.n	a0, a1, 12
+40273ce1:	c02320        	sub	a2, a3, a2
+40273ce4:	f42020        	extui	a2, a2, 0, 16
+40273ce7:	10c112        	addi	a1, a1, 16
+40273cea:	f00d      	ret.n
+40273cec:	fef9a0        	excw
+40273cef:	3f          	.byte 0x3f
 
-4027372c <bufferWrite>:
-4027372c:	d0c112        	addi	a1, a1, -48
-4027372f:	a1c9      	s32i.n	a12, a1, 40
-40273731:	81e9      	s32i.n	a14, a1, 32
-40273733:	71f9      	s32i.n	a15, a1, 28
-40273735:	b109      	s32i.n	a0, a1, 44
-40273737:	91d9      	s32i.n	a13, a1, 36
-40273739:	02fd      	mov.n	a15, a2
-4027373b:	f43030        	extui	a3, a3, 0, 16
-4027373e:	02cd      	mov.n	a12, a2
-40273740:	ffe5e1        	l32r	a14, 402736d4 <VS1053_SetVolume+0x1c>
-40273743:	050c      	movi.n	a5, 0
-40273745:	060c      	movi.n	a6, 0
-40273747:	0010c6        	j	4027378e <bufferWrite+0x62>
-4027374a:	006132        	s32i	a3, a1, 0
-4027374d:	016152        	s32i	a5, a1, 4
-40273750:	026162        	s32i	a6, a1, 8
-40273753:	fff8c5        	call0	402736e0 <getBufferFree>
-40273756:	0138      	l32i.n	a3, a1, 0
-40273758:	1158      	l32i.n	a5, a1, 4
-4027375a:	2168      	l32i.n	a6, a1, 8
-4027375c:	c2bc      	beqz.n	a2, 4027379c <bufferWrite+0x70>
-4027375e:	001e22        	l16ui	a2, a14, 0
-40273761:	fff181        	l32r	a8, 40273728 <getBufferFilled+0x18>
-40273764:	000c72        	l8ui	a7, a12, 0
-40273767:	482a      	add.n	a4, a8, a2
-40273769:	004472        	s8i	a7, a4, 0
-4027376c:	ffdc71        	l32r	a7, 402736dc <VS1053_SetVolume+0x24>
-4027376f:	000742        	l8ui	a4, a7, 0
-40273772:	002416        	beqz	a4, 40273778 <bufferWrite+0x4c>
-40273775:	004752        	s8i	a5, a7, 0
-40273778:	221b      	addi.n	a2, a2, 1
-4027377a:	cfbf81        	l32r	a8, 40267678 <wpa_auth_sta_deinit+0xc8>
-4027377d:	f42020        	extui	a2, a2, 0, 16
-40273780:	051287        	beq	a2, a8, 40273789 <bufferWrite+0x5d>
-40273783:	005e22        	s16i	a2, a14, 0
-40273786:	000086        	j	4027378c <bufferWrite+0x60>
-40273789:	005e62        	s16i	a6, a14, 0
-4027378c:	cc1b      	addi.n	a12, a12, 1
-4027378e:	c04cf0        	sub	a4, a12, a15
-40273791:	f4d040        	extui	a13, a4, 0, 16
-40273794:	b23d37        	bltu	a13, a3, 4027374a <bufferWrite+0x1e>
-40273797:	032d      	mov.n	a2, a3
-40273799:	000046        	j	4027379e <bufferWrite+0x72>
-4027379c:	0d2d      	mov.n	a2, a13
-4027379e:	b108      	l32i.n	a0, a1, 44
-402737a0:	a1c8      	l32i.n	a12, a1, 40
-402737a2:	91d8      	l32i.n	a13, a1, 36
-402737a4:	81e8      	l32i.n	a14, a1, 32
-402737a6:	71f8      	l32i.n	a15, a1, 28
-402737a8:	30c112        	addi	a1, a1, 48
-402737ab:	f00d      	ret.n
-402737ad:	000000        	ill
+40273cf0 <bufferWrite>:
+40273cf0:	d0c112        	addi	a1, a1, -48
+40273cf3:	a1c9      	s32i.n	a12, a1, 40
+40273cf5:	81e9      	s32i.n	a14, a1, 32
+40273cf7:	71f9      	s32i.n	a15, a1, 28
+40273cf9:	b109      	s32i.n	a0, a1, 44
+40273cfb:	91d9      	s32i.n	a13, a1, 36
+40273cfd:	02fd      	mov.n	a15, a2
+40273cff:	f43030        	extui	a3, a3, 0, 16
+40273d02:	02cd      	mov.n	a12, a2
+40273d04:	ffe5e1        	l32r	a14, 40273c98 <VS1053_SetBass+0x44>
+40273d07:	050c      	movi.n	a5, 0
+40273d09:	060c      	movi.n	a6, 0
+40273d0b:	0010c6        	j	40273d52 <bufferWrite+0x62>
+40273d0e:	006132        	s32i	a3, a1, 0
+40273d11:	016152        	s32i	a5, a1, 4
+40273d14:	026162        	s32i	a6, a1, 8
+40273d17:	fff8c5        	call0	40273ca4 <getBufferFree>
+40273d1a:	0138      	l32i.n	a3, a1, 0
+40273d1c:	1158      	l32i.n	a5, a1, 4
+40273d1e:	2168      	l32i.n	a6, a1, 8
+40273d20:	c2bc      	beqz.n	a2, 40273d60 <bufferWrite+0x70>
+40273d22:	001e22        	l16ui	a2, a14, 0
+40273d25:	fff181        	l32r	a8, 40273cec <getBufferFilled+0x18>
+40273d28:	000c72        	l8ui	a7, a12, 0
+40273d2b:	482a      	add.n	a4, a8, a2
+40273d2d:	004472        	s8i	a7, a4, 0
+40273d30:	ffdc71        	l32r	a7, 40273ca0 <VS1053_SetBass+0x4c>
+40273d33:	000742        	l8ui	a4, a7, 0
+40273d36:	002416        	beqz	a4, 40273d3c <bufferWrite+0x4c>
+40273d39:	004752        	s8i	a5, a7, 0
+40273d3c:	221b      	addi.n	a2, a2, 1
+40273d3e:	ce4e81        	l32r	a8, 40267678 <wpa_auth_sta_deinit+0xc8>
+40273d41:	f42020        	extui	a2, a2, 0, 16
+40273d44:	051287        	beq	a2, a8, 40273d4d <bufferWrite+0x5d>
+40273d47:	005e22        	s16i	a2, a14, 0
+40273d4a:	000086        	j	40273d50 <bufferWrite+0x60>
+40273d4d:	005e62        	s16i	a6, a14, 0
+40273d50:	cc1b      	addi.n	a12, a12, 1
+40273d52:	c04cf0        	sub	a4, a12, a15
+40273d55:	f4d040        	extui	a13, a4, 0, 16
+40273d58:	b23d37        	bltu	a13, a3, 40273d0e <bufferWrite+0x1e>
+40273d5b:	032d      	mov.n	a2, a3
+40273d5d:	000046        	j	40273d62 <bufferWrite+0x72>
+40273d60:	0d2d      	mov.n	a2, a13
+40273d62:	b108      	l32i.n	a0, a1, 44
+40273d64:	a1c8      	l32i.n	a12, a1, 40
+40273d66:	91d8      	l32i.n	a13, a1, 36
+40273d68:	81e8      	l32i.n	a14, a1, 32
+40273d6a:	71f8      	l32i.n	a15, a1, 28
+40273d6c:	30c112        	addi	a1, a1, 48
+40273d6f:	f00d      	ret.n
+40273d71:	000000        	ill
 
-402737b0 <bufferRead>:
-402737b0:	d0c112        	addi	a1, a1, -48
-402737b3:	a1c9      	s32i.n	a12, a1, 40
-402737b5:	91d9      	s32i.n	a13, a1, 36
-402737b7:	b109      	s32i.n	a0, a1, 44
-402737b9:	f4d030        	extui	a13, a3, 0, 16
-402737bc:	81e9      	s32i.n	a14, a1, 32
-402737be:	71f9      	s32i.n	a15, a1, 28
-402737c0:	02cd      	mov.n	a12, a2
-402737c2:	fff4c5        	call0	40273710 <getBufferFilled>
-402737c5:	023d      	mov.n	a3, a2
-402737c7:	01bd27        	bgeu	a13, a2, 402737cc <bufferRead+0x1c>
-402737ca:	0d3d      	mov.n	a3, a13
-402737cc:	f43030        	extui	a3, a3, 0, 16
-402737cf:	0ced      	mov.n	a14, a12
-402737d1:	ffc1d1        	l32r	a13, 402736d8 <VS1053_SetVolume+0x20>
-402737d4:	040c      	movi.n	a4, 0
-402737d6:	150c      	movi.n	a5, 1
-402737d8:	0013c6        	j	4027382b <bufferRead+0x7b>
-402737db:	613200        	excw
-402737de:	614200        	excw
-402737e1:	615201        	l32r	a0, 4024bd2c <tcp_rst_impl+0x14>
-402737e4:	f28502        	excw
-402737e7:	ff          	.byte 0xff
-402737e8:	0138      	l32i.n	a3, a1, 0
-402737ea:	1148      	l32i.n	a4, a1, 4
-402737ec:	2158      	l32i.n	a5, a1, 8
-402737ee:	047216        	beqz	a2, 40273839 <bufferRead+0x89>
-402737f1:	001d22        	l16ui	a2, a13, 0
-402737f4:	ffcd61        	l32r	a6, 40273728 <getBufferFilled+0x18>
-402737f7:	cfa071        	l32r	a7, 40267678 <wpa_auth_sta_deinit+0xc8>
-402737fa:	262a      	add.n	a2, a6, a2
-402737fc:	000222        	l8ui	a2, a2, 0
-402737ff:	004e22        	s8i	a2, a14, 0
-40273802:	001d22        	l16ui	a2, a13, 0
-40273805:	221b      	addi.n	a2, a2, 1
-40273807:	f42020        	extui	a2, a2, 0, 16
-4027380a:	061277        	beq	a2, a7, 40273814 <bufferRead+0x64>
-4027380d:	005d22        	s16i	a2, a13, 0
-40273810:	0000c6        	j	40273817 <bufferRead+0x67>
-40273813:	5d4200        	excw
-40273816:	af7100        	excw
-40273819:	ff          	.byte 0xff
-4027381a:	001d62        	l16ui	a6, a13, 0
-4027381d:	001722        	l16ui	a2, a7, 0
-40273820:	059627        	bne	a6, a2, 40273829 <bufferRead+0x79>
-40273823:	ffae21        	l32r	a2, 402736dc <VS1053_SetVolume+0x24>
-40273826:	004252        	s8i	a5, a2, 0
-40273829:	ee1b      	addi.n	a14, a14, 1
-4027382b:	c0fec0        	sub	a15, a14, a12
-4027382e:	f4f0f0        	extui	a15, a15, 0, 16
-40273831:	a73f37        	bltu	a15, a3, 402737dc <bufferRead+0x2c>
-40273834:	032d      	mov.n	a2, a3
-40273836:	000046        	j	4027383b <bufferRead+0x8b>
-40273839:	0f2d      	mov.n	a2, a15
-4027383b:	b108      	l32i.n	a0, a1, 44
-4027383d:	a1c8      	l32i.n	a12, a1, 40
-4027383f:	91d8      	l32i.n	a13, a1, 36
-40273841:	81e8      	l32i.n	a14, a1, 32
-40273843:	71f8      	l32i.n	a15, a1, 28
-40273845:	30c112        	addi	a1, a1, 48
-40273848:	f00d      	ret.n
+40273d74 <bufferRead>:
+40273d74:	d0c112        	addi	a1, a1, -48
+40273d77:	a1c9      	s32i.n	a12, a1, 40
+40273d79:	91d9      	s32i.n	a13, a1, 36
+40273d7b:	b109      	s32i.n	a0, a1, 44
+40273d7d:	f4d030        	extui	a13, a3, 0, 16
+40273d80:	81e9      	s32i.n	a14, a1, 32
+40273d82:	71f9      	s32i.n	a15, a1, 28
+40273d84:	02cd      	mov.n	a12, a2
+40273d86:	fff4c5        	call0	40273cd4 <getBufferFilled>
+40273d89:	023d      	mov.n	a3, a2
+40273d8b:	01bd27        	bgeu	a13, a2, 40273d90 <bufferRead+0x1c>
+40273d8e:	0d3d      	mov.n	a3, a13
+40273d90:	f43030        	extui	a3, a3, 0, 16
+40273d93:	0ced      	mov.n	a14, a12
+40273d95:	ffc1d1        	l32r	a13, 40273c9c <VS1053_SetBass+0x48>
+40273d98:	040c      	movi.n	a4, 0
+40273d9a:	150c      	movi.n	a5, 1
+40273d9c:	0013c6        	j	40273def <bufferRead+0x7b>
+40273d9f:	613200        	excw
+40273da2:	614200        	excw
+40273da5:	615201        	l32r	a0, 4024c2f0 <sys_timeouts_mbox_fetch+0x14>
+40273da8:	f28502        	excw
+40273dab:	ff          	.byte 0xff
+40273dac:	0138      	l32i.n	a3, a1, 0
+40273dae:	1148      	l32i.n	a4, a1, 4
+40273db0:	2158      	l32i.n	a5, a1, 8
+40273db2:	047216        	beqz	a2, 40273dfd <bufferRead+0x89>
+40273db5:	001d22        	l16ui	a2, a13, 0
+40273db8:	ffcd61        	l32r	a6, 40273cec <getBufferFilled+0x18>
+40273dbb:	ce2f71        	l32r	a7, 40267678 <wpa_auth_sta_deinit+0xc8>
+40273dbe:	262a      	add.n	a2, a6, a2
+40273dc0:	000222        	l8ui	a2, a2, 0
+40273dc3:	004e22        	s8i	a2, a14, 0
+40273dc6:	001d22        	l16ui	a2, a13, 0
+40273dc9:	221b      	addi.n	a2, a2, 1
+40273dcb:	f42020        	extui	a2, a2, 0, 16
+40273dce:	061277        	beq	a2, a7, 40273dd8 <bufferRead+0x64>
+40273dd1:	005d22        	s16i	a2, a13, 0
+40273dd4:	0000c6        	j	40273ddb <bufferRead+0x67>
+40273dd7:	5d4200        	excw
+40273dda:	af7100        	excw
+40273ddd:	ff          	.byte 0xff
+40273dde:	001d62        	l16ui	a6, a13, 0
+40273de1:	001722        	l16ui	a2, a7, 0
+40273de4:	059627        	bne	a6, a2, 40273ded <bufferRead+0x79>
+40273de7:	ffae21        	l32r	a2, 40273ca0 <VS1053_SetBass+0x4c>
+40273dea:	004252        	s8i	a5, a2, 0
+40273ded:	ee1b      	addi.n	a14, a14, 1
+40273def:	c0fec0        	sub	a15, a14, a12
+40273df2:	f4f0f0        	extui	a15, a15, 0, 16
+40273df5:	a73f37        	bltu	a15, a3, 40273da0 <bufferRead+0x2c>
+40273df8:	032d      	mov.n	a2, a3
+40273dfa:	000046        	j	40273dff <bufferRead+0x8b>
+40273dfd:	0f2d      	mov.n	a2, a15
+40273dff:	b108      	l32i.n	a0, a1, 44
+40273e01:	a1c8      	l32i.n	a12, a1, 40
+40273e03:	91d8      	l32i.n	a13, a1, 36
+40273e05:	81e8      	l32i.n	a14, a1, 32
+40273e07:	71f8      	l32i.n	a15, a1, 28
+40273e09:	30c112        	addi	a1, a1, 48
+40273e0c:	f00d      	ret.n
 	...
 
-4027384c <bufferReset>:
-4027384c:	ffa231        	l32r	a3, 402736d4 <VS1053_SetVolume+0x1c>
-4027384f:	020c      	movi.n	a2, 0
-40273851:	005322        	s16i	a2, a3, 0
-40273854:	ffa131        	l32r	a3, 402736d8 <VS1053_SetVolume+0x20>
-40273857:	005322        	s16i	a2, a3, 0
-4027385a:	ffa021        	l32r	a2, 402736dc <VS1053_SetVolume+0x24>
-4027385d:	130c      	movi.n	a3, 1
-4027385f:	004232        	s8i	a3, a2, 0
-40273862:	f00d      	ret.n
-40273864:	fef910        	excw
-40273867:	3f          	.byte 0x3f
+40273e10 <bufferReset>:
+40273e10:	ffa231        	l32r	a3, 40273c98 <VS1053_SetBass+0x44>
+40273e13:	020c      	movi.n	a2, 0
+40273e15:	005322        	s16i	a2, a3, 0
+40273e18:	ffa131        	l32r	a3, 40273c9c <VS1053_SetBass+0x48>
+40273e1b:	005322        	s16i	a2, a3, 0
+40273e1e:	ffa021        	l32r	a2, 40273ca0 <VS1053_SetBass+0x4c>
+40273e21:	130c      	movi.n	a3, 1
+40273e23:	004232        	s8i	a3, a2, 0
+40273e26:	f00d      	ret.n
+40273e28:	fef994        	excw
+40273e2b:	3f          	.byte 0x3f
+40273e2c:	ff21a0        	excw
+40273e2f:	3f          	.byte 0x3f
+40273e30:	f998      	l32i.n	a9, a9, 60
+40273e32:	fe          	.byte 0xfe
+40273e33:	3f          	.byte 0x3f
 
-40273868 <clientGetHeader>:
-40273868:	ffff21        	l32r	a2, 40273864 <bufferReset+0x18>
-4027386b:	f00d      	ret.n
-4027386d:	000000        	ill
-40273870:	fe8784        	excw
-40273873:	3f          	.byte 0x3f
-40273874:	8678      	l32i.n	a7, a6, 32
-40273876:	fe          	.byte 0xfe
-40273877:	3f          	.byte 0x3f
+40273e34 <clientInit>:
+40273e34:	f0c112        	addi	a1, a1, -16
+40273e37:	120c      	movi.n	a2, 1
+40273e39:	030c      	movi.n	a3, 0
+40273e3b:	340c      	movi.n	a4, 3
+40273e3d:	21c9      	s32i.n	a12, a1, 8
+40273e3f:	3109      	s32i.n	a0, a1, 12
+40273e41:	11d9      	s32i.n	a13, a1, 4
+40273e43:	01e9      	s32i.n	a14, a1, 0
+40273e45:	cf9e85        	call0	40243830 <xQueueGenericCreate>
+40273e48:	fff8c1        	l32r	a12, 40273e28 <bufferReset+0x18>
+40273e4b:	0c29      	s32i.n	a2, a12, 0
+40273e4d:	728c      	beqz.n	a2, 40273e58 <clientInit+0x24>
+40273e4f:	030c      	movi.n	a3, 0
+40273e51:	034d      	mov.n	a4, a3
+40273e53:	035d      	mov.n	a5, a3
+40273e55:	cfb105        	call0	40243968 <xQueueGenericSend>
+40273e58:	01a022        	movi	a2, 1
+40273e5b:	00a032        	movi	a3, 0
+40273e5e:	03a042        	movi	a4, 3
+40273e61:	cf9cc5        	call0	40243830 <xQueueGenericCreate>
+40273e64:	fff2d1        	l32r	a13, 40273e2c <bufferReset+0x1c>
+40273e67:	0d29      	s32i.n	a2, a13, 0
+40273e69:	728c      	beqz.n	a2, 40273e74 <clientInit+0x40>
+40273e6b:	030c      	movi.n	a3, 0
+40273e6d:	034d      	mov.n	a4, a3
+40273e6f:	035d      	mov.n	a5, a3
+40273e71:	cfaf45        	call0	40243968 <xQueueGenericSend>
+40273e74:	00a032        	movi	a3, 0
+40273e77:	01a022        	movi	a2, 1
+40273e7a:	340c      	movi.n	a4, 3
+40273e7c:	cf9b05        	call0	40243830 <xQueueGenericCreate>
+40273e7f:	ffec31        	l32r	a3, 40273e30 <bufferReset+0x20>
+40273e82:	0329      	s32i.n	a2, a3, 0
+40273e84:	03ed      	mov.n	a14, a3
+40273e86:	828c      	beqz.n	a2, 40273e92 <clientInit+0x5e>
+40273e88:	030c      	movi.n	a3, 0
+40273e8a:	034d      	mov.n	a4, a3
+40273e8c:	205330        	or	a5, a3, a3
+40273e8f:	cfad85        	call0	40243968 <xQueueGenericSend>
+40273e92:	00a032        	movi	a3, 0
+40273e95:	0c28      	l32i.n	a2, a12, 0
+40273e97:	035d      	mov.n	a5, a3
+40273e99:	f47c      	movi.n	a4, -1
+40273e9b:	cfc505        	call0	40243aec <xQueueGenericReceive>
+40273e9e:	030c      	movi.n	a3, 0
+40273ea0:	0d28      	l32i.n	a2, a13, 0
+40273ea2:	035d      	mov.n	a5, a3
+40273ea4:	f47c      	movi.n	a4, -1
+40273ea6:	cfc445        	call0	40243aec <xQueueGenericReceive>
+40273ea9:	0e28      	l32i.n	a2, a14, 0
+40273eab:	030c      	movi.n	a3, 0
+40273ead:	f47c      	movi.n	a4, -1
+40273eaf:	035d      	mov.n	a5, a3
+40273eb1:	cfc385        	call0	40243aec <xQueueGenericReceive>
+40273eb4:	3108      	l32i.n	a0, a1, 12
+40273eb6:	21c8      	l32i.n	a12, a1, 8
+40273eb8:	11d8      	l32i.n	a13, a1, 4
+40273eba:	01e8      	l32i.n	a14, a1, 0
+40273ebc:	10c112        	addi	a1, a1, 16
+40273ebf:	f00d      	ret.n
+40273ec1:	000000        	ill
 
-40273878 <clientParseHeader>:
-40273878:	d0c112        	addi	a1, a1, -48
-4027387b:	a1c9      	s32i.n	a12, a1, 40
-4027387d:	71f9      	s32i.n	a15, a1, 28
-4027387f:	fff9c1        	l32r	a12, 40273864 <bufferReset+0x18>
-40273882:	fffbf1        	l32r	a15, 40273870 <clientGetHeader+0x8>
-40273885:	91d9      	s32i.n	a13, a1, 36
-40273887:	b109      	s32i.n	a0, a1, 44
-40273889:	0861e2        	s32i	a14, a1, 32
-4027388c:	006122        	s32i	a2, a1, 0
-4027388f:	00a0d2        	movi	a13, 0
-40273892:	002fe2        	l32i	a14, a15, 0
-40273895:	0128      	l32i.n	a2, a1, 0
-40273897:	0e3d      	mov.n	a3, a14
-40273899:	cd46c5        	call0	40240d08 <strstr>
-4027389c:	023d      	mov.n	a3, a2
-4027389e:	09a216        	beqz	a2, 4027393c <clientParseHeader+0xc4>
-402738a1:	0e2d      	mov.n	a2, a14
-402738a3:	1139      	s32i.n	a3, a1, 4
-402738a5:	cd4485        	call0	40240cf0 <strlen>
-402738a8:	1138      	l32i.n	a3, a1, 4
-402738aa:	e32a      	add.n	a14, a3, a2
-402738ac:	fff231        	l32r	a3, 40273874 <clientGetHeader+0xc>
-402738af:	0e2d      	mov.n	a2, a14
-402738b1:	cd4545        	call0	40240d08 <strstr>
-402738b4:	084216        	beqz	a2, 4027393c <clientParseHeader+0xc4>
-402738b7:	c042e0        	sub	a4, a2, a14
-402738ba:	f44040        	extui	a4, a4, 0, 16
-402738bd:	3b6d26        	beqi	a13, 6, 402738fc <clientParseHeader+0x84>
-402738c0:	0c28      	l32i.n	a2, a12, 0
-402738c2:	828c      	beqz.n	a2, 402738ce <clientParseHeader+0x56>
-402738c4:	1149      	s32i.n	a4, a1, 4
-402738c6:	331001        	l32r	a0, 40240508 <user_init_task+0xcc>
-402738c9:	0000c0        	callx0	a0
-402738cc:	1148      	l32i.n	a4, a1, 4
-402738ce:	241b      	addi.n	a2, a4, 1
-402738d0:	1149      	s32i.n	a4, a1, 4
-402738d2:	330f01        	l32r	a0, 40240510 <user_init_task+0xd4>
-402738d5:	0000c0        	callx0	a0
-402738d8:	0c29      	s32i.n	a2, a12, 0
-402738da:	1148      	l32i.n	a4, a1, 4
-402738dc:	05c216        	beqz	a2, 4027393c <clientParseHeader+0xc4>
-402738df:	00a022        	movi	a2, 0
-402738e2:	025d      	mov.n	a5, a2
-402738e4:	0c38      	l32i.n	a3, a12, 0
-402738e6:	332a      	add.n	a3, a3, a2
-402738e8:	004352        	s8i	a5, a3, 0
-402738eb:	221b      	addi.n	a2, a2, 1
-402738ed:	f3a427        	bge	a4, a2, 402738e4 <clientParseHeader+0x6c>
-402738f0:	0c28      	l32i.n	a2, a12, 0
-402738f2:	203ee0        	or	a3, a14, a14
-402738f5:	cd3b05        	call0	40240ca8 <strncpy>
-402738f8:	001006        	j	4027393c <clientParseHeader+0xc4>
-402738fb:	241b00        	extui	a1, a0, 11, 3
-402738fe:	1149      	s32i.n	a4, a1, 4
-40273900:	330401        	l32r	a0, 40240510 <user_init_task+0xd4>
-40273903:	0000c0        	callx0	a0
-40273906:	025d      	mov.n	a5, a2
-40273908:	1148      	l32i.n	a4, a1, 4
-4027390a:	e2ac      	beqz.n	a2, 4027393c <clientParseHeader+0xc4>
-4027390c:	020c      	movi.n	a2, 0
-4027390e:	026d      	mov.n	a6, a2
-40273910:	803520        	add	a3, a5, a2
-40273913:	004362        	s8i	a6, a3, 0
-40273916:	01c222        	addi	a2, a2, 1
-40273919:	f3a427        	bge	a4, a2, 40273910 <clientParseHeader+0x98>
-4027391c:	0e3d      	mov.n	a3, a14
-4027391e:	052d      	mov.n	a2, a5
-40273920:	1159      	s32i.n	a5, a1, 4
-40273922:	cd3845        	call0	40240ca8 <strncpy>
-40273925:	1158      	l32i.n	a5, a1, 4
-40273927:	202550        	or	a2, a5, a5
-4027392a:	dc1905        	call0	4024fabc <atoi>
-4027392d:	ffcd31        	l32r	a3, 40273864 <bufferReset+0x18>
-40273930:	7329      	s32i.n	a2, a3, 28
-40273932:	1158      	l32i.n	a5, a1, 4
-40273934:	052d      	mov.n	a2, a5
-40273936:	32f401        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273939:	0000c0        	callx0	a0
-4027393c:	dd1b      	addi.n	a13, a13, 1
-4027393e:	74d0d0        	extui	a13, a13, 0, 8
-40273941:	ff4b      	addi.n	a15, a15, 4
-40273943:	cc4b      	addi.n	a12, a12, 4
-40273945:	027d26        	beqi	a13, 7, 4027394b <clientParseHeader+0xd3>
-40273948:	ffd186        	j	40273892 <clientParseHeader+0x1a>
-4027394b:	b108      	l32i.n	a0, a1, 44
-4027394d:	a1c8      	l32i.n	a12, a1, 40
-4027394f:	91d8      	l32i.n	a13, a1, 36
-40273951:	81e8      	l32i.n	a14, a1, 32
-40273953:	71f8      	l32i.n	a15, a1, 28
-40273955:	30c112        	addi	a1, a1, 48
-40273958:	f00d      	ret.n
-4027395a:	0c0000        	excw
-4027395d:	fef9      	s32i.n	a15, a14, 60
-4027395f:	3f          	.byte 0x3f
-40273960:	867c      	movi.n	a6, -8
-40273962:	fe          	.byte 0xfe
-40273963:	3f          	.byte 0x3f
+40273ec4 <clientIsConnected>:
+40273ec4:	f0c112        	addi	a1, a1, -16
+40273ec7:	0261c2        	s32i	a12, a1, 8
+40273eca:	ffd8c1        	l32r	a12, 40273e2c <bufferReset+0x1c>
+40273ecd:	00a032        	movi	a3, 0
+40273ed0:	0c28      	l32i.n	a2, a12, 0
+40273ed2:	034d      	mov.n	a4, a3
+40273ed4:	035d      	mov.n	a5, a3
+40273ed6:	3109      	s32i.n	a0, a1, 12
+40273ed8:	cfc105        	call0	40243aec <xQueueGenericReceive>
+40273edb:	130c      	movi.n	a3, 1
+40273edd:	b28c      	beqz.n	a2, 40273eec <clientIsConnected+0x28>
+40273edf:	030c      	movi.n	a3, 0
+40273ee1:	0c28      	l32i.n	a2, a12, 0
+40273ee3:	034d      	mov.n	a4, a3
+40273ee5:	035d      	mov.n	a5, a3
+40273ee7:	cfa805        	call0	40243968 <xQueueGenericSend>
+40273eea:	030c      	movi.n	a3, 0
+40273eec:	3108      	l32i.n	a0, a1, 12
+40273eee:	032d      	mov.n	a2, a3
+40273ef0:	21c8      	l32i.n	a12, a1, 8
+40273ef2:	10c112        	addi	a1, a1, 16
+40273ef5:	f00d      	ret.n
+40273ef7:	f97000        	excw
+40273efa:	fe          	.byte 0xfe
+40273efb:	3f          	.byte 0x3f
 
-40273964 <clientSetURL>:
+40273efc <clientGetHeader>:
+40273efc:	ffff21        	l32r	a2, 40273ef8 <clientIsConnected+0x34>
+40273eff:	f00d      	ret.n
+40273f01:	000000        	ill
+40273f04:	fe87a4        	excw
+40273f07:	3f          	.byte 0x3f
+40273f08:	8688      	l32i.n	a8, a6, 32
+40273f0a:	fe          	.byte 0xfe
+40273f0b:	3f          	.byte 0x3f
+
+40273f0c <clientParseHeader>:
+40273f0c:	d0c112        	addi	a1, a1, -48
+40273f0f:	a1c9      	s32i.n	a12, a1, 40
+40273f11:	81e9      	s32i.n	a14, a1, 32
+40273f13:	0c0c      	movi.n	a12, 0
+40273f15:	fff8e1        	l32r	a14, 40273ef8 <clientIsConnected+0x34>
+40273f18:	71f9      	s32i.n	a15, a1, 28
+40273f1a:	b109      	s32i.n	a0, a1, 44
+40273f1c:	0961d2        	s32i	a13, a1, 36
+40273f1f:	006122        	s32i	a2, a1, 0
+40273f22:	20fcc0        	or	a15, a12, a12
+40273f25:	7420c0        	extui	a2, a12, 0, 8
+40273f28:	0e6226        	beqi	a2, 6, 40273f3a <clientParseHeader+0x2e>
+40273f2b:	a0dce0        	addx4	a13, a12, a14
+40273f2e:	0d28      	l32i.n	a2, a13, 0
+40273f30:	628c      	beqz.n	a2, 40273f3a <clientParseHeader+0x2e>
+40273f32:	317501        	l32r	a0, 40240508 <user_init_task+0xcc>
+40273f35:	0000c0        	callx0	a0
+40273f38:	0df9      	s32i.n	a15, a13, 0
+40273f3a:	cc1b      	addi.n	a12, a12, 1
+40273f3c:	e57c66        	bnei	a12, 7, 40273f25 <clientParseHeader+0x19>
+40273f3f:	fff1f1        	l32r	a15, 40273f04 <clientGetHeader+0x8>
+40273f42:	ffedc1        	l32r	a12, 40273ef8 <clientIsConnected+0x34>
+40273f45:	00a0d2        	movi	a13, 0
+40273f48:	002fe2        	l32i	a14, a15, 0
+40273f4b:	002122        	l32i	a2, a1, 0
+40273f4e:	203ee0        	or	a3, a14, a14
+40273f51:	ccdb45        	call0	40240d08 <strstr>
+40273f54:	023d      	mov.n	a3, a2
+40273f56:	09a216        	beqz	a2, 40273ff4 <clientParseHeader+0xe8>
+40273f59:	0e2d      	mov.n	a2, a14
+40273f5b:	1139      	s32i.n	a3, a1, 4
+40273f5d:	ccd905        	call0	40240cf0 <strlen>
+40273f60:	1138      	l32i.n	a3, a1, 4
+40273f62:	e32a      	add.n	a14, a3, a2
+40273f64:	ffe931        	l32r	a3, 40273f08 <clientGetHeader+0xc>
+40273f67:	0e2d      	mov.n	a2, a14
+40273f69:	ccd9c5        	call0	40240d08 <strstr>
+40273f6c:	084216        	beqz	a2, 40273ff4 <clientParseHeader+0xe8>
+40273f6f:	c042e0        	sub	a4, a2, a14
+40273f72:	f44040        	extui	a4, a4, 0, 16
+40273f75:	3b6d26        	beqi	a13, 6, 40273fb4 <clientParseHeader+0xa8>
+40273f78:	0c28      	l32i.n	a2, a12, 0
+40273f7a:	828c      	beqz.n	a2, 40273f86 <clientParseHeader+0x7a>
+40273f7c:	1149      	s32i.n	a4, a1, 4
+40273f7e:	316201        	l32r	a0, 40240508 <user_init_task+0xcc>
+40273f81:	0000c0        	callx0	a0
+40273f84:	1148      	l32i.n	a4, a1, 4
+40273f86:	241b      	addi.n	a2, a4, 1
+40273f88:	1149      	s32i.n	a4, a1, 4
+40273f8a:	316101        	l32r	a0, 40240510 <user_init_task+0xd4>
+40273f8d:	0000c0        	callx0	a0
+40273f90:	0c29      	s32i.n	a2, a12, 0
+40273f92:	1148      	l32i.n	a4, a1, 4
+40273f94:	05c216        	beqz	a2, 40273ff4 <clientParseHeader+0xe8>
+40273f97:	00a022        	movi	a2, 0
+40273f9a:	025d      	mov.n	a5, a2
+40273f9c:	0c38      	l32i.n	a3, a12, 0
+40273f9e:	332a      	add.n	a3, a3, a2
+40273fa0:	004352        	s8i	a5, a3, 0
+40273fa3:	221b      	addi.n	a2, a2, 1
+40273fa5:	f3a427        	bge	a4, a2, 40273f9c <clientParseHeader+0x90>
+40273fa8:	0c28      	l32i.n	a2, a12, 0
+40273faa:	203ee0        	or	a3, a14, a14
+40273fad:	cccf85        	call0	40240ca8 <strncpy>
+40273fb0:	001006        	j	40273ff4 <clientParseHeader+0xe8>
+40273fb3:	241b00        	extui	a1, a0, 11, 3
+40273fb6:	1149      	s32i.n	a4, a1, 4
+40273fb8:	315601        	l32r	a0, 40240510 <user_init_task+0xd4>
+40273fbb:	0000c0        	callx0	a0
+40273fbe:	025d      	mov.n	a5, a2
+40273fc0:	1148      	l32i.n	a4, a1, 4
+40273fc2:	e2ac      	beqz.n	a2, 40273ff4 <clientParseHeader+0xe8>
+40273fc4:	020c      	movi.n	a2, 0
+40273fc6:	026d      	mov.n	a6, a2
+40273fc8:	803520        	add	a3, a5, a2
+40273fcb:	004362        	s8i	a6, a3, 0
+40273fce:	01c222        	addi	a2, a2, 1
+40273fd1:	f3a427        	bge	a4, a2, 40273fc8 <clientParseHeader+0xbc>
+40273fd4:	0e3d      	mov.n	a3, a14
+40273fd6:	052d      	mov.n	a2, a5
+40273fd8:	1159      	s32i.n	a5, a1, 4
+40273fda:	ccccc5        	call0	40240ca8 <strncpy>
+40273fdd:	1158      	l32i.n	a5, a1, 4
+40273fdf:	202550        	or	a2, a5, a5
+40273fe2:	dbad85        	call0	4024fabc <atoi>
+40273fe5:	ffc431        	l32r	a3, 40273ef8 <clientIsConnected+0x34>
+40273fe8:	7329      	s32i.n	a2, a3, 28
+40273fea:	1158      	l32i.n	a5, a1, 4
+40273fec:	052d      	mov.n	a2, a5
+40273fee:	314601        	l32r	a0, 40240508 <user_init_task+0xcc>
+40273ff1:	0000c0        	callx0	a0
+40273ff4:	dd1b      	addi.n	a13, a13, 1
+40273ff6:	74d0d0        	extui	a13, a13, 0, 8
+40273ff9:	ff4b      	addi.n	a15, a15, 4
+40273ffb:	cc4b      	addi.n	a12, a12, 4
+40273ffd:	027d26        	beqi	a13, 7, 40274003 <clientParseHeader+0xf7>
+40274000:	ffd106        	j	40273f48 <clientParseHeader+0x3c>
+40274003:	b108      	l32i.n	a0, a1, 44
+40274005:	a1c8      	l32i.n	a12, a1, 40
+40274007:	91d8      	l32i.n	a13, a1, 36
+40274009:	81e8      	l32i.n	a14, a1, 32
+4027400b:	71f8      	l32i.n	a15, a1, 28
+4027400d:	30c112        	addi	a1, a1, 48
+40274010:	f00d      	ret.n
+40274012:	6c0000        	excw
+40274015:	fef9      	s32i.n	a15, a14, 60
+40274017:	3f          	.byte 0x3f
+40274018:	868c      	beqz.n	a6, 40274024 <clientSetURL+0x8>
+4027401a:	fe          	.byte 0xfe
+4027401b:	3f          	.byte 0x3f
+
+4027401c <clientSetURL>:
 
 ICACHE_FLASH_ATTR void clientSetURL(char* url)
 {
-40273964:	f0c112        	addi	a1, a1, -16
-40273967:	21c9      	s32i.n	a12, a1, 8
-40273969:	11d9      	s32i.n	a13, a1, 4
-4027396b:	01e9      	s32i.n	a14, a1, 0
-4027396d:	3109      	s32i.n	a0, a1, 12
-4027396f:	02cd      	mov.n	a12, a2
+4027401c:	f0c112        	addi	a1, a1, -16
+4027401f:	21c9      	s32i.n	a12, a1, 8
+40274021:	11d9      	s32i.n	a13, a1, 4
+40274023:	01e9      	s32i.n	a14, a1, 0
+40274025:	3109      	s32i.n	a0, a1, 12
+40274027:	02cd      	mov.n	a12, a2
 	int l = strlen(url)+1;
-40273971:	cd37c5        	call0	40240cf0 <strlen>
+40274029:	cccc45        	call0	40240cf0 <strlen>
 	if(clientURL != NULL) free(clientURL);
-40273974:	fffa41        	l32r	a4, 4027395c <clientParseHeader+0xe4>
+4027402c:	fffa41        	l32r	a4, 40274014 <clientParseHeader+0x108>
 	return processed;
 }
 
 ICACHE_FLASH_ATTR void clientSetURL(char* url)
 {
 	int l = strlen(url)+1;
-40273977:	e21b      	addi.n	a14, a2, 1
+4027402f:	e21b      	addi.n	a14, a2, 1
 	if(clientURL != NULL) free(clientURL);
-40273979:	0428      	l32i.n	a2, a4, 0
-4027397b:	04dd      	mov.n	a13, a4
-4027397d:	428c      	beqz.n	a2, 40273985 <clientSetURL+0x21>
-4027397f:	32e201        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273982:	0000c0        	callx0	a0
+40274031:	0428      	l32i.n	a2, a4, 0
+40274033:	04dd      	mov.n	a13, a4
+40274035:	428c      	beqz.n	a2, 4027403d <clientSetURL+0x21>
+40274037:	313401        	l32r	a0, 40240508 <user_init_task+0xcc>
+4027403a:	0000c0        	callx0	a0
 	clientURL = (char*) malloc(l*sizeof(char));
-40273985:	202ee0        	or	a2, a14, a14
-40273988:	32e201        	l32r	a0, 40240510 <user_init_task+0xd4>
-4027398b:	0000c0        	callx0	a0
-4027398e:	006d22        	s32i	a2, a13, 0
+4027403d:	202ee0        	or	a2, a14, a14
+40274040:	313401        	l32r	a0, 40240510 <user_init_task+0xd4>
+40274043:	0000c0        	callx0	a0
+40274046:	006d22        	s32i	a2, a13, 0
 	if(clientURL != NULL) strcpy(clientURL, url);
-40273991:	004216        	beqz	a2, 40273999 <clientSetURL+0x35>
-40273994:	0c3d      	mov.n	a3, a12
-40273996:	cd2f85        	call0	40240c90 <strcpy>
+40274049:	004216        	beqz	a2, 40274051 <clientSetURL+0x35>
+4027404c:	0c3d      	mov.n	a3, a12
+4027404e:	ccc405        	call0	40240c90 <strcpy>
 	printf("\n##CLI.URLSET#\n");
-40273999:	fff121        	l32r	a2, 40273960 <clientParseHeader+0xe8>
-4027399c:	fe4001        	l32r	a0, 4027329c <wep+0x1c>
-4027399f:	0000c0        	callx0	a0
+40274051:	fff121        	l32r	a2, 40274018 <clientParseHeader+0x10c>
+40274054:	fd9601        	l32r	a0, 402736ac <wep+0x1c>
+40274057:	0000c0        	callx0	a0
 }
-402739a2:	3108      	l32i.n	a0, a1, 12
-402739a4:	21c8      	l32i.n	a12, a1, 8
-402739a6:	11d8      	l32i.n	a13, a1, 4
-402739a8:	01e8      	l32i.n	a14, a1, 0
-402739aa:	10c112        	addi	a1, a1, 16
-402739ad:	f00d      	ret.n
-402739af:	f90800        	excw
-402739b2:	fe          	.byte 0xfe
-402739b3:	3f          	.byte 0x3f
-402739b4:	868c      	beqz.n	a6, 402739c0 <clientSetPath+0x8>
-402739b6:	fe          	.byte 0xfe
-402739b7:	3f          	.byte 0x3f
+4027405a:	3108      	l32i.n	a0, a1, 12
+4027405c:	21c8      	l32i.n	a12, a1, 8
+4027405e:	11d8      	l32i.n	a13, a1, 4
+40274060:	01e8      	l32i.n	a14, a1, 0
+40274062:	10c112        	addi	a1, a1, 16
+40274065:	f00d      	ret.n
+40274067:	f96800        	excw
+4027406a:	fe          	.byte 0xfe
+4027406b:	3f          	.byte 0x3f
+4027406c:	869c      	beqz.n	a6, 40274088 <clientSetPath+0x18>
+4027406e:	fe          	.byte 0xfe
+4027406f:	3f          	.byte 0x3f
 
-402739b8 <clientSetPath>:
+40274070 <clientSetPath>:
 
 ICACHE_FLASH_ATTR void clientSetPath(char* path)
 {
-402739b8:	f0c112        	addi	a1, a1, -16
-402739bb:	21c9      	s32i.n	a12, a1, 8
-402739bd:	11d9      	s32i.n	a13, a1, 4
-402739bf:	01e9      	s32i.n	a14, a1, 0
-402739c1:	3109      	s32i.n	a0, a1, 12
-402739c3:	02cd      	mov.n	a12, a2
+40274070:	f0c112        	addi	a1, a1, -16
+40274073:	21c9      	s32i.n	a12, a1, 8
+40274075:	11d9      	s32i.n	a13, a1, 4
+40274077:	01e9      	s32i.n	a14, a1, 0
+40274079:	3109      	s32i.n	a0, a1, 12
+4027407b:	02cd      	mov.n	a12, a2
 	int l = strlen(path)+1;
-402739c5:	cd3285        	call0	40240cf0 <strlen>
+4027407d:	ccc705        	call0	40240cf0 <strlen>
 	if(clientPath != NULL) free(clientPath);
-402739c8:	fffa41        	l32r	a4, 402739b0 <clientSetURL+0x4c>
+40274080:	fffa41        	l32r	a4, 40274068 <clientSetURL+0x4c>
 	printf("\n##CLI.URLSET#\n");
 }
 
 ICACHE_FLASH_ATTR void clientSetPath(char* path)
 {
 	int l = strlen(path)+1;
-402739cb:	e21b      	addi.n	a14, a2, 1
+40274083:	e21b      	addi.n	a14, a2, 1
 	if(clientPath != NULL) free(clientPath);
-402739cd:	0428      	l32i.n	a2, a4, 0
-402739cf:	04dd      	mov.n	a13, a4
-402739d1:	428c      	beqz.n	a2, 402739d9 <clientSetPath+0x21>
-402739d3:	32cd01        	l32r	a0, 40240508 <user_init_task+0xcc>
-402739d6:	0000c0        	callx0	a0
+40274085:	0428      	l32i.n	a2, a4, 0
+40274087:	04dd      	mov.n	a13, a4
+40274089:	428c      	beqz.n	a2, 40274091 <clientSetPath+0x21>
+4027408b:	311f01        	l32r	a0, 40240508 <user_init_task+0xcc>
+4027408e:	0000c0        	callx0	a0
 	clientPath = (char*) malloc(l*sizeof(char));
-402739d9:	202ee0        	or	a2, a14, a14
-402739dc:	32cd01        	l32r	a0, 40240510 <user_init_task+0xd4>
-402739df:	0000c0        	callx0	a0
-402739e2:	006d22        	s32i	a2, a13, 0
+40274091:	202ee0        	or	a2, a14, a14
+40274094:	311f01        	l32r	a0, 40240510 <user_init_task+0xd4>
+40274097:	0000c0        	callx0	a0
+4027409a:	006d22        	s32i	a2, a13, 0
 	if(clientPath != NULL) strcpy(clientPath, path);
-402739e5:	004216        	beqz	a2, 402739ed <clientSetPath+0x35>
-402739e8:	0c3d      	mov.n	a3, a12
-402739ea:	cd2a45        	call0	40240c90 <strcpy>
+4027409d:	004216        	beqz	a2, 402740a5 <clientSetPath+0x35>
+402740a0:	0c3d      	mov.n	a3, a12
+402740a2:	ccbec5        	call0	40240c90 <strcpy>
 	printf("\n##CLI.PATHSET#\n");
-402739ed:	fff121        	l32r	a2, 402739b4 <clientSetURL+0x50>
-402739f0:	fe2b01        	l32r	a0, 4027329c <wep+0x1c>
-402739f3:	0000c0        	callx0	a0
+402740a5:	fff121        	l32r	a2, 4027406c <clientSetURL+0x50>
+402740a8:	fd8101        	l32r	a0, 402736ac <wep+0x1c>
+402740ab:	0000c0        	callx0	a0
 }
-402739f6:	3108      	l32i.n	a0, a1, 12
-402739f8:	21c8      	l32i.n	a12, a1, 8
-402739fa:	11d8      	l32i.n	a13, a1, 4
-402739fc:	01e8      	l32i.n	a14, a1, 0
-402739fe:	10c112        	addi	a1, a1, 16
-40273a01:	f00d      	ret.n
-40273a03:	848600        	extui	a8, a0, 6, 9
-40273a06:	fe          	.byte 0xfe
-40273a07:	3f          	.byte 0x3f
-40273a08:	869c      	beqz.n	a6, 40273a24 <clientSetPort+0x18>
-40273a0a:	fe          	.byte 0xfe
-40273a0b:	3f          	.byte 0x3f
+402740ae:	3108      	l32i.n	a0, a1, 12
+402740b0:	21c8      	l32i.n	a12, a1, 8
+402740b2:	11d8      	l32i.n	a13, a1, 4
+402740b4:	01e8      	l32i.n	a14, a1, 0
+402740b6:	10c112        	addi	a1, a1, 16
+402740b9:	f00d      	ret.n
+402740bb:	848a00        	extui	a8, a0, 10, 9
+402740be:	fe          	.byte 0xfe
+402740bf:	3f          	.byte 0x3f
+402740c0:	86ac      	beqz.n	a6, 402740ec <clientDisconnect+0x8>
+402740c2:	fe          	.byte 0xfe
+402740c3:	3f          	.byte 0x3f
 
-40273a0c <clientSetPort>:
+402740c4 <clientSetPort>:
 
 ICACHE_FLASH_ATTR void clientSetPort(uint16_t port)
 {
-40273a0c:	f0c112        	addi	a1, a1, -16
+402740c4:	f0c112        	addi	a1, a1, -16
 	clientPort = port;
-40273a0f:	fffd31        	l32r	a3, 40273a04 <clientSetPath+0x4c>
+402740c7:	fffd31        	l32r	a3, 402740bc <clientSetPath+0x4c>
 	if(clientPath != NULL) strcpy(clientPath, path);
 	printf("\n##CLI.PATHSET#\n");
 }
 
 ICACHE_FLASH_ATTR void clientSetPort(uint16_t port)
 {
-40273a12:	3109      	s32i.n	a0, a1, 12
+402740ca:	3109      	s32i.n	a0, a1, 12
 	clientPort = port;
-40273a14:	005322        	s16i	a2, a3, 0
+402740cc:	005322        	s16i	a2, a3, 0
 	printf("\n##CLI.PORTSET#\n");
-40273a17:	fffc21        	l32r	a2, 40273a08 <clientSetPath+0x50>
-40273a1a:	fe2001        	l32r	a0, 4027329c <wep+0x1c>
-40273a1d:	0000c0        	callx0	a0
+402740cf:	fffc21        	l32r	a2, 402740c0 <clientSetPath+0x50>
+402740d2:	fd7601        	l32r	a0, 402736ac <wep+0x1c>
+402740d5:	0000c0        	callx0	a0
 }
-40273a20:	3108      	l32i.n	a0, a1, 12
-40273a22:	10c112        	addi	a1, a1, 16
-40273a25:	f00d      	ret.n
-40273a27:	f8fd00        	excw
-40273a2a:	fe          	.byte 0xfe
-40273a2b:	3f          	.byte 0x3f
-40273a2c:	86ac      	beqz.n	a6, 40273a58 <clientDisconnect+0x28>
-40273a2e:	fe          	.byte 0xfe
-40273a2f:	3f          	.byte 0x3f
+402740d8:	3108      	l32i.n	a0, a1, 12
+402740da:	10c112        	addi	a1, a1, 16
+402740dd:	f00d      	ret.n
+402740df:	86bc00        	excw
+402740e2:	fe          	.byte 0xfe
+402740e3:	3f          	.byte 0x3f
 
-40273a30 <clientDisconnect>:
+402740e4 <clientDisconnect>:
+}
+
+ICACHE_FLASH_ATTR void clientDisconnect()
+{
+	//connect = 0;
+	xSemaphoreGive(sDisconnect);
+402740e4:	ff5321        	l32r	a2, 40273e30 <bufferReset+0x20>
+402740e7:	030c      	movi.n	a3, 0
+402740e9:	0228      	l32i.n	a2, a2, 0
 		clientDisconnect();
 	}
 }
 
 ICACHE_FLASH_ATTR void clientDisconnect()
 {
-40273a30:	f0c112        	addi	a1, a1, -16
-	connect = 0;
-40273a33:	fffd21        	l32r	a2, 40273a28 <clientSetPort+0x1c>
+402740eb:	f0c112        	addi	a1, a1, -16
+	//connect = 0;
+	xSemaphoreGive(sDisconnect);
+402740ee:	034d      	mov.n	a4, a3
+402740f0:	035d      	mov.n	a5, a3
 		clientDisconnect();
 	}
 }
 
 ICACHE_FLASH_ATTR void clientDisconnect()
 {
-40273a36:	3109      	s32i.n	a0, a1, 12
-	connect = 0;
-40273a38:	030c      	movi.n	a3, 0
-40273a3a:	004232        	s8i	a3, a2, 0
+402740f2:	036102        	s32i	a0, a1, 12
+	//connect = 0;
+	xSemaphoreGive(sDisconnect);
+402740f5:	cf8705        	call0	40243968 <xQueueGenericSend>
 	printf("\n##CLI.STOPPED#\n");
-40273a3d:	fffb21        	l32r	a2, 40273a2c <clientSetPort+0x20>
-40273a40:	fe1701        	l32r	a0, 4027329c <wep+0x1c>
-40273a43:	0000c0        	callx0	a0
+402740f8:	fffa21        	l32r	a2, 402740e0 <clientSetPort+0x1c>
+402740fb:	fd6c01        	l32r	a0, 402736ac <wep+0x1c>
+402740fe:	0000c0        	callx0	a0
 }
-40273a46:	3108      	l32i.n	a0, a1, 12
-40273a48:	10c112        	addi	a1, a1, 16
-40273a4b:	f00d      	ret.n
-40273a4d:	000000        	ill
-40273a50:	fef904        	excw
-40273a53:	3f          	.byte 0x3f
-40273a54:	fef900        	excw
-40273a57:	3f          	.byte 0x3f
-40273a58:	fe          	.byte 0xfe
-40273a59:	fef8      	l32i.n	a15, a14, 60
-40273a5b:	3f          	.byte 0x3f
-40273a5c:	fef930        	excw
-40273a5f:	3f          	.byte 0x3f
+40274101:	3108      	l32i.n	a0, a1, 12
+40274103:	10c112        	addi	a1, a1, 16
+40274106:	f00d      	ret.n
+40274108:	fef964        	excw
+4027410b:	3f          	.byte 0x3f
+4027410c:	fef960        	excw
+4027410f:	3f          	.byte 0x3f
+40274110:	5e          	.byte 0x5e
+40274111:	fef9      	s32i.n	a15, a14, 60
+40274113:	3f          	.byte 0x3f
+40274114:	f99c      	beqz.n	a9, 40274137 <clientConnect+0x1f>
+40274116:	fe          	.byte 0xfe
+40274117:	3f          	.byte 0x3f
 
-40273a60 <clientConnect>:
+40274118 <clientConnect>:
 	printf("\n##CLI.PORTSET#\n");
 }
 
 ICACHE_FLASH_ATTR void clientConnect()
 {
 	cstatus = C_HEADER;
-40273a60:	fffc31        	l32r	a3, 40273a50 <clientDisconnect+0x20>
+40274118:	fffc31        	l32r	a3, 40274108 <clientDisconnect+0x24>
 	clientPort = port;
 	printf("\n##CLI.PORTSET#\n");
 }
 
 ICACHE_FLASH_ATTR void clientConnect()
 {
-40273a63:	f0c112        	addi	a1, a1, -16
-40273a66:	036102        	s32i	a0, a1, 12
+4027411b:	f0c112        	addi	a1, a1, -16
+4027411e:	036102        	s32i	a0, a1, 12
 	cstatus = C_HEADER;
-40273a69:	00a022        	movi	a2, 0
-40273a6c:	006322        	s32i	a2, a3, 0
+40274121:	00a022        	movi	a2, 0
+40274124:	0329      	s32i.n	a2, a3, 0
 	metacount = 0;
-40273a6f:	fff931        	l32r	a3, 40273a54 <clientDisconnect+0x24>
-40273a72:	0329      	s32i.n	a2, a3, 0
+40274126:	fff931        	l32r	a3, 4027410c <clientDisconnect+0x28>
+40274129:	0329      	s32i.n	a2, a3, 0
 	metasize = 0;
-40273a74:	fff931        	l32r	a3, 40273a58 <clientDisconnect+0x28>
-40273a77:	005322        	s16i	a2, a3, 0
+4027412b:	fff931        	l32r	a3, 40274110 <clientDisconnect+0x2c>
+4027412e:	005322        	s16i	a2, a3, 0
 	
 	if(netconn_gethostbyname(clientURL, &ipAddress) == ERR_OK) {
-40273a7a:	ffb821        	l32r	a2, 4027395c <clientParseHeader+0xe4>
-40273a7d:	fff731        	l32r	a3, 40273a5c <clientDisconnect+0x2c>
-40273a80:	0228      	l32i.n	a2, a2, 0
-40273a82:	dad385        	call0	4024e7bc <netconn_gethostbyname>
-40273a85:	742020        	extui	a2, a2, 0, 8
-40273a88:	92cc      	bnez.n	a2, 40273a95 <clientConnect+0x35>
-		connect = 1; // todo: semafor!!!
-40273a8a:	ffe721        	l32r	a2, 40273a28 <clientSetPort+0x1c>
-40273a8d:	130c      	movi.n	a3, 1
-40273a8f:	004232        	s8i	a3, a2, 0
-40273a92:	000086        	j	40273a98 <clientConnect+0x38>
+40274131:	ffb821        	l32r	a2, 40274014 <clientParseHeader+0x108>
+40274134:	fff831        	l32r	a3, 40274114 <clientDisconnect+0x30>
+40274137:	0228      	l32i.n	a2, a2, 0
+40274139:	da6805        	call0	4024e7bc <netconn_gethostbyname>
+4027413c:	745020        	extui	a5, a2, 0, 8
+4027413f:	d5cc      	bnez.n	a5, 40274150 <clientConnect+0x38>
+		xSemaphoreGive(sConnect);
+40274141:	ff3921        	l32r	a2, 40273e28 <bufferReset+0x18>
+40274144:	053d      	mov.n	a3, a5
+40274146:	0228      	l32i.n	a2, a2, 0
+40274148:	054d      	mov.n	a4, a5
+4027414a:	cf81c5        	call0	40243968 <xQueueGenericSend>
+4027414d:	000086        	j	40274153 <clientConnect+0x3b>
+		//connect = 1; // todo: semafor!!!
 	} else {
 		clientDisconnect();
-40273a95:	fff985        	call0	40273a30 <clientDisconnect>
+40274150:	fff905        	call0	402740e4 <clientDisconnect>
 	}
 }
-40273a98:	3108      	l32i.n	a0, a1, 12
-40273a9a:	10c112        	addi	a1, a1, 16
-40273a9d:	f00d      	ret.n
-40273a9f:	884800        	excw
-40273aa2:	fe          	.byte 0xfe
-40273aa3:	3f          	.byte 0x3f
-40273aa4:	f8fc      	bnez.n	a8, 40273ae7 <clientReceiveCallback+0x3b>
-40273aa6:	fe          	.byte 0xfe
-40273aa7:	3f          	.byte 0x3f
-40273aa8:	ff          	.byte 0xff
-40273aa9:	000013        	excw
+40274153:	3108      	l32i.n	a0, a1, 12
+40274155:	10c112        	addi	a1, a1, 16
+40274158:	f00d      	ret.n
+4027415a:	840000        	extui	a0, a0, 0, 9
+4027415d:	3ffe84        	excw
+40274160:	8898      	l32i.n	a9, a8, 32
+40274162:	fe          	.byte 0xfe
+40274163:	3f          	.byte 0x3f
+40274164:	f95c      	movi.n	a9, 95
+40274166:	fe          	.byte 0xfe
+40274167:	3f          	.byte 0x3f
+40274168:	ff          	.byte 0xff
+40274169:	000013        	excw
 
-40273aac <clientReceiveCallback>:
-	connect = 0;
+4027416c <clientReceiveCallback>:
+	xSemaphoreGive(sDisconnect);
 	printf("\n##CLI.STOPPED#\n");
 }
 
 ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned short len)
 {
-40273aac:	e0c112        	addi	a1, a1, -32
-40273aaf:	0361f2        	s32i	a15, a1, 12
-	/* TODO:
+4027416c:	e0c112        	addi	a1, a1, -32
+4027416f:	0461e2        	s32i	a14, a1, 16
 		- What if header is in more than 1 data part?
 		- Metadata processing
 		- Buffer underflow handling (?)
 	*/
+	static int metad = -1;
 	if(cstatus == C_HEADER)	{
-40273ab2:	ffe7f1        	l32r	a15, 40273a50 <clientDisconnect+0x20>
-	connect = 0;
+40274172:	ffe5e1        	l32r	a14, 40274108 <clientDisconnect+0x24>
+	xSemaphoreGive(sDisconnect);
 	printf("\n##CLI.STOPPED#\n");
 }
 
 ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned short len)
 {
-40273ab5:	0661c2        	s32i	a12, a1, 24
-	/* TODO:
+40274175:	0661c2        	s32i	a12, a1, 24
 		- What if header is in more than 1 data part?
 		- Metadata processing
 		- Buffer underflow handling (?)
 	*/
+	static int metad = -1;
 	if(cstatus == C_HEADER)	{
-40273ab8:	0f28      	l32i.n	a2, a15, 0
-	connect = 0;
+40274178:	002e22        	l32i	a2, a14, 0
+	xSemaphoreGive(sDisconnect);
 	printf("\n##CLI.STOPPED#\n");
 }
 
 ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned short len)
 {
-40273aba:	51d9      	s32i.n	a13, a1, 20
-40273abc:	41e9      	s32i.n	a14, a1, 16
-40273abe:	7109      	s32i.n	a0, a1, 28
-	/* TODO:
+4027417b:	51d9      	s32i.n	a13, a1, 20
+4027417d:	31f9      	s32i.n	a15, a1, 12
+4027417f:	7109      	s32i.n	a0, a1, 28
 		- What if header is in more than 1 data part?
 		- Metadata processing
 		- Buffer underflow handling (?)
 	*/
+	static int metad = -1;
 	if(cstatus == C_HEADER)	{
-40273ac0:	0e0c      	movi.n	a14, 0
-	connect = 0;
+40274181:	0f0c      	movi.n	a15, 0
+	xSemaphoreGive(sDisconnect);
 	printf("\n##CLI.STOPPED#\n");
 }
 
 ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned short len)
 {
-40273ac2:	03dd      	mov.n	a13, a3
-40273ac4:	f4c040        	extui	a12, a4, 0, 16
-	/* TODO:
+40274183:	03dd      	mov.n	a13, a3
+40274185:	f4c040        	extui	a12, a4, 0, 16
 		- What if header is in more than 1 data part?
 		- Metadata processing
 		- Buffer underflow handling (?)
 	*/
+	static int metad = -1;
 	if(cstatus == C_HEADER)	{
-40273ac7:	1992e7        	bne	a2, a14, 40273ae4 <clientReceiveCallback+0x38>
+40274188:	3c92f7        	bne	a2, a15, 402741c8 <clientReceiveCallback+0x5c>
 		clientParseHeader(pdata);
-40273aca:	202330        	or	a2, a3, a3
-40273acd:	ffda85        	call0	40273878 <clientParseHeader>
+4027418b:	032d      	mov.n	a2, a3
+4027418d:	ffd7c5        	call0	40273f0c <clientParseHeader>
+		if(header.members.single.metaint > 0) metad = header.members.single.metaint;
+40274190:	ff5a21        	l32r	a2, 40273ef8 <clientIsConnected+0x34>
+40274193:	7228      	l32i.n	a2, a2, 28
+40274195:	0412a6        	blti	a2, 1, 4027419d <clientReceiveCallback+0x31>
+40274198:	fff131        	l32r	a3, 4027415c <clientConnect+0x44>
+4027419b:	0329      	s32i.n	a2, a3, 0
 		char *t1 = strstr(pdata, "\r\n\r\n"); // END OF HEADER
-40273ad0:	fff431        	l32r	a3, 40273aa0 <clientConnect+0x40>
-40273ad3:	0d2d      	mov.n	a2, a13
-40273ad5:	cd2305        	call0	40240d08 <strstr>
+4027419d:	fff031        	l32r	a3, 40274160 <clientConnect+0x48>
+402741a0:	0d2d      	mov.n	a2, a13
+402741a2:	ccb645        	call0	40240d08 <strstr>
+402741a5:	023d      	mov.n	a3, a2
 		if(t1 != NULL) {
-40273ad8:	3c12e7        	beq	a2, a14, 40273b18 <clientReceiveCallback+0x6c>
+402741a7:	051216        	beqz	a2, 402741fc <clientReceiveCallback+0x90>
 			//processed = t1-pdata + 4;
 			cstatus = C_DATA;
-40273adb:	220c      	movi.n	a2, 2
-40273add:	0f29      	s32i.n	a2, a15, 0
-40273adf:	000d46        	j	40273b18 <clientReceiveCallback+0x6c>
-40273ae2:	850000        	extui	a0, a0, 16, 9
-		}
-		else return;
-	} else {
-		uint16_t l = 0;
+			int newlen = len - (t1-pdata) - 4;
+402741aa:	c0dd30        	sub	a13, a13, a3
+		clientParseHeader(pdata);
+		if(header.members.single.metaint > 0) metad = header.members.single.metaint;
+		char *t1 = strstr(pdata, "\r\n\r\n"); // END OF HEADER
+		if(t1 != NULL) {
+			//processed = t1-pdata + 4;
+			cstatus = C_DATA;
+402741ad:	220c      	movi.n	a2, 2
+			int newlen = len - (t1-pdata) - 4;
+402741af:	ccda      	add.n	a12, a12, a13
+		clientParseHeader(pdata);
+		if(header.members.single.metaint > 0) metad = header.members.single.metaint;
+		char *t1 = strstr(pdata, "\r\n\r\n"); // END OF HEADER
+		if(t1 != NULL) {
+			//processed = t1-pdata + 4;
+			cstatus = C_DATA;
+402741b1:	0e29      	s32i.n	a2, a14, 0
+			int newlen = len - (t1-pdata) - 4;
+402741b3:	fccc42        	addi	a4, a12, -4
+			if(newlen > 0) clientReceiveCallback(NULL, t1+4, newlen);
+402741b6:	4214a6        	blti	a4, 1, 402741fc <clientReceiveCallback+0x90>
+402741b9:	020c      	movi.n	a2, 0
+402741bb:	04c332        	addi	a3, a3, 4
+402741be:	f44040        	extui	a4, a4, 0, 16
+402741c1:	fffa85        	call0	4027416c <clientReceiveCallback>
+402741c4:	000d06        	j	402741fc <clientReceiveCallback+0x90>
+402741c7:	ad8500        	excw
+			printf("%d\n", l);
+			int rest = len - (&(pdata[metad+1])-pdata) -l;
+			metad = header.members.single.metaint - rest;
+		} else metad -= len;*/
 		do {
 			if(getBufferFree() < len) vTaskDelay(1);
-40273ae5:	bf          	.byte 0xbf
-40273ae6:	ff          	.byte 0xff
-40273ae7:	09b2c7        	bgeu	a2, a12, 40273af4 <clientReceiveCallback+0x48>
-40273aea:	120c      	movi.n	a2, 1
-40273aec:	d05e05        	call0	402440d0 <vTaskDelay>
-40273aef:	000306        	j	40273aff <clientReceiveCallback+0x53>
-40273af2:	d00000        	subx2	a0, a0, a0
-			else l = bufferWrite(pdata, len);
-40273af5:	202d      	excw
-40273af7:	203cc0        	or	a3, a12, a12
-40273afa:	ffc305        	call0	4027372c <bufferWrite>
-40273afd:	02ed      	mov.n	a14, a2
+402741ca:	ff          	.byte 0xff
+402741cb:	09b2c7        	bgeu	a2, a12, 402741d8 <clientReceiveCallback+0x6c>
+402741ce:	120c      	movi.n	a2, 1
+402741d0:	cfefc5        	call0	402440d0 <vTaskDelay>
+402741d3:	000306        	j	402741e3 <clientReceiveCallback+0x77>
+402741d6:	d00000        	subx2	a0, a0, a0
+			else l = bufferWrite(buf, len);
+402741d9:	202d      	excw
+402741db:	203cc0        	or	a3, a12, a12
+402741de:	ffb105        	call0	40273cf0 <bufferWrite>
+402741e1:	02fd      	mov.n	a15, a2
 		} while(l < len);
-40273aff:	e13ec7        	bltu	a14, a12, 40273ae4 <clientReceiveCallback+0x38>
+402741e3:	e13fc7        	bltu	a15, a12, 402741c8 <clientReceiveCallback+0x5c>
 		
 		if(!playing && getBufferFree() < BUFFER_SIZE/2) { 
-40273b02:	ffe8c1        	l32r	a12, 40273aa4 <clientConnect+0x44>
-40273b05:	000c22        	l8ui	a2, a12, 0
-40273b08:	c2cc      	bnez.n	a2, 40273b18 <clientReceiveCallback+0x6c>
-40273b0a:	ffbd45        	call0	402736e0 <getBufferFree>
-40273b0d:	ffe631        	l32r	a3, 40273aa8 <clientConnect+0x48>
-40273b10:	043327        	bltu	a3, a2, 40273b18 <clientReceiveCallback+0x6c>
+402741e6:	ffdfc1        	l32r	a12, 40274164 <clientConnect+0x4c>
+402741e9:	000c22        	l8ui	a2, a12, 0
+402741ec:	c2cc      	bnez.n	a2, 402741fc <clientReceiveCallback+0x90>
+402741ee:	ffab45        	call0	40273ca4 <getBufferFree>
+402741f1:	ffdd31        	l32r	a3, 40274168 <clientConnect+0x50>
+402741f4:	043327        	bltu	a3, a2, 402741fc <clientReceiveCallback+0x90>
 			playing=1;
-40273b13:	120c      	movi.n	a2, 1
-40273b15:	004c22        	s8i	a2, a12, 0
+402741f7:	120c      	movi.n	a2, 1
+402741f9:	004c22        	s8i	a2, a12, 0
 		}	
 	}
 }
-40273b18:	7108      	l32i.n	a0, a1, 28
-40273b1a:	61c8      	l32i.n	a12, a1, 24
-40273b1c:	51d8      	l32i.n	a13, a1, 20
-40273b1e:	41e8      	l32i.n	a14, a1, 16
-40273b20:	31f8      	l32i.n	a15, a1, 12
-40273b22:	20c112        	addi	a1, a1, 32
-40273b25:	f00d      	ret.n
+402741fc:	7108      	l32i.n	a0, a1, 28
+402741fe:	61c8      	l32i.n	a12, a1, 24
+40274200:	51d8      	l32i.n	a13, a1, 20
+40274202:	41e8      	l32i.n	a14, a1, 16
+40274204:	31f8      	l32i.n	a15, a1, 12
+40274206:	20c112        	addi	a1, a1, 32
+40274209:	f00d      	ret.n
 	...
 
-40273b28 <vsTask>:
+4027420c <vsTask>:
 
 void vsTask(void *pvParams) {
-40273b28:	f0c112        	addi	a1, a1, -16
-40273b2b:	00a492        	movi	a9, 0x400
-40273b2e:	036102        	s32i	a0, a1, 12
-40273b31:	0261c2        	s32i	a12, a1, 8
-40273b34:	0161d2        	s32i	a13, a1, 4
-40273b37:	c01190        	sub	a1, a1, a9
+4027420c:	f0c112        	addi	a1, a1, -16
+4027420f:	00a492        	movi	a9, 0x400
+40274212:	036102        	s32i	a0, a1, 12
+40274215:	0261c2        	s32i	a12, a1, 8
+40274218:	0161d2        	s32i	a13, a1, 4
+4027421b:	c01190        	sub	a1, a1, a9
 	uint8_t b[1024];
+	
 	while(1) {
 		if(playing) {
-40273b3a:	ffda31        	l32r	a3, 40273aa4 <clientConnect+0x44>
-40273b3d:	000322        	l8ui	a2, a3, 0
-40273b40:	b2ac      	beqz.n	a2, 40273b6f <vsTask+0x47>
+4027421e:	ffd131        	l32r	a3, 40274164 <clientConnect+0x4c>
+40274221:	000322        	l8ui	a2, a3, 0
+40274224:	c2ac      	beqz.n	a2, 40274254 <vsTask+0x48>
 			uint16_t size = bufferRead(b, 1024), s = 0;
-40273b42:	012d      	mov.n	a2, a1
-40273b44:	00a432        	movi	a3, 0x400
-40273b47:	ffc685        	call0	402737b0 <bufferRead>
-40273b4a:	02dd      	mov.n	a13, a2
-40273b4c:	0c0c      	movi.n	a12, 0
+40274226:	012d      	mov.n	a2, a1
+40274228:	00a432        	movi	a3, 0x400
+4027422b:	ffb485        	call0	40273d74 <bufferRead>
+4027422e:	02dd      	mov.n	a13, a2
+40274230:	0c0c      	movi.n	a12, 0
 			while(s < size) {
-40273b4e:	0005c6        	j	40273b69 <vsTask+0x41>
+40274232:	0005c6        	j	4027424d <vsTask+0x41>
 				s += VS1053_SendMusicBytes(b+s, size-s);
-40273b51:	c03dc0        	sub	a3, a13, a12
-40273b54:	8021c0        	add	a2, a1, a12
-40273b57:	f43030        	extui	a3, a3, 0, 16
-40273b5a:	ffad45        	call0	40273630 <VS1053_SendMusicBytes>
-40273b5d:	802c20        	add	a2, a12, a2
-40273b60:	f4c020        	extui	a12, a2, 0, 16
+40274235:	c03dc0        	sub	a3, a13, a12
+40274238:	8021c0        	add	a2, a1, a12
+4027423b:	f43030        	extui	a3, a3, 0, 16
+4027423e:	ff8d85        	call0	40273b18 <VS1053_SendMusicBytes>
+40274241:	802c20        	add	a2, a12, a2
+40274244:	f4c020        	extui	a12, a2, 0, 16
 				vTaskDelay(2);
-40273b63:	02a022        	movi	a2, 2
-40273b66:	d05685        	call0	402440d0 <vTaskDelay>
-void vsTask(void *pvParams) {
+40274247:	02a022        	movi	a2, 2
+4027424a:	cfe845        	call0	402440d0 <vTaskDelay>
 	uint8_t b[1024];
+	
 	while(1) {
 		if(playing) {
 			uint16_t size = bufferRead(b, 1024), s = 0;
 			while(s < size) {
-40273b69:	e43cd7        	bltu	a12, a13, 40273b51 <vsTask+0x29>
-40273b6c:	fff286        	j	40273b3a <vsTask+0x12>
+4027424d:	e43cd7        	bltu	a12, a13, 40274235 <vsTask+0x29>
+40274250:	fff286        	j	4027421e <vsTask+0x12>
+40274253:	a20c00        	excw
 				s += VS1053_SendMusicBytes(b+s, size-s);
 				vTaskDelay(2);
 			}
 		} else vTaskDelay(10);
-40273b6f:	a20c      	movi.n	a2, 10
-40273b71:	d055c5        	call0	402440d0 <vTaskDelay>
-40273b74:	fff086        	j	40273b3a <vsTask+0x12>
-40273b77:	86bc00        	excw
-40273b7a:	fe          	.byte 0xfe
-40273b7b:	3f          	.byte 0x3f
-40273b7c:	86cc      	bnez.n	a6, 40273b88 <vsTask+0x60>
-40273b7e:	fe          	.byte 0xfe
-40273b7f:	3f          	.byte 0x3f
-40273b80:	fe86e0        	excw
-40273b83:	3f          	.byte 0x3f
-40273b84:	fe86f4        	excw
-40273b87:	3f          	.byte 0x3f
-40273b88:	8708      	l32i.n	a0, a7, 32
-40273b8a:	fe          	.byte 0xfe
-40273b8b:	3f          	.byte 0x3f
-40273b8c:	8718      	l32i.n	a1, a7, 32
-40273b8e:	fe          	.byte 0xfe
-40273b8f:	3f          	.byte 0x3f
+40274256:	cfe785        	call0	402440d0 <vTaskDelay>
+40274259:	fff046        	j	4027421e <vsTask+0x12>
+4027425c:	86cc      	bnez.n	a6, 40274268 <vsTask+0x5c>
+4027425e:	fe          	.byte 0xfe
+4027425f:	3f          	.byte 0x3f
+40274260:	86dc      	bnez.n	a6, 4027427c <clientTask+0x8>
+40274262:	fe          	.byte 0xfe
+40274263:	3f          	.byte 0x3f
+40274264:	fe86f0        	excw
+40274267:	3f          	.byte 0x3f
+40274268:	fe8704        	excw
+4027426b:	3f          	.byte 0x3f
+4027426c:	8728      	l32i.n	a2, a7, 32
+4027426e:	fe          	.byte 0xfe
+4027426f:	3f          	.byte 0x3f
+40274270:	8738      	l32i.n	a3, a7, 32
+40274272:	fe          	.byte 0xfe
+40274273:	3f          	.byte 0x3f
 
-40273b90 <clientTask>:
+40274274 <clientTask>:
 	}
 }
 
 void clientTask(void *pvParams) {
-40273b90:	c0c112        	addi	a1, a1, -64
-40273b93:	f109      	s32i.n	a0, a1, 60
-40273b95:	e1c9      	s32i.n	a12, a1, 56
-40273b97:	d1d9      	s32i.n	a13, a1, 52
-40273b99:	c1e9      	s32i.n	a14, a1, 48
-40273b9b:	b1f9      	s32i.n	a15, a1, 44
+40274274:	c0c112        	addi	a1, a1, -64
+40274277:	f109      	s32i.n	a0, a1, 60
+40274279:	e1c9      	s32i.n	a12, a1, 56
+4027427b:	d1d9      	s32i.n	a13, a1, 52
+4027427d:	c1e9      	s32i.n	a14, a1, 48
+4027427f:	b1f9      	s32i.n	a15, a1, 44
+	struct netbuf *inbuf;
 	
 	err_t rc1, rc2, rc3;
 	
 	while(1) {
+		xSemaphoreGive(sConnected);
+40274281:	feea31        	l32r	a3, 40273e2c <bufferReset+0x1c>
+40274284:	0328      	l32i.n	a2, a3, 0
+40274286:	00a032        	movi	a3, 0
+40274289:	034d      	mov.n	a4, a3
+4027428b:	205330        	or	a5, a3, a3
+4027428e:	cf6d85        	call0	40243968 <xQueueGenericSend>
 		
-		if(connect) {
-40273b9d:	ffa231        	l32r	a3, 40273a28 <clientSetPort+0x1c>
-40273ba0:	000322        	l8ui	a2, a3, 0
-40273ba3:	116216        	beqz	a2, 40273cbd <clientTask+0x12d>
+		if(xSemaphoreTake(sConnect, portMAX_DELAY)) {
+40274291:	fee531        	l32r	a3, 40273e28 <bufferReset+0x18>
+40274294:	f47c      	movi.n	a4, -1
+40274296:	0328      	l32i.n	a2, a3, 0
+40274298:	030c      	movi.n	a3, 0
+4027429a:	035d      	mov.n	a5, a3
+4027429c:	cf84c5        	call0	40243aec <xQueueGenericReceive>
+4027429f:	fde216        	beqz	a2, 40274281 <clientTask+0xd>
+			
+			xSemaphoreTake(sDisconnect, 0);
+402742a2:	fee3f1        	l32r	a15, 40273e30 <bufferReset+0x20>
+402742a5:	030c      	movi.n	a3, 0
+402742a7:	0f28      	l32i.n	a2, a15, 0
+402742a9:	035d      	mov.n	a5, a3
+402742ab:	034d      	mov.n	a4, a3
+402742ad:	cf83c5        	call0	40243aec <xQueueGenericReceive>
 
 			NetConn = netconn_new(NETCONN_TCP);
-40273ba6:	030c      	movi.n	a3, 0
-40273ba8:	034d      	mov.n	a4, a3
-40273baa:	021c      	movi.n	a2, 16
-40273bac:	da5885        	call0	4024e138 <netconn_new_with_proto_and_callback>
-40273baf:	02cd      	mov.n	a12, a2
+402742b0:	030c      	movi.n	a3, 0
+402742b2:	034d      	mov.n	a4, a3
+402742b4:	021c      	movi.n	a2, 16
+402742b6:	d9e805        	call0	4024e138 <netconn_new_with_proto_and_callback>
+402742b9:	02cd      	mov.n	a12, a2
 			netconn_set_recvtimeout(NetConn, 1000);
-40273bb1:	e8a322        	movi	a2, 0x3e8
+402742bb:	e8a322        	movi	a2, 0x3e8
 
 			if(NetConn == NULL){
 					/*No memory for new connection? */
 					printf("No mem for new con\r\n");
 			}
 			rc1 = netconn_bind(NetConn, NULL, 666);        //3250          /* Adres IP i port local host'a */
-40273bb4:	030c      	movi.n	a3, 0
-40273bb6:	9aa242        	movi	a4, 0x29a
-	while(1) {
-		
-		if(connect) {
+402742be:	030c      	movi.n	a3, 0
+402742c0:	9aa242        	movi	a4, 0x29a
+		if(xSemaphoreTake(sConnect, portMAX_DELAY)) {
+			
+			xSemaphoreTake(sDisconnect, 0);
 
 			NetConn = netconn_new(NETCONN_TCP);
 			netconn_set_recvtimeout(NetConn, 1000);
-40273bb9:	9c29      	s32i.n	a2, a12, 36
+402742c3:	9c29      	s32i.n	a2, a12, 36
 
 			if(NetConn == NULL){
 					/*No memory for new connection? */
 					printf("No mem for new con\r\n");
 			}
 			rc1 = netconn_bind(NetConn, NULL, 666);        //3250          /* Adres IP i port local host'a */
-40273bbb:	202cc0        	or	a2, a12, a12
-40273bbe:	da6505        	call0	4024e210 <netconn_bind>
-40273bc1:	74d020        	extui	a13, a2, 0, 8
+402742c5:	0c2d      	mov.n	a2, a12
+402742c7:	d9f485        	call0	4024e210 <netconn_bind>
+402742ca:	74d020        	extui	a13, a2, 0, 8
 			printf("netcon binded\r\n");
-40273bc4:	ffed21        	l32r	a2, 40273b78 <vsTask+0x50>
-40273bc7:	fdb501        	l32r	a0, 4027329c <wep+0x1c>
-40273bca:	0000c0        	callx0	a0
+402742cd:	ffe321        	l32r	a2, 4027425c <vsTask+0x50>
+402742d0:	fcf701        	l32r	a0, 402736ac <wep+0x1c>
+402742d3:	0000c0        	callx0	a0
 			rc2 = netconn_connect(NetConn, &ipAddress, clientPort);     // todo: !!!         /* Adres IP i port serwera */
-40273bcd:	ff8d41        	l32r	a4, 40273a04 <clientSetPath+0x4c>
-40273bd0:	ffa331        	l32r	a3, 40273a5c <clientDisconnect+0x2c>
-40273bd3:	001442        	l16ui	a4, a4, 0
-40273bd6:	0c2d      	mov.n	a2, a12
-40273bd8:	da6885        	call0	4024e264 <netconn_connect>
-40273bdb:	74e020        	extui	a14, a2, 0, 8
+402742d6:	ff7941        	l32r	a4, 402740bc <clientSetPath+0x4c>
+402742d9:	ff8e31        	l32r	a3, 40274114 <clientDisconnect+0x30>
+402742dc:	001442        	l16ui	a4, a4, 0
+402742df:	0c2d      	mov.n	a2, a12
+402742e1:	d9f805        	call0	4024e264 <netconn_connect>
+402742e4:	74e020        	extui	a14, a2, 0, 8
 			//rc2 = netconn_connect(NetConn, &ipaddrserv, 80); 
 			printf("netcon connected\r\n");
-40273bde:	ffe721        	l32r	a2, 40273b7c <vsTask+0x54>
-40273be1:	fdae01        	l32r	a0, 4027329c <wep+0x1c>
-40273be4:	0000c0        	callx0	a0
+402742e7:	ffde21        	l32r	a2, 40274260 <vsTask+0x54>
+402742ea:	fcf001        	l32r	a0, 402736ac <wep+0x1c>
+402742ed:	0000c0        	callx0	a0
 
 			if(rc1 != ERR_OK || rc2 != ERR_OK){
-40273be7:	206ed0        	or	a6, a14, a13
-40273bea:	016680        	slli	a6, a6, 24
-40273bed:	31e860        	srai	a14, a6, 24
-40273bf0:	4e9c      	beqz.n	a14, 40273c08 <clientTask+0x78>
+402742f0:	206ed0        	or	a6, a14, a13
+402742f3:	016680        	slli	a6, a6, 24
+402742f6:	31e860        	srai	a14, a6, 24
+402742f9:	3e9c      	beqz.n	a14, 40274310 <clientTask+0x9c>
 					netconn_delete(NetConn);
-40273bf2:	0c2d      	mov.n	a2, a12
-40273bf4:	da58c5        	call0	4024e184 <netconn_delete>
+402742fb:	0c2d      	mov.n	a2, a12
+402742fd:	d9e845        	call0	4024e184 <netconn_delete>
 					printf("connection error\r\n");
-40273bf7:	ffe221        	l32r	a2, 40273b80 <vsTask+0x58>
-40273bfa:	fda801        	l32r	a0, 4027329c <wep+0x1c>
-40273bfd:	0000c0        	callx0	a0
+40274300:	ffd921        	l32r	a2, 40274264 <vsTask+0x58>
+40274303:	fcea01        	l32r	a0, 402736ac <wep+0x1c>
+40274306:	0000c0        	callx0	a0
 					clientDisconnect();
-40273c00:	ffe2c5        	call0	40273a30 <clientDisconnect>
+40274309:	ffdd85        	call0	402740e4 <clientDisconnect>
 					continue;
-40273c03:	ffe586        	j	40273b9d <clientTask+0xd>
-40273c06:	210000        	srai	a0, a0, 0
+4027430c:	ffdc46        	j	40274281 <clientTask+0xd>
+4027430f:	562100        	excw
 			} else {
-				char *getQuery = malloc(sizeof(char)*(strlen(clientPath) + 18));
-40273c09:	ff6a      	add.n	a15, a15, a6
-40273c0b:	02f8      	l32i.n	a15, a2, 0
-40273c0d:	0f2d      	mov.n	a2, a15
-40273c0f:	cd0e05        	call0	40240cf0 <strlen>
-40273c12:	12c222        	addi	a2, a2, 18
-40273c15:	323e01        	l32r	a0, 40240510 <user_init_task+0xd4>
-40273c18:	0000c0        	callx0	a0
-				sprintf(getQuery, "GET %s HTTP/1.0\r\n\r\n", clientPath);
-40273c1b:	ffda31        	l32r	a3, 40273b84 <vsTask+0x5c>
-40273c1e:	0f4d      	mov.n	a4, a15
+				char *getQuery = malloc(sizeof(char)*(strlen(clientPath) + 34));
+40274312:	ff          	.byte 0xff
+40274313:	02f8      	l32i.n	a15, a2, 0
+40274315:	0f2d      	mov.n	a2, a15
+40274317:	cc9d85        	call0	40240cf0 <strlen>
+4027431a:	22c222        	addi	a2, a2, 34
+4027431d:	307c01        	l32r	a0, 40240510 <user_init_task+0xd4>
+40274320:	0000c0        	callx0	a0
+				sprintf(getQuery, "GET %s HTTP/1.0\r\nicy-metadata:0\r\n\r\n", clientPath);
+40274323:	ffd131        	l32r	a3, 40274268 <vsTask+0x5c>
+40274326:	0f4d      	mov.n	a4, a15
 					netconn_delete(NetConn);
 					printf("connection error\r\n");
 					clientDisconnect();
 					continue;
 			} else {
-				char *getQuery = malloc(sizeof(char)*(strlen(clientPath) + 18));
-40273c20:	02dd      	mov.n	a13, a2
-				sprintf(getQuery, "GET %s HTTP/1.0\r\n\r\n", clientPath);
-40273c22:	dbec85        	call0	4024faec <sprintf>
+				char *getQuery = malloc(sizeof(char)*(strlen(clientPath) + 34));
+40274328:	02dd      	mov.n	a13, a2
+				sprintf(getQuery, "GET %s HTTP/1.0\r\nicy-metadata:0\r\n\r\n", clientPath);
+4027432a:	db7c05        	call0	4024faec <sprintf>
 				netconn_write(NetConn, getQuery, strlen(getQuery), NETCONN_NOCOPY);
-40273c25:	0d2d      	mov.n	a2, a13
-40273c27:	cd0c85        	call0	40240cf0 <strlen>
-40273c2a:	024d      	mov.n	a4, a2
-40273c2c:	0d3d      	mov.n	a3, a13
-40273c2e:	0c2d      	mov.n	a2, a12
-40273c30:	0e5d      	mov.n	a5, a14
-40273c32:	0e6d      	mov.n	a6, a14
-40273c34:	daa445        	call0	4024e67c <netconn_write_partly>
+4027432d:	0d2d      	mov.n	a2, a13
+4027432f:	cc9c05        	call0	40240cf0 <strlen>
+40274332:	024d      	mov.n	a4, a2
+40274334:	0d3d      	mov.n	a3, a13
+40274336:	0c2d      	mov.n	a2, a12
+40274338:	0e5d      	mov.n	a5, a14
+4027433a:	0e6d      	mov.n	a6, a14
+4027433c:	da33c5        	call0	4024e67c <netconn_write_partly>
 				free(getQuery);
-40273c37:	0d2d      	mov.n	a2, a13
-40273c39:	323301        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273c3c:	0000c0        	callx0	a0
+4027433f:	0d2d      	mov.n	a2, a13
+40274341:	307101        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274344:	0000c0        	callx0	a0
 				while(1){
 					if(netconn_recv(NetConn, &inbuf) != ERR_OK) break;
-40273c3f:	0c2d      	mov.n	a2, a12
-40273c41:	013d      	mov.n	a3, a1
-40273c43:	da8e05        	call0	4024e524 <netconn_recv>
-40273c46:	74f020        	extui	a15, a2, 0, 8
-40273c49:	047f56        	bnez	a15, 40273c94 <clientTask+0x104>
+40274347:	0c2d      	mov.n	a2, a12
+40274349:	203110        	or	a3, a1, a1
+4027434c:	da1d45        	call0	4024e524 <netconn_recv>
+4027434f:	74d020        	extui	a13, a2, 0, 8
+40274352:	05ed56        	bnez	a13, 402743b4 <clientTask+0x140>
 					int BufLen = netbuf_len(inbuf);
-40273c4c:	0128      	l32i.n	a2, a1, 0
-40273c4e:	0238      	l32i.n	a3, a2, 0
-40273c50:	0413e2        	l16ui	a14, a3, 8
+40274355:	0128      	l32i.n	a2, a1, 0
+40274357:	0238      	l32i.n	a3, a2, 0
+40274359:	0413f2        	l16ui	a15, a3, 8
 					char *tmp = malloc(BufLen);
-40273c53:	4139      	s32i.n	a3, a1, 16
-40273c55:	0e2d      	mov.n	a2, a14
-40273c57:	322e01        	l32r	a0, 40240510 <user_init_task+0xd4>
-40273c5a:	0000c0        	callx0	a0
+4027435c:	4139      	s32i.n	a3, a1, 16
+4027435e:	0f2d      	mov.n	a2, a15
+40274360:	306c01        	l32r	a0, 40240510 <user_init_task+0xd4>
+40274363:	0000c0        	callx0	a0
 					netbuf_copy(inbuf, tmp, BufLen);
-40273c5d:	4138      	l32i.n	a3, a1, 16
+40274366:	4138      	l32i.n	a3, a1, 16
 				netconn_write(NetConn, getQuery, strlen(getQuery), NETCONN_NOCOPY);
 				free(getQuery);
 				while(1){
 					if(netconn_recv(NetConn, &inbuf) != ERR_OK) break;
 					int BufLen = netbuf_len(inbuf);
 					char *tmp = malloc(BufLen);
-40273c5f:	02dd      	mov.n	a13, a2
+40274368:	02ed      	mov.n	a14, a2
 					netbuf_copy(inbuf, tmp, BufLen);
-40273c61:	0f5d      	mov.n	a5, a15
-40273c63:	0e4d      	mov.n	a4, a14
-40273c65:	032d      	mov.n	a2, a3
-40273c67:	0d3d      	mov.n	a3, a13
-40273c69:	d4b845        	call0	402487f0 <pbuf_copy_partial>
+4027436a:	0d5d      	mov.n	a5, a13
+4027436c:	0f4d      	mov.n	a4, a15
+4027436e:	032d      	mov.n	a2, a3
+40274370:	0e3d      	mov.n	a3, a14
+40274372:	d447c5        	call0	402487f0 <pbuf_copy_partial>
 					netbuf_delete(inbuf);
-40273c6c:	0128      	l32i.n	a2, a1, 0
-40273c6e:	dba305        	call0	4024f6a0 <netbuf_delete>
+40274375:	0128      	l32i.n	a2, a1, 0
+40274377:	db3285        	call0	4024f6a0 <netbuf_delete>
 					clientReceiveCallback(NULL, tmp, BufLen);
-40273c71:	0d3d      	mov.n	a3, a13
-40273c73:	0f2d      	mov.n	a2, a15
-40273c75:	0e4d      	mov.n	a4, a14
-40273c77:	ffe345        	call0	40273aac <clientReceiveCallback>
+4027437a:	0e3d      	mov.n	a3, a14
+4027437c:	0f4d      	mov.n	a4, a15
+4027437e:	0d2d      	mov.n	a2, a13
+40274380:	ffde85        	call0	4027416c <clientReceiveCallback>
 
 					free(tmp);
-40273c7a:	0d2d      	mov.n	a2, a13
-40273c7c:	322301        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273c7f:	0000c0        	callx0	a0
-					if(connect == 0) break;
-40273c82:	ff6931        	l32r	a3, 40273a28 <clientSetPort+0x1c>
-40273c85:	000322        	l8ui	a2, a3, 0
-40273c88:	008216        	beqz	a2, 40273c94 <clientTask+0x104>
+40274383:	0e2d      	mov.n	a2, a14
+40274385:	306001        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274388:	0000c0        	callx0	a0
+					if(xSemaphoreTake(sDisconnect, 0)) break;
+4027438b:	fea931        	l32r	a3, 40273e30 <bufferReset+0x20>
+4027438e:	0d5d      	mov.n	a5, a13
+40274390:	0328      	l32i.n	a2, a3, 0
+40274392:	0d4d      	mov.n	a4, a13
+40274394:	203dd0        	or	a3, a13, a13
+40274397:	cf7545        	call0	40243aec <xQueueGenericReceive>
+4027439a:	025d      	mov.n	a5, a2
+4027439c:	42dc      	bnez.n	a2, 402743b4 <clientTask+0x140>
+					xSemaphoreTake(sConnected, 0);
+4027439e:	fea331        	l32r	a3, 40273e2c <bufferReset+0x1c>
+402743a1:	054d      	mov.n	a4, a5
+402743a3:	0328      	l32i.n	a2, a3, 0
+402743a5:	203550        	or	a3, a5, a5
+402743a8:	cf7405        	call0	40243aec <xQueueGenericReceive>
 					vTaskDelay(1);
-40273c8b:	120c      	movi.n	a2, 1
-40273c8d:	d04405        	call0	402440d0 <vTaskDelay>
+402743ab:	120c      	movi.n	a2, 1
+402743ad:	cfd205        	call0	402440d0 <vTaskDelay>
 				}
-40273c90:	ffeac6        	j	40273c3f <clientTask+0xaf>
-40273c93:	842100        	extui	a2, a0, 1, 9
+402743b0:	ffe4c6        	j	40274347 <clientTask+0xd3>
+402743b3:	6c2100        	excw
 
 			}
-
+			
 			playing = 0;
-40273c96:	ff          	.byte 0xff
-40273c97:	00a032        	movi	a3, 0
-40273c9a:	004232        	s8i	a3, a2, 0
+402743b6:	ff          	.byte 0xff
+402743b7:	00a032        	movi	a3, 0
+402743ba:	004232        	s8i	a3, a2, 0
 			bufferReset();
-40273c9d:	ffbac5        	call0	4027384c <bufferReset>
+402743bd:	ffa505        	call0	40273e10 <bufferReset>
 			netconn_close(NetConn);
-40273ca0:	0c2d      	mov.n	a2, a12
-40273ca2:	daadc5        	call0	4024e780 <netconn_close>
+402743c0:	0c2d      	mov.n	a2, a12
+402743c2:	da3bc5        	call0	4024e780 <netconn_close>
 			printf("netcon closed\r\n");
-40273ca5:	ffb821        	l32r	a2, 40273b88 <vsTask+0x60>
-40273ca8:	fd7d01        	l32r	a0, 4027329c <wep+0x1c>
-40273cab:	0000c0        	callx0	a0
+402743c5:	ffa921        	l32r	a2, 4027426c <vsTask+0x60>
+402743c8:	fcb901        	l32r	a0, 402736ac <wep+0x1c>
+402743cb:	0000c0        	callx0	a0
 			netconn_delete(NetConn);
-40273cae:	202cc0        	or	a2, a12, a12
-40273cb1:	da4d05        	call0	4024e184 <netconn_delete>
+402743ce:	202cc0        	or	a2, a12, a12
+402743d1:	d9db05        	call0	4024e184 <netconn_delete>
 			printf("netcon deleted\r\n");
-40273cb4:	ffb621        	l32r	a2, 40273b8c <vsTask+0x64>
-40273cb7:	fd7901        	l32r	a0, 4027329c <wep+0x1c>
-40273cba:	0000c0        	callx0	a0
-		
-		}
+402743d4:	ffa721        	l32r	a2, 40274270 <vsTask+0x64>
+402743d7:	fcb501        	l32r	a0, 402736ac <wep+0x1c>
+402743da:	0000c0        	callx0	a0
+402743dd:	ffa806        	j	40274281 <clientTask+0xd>
+402743e0:	000914        	excw
+402743e3:	000060        	excw
+402743e6:	12bfe0        	excw
 
-		vTaskDelay(10);
-40273cbd:	a20c      	movi.n	a2, 10
-40273cbf:	d04105        	call0	402440d0 <vTaskDelay>
-40273cc2:	ffb5c6        	j	40273b9d <clientTask+0xd>
-40273cc5:	000000        	ill
-40273cc8:	000914        	excw
-40273ccb:	000060        	excw
-40273cce:	12bfe0        	excw
-
-40273cd0 <fread>:
+402743e8 <fread>:
 #include "lwip/netdb.h"
 
 #define INTERNAL_FLASH_START_ADDRESS    0x40200000
 
 ICACHE_FLASH_ATTR uint32_t fread( void *to, uint32_t fromaddr, uint32_t size )
 {
-40273cd0:	f0c112        	addi	a1, a1, -16
-40273cd3:	025d      	mov.n	a5, a2
+402743e8:	f0c112        	addi	a1, a1, -16
+402743eb:	025d      	mov.n	a5, a2
   fromaddr -= INTERNAL_FLASH_START_ADDRESS;
   int r;
   WRITE_PERI_REG(0x60000914, 0x73);
-40273cd5:	fffc21        	l32r	a2, 40273cc8 <clientTask+0x138>
+402743ed:	fffc21        	l32r	a2, 402743e0 <clientTask+0x16c>
 #include "lwip/netdb.h"
 
 #define INTERNAL_FLASH_START_ADDRESS    0x40200000
 
 ICACHE_FLASH_ATTR uint32_t fread( void *to, uint32_t fromaddr, uint32_t size )
 {
-40273cd8:	3109      	s32i.n	a0, a1, 12
-40273cda:	21c9      	s32i.n	a12, a1, 8
-40273cdc:	04cd      	mov.n	a12, a4
+402743f0:	3109      	s32i.n	a0, a1, 12
+402743f2:	21c9      	s32i.n	a12, a1, 8
+402743f4:	04cd      	mov.n	a12, a4
   fromaddr -= INTERNAL_FLASH_START_ADDRESS;
   int r;
   WRITE_PERI_REG(0x60000914, 0x73);
-40273cde:	73a042        	movi	a4, 115
-40273ce1:	0020c0        	memw
-40273ce4:	0249      	s32i.n	a4, a2, 0
+402743f6:	73a042        	movi	a4, 115
+402743f9:	0020c0        	memw
+402743fc:	0249      	s32i.n	a4, a2, 0
   r = spi_flash_read(fromaddr, (uint32 *)to, size);
-40273ce6:	fff921        	l32r	a2, 40273ccc <clientTask+0x13c>
-40273ce9:	0c4d      	mov.n	a4, a12
-40273ceb:	232a      	add.n	a2, a3, a2
-40273ced:	053d      	mov.n	a3, a5
-40273cef:	320901        	l32r	a0, 40240514 <user_init_task+0xd8>
-40273cf2:	0000c0        	callx0	a0
+402743fe:	fff921        	l32r	a2, 402743e4 <clientTask+0x170>
+40274401:	0c4d      	mov.n	a4, a12
+40274403:	232a      	add.n	a2, a3, a2
+40274405:	053d      	mov.n	a3, a5
+40274407:	304301        	l32r	a0, 40240514 <user_init_task+0xd8>
+4027440a:	0000c0        	callx0	a0
   if(0 == r)
     return size;
   else{
     return 0;
   }
 }
-40273cf5:	3108      	l32i.n	a0, a1, 12
+4027440d:	3108      	l32i.n	a0, a1, 12
 ICACHE_FLASH_ATTR uint32_t fread( void *to, uint32_t fromaddr, uint32_t size )
 {
   fromaddr -= INTERNAL_FLASH_START_ADDRESS;
   int r;
   WRITE_PERI_REG(0x60000914, 0x73);
   r = spi_flash_read(fromaddr, (uint32 *)to, size);
-40273cf7:	023d      	mov.n	a3, a2
+4027440f:	023d      	mov.n	a3, a2
   if(0 == r)
     return size;
   else{
     return 0;
-40273cf9:	020c      	movi.n	a2, 0
-40273cfb:	832c30        	moveqz	a2, a12, a3
+40274411:	020c      	movi.n	a2, 0
+40274413:	832c30        	moveqz	a2, a12, a3
   }
 }
-40273cfe:	21c8      	l32i.n	a12, a1, 8
-40273d00:	10c112        	addi	a1, a1, 16
-40273d03:	f00d      	ret.n
-40273d05:	000000        	ill
+40274416:	21c8      	l32i.n	a12, a1, 8
+40274418:	10c112        	addi	a1, a1, 16
+4027441b:	f00d      	ret.n
+4027441d:	000000        	ill
 
-40273d08 <my_strdup>:
+40274420 <my_strdup>:
 
 ICACHE_FLASH_ATTR char* my_strdup(char* string, int length)
 {
-40273d08:	f0c112        	addi	a1, a1, -16
-40273d0b:	11d9      	s32i.n	a13, a1, 4
-40273d0d:	02dd      	mov.n	a13, a2
+40274420:	f0c112        	addi	a1, a1, -16
+40274423:	11d9      	s32i.n	a13, a1, 4
+40274425:	02dd      	mov.n	a13, a2
   char* newstr = (char*)malloc((length+1)*sizeof(char));
-40273d0f:	231b      	addi.n	a2, a3, 1
+40274427:	231b      	addi.n	a2, a3, 1
     return 0;
   }
 }
 
 ICACHE_FLASH_ATTR char* my_strdup(char* string, int length)
 {
-40273d11:	21c9      	s32i.n	a12, a1, 8
-40273d13:	3109      	s32i.n	a0, a1, 12
-40273d15:	03cd      	mov.n	a12, a3
+40274429:	21c9      	s32i.n	a12, a1, 8
+4027442b:	3109      	s32i.n	a0, a1, 12
+4027442d:	03cd      	mov.n	a12, a3
   char* newstr = (char*)malloc((length+1)*sizeof(char));
-40273d17:	31fe01        	l32r	a0, 40240510 <user_init_task+0xd4>
-40273d1a:	0000c0        	callx0	a0
+4027442f:	303801        	l32r	a0, 40240510 <user_init_task+0xd4>
+40274432:	0000c0        	callx0	a0
   if(newstr != NULL)
-40273d1d:	040c      	movi.n	a4, 0
+40274435:	040c      	movi.n	a4, 0
   {
     int i;
     for(i=0; i<length+1; i++) if(i < length) newstr[i] = string[i]; else newstr[i] = 0;
-40273d1f:	045d      	mov.n	a5, a4
+40274437:	045d      	mov.n	a5, a4
 }
 
 ICACHE_FLASH_ATTR char* my_strdup(char* string, int length)
 {
   char* newstr = (char*)malloc((length+1)*sizeof(char));
   if(newstr != NULL)
-40273d21:	189247        	bne	a2, a4, 40273d3d <my_strdup+0x35>
-40273d24:	000606        	j	40273d40 <my_strdup+0x38>
-40273d27:	324a00        	excw
+40274439:	189247        	bne	a2, a4, 40274455 <my_strdup+0x35>
+4027443c:	000606        	j	40274458 <my_strdup+0x38>
+4027443f:	324a00        	excw
   {
     int i;
     for(i=0; i<length+1; i++) if(i < length) newstr[i] = string[i]; else newstr[i] = 0;
-40273d2a:	0aa4c7        	bge	a4, a12, 40273d38 <my_strdup+0x30>
-40273d2d:	6d4a      	add.n	a6, a13, a4
-40273d2f:	000662        	l8ui	a6, a6, 0
-40273d32:	004362        	s8i	a6, a3, 0
-40273d35:	000086        	j	40273d3b <my_strdup+0x33>
-40273d38:	004352        	s8i	a5, a3, 0
-40273d3b:	441b      	addi.n	a4, a4, 1
-40273d3d:	e7ac47        	bge	a12, a4, 40273d28 <my_strdup+0x20>
+40274442:	0aa4c7        	bge	a4, a12, 40274450 <my_strdup+0x30>
+40274445:	6d4a      	add.n	a6, a13, a4
+40274447:	000662        	l8ui	a6, a6, 0
+4027444a:	004362        	s8i	a6, a3, 0
+4027444d:	000086        	j	40274453 <my_strdup+0x33>
+40274450:	004352        	s8i	a5, a3, 0
+40274453:	441b      	addi.n	a4, a4, 1
+40274455:	e7ac47        	bge	a12, a4, 40274440 <my_strdup+0x20>
   }
   return newstr;
 }
-40273d40:	3108      	l32i.n	a0, a1, 12
-40273d42:	21c8      	l32i.n	a12, a1, 8
-40273d44:	11d8      	l32i.n	a13, a1, 4
-40273d46:	10c112        	addi	a1, a1, 16
-40273d49:	f00d      	ret.n
-40273d4b:	884c00        	excw
-40273d4e:	fe          	.byte 0xfe
-40273d4f:	3f          	.byte 0x3f
+40274458:	3108      	l32i.n	a0, a1, 12
+4027445a:	21c8      	l32i.n	a12, a1, 8
+4027445c:	11d8      	l32i.n	a13, a1, 4
+4027445e:	10c112        	addi	a1, a1, 16
+40274461:	f00d      	ret.n
+40274463:	889c00        	excw
+40274466:	fe          	.byte 0xfe
+40274467:	3f          	.byte 0x3f
 
-40273d50 <str_replace>:
+40274468 <str_replace>:
 
 ICACHE_FLASH_ATTR char* str_replace ( char *string, const char *substr, const char *replacement, int length ){
-40273d50:	c0c112        	addi	a1, a1, -64
-40273d53:	0d61d2        	s32i	a13, a1, 52
-40273d56:	0b61f2        	s32i	a15, a1, 44
-40273d59:	0f6102        	s32i	a0, a1, 60
-40273d5c:	03fd      	mov.n	a15, a3
-40273d5e:	e1c9      	s32i.n	a12, a1, 56
-40273d60:	c1e9      	s32i.n	a14, a1, 48
-40273d62:	0129      	s32i.n	a2, a1, 0
-40273d64:	04dd      	mov.n	a13, a4
-40273d66:	053d      	mov.n	a3, a5
+40274468:	c0c112        	addi	a1, a1, -64
+4027446b:	0d61d2        	s32i	a13, a1, 52
+4027446e:	0b61f2        	s32i	a15, a1, 44
+40274471:	0f6102        	s32i	a0, a1, 60
+40274474:	03fd      	mov.n	a15, a3
+40274476:	e1c9      	s32i.n	a12, a1, 56
+40274478:	c1e9      	s32i.n	a14, a1, 48
+4027447a:	0129      	s32i.n	a2, a1, 0
+4027447c:	04dd      	mov.n	a13, a4
+4027447e:	053d      	mov.n	a3, a5
   char *tok = NULL;
   char *newstr = NULL;
   char *oldstr = NULL;
   /* if either substr or replacement is NULL, duplicate string a let caller handle it */
   if ( substr == NULL ) {
-40273d68:	8fcc      	bnez.n	a15, 40273d74 <str_replace+0x24>
+40274480:	8fcc      	bnez.n	a15, 4027448c <str_replace+0x24>
     newstr = my_strdup(string, length);
-40273d6a:	fff9c5        	call0	40273d08 <my_strdup>
-40273d6d:	02cd      	mov.n	a12, a2
-40273d6f:	003886        	j	40273e55 <str_replace+0x105>
-40273d72:	210000        	srai	a0, a0, 0
+40274482:	fff9c5        	call0	40274420 <my_strdup>
+40274485:	02cd      	mov.n	a12, a2
+40274487:	003886        	j	4027456d <str_replace+0x105>
+4027448a:	210000        	srai	a0, a0, 0
     free(string);
     return newstr;
   }
   if( replacement == NULL ) replacement = "";
-40273d75:	40fff6        	bgeui	a15, 0x100, 40273db9 <str_replace+0x69>
-40273d78:	2883d2        	excw
+4027448d:	40fff6        	bgeui	a15, 0x100, 402744d1 <str_replace+0x69>
+40274490:	2883d2        	excw
   newstr = my_strdup(string, length);
-40273d7b:	f88501        	l32r	a0, 40271f90 <index_html+0x175c>
-40273d7e:	ff          	.byte 0xff
-40273d7f:	02cd      	mov.n	a12, a2
+40274493:	f88501        	l32r	a0, 402726a8 <index_html+0x1e74>
+40274496:	ff          	.byte 0xff
+40274497:	02cd      	mov.n	a12, a2
   
   while ( (tok = strstr ( newstr, substr ))){
-40273d81:	003106        	j	40273e49 <str_replace+0xf9>
+40274499:	003106        	j	40274561 <str_replace+0xf9>
     oldstr = newstr;
     newstr = malloc ( strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) + 1 );
-40273d84:	202cc0        	or	a2, a12, a12
-40273d87:	4159      	s32i.n	a5, a1, 16
-40273d89:	ccf645        	call0	40240cf0 <strlen>
-40273d8c:	023d      	mov.n	a3, a2
-40273d8e:	0f2d      	mov.n	a2, a15
-40273d90:	2139      	s32i.n	a3, a1, 8
-40273d92:	ccf5c5        	call0	40240cf0 <strlen>
-40273d95:	02ed      	mov.n	a14, a2
-40273d97:	202dd0        	or	a2, a13, a13
-40273d9a:	ccf545        	call0	40240cf0 <strlen>
-40273d9d:	2138      	l32i.n	a3, a1, 8
-40273d9f:	232a      	add.n	a2, a3, a2
-40273da1:	221b      	addi.n	a2, a2, 1
-40273da3:	c022e0        	sub	a2, a2, a14
-40273da6:	31da01        	l32r	a0, 40240510 <user_init_task+0xd4>
-40273da9:	0000c0        	callx0	a0
-40273dac:	02ed      	mov.n	a14, a2
+4027449c:	202cc0        	or	a2, a12, a12
+4027449f:	4159      	s32i.n	a5, a1, 16
+402744a1:	cc84c5        	call0	40240cf0 <strlen>
+402744a4:	023d      	mov.n	a3, a2
+402744a6:	0f2d      	mov.n	a2, a15
+402744a8:	2139      	s32i.n	a3, a1, 8
+402744aa:	cc8445        	call0	40240cf0 <strlen>
+402744ad:	02ed      	mov.n	a14, a2
+402744af:	202dd0        	or	a2, a13, a13
+402744b2:	cc83c5        	call0	40240cf0 <strlen>
+402744b5:	2138      	l32i.n	a3, a1, 8
+402744b7:	232a      	add.n	a2, a3, a2
+402744b9:	221b      	addi.n	a2, a2, 1
+402744bb:	c022e0        	sub	a2, a2, a14
+402744be:	301401        	l32r	a0, 40240510 <user_init_task+0xd4>
+402744c1:	0000c0        	callx0	a0
+402744c4:	02ed      	mov.n	a14, a2
     /*failed to alloc mem, free old string and return NULL */
     if ( newstr == NULL ){
-40273dae:	4158      	l32i.n	a5, a1, 16
-40273db0:	d2cc      	bnez.n	a2, 40273dc1 <str_replace+0x71>
+402744c6:	4158      	l32i.n	a5, a1, 16
+402744c8:	d2cc      	bnez.n	a2, 402744d9 <str_replace+0x71>
       free (oldstr);
-40273db2:	0c2d      	mov.n	a2, a12
-40273db4:	31d501        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273db7:	0000c0        	callx0	a0
+402744ca:	0c2d      	mov.n	a2, a12
+402744cc:	300f01        	l32r	a0, 40240508 <user_init_task+0xcc>
+402744cf:	0000c0        	callx0	a0
       return NULL;
-40273dba:	0e2d      	mov.n	a2, a14
-40273dbc:	0027c6        	j	40273e5f <str_replace+0x10f>
-40273dbf:	c00000        	sub	a0, a0, a0
+402744d2:	0e2d      	mov.n	a2, a14
+402744d4:	0027c6        	j	40274577 <str_replace+0x10f>
+402744d7:	c00000        	sub	a0, a0, a0
     }
     memcpy ( newstr, oldstr, tok - oldstr );
-40273dc2:	3dc065        	excw
-40273dc5:	4d0c      	movi.n	a13, 4
-40273dc7:	415906        	j	4028432f <_irom0_text_end+0xf5a7>
-40273dca:	3169      	s32i.n	a6, a1, 12
-40273dcc:	495f01        	l32r	a0, 40246348 <node_remove_from_list+0x170>
-40273dcf:	0000c0        	callx0	a0
+402744da:	3dc065        	excw
+402744dd:	4d0c      	movi.n	a13, 4
+402744df:	415906        	j	40284a47 <_irom0_text_end+0xf44e>
+402744e2:	3169      	s32i.n	a6, a1, 12
+402744e4:	479901        	l32r	a0, 40246348 <node_remove_from_list+0x170>
+402744e7:	0000c0        	callx0	a0
     memcpy ( newstr + (tok - oldstr), replacement, strlen ( replacement ) );
-40273dd2:	0d2d      	mov.n	a2, a13
-40273dd4:	ccf185        	call0	40240cf0 <strlen>
-40273dd7:	3168      	l32i.n	a6, a1, 12
-40273dd9:	024d      	mov.n	a4, a2
-40273ddb:	0d3d      	mov.n	a3, a13
-40273ddd:	2e6a      	add.n	a2, a14, a6
-40273ddf:	495a01        	l32r	a0, 40246348 <node_remove_from_list+0x170>
-40273de2:	0000c0        	callx0	a0
+402744ea:	0d2d      	mov.n	a2, a13
+402744ec:	cc8005        	call0	40240cf0 <strlen>
+402744ef:	3168      	l32i.n	a6, a1, 12
+402744f1:	024d      	mov.n	a4, a2
+402744f3:	0d3d      	mov.n	a3, a13
+402744f5:	2e6a      	add.n	a2, a14, a6
+402744f7:	479401        	l32r	a0, 40246348 <node_remove_from_list+0x170>
+402744fa:	0000c0        	callx0	a0
     memcpy ( newstr + (tok - oldstr) + strlen( replacement ), tok + strlen ( substr ), strlen ( oldstr ) - strlen ( substr ) - ( tok - oldstr ) );
-40273de5:	0d2d      	mov.n	a2, a13
-40273de7:	ccf085        	call0	40240cf0 <strlen>
-40273dea:	023d      	mov.n	a3, a2
-40273dec:	0f2d      	mov.n	a2, a15
-40273dee:	2139      	s32i.n	a3, a1, 8
-40273df0:	ccefc5        	call0	40240cf0 <strlen>
-40273df3:	027d      	mov.n	a7, a2
-40273df5:	0c2d      	mov.n	a2, a12
-40273df7:	1179      	s32i.n	a7, a1, 4
-40273df9:	ccef45        	call0	40240cf0 <strlen>
-40273dfc:	4158      	l32i.n	a5, a1, 16
-40273dfe:	2138      	l32i.n	a3, a1, 8
-40273e00:	3168      	l32i.n	a6, a1, 12
-40273e02:	c04c50        	sub	a4, a12, a5
-40273e05:	1178      	l32i.n	a7, a1, 4
-40273e07:	636a      	add.n	a6, a3, a6
-40273e09:	424a      	add.n	a4, a2, a4
-40273e0b:	357a      	add.n	a3, a5, a7
-40273e0d:	c04470        	sub	a4, a4, a7
-40273e10:	2e6a      	add.n	a2, a14, a6
-40273e12:	494d01        	l32r	a0, 40246348 <node_remove_from_list+0x170>
-40273e15:	0000c0        	callx0	a0
+402744fd:	0d2d      	mov.n	a2, a13
+402744ff:	cc7f05        	call0	40240cf0 <strlen>
+40274502:	023d      	mov.n	a3, a2
+40274504:	0f2d      	mov.n	a2, a15
+40274506:	2139      	s32i.n	a3, a1, 8
+40274508:	cc7e45        	call0	40240cf0 <strlen>
+4027450b:	027d      	mov.n	a7, a2
+4027450d:	0c2d      	mov.n	a2, a12
+4027450f:	1179      	s32i.n	a7, a1, 4
+40274511:	cc7dc5        	call0	40240cf0 <strlen>
+40274514:	4158      	l32i.n	a5, a1, 16
+40274516:	2138      	l32i.n	a3, a1, 8
+40274518:	3168      	l32i.n	a6, a1, 12
+4027451a:	c04c50        	sub	a4, a12, a5
+4027451d:	1178      	l32i.n	a7, a1, 4
+4027451f:	636a      	add.n	a6, a3, a6
+40274521:	424a      	add.n	a4, a2, a4
+40274523:	357a      	add.n	a3, a5, a7
+40274525:	c04470        	sub	a4, a4, a7
+40274528:	2e6a      	add.n	a2, a14, a6
+4027452a:	478701        	l32r	a0, 40246348 <node_remove_from_list+0x170>
+4027452d:	0000c0        	callx0	a0
     memset ( newstr + strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) , 0, 1 );
-40273e18:	0c2d      	mov.n	a2, a12
-40273e1a:	cced45        	call0	40240cf0 <strlen>
-40273e1d:	024d      	mov.n	a4, a2
-40273e1f:	0f2d      	mov.n	a2, a15
-40273e21:	1149      	s32i.n	a4, a1, 4
-40273e23:	ccecc5        	call0	40240cf0 <strlen>
-40273e26:	023d      	mov.n	a3, a2
-40273e28:	0d2d      	mov.n	a2, a13
-40273e2a:	2139      	s32i.n	a3, a1, 8
-40273e2c:	ccec05        	call0	40240cf0 <strlen>
-40273e2f:	1148      	l32i.n	a4, a1, 4
-40273e31:	2138      	l32i.n	a3, a1, 8
-40273e33:	224a      	add.n	a2, a2, a4
-40273e35:	c03230        	sub	a3, a2, a3
-40273e38:	3e3a      	add.n	a3, a14, a3
-40273e3a:	020c      	movi.n	a2, 0
-40273e3c:	004322        	s8i	a2, a3, 0
+40274530:	0c2d      	mov.n	a2, a12
+40274532:	cc7bc5        	call0	40240cf0 <strlen>
+40274535:	024d      	mov.n	a4, a2
+40274537:	0f2d      	mov.n	a2, a15
+40274539:	1149      	s32i.n	a4, a1, 4
+4027453b:	cc7b45        	call0	40240cf0 <strlen>
+4027453e:	023d      	mov.n	a3, a2
+40274540:	0d2d      	mov.n	a2, a13
+40274542:	2139      	s32i.n	a3, a1, 8
+40274544:	cc7a85        	call0	40240cf0 <strlen>
+40274547:	1148      	l32i.n	a4, a1, 4
+40274549:	2138      	l32i.n	a3, a1, 8
+4027454b:	224a      	add.n	a2, a2, a4
+4027454d:	c03230        	sub	a3, a2, a3
+40274550:	3e3a      	add.n	a3, a14, a3
+40274552:	020c      	movi.n	a2, 0
+40274554:	004322        	s8i	a2, a3, 0
     free (oldstr);
-40273e3f:	0c2d      	mov.n	a2, a12
-40273e41:	31b101        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273e44:	0000c0        	callx0	a0
-40273e47:	0ecd      	mov.n	a12, a14
+40274557:	0c2d      	mov.n	a2, a12
+40274559:	2feb01        	l32r	a0, 40240508 <user_init_task+0xcc>
+4027455c:	0000c0        	callx0	a0
+4027455f:	0ecd      	mov.n	a12, a14
     return newstr;
   }
   if( replacement == NULL ) replacement = "";
   newstr = my_strdup(string, length);
   
   while ( (tok = strstr ( newstr, substr ))){
-40273e49:	0c2d      	mov.n	a2, a12
-40273e4b:	0f3d      	mov.n	a3, a15
-40273e4d:	cceb85        	call0	40240d08 <strstr>
-40273e50:	025d      	mov.n	a5, a2
-40273e52:	f2e256        	bnez	a2, 40273d84 <str_replace+0x34>
+40274561:	0c2d      	mov.n	a2, a12
+40274563:	0f3d      	mov.n	a3, a15
+40274565:	cc7a05        	call0	40240d08 <strstr>
+40274568:	025d      	mov.n	a5, a2
+4027456a:	f2e256        	bnez	a2, 4027449c <str_replace+0x34>
     memcpy ( newstr + (tok - oldstr), replacement, strlen ( replacement ) );
     memcpy ( newstr + (tok - oldstr) + strlen( replacement ), tok + strlen ( substr ), strlen ( oldstr ) - strlen ( substr ) - ( tok - oldstr ) );
     memset ( newstr + strlen ( oldstr ) - strlen ( substr ) + strlen ( replacement ) , 0, 1 );
     free (oldstr);
   }
   free(string);
-40273e55:	0128      	l32i.n	a2, a1, 0
-40273e57:	31ac01        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273e5a:	0000c0        	callx0	a0
+4027456d:	0128      	l32i.n	a2, a1, 0
+4027456f:	2fe601        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274572:	0000c0        	callx0	a0
   return newstr;
-40273e5d:	0c2d      	mov.n	a2, a12
+40274575:	0c2d      	mov.n	a2, a12
 }
-40273e5f:	f108      	l32i.n	a0, a1, 60
-40273e61:	e1c8      	l32i.n	a12, a1, 56
-40273e63:	d1d8      	l32i.n	a13, a1, 52
-40273e65:	c1e8      	l32i.n	a14, a1, 48
-40273e67:	b1f8      	l32i.n	a15, a1, 44
-40273e69:	40c112        	addi	a1, a1, 64
-40273e6c:	f00d      	ret.n
-40273e6e:	a00000        	addx4	a0, a0, a0
-40273e71:	3ffe87        	bbsi	a14, 24, 40273eb4 <serverParseCGI+0x2c>
-40273e74:	87ac      	beqz.n	a7, 40273ea0 <serverParseCGI+0x18>
-40273e76:	fe          	.byte 0xfe
-40273e77:	3f          	.byte 0x3f
-40273e78:	87bc      	beqz.n	a7, 40273eb4 <serverParseCGI+0x2c>
-40273e7a:	fe          	.byte 0xfe
-40273e7b:	3f          	.byte 0x3f
-40273e7c:	87cc      	bnez.n	a7, 40273e88 <serverParseCGI>
-40273e7e:	fe          	.byte 0xfe
-40273e7f:	3f          	.byte 0x3f
-40273e80:	87d8      	l32i.n	a13, a7, 32
-40273e82:	fe          	.byte 0xfe
-40273e83:	3f          	.byte 0x3f
-40273e84:	fe87e4        	excw
-40273e87:	3f          	.byte 0x3f
+40274577:	f108      	l32i.n	a0, a1, 60
+40274579:	e1c8      	l32i.n	a12, a1, 56
+4027457b:	d1d8      	l32i.n	a13, a1, 52
+4027457d:	c1e8      	l32i.n	a14, a1, 48
+4027457f:	b1f8      	l32i.n	a15, a1, 44
+40274581:	40c112        	addi	a1, a1, 64
+40274584:	f00d      	ret.n
+40274586:	c00000        	sub	a0, a0, a0
+40274589:	3ffe87        	bbsi	a14, 24, 402745cc <serverParseCGI+0x1c>
+4027458c:	87cc      	bnez.n	a7, 40274598 <str_replace+0x130>
+4027458e:	fe          	.byte 0xfe
+4027458f:	3f          	.byte 0x3f
+40274590:	87dc      	bnez.n	a7, 402745ac <str_replace+0x144>
+40274592:	fe          	.byte 0xfe
+40274593:	3f          	.byte 0x3f
+40274594:	87ec      	bnez.n	a7, 402745c0 <serverParseCGI+0x10>
+40274596:	fe          	.byte 0xfe
+40274597:	3f          	.byte 0x3f
+40274598:	87f8      	l32i.n	a15, a7, 32
+4027459a:	fe          	.byte 0xfe
+4027459b:	3f          	.byte 0x3f
+4027459c:	fe8804        	excw
+4027459f:	3f          	.byte 0x3f
+402745a0:	fe8814        	excw
+402745a3:	3f          	.byte 0x3f
+402745a4:	8818      	l32i.n	a1, a8, 32
+402745a6:	fe          	.byte 0xfe
+402745a7:	3f          	.byte 0x3f
+402745a8:	fe8824        	excw
+402745ab:	3f          	.byte 0x3f
+402745ac:	fe8834        	excw
+402745af:	3f          	.byte 0x3f
 
-40273e88 <serverParseCGI>:
+402745b0 <serverParseCGI>:
 
 
 ICACHE_FLASH_ATTR char* serverParseCGI(char* html, int length)
 {
-40273e88:	f0c112        	addi	a1, a1, -16
-40273e8b:	3109      	s32i.n	a0, a1, 12
-40273e8d:	21c9      	s32i.n	a12, a1, 8
-40273e8f:	11d9      	s32i.n	a13, a1, 4
-40273e91:	01e9      	s32i.n	a14, a1, 0
-40273e93:	03dd      	mov.n	a13, a3
-40273e95:	02ed      	mov.n	a14, a2
+402745b0:	e0c112        	addi	a1, a1, -32
+402745b3:	7109      	s32i.n	a0, a1, 28
+402745b5:	61c9      	s32i.n	a12, a1, 24
+402745b7:	51d9      	s32i.n	a13, a1, 20
+402745b9:	41e9      	s32i.n	a14, a1, 16
+402745bb:	03dd      	mov.n	a13, a3
+402745bd:	02ed      	mov.n	a14, a2
   struct icyHeader *header = clientGetHeader();
-40273e97:	ff9d05        	call0	40273868 <clientGetHeader>
-40273e9a:	02cd      	mov.n	a12, a2
+402745bf:	ff93c5        	call0	40273efc <clientGetHeader>
+402745c2:	02cd      	mov.n	a12, a2
   char* h = html;
+  char buf[15];
 
   h = str_replace(h, "#ICY-NAME#", header->members.single.name, length);
-40273e9c:	0c48      	l32i.n	a4, a12, 0
-40273e9e:	fff431        	l32r	a3, 40273e70 <str_replace+0x120>
-40273ea1:	0d5d      	mov.n	a5, a13
-40273ea3:	0e2d      	mov.n	a2, a14
-40273ea5:	ffea85        	call0	40273d50 <str_replace>
-40273ea8:	02dd      	mov.n	a13, a2
+402745c4:	0c48      	l32i.n	a4, a12, 0
+402745c6:	fff031        	l32r	a3, 40274588 <str_replace+0x120>
+402745c9:	0d5d      	mov.n	a5, a13
+402745cb:	0e2d      	mov.n	a2, a14
+402745cd:	ffe985        	call0	40274468 <str_replace>
+402745d0:	02dd      	mov.n	a13, a2
   h = str_replace(h, "#ICY-NOTICE1#", header->members.single.notice1, strlen(h));
-40273eaa:	cce445        	call0	40240cf0 <strlen>
-40273ead:	1c48      	l32i.n	a4, a12, 4
-40273eaf:	fff131        	l32r	a3, 40273e74 <str_replace+0x124>
-40273eb2:	025d      	mov.n	a5, a2
-40273eb4:	202dd0        	or	a2, a13, a13
-40273eb7:	ffe985        	call0	40273d50 <str_replace>
-40273eba:	02dd      	mov.n	a13, a2
+402745d2:	cc71c5        	call0	40240cf0 <strlen>
+402745d5:	1c48      	l32i.n	a4, a12, 4
+402745d7:	ffed31        	l32r	a3, 4027458c <str_replace+0x124>
+402745da:	025d      	mov.n	a5, a2
+402745dc:	0d2d      	mov.n	a2, a13
+402745de:	ffe885        	call0	40274468 <str_replace>
+402745e1:	02dd      	mov.n	a13, a2
   h = str_replace(h, "#ICY-NOTICE2#", header->members.single.notice2, strlen(h));
-40273ebc:	cce305        	call0	40240cf0 <strlen>
-40273ebf:	2c48      	l32i.n	a4, a12, 8
-40273ec1:	ffed31        	l32r	a3, 40273e78 <str_replace+0x128>
-40273ec4:	025d      	mov.n	a5, a2
-40273ec6:	202dd0        	or	a2, a13, a13
-40273ec9:	ffe845        	call0	40273d50 <str_replace>
-40273ecc:	02dd      	mov.n	a13, a2
+402745e3:	cc70c5        	call0	40240cf0 <strlen>
+402745e6:	2c48      	l32i.n	a4, a12, 8
+402745e8:	ffea31        	l32r	a3, 40274590 <str_replace+0x128>
+402745eb:	025d      	mov.n	a5, a2
+402745ed:	0d2d      	mov.n	a2, a13
+402745ef:	ffe785        	call0	40274468 <str_replace>
+402745f2:	02dd      	mov.n	a13, a2
   h = str_replace(h, "#ICY-GENRE#", header->members.single.genre, strlen(h));
-40273ece:	cce205        	call0	40240cf0 <strlen>
-40273ed1:	4c48      	l32i.n	a4, a12, 16
-40273ed3:	ffea31        	l32r	a3, 40273e7c <str_replace+0x12c>
-40273ed6:	025d      	mov.n	a5, a2
-40273ed8:	202dd0        	or	a2, a13, a13
-40273edb:	ffe745        	call0	40273d50 <str_replace>
-40273ede:	02dd      	mov.n	a13, a2
+402745f4:	cc6f85        	call0	40240cf0 <strlen>
+402745f7:	4c48      	l32i.n	a4, a12, 16
+402745f9:	ffe631        	l32r	a3, 40274594 <str_replace+0x12c>
+402745fc:	025d      	mov.n	a5, a2
+402745fe:	0d2d      	mov.n	a2, a13
+40274600:	ffe645        	call0	40274468 <str_replace>
+40274603:	02dd      	mov.n	a13, a2
   h = str_replace(h, "#ICY-URL#", header->members.single.url, strlen(h));
-40273ee0:	cce0c5        	call0	40240cf0 <strlen>
-40273ee3:	3c48      	l32i.n	a4, a12, 12
-40273ee5:	ffe631        	l32r	a3, 40273e80 <str_replace+0x130>
-40273ee8:	025d      	mov.n	a5, a2
-40273eea:	0d2d      	mov.n	a2, a13
-40273eec:	ffe605        	call0	40273d50 <str_replace>
-40273eef:	02dd      	mov.n	a13, a2
+40274605:	cc6e85        	call0	40240cf0 <strlen>
+40274608:	3c48      	l32i.n	a4, a12, 12
+4027460a:	ffe331        	l32r	a3, 40274598 <str_replace+0x130>
+4027460d:	025d      	mov.n	a5, a2
+4027460f:	0d2d      	mov.n	a2, a13
+40274611:	ffe545        	call0	40274468 <str_replace>
+40274614:	02dd      	mov.n	a13, a2
   h = str_replace(h, "#ICY-BITRATE#", header->members.single.bitrate, strlen(h));
-40273ef1:	ccdfc5        	call0	40240cf0 <strlen>
-40273ef4:	5c48      	l32i.n	a4, a12, 20
-40273ef6:	ffe331        	l32r	a3, 40273e84 <str_replace+0x134>
-40273ef9:	025d      	mov.n	a5, a2
-40273efb:	0d2d      	mov.n	a2, a13
-40273efd:	ffe505        	call0	40273d50 <str_replace>
+40274616:	cc6d85        	call0	40240cf0 <strlen>
+40274619:	5c48      	l32i.n	a4, a12, 20
+4027461b:	ffe031        	l32r	a3, 4027459c <str_replace+0x134>
+4027461e:	025d      	mov.n	a5, a2
+40274620:	0d2d      	mov.n	a2, a13
+40274622:	ffe445        	call0	40274468 <str_replace>
+40274625:	02dd      	mov.n	a13, a2
+  
+  sprintf(buf, "%d", 254-VS1053_GetVolume());
+40274627:	ff5805        	call0	40273ba8 <VS1053_GetVolume>
+4027462a:	ffddc1        	l32r	a12, 402745a0 <str_replace+0x138>
+4027462d:	fea042        	movi	a4, 254
+40274630:	c04420        	sub	a4, a4, a2
+40274633:	0c3d      	mov.n	a3, a12
+40274635:	202110        	or	a2, a1, a1
+40274638:	db4b05        	call0	4024faec <sprintf>
+  h = str_replace(h, "#SOUND-VOL#", buf, strlen(h));
+4027463b:	0d2d      	mov.n	a2, a13
+4027463d:	cc6b05        	call0	40240cf0 <strlen>
+40274640:	ffd931        	l32r	a3, 402745a4 <str_replace+0x13c>
+40274643:	025d      	mov.n	a5, a2
+40274645:	014d      	mov.n	a4, a1
+40274647:	202dd0        	or	a2, a13, a13
+4027464a:	ffe1c5        	call0	40274468 <str_replace>
+4027464d:	02dd      	mov.n	a13, a2
+  sprintf(buf, "%d", VS1053_GetTreble());
+4027464f:	ff58c5        	call0	40273bdc <VS1053_GetTreble>
+40274652:	024d      	mov.n	a4, a2
+40274654:	0c3d      	mov.n	a3, a12
+40274656:	012d      	mov.n	a2, a1
+40274658:	db4905        	call0	4024faec <sprintf>
+  h = str_replace(h, "#SOUND-TREBLE#", buf, strlen(h));
+4027465b:	0d2d      	mov.n	a2, a13
+4027465d:	cc6905        	call0	40240cf0 <strlen>
+40274660:	ffd231        	l32r	a3, 402745a8 <str_replace+0x140>
+40274663:	025d      	mov.n	a5, a2
+40274665:	014d      	mov.n	a4, a1
+40274667:	202dd0        	or	a2, a13, a13
+4027466a:	ffdfc5        	call0	40274468 <str_replace>
+4027466d:	02dd      	mov.n	a13, a2
+  sprintf(buf, "%d", VS1053_GetBass());
+4027466f:	ff5cc5        	call0	40273c3c <VS1053_GetBass>
+40274672:	024d      	mov.n	a4, a2
+40274674:	0c3d      	mov.n	a3, a12
+40274676:	012d      	mov.n	a2, a1
+40274678:	db4705        	call0	4024faec <sprintf>
+  h = str_replace(h, "#SOUND-BASS#", buf, strlen(h));
+4027467b:	0d2d      	mov.n	a2, a13
+4027467d:	cc6705        	call0	40240cf0 <strlen>
+40274680:	ffcb31        	l32r	a3, 402745ac <str_replace+0x144>
+40274683:	025d      	mov.n	a5, a2
+40274685:	014d      	mov.n	a4, a1
+40274687:	0d2d      	mov.n	a2, a13
+40274689:	ffddc5        	call0	40274468 <str_replace>
 
   return h;
 }
-40273f00:	3108      	l32i.n	a0, a1, 12
-40273f02:	21c8      	l32i.n	a12, a1, 8
-40273f04:	11d8      	l32i.n	a13, a1, 4
-40273f06:	01e8      	l32i.n	a14, a1, 0
-40273f08:	10c112        	addi	a1, a1, 16
-40273f0b:	f00d      	ret.n
-40273f0d:	000000        	ill
-40273f10:	88ec      	bnez.n	a8, 40273f3c <findFile+0x28>
-40273f12:	fe          	.byte 0xfe
-40273f13:	3f          	.byte 0x3f
+4027468c:	7108      	l32i.n	a0, a1, 28
+4027468e:	61c8      	l32i.n	a12, a1, 24
+40274690:	51d8      	l32i.n	a13, a1, 20
+40274692:	41e8      	l32i.n	a14, a1, 16
+40274694:	20c112        	addi	a1, a1, 32
+40274697:	f00d      	ret.n
+40274699:	000000        	ill
+4027469c:	fe8944        	excw
+4027469f:	3f          	.byte 0x3f
 
-40273f14 <findFile>:
+402746a0 <findFile>:
 
 ICACHE_FLASH_ATTR struct servFile* findFile(char* name)
 {
-40273f14:	f0c112        	addi	a1, a1, -16
-40273f17:	21c9      	s32i.n	a12, a1, 8
+402746a0:	f0c112        	addi	a1, a1, -16
+402746a3:	21c9      	s32i.n	a12, a1, 8
 	struct servFile* f = (struct servFile*)&indexFile;
-40273f19:	fffdc1        	l32r	a12, 40273f10 <serverParseCGI+0x88>
+402746a5:	fffdc1        	l32r	a12, 4027469c <serverParseCGI+0xec>
 
   return h;
 }
 
 ICACHE_FLASH_ATTR struct servFile* findFile(char* name)
 {
-40273f1c:	11d9      	s32i.n	a13, a1, 4
-40273f1e:	3109      	s32i.n	a0, a1, 12
-40273f20:	02dd      	mov.n	a13, a2
+402746a8:	11d9      	s32i.n	a13, a1, 4
+402746aa:	3109      	s32i.n	a0, a1, 12
+402746ac:	02dd      	mov.n	a13, a2
 	struct servFile* f = (struct servFile*)&indexFile;
 	while(1)
 	{
 		if(strcmp(f->name, name) == 0) return f;
-40273f22:	0c2d      	mov.n	a2, a12
-40273f24:	0d3d      	mov.n	a3, a13
-40273f26:	ccd985        	call0	40240cc0 <strcmp>
-40273f29:	328c      	beqz.n	a2, 40273f30 <findFile+0x1c>
+402746ae:	0c2d      	mov.n	a2, a12
+402746b0:	0d3d      	mov.n	a3, a13
+402746b2:	cc60c5        	call0	40240cc0 <strcmp>
+402746b5:	328c      	beqz.n	a2, 402746bc <findFile+0x1c>
 		else f = f->next;
-40273f2b:	ecc8      	l32i.n	a12, a12, 56
+402746b7:	ecc8      	l32i.n	a12, a12, 56
 		if(f == NULL) return NULL;
-40273f2d:	ff1c56        	bnez	a12, 40273f22 <findFile+0xe>
+402746b9:	ff1c56        	bnez	a12, 402746ae <findFile+0xe>
 	}
 }
-40273f30:	3108      	l32i.n	a0, a1, 12
-40273f32:	0c2d      	mov.n	a2, a12
-40273f34:	11d8      	l32i.n	a13, a1, 4
-40273f36:	21c8      	l32i.n	a12, a1, 8
-40273f38:	10c112        	addi	a1, a1, 16
-40273f3b:	f00d      	ret.n
-40273f3d:	000000        	ill
-40273f40:	fe87f4        	excw
-40273f43:	3f          	.byte 0x3f
-40273f44:	fe8800        	excw
-40273f47:	3f          	.byte 0x3f
-40273f48:	fe8850        	excw
-40273f4b:	3f          	.byte 0x3f
+402746bc:	3108      	l32i.n	a0, a1, 12
+402746be:	0c2d      	mov.n	a2, a12
+402746c0:	11d8      	l32i.n	a13, a1, 4
+402746c2:	21c8      	l32i.n	a12, a1, 8
+402746c4:	10c112        	addi	a1, a1, 16
+402746c7:	f00d      	ret.n
+402746c9:	000000        	ill
+402746cc:	fe8844        	excw
+402746cf:	3f          	.byte 0x3f
+402746d0:	fe8850        	excw
+402746d3:	3f          	.byte 0x3f
+402746d4:	fe88a0        	excw
+402746d7:	3f          	.byte 0x3f
 
-40273f4c <serveFile>:
+402746d8 <serveFile>:
 
 ICACHE_FLASH_ATTR void serveFile(char* name, int conn)
 {
-40273f4c:	b0a092        	movi	a9, 176
-40273f4f:	c01190        	sub	a1, a1, a9
-40273f52:	2861e2        	s32i	a14, a1, 160
-40273f55:	2761f2        	s32i	a15, a1, 156
-40273f58:	2b6102        	s32i	a0, a1, 172
-40273f5b:	2a61c2        	s32i	a12, a1, 168
-40273f5e:	2961d2        	s32i	a13, a1, 164
-40273f61:	03fd      	mov.n	a15, a3
+402746d8:	b0a092        	movi	a9, 176
+402746db:	c01190        	sub	a1, a1, a9
+402746de:	2861e2        	s32i	a14, a1, 160
+402746e1:	2761f2        	s32i	a15, a1, 156
+402746e4:	2b6102        	s32i	a0, a1, 172
+402746e7:	2a61c2        	s32i	a12, a1, 168
+402746ea:	2961d2        	s32i	a13, a1, 164
+402746ed:	03fd      	mov.n	a15, a3
 	int length;
 	char buf[128];
 	const char *content;
 
 	struct servFile* f = findFile(name);
-40273f63:	fffb05        	call0	40273f14 <findFile>
-40273f66:	02ed      	mov.n	a14, a2
+402746ef:	fffb05        	call0	402746a0 <findFile>
+402746f2:	02ed      	mov.n	a14, a2
 
 	if(f != NULL)
-40273f68:	069216        	beqz	a2, 40273fd5 <serveFile+0x89>
+402746f4:	069216        	beqz	a2, 40274761 <serveFile+0x89>
 	{
 		length = f->size;
-40273f6b:	1912d2        	l16ui	a13, a2, 50
+402746f7:	1912d2        	l16ui	a13, a2, 50
 		content = f->content;
-40273f6e:	d238      	l32i.n	a3, a2, 52
+402746fa:	d238      	l32i.n	a3, a2, 52
 	}
 	else length = 0;
 
 	if(length > 0)
-40273f70:	05bd16        	beqz	a13, 40273fcf <serveFile+0x83>
+402746fc:	05bd16        	beqz	a13, 4027475b <serveFile+0x83>
 	{
 		char *con = (char*)malloc(length*sizeof(char));
-40273f73:	0d2d      	mov.n	a2, a13
-40273f75:	206132        	s32i	a3, a1, 128
-40273f78:	316601        	l32r	a0, 40240510 <user_init_task+0xd4>
-40273f7b:	0000c0        	callx0	a0
-40273f7e:	02cd      	mov.n	a12, a2
+402746ff:	0d2d      	mov.n	a2, a13
+40274701:	206132        	s32i	a3, a1, 128
+40274704:	2f8301        	l32r	a0, 40240510 <user_init_task+0xd4>
+40274707:	0000c0        	callx0	a0
+4027470a:	02cd      	mov.n	a12, a2
 		if(con != NULL)
-40273f80:	202132        	l32i	a3, a1, 128
-40273f83:	06a216        	beqz	a2, 40273ff1 <serveFile+0xa5>
+4027470c:	202132        	l32i	a3, a1, 128
+4027470f:	06a216        	beqz	a2, 4027477d <serveFile+0xa5>
 		{
 			fread(con, (uint32_t)content, length);
-40273f86:	0d4d      	mov.n	a4, a13
-40273f88:	ffd445        	call0	40273cd0 <fread>
+40274712:	0d4d      	mov.n	a4, a13
+40274714:	ffcd05        	call0	402743e8 <fread>
 			if(f->cgi == 1) {
-40273f8b:	300e22        	l8ui	a2, a14, 48
-40273f8e:	0e1266        	bnei	a2, 1, 40273fa0 <serveFile+0x54>
+40274717:	300e22        	l8ui	a2, a14, 48
+4027471a:	0e1266        	bnei	a2, 1, 4027472c <serveFile+0x54>
 				con = serverParseCGI(con, length);
-40273f91:	0d3d      	mov.n	a3, a13
-40273f93:	202cc0        	or	a2, a12, a12
-40273f96:	ffef05        	call0	40273e88 <serverParseCGI>
-40273f99:	02cd      	mov.n	a12, a2
+4027471d:	0d3d      	mov.n	a3, a13
+4027471f:	202cc0        	or	a2, a12, a12
+40274722:	ffe8c5        	call0	402745b0 <serverParseCGI>
+40274725:	02cd      	mov.n	a12, a2
 				length = strlen(con);
-40273f9b:	ccd545        	call0	40240cf0 <strlen>
-40273f9e:	02dd      	mov.n	a13, a2
+40274727:	cc5c85        	call0	40240cf0 <strlen>
+4027472a:	02dd      	mov.n	a13, a2
 			}
 			sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n", (f!=NULL ? f->type : "text/plain"), length);
-40273fa0:	ffe931        	l32r	a3, 40273f44 <findFile+0x30>
-40273fa3:	0d5d      	mov.n	a5, a13
-40273fa5:	20ce42        	addi	a4, a14, 32
-40273fa8:	012d      	mov.n	a2, a1
-40273faa:	dbb405        	call0	4024faec <sprintf>
+4027472c:	ffe931        	l32r	a3, 402746d0 <findFile+0x30>
+4027472f:	0d5d      	mov.n	a5, a13
+40274731:	20ce42        	addi	a4, a14, 32
+40274734:	012d      	mov.n	a2, a1
+40274736:	db3b45        	call0	4024faec <sprintf>
 			write(conn, buf, strlen(buf));
-40273fad:	012d      	mov.n	a2, a1
-40273faf:	ccd405        	call0	40240cf0 <strlen>
-40273fb2:	024d      	mov.n	a4, a2
-40273fb4:	013d      	mov.n	a3, a1
-40273fb6:	0f2d      	mov.n	a2, a15
-40273fb8:	d953c5        	call0	4024d4f8 <lwip_write>
+40274739:	012d      	mov.n	a2, a1
+4027473b:	cc5b45        	call0	40240cf0 <strlen>
+4027473e:	024d      	mov.n	a4, a2
+40274740:	013d      	mov.n	a3, a1
+40274742:	0f2d      	mov.n	a2, a15
+40274744:	d8db05        	call0	4024d4f8 <lwip_write>
 			write(conn, con, length);
-40273fbb:	0f2d      	mov.n	a2, a15
-40273fbd:	0c3d      	mov.n	a3, a12
-40273fbf:	0d4d      	mov.n	a4, a13
-40273fc1:	d95345        	call0	4024d4f8 <lwip_write>
+40274747:	0f2d      	mov.n	a2, a15
+40274749:	0c3d      	mov.n	a3, a12
+4027474b:	0d4d      	mov.n	a4, a13
+4027474d:	d8da85        	call0	4024d4f8 <lwip_write>
 			free(con);
-40273fc4:	0c2d      	mov.n	a2, a12
-40273fc6:	315001        	l32r	a0, 40240508 <user_init_task+0xcc>
-40273fc9:	0000c0        	callx0	a0
-40273fcc:	000846        	j	40273ff1 <serveFile+0xa5>
+40274750:	0c2d      	mov.n	a2, a12
+40274752:	2f6d01        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274755:	0000c0        	callx0	a0
+40274758:	000846        	j	4027477d <serveFile+0xa5>
 		}
 	}
 	else
 	{
 		sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\n\r\n", (f!=NULL ? f->type : "text/plain"), 0);
-40273fcf:	20c242        	addi	a4, a2, 32
-40273fd2:	000086        	j	40273fd8 <serveFile+0x8c>
-40273fd5:	ffda41        	l32r	a4, 40273f40 <findFile+0x2c>
-40273fd8:	ffdc31        	l32r	a3, 40273f48 <findFile+0x34>
-40273fdb:	00a052        	movi	a5, 0
-40273fde:	012d      	mov.n	a2, a1
-40273fe0:	dbb085        	call0	4024faec <sprintf>
+4027475b:	20c242        	addi	a4, a2, 32
+4027475e:	000086        	j	40274764 <serveFile+0x8c>
+40274761:	ffda41        	l32r	a4, 402746cc <findFile+0x2c>
+40274764:	ffdc31        	l32r	a3, 402746d4 <findFile+0x34>
+40274767:	00a052        	movi	a5, 0
+4027476a:	012d      	mov.n	a2, a1
+4027476c:	db37c5        	call0	4024faec <sprintf>
 		write(conn, buf, strlen(buf));
-40273fe3:	012d      	mov.n	a2, a1
-40273fe5:	ccd085        	call0	40240cf0 <strlen>
-40273fe8:	024d      	mov.n	a4, a2
-40273fea:	013d      	mov.n	a3, a1
-40273fec:	0f2d      	mov.n	a2, a15
-40273fee:	d95085        	call0	4024d4f8 <lwip_write>
+4027476f:	012d      	mov.n	a2, a1
+40274771:	cc57c5        	call0	40240cf0 <strlen>
+40274774:	024d      	mov.n	a4, a2
+40274776:	013d      	mov.n	a3, a1
+40274778:	0f2d      	mov.n	a2, a15
+4027477a:	d8d7c5        	call0	4024d4f8 <lwip_write>
 	}
 }
-40273ff1:	2b2102        	l32i	a0, a1, 172
-40273ff4:	b0a092        	movi	a9, 176
-40273ff7:	2a21c2        	l32i	a12, a1, 168
-40273ffa:	2921d2        	l32i	a13, a1, 164
-40273ffd:	2821e2        	l32i	a14, a1, 160
-40274000:	2721f2        	l32i	a15, a1, 156
-40274003:	119a      	add.n	a1, a1, a9
-40274005:	f00d      	ret.n
-40274007:	888c00        	excw
-4027400a:	fe          	.byte 0xfe
-4027400b:	3f          	.byte 0x3f
-4027400c:	fe8664        	excw
-4027400f:	3f          	.byte 0x3f
+4027477d:	2b2102        	l32i	a0, a1, 172
+40274780:	b0a092        	movi	a9, 176
+40274783:	2a21c2        	l32i	a12, a1, 168
+40274786:	2921d2        	l32i	a13, a1, 164
+40274789:	2821e2        	l32i	a14, a1, 160
+4027478c:	2721f2        	l32i	a15, a1, 156
+4027478f:	119a      	add.n	a1, a1, a9
+40274791:	f00d      	ret.n
+40274793:	88dc00        	excw
+40274796:	fe          	.byte 0xfe
+40274797:	3f          	.byte 0x3f
+40274798:	fe8664        	excw
+4027479b:	3f          	.byte 0x3f
 
-40274010 <getParameterFromResponse>:
+4027479c <getParameterFromResponse>:
 
 char* getParameterFromResponse(char* param, char* data, uint16_t data_length) {
-40274010:	e0c112        	addi	a1, a1, -32
-40274013:	31f9      	s32i.n	a15, a1, 12
-40274015:	02fd      	mov.n	a15, a2
-40274017:	61c9      	s32i.n	a12, a1, 24
+4027479c:	e0c112        	addi	a1, a1, -32
+4027479f:	31f9      	s32i.n	a15, a1, 12
+402747a1:	02fd      	mov.n	a15, a2
+402747a3:	61c9      	s32i.n	a12, a1, 24
 	char* p = strstr(data, param);
-40274019:	032d      	mov.n	a2, a3
+402747a5:	032d      	mov.n	a2, a3
 		sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\n\r\n", (f!=NULL ? f->type : "text/plain"), 0);
 		write(conn, buf, strlen(buf));
 	}
 }
 
 char* getParameterFromResponse(char* param, char* data, uint16_t data_length) {
-4027401b:	03cd      	mov.n	a12, a3
+402747a7:	03cd      	mov.n	a12, a3
 	char* p = strstr(data, param);
-4027401d:	0f3d      	mov.n	a3, a15
+402747a9:	0f3d      	mov.n	a3, a15
 		sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\n\r\n", (f!=NULL ? f->type : "text/plain"), 0);
 		write(conn, buf, strlen(buf));
 	}
 }
 
 char* getParameterFromResponse(char* param, char* data, uint16_t data_length) {
-4027401f:	51d9      	s32i.n	a13, a1, 20
-40274021:	41e9      	s32i.n	a14, a1, 16
-40274023:	7109      	s32i.n	a0, a1, 28
-40274025:	f4d040        	extui	a13, a4, 0, 16
+402747ab:	51d9      	s32i.n	a13, a1, 20
+402747ad:	41e9      	s32i.n	a14, a1, 16
+402747af:	7109      	s32i.n	a0, a1, 28
+402747b1:	f4d040        	extui	a13, a4, 0, 16
 	char* p = strstr(data, param);
-40274028:	cccdc5        	call0	40240d08 <strstr>
-4027402b:	02ed      	mov.n	a14, a2
+402747b4:	cc5505        	call0	40240d08 <strstr>
+402747b7:	02ed      	mov.n	a14, a2
 	if(p > 0) {
-4027402d:	057216        	beqz	a2, 40274088 <getParameterFromResponse+0x78>
+402747b9:	057216        	beqz	a2, 40274814 <getParameterFromResponse+0x78>
 		p += strlen(param);
-40274030:	0f2d      	mov.n	a2, a15
-40274032:	cccbc5        	call0	40240cf0 <strlen>
-40274035:	ee2a      	add.n	a14, a14, a2
+402747bc:	0f2d      	mov.n	a2, a15
+402747be:	cc5305        	call0	40240cf0 <strlen>
+402747c1:	ee2a      	add.n	a14, a14, a2
 		char* p_end = strstr(p, "&");
-40274037:	0e2d      	mov.n	a2, a14
-40274039:	632c      	movi.n	a3, 38
-4027403b:	dba685        	call0	4024faa4 <strchr>
+402747c3:	0e2d      	mov.n	a2, a14
+402747c5:	632c      	movi.n	a3, 38
+402747c7:	db2dc5        	call0	4024faa4 <strchr>
 		if(p_end <= 0) p_end = data_length + data;
-4027403e:	42cc      	bnez.n	a2, 40274046 <getParameterFromResponse+0x36>
-40274040:	802cd0        	add	a2, a12, a13
+402747ca:	42cc      	bnez.n	a2, 402747d2 <getParameterFromResponse+0x36>
+402747cc:	802cd0        	add	a2, a12, a13
 		if(p_end > 0) {
-40274043:	03d216        	beqz	a2, 40274084 <getParameterFromResponse+0x74>
+402747cf:	03d216        	beqz	a2, 40274810 <getParameterFromResponse+0x74>
 			char* t = malloc(p_end-p + 1);
-40274046:	c0d2e0        	sub	a13, a2, a14
-40274049:	2d1b      	addi.n	a2, a13, 1
-4027404b:	313101        	l32r	a0, 40240510 <user_init_task+0xd4>
-4027404e:	0000c0        	callx0	a0
+402747d2:	c0d2e0        	sub	a13, a2, a14
+402747d5:	2d1b      	addi.n	a2, a13, 1
+402747d7:	2f4e01        	l32r	a0, 40240510 <user_init_task+0xd4>
+402747da:	0000c0        	callx0	a0
 			int i;
 			for(i=0; i<(p_end-p + 1); i++) t[i] = 0;
-40274051:	050c      	movi.n	a5, 0
+402747dd:	050c      	movi.n	a5, 0
 	if(p > 0) {
 		p += strlen(param);
 		char* p_end = strstr(p, "&");
 		if(p_end <= 0) p_end = data_length + data;
 		if(p_end > 0) {
 			char* t = malloc(p_end-p + 1);
-40274053:	02cd      	mov.n	a12, a2
+402747df:	02cd      	mov.n	a12, a2
 			int i;
 			for(i=0; i<(p_end-p + 1); i++) t[i] = 0;
-40274055:	052d      	mov.n	a2, a5
-40274057:	0001c6        	j	40274062 <getParameterFromResponse+0x52>
-4027405a:	803c50        	add	a3, a12, a5
-4027405d:	004322        	s8i	a2, a3, 0
-40274060:	551b      	addi.n	a5, a5, 1
-40274062:	f4ad57        	bge	a13, a5, 4027405a <getParameterFromResponse+0x4a>
+402747e1:	052d      	mov.n	a2, a5
+402747e3:	0001c6        	j	402747ee <getParameterFromResponse+0x52>
+402747e6:	803c50        	add	a3, a12, a5
+402747e9:	004322        	s8i	a2, a3, 0
+402747ec:	551b      	addi.n	a5, a5, 1
+402747ee:	f4ad57        	bge	a13, a5, 402747e6 <getParameterFromResponse+0x4a>
 			strncpy(t, p, p_end-p);
-40274065:	0e3d      	mov.n	a3, a14
-40274067:	0d4d      	mov.n	a4, a13
-40274069:	0c2d      	mov.n	a2, a12
-4027406b:	ccc3c5        	call0	40240ca8 <strncpy>
+402747f1:	0e3d      	mov.n	a3, a14
+402747f3:	0d4d      	mov.n	a4, a13
+402747f5:	0c2d      	mov.n	a2, a12
+402747f7:	cc4b05        	call0	40240ca8 <strncpy>
 			t = str_replace(t, "%2F", "/", strlen(t));
-4027406e:	0c2d      	mov.n	a2, a12
-40274070:	ccc7c5        	call0	40240cf0 <strlen>
-40274073:	ffe531        	l32r	a3, 40274008 <serveFile+0xbc>
-40274076:	ffe541        	l32r	a4, 4027400c <serveFile+0xc0>
-40274079:	025d      	mov.n	a5, a2
-4027407b:	0c2d      	mov.n	a2, a12
-4027407d:	ffcd05        	call0	40273d50 <str_replace>
+402747fa:	0c2d      	mov.n	a2, a12
+402747fc:	cc4f05        	call0	40240cf0 <strlen>
+402747ff:	ffe531        	l32r	a3, 40274794 <serveFile+0xbc>
+40274802:	ffe541        	l32r	a4, 40274798 <serveFile+0xc0>
+40274805:	025d      	mov.n	a5, a2
+40274807:	0c2d      	mov.n	a2, a12
+40274809:	ffc5c5        	call0	40274468 <str_replace>
 			return t;
-40274080:	000106        	j	40274088 <getParameterFromResponse+0x78>
-40274083:	000600        	excw
-40274086:	080000        	excw
+4027480c:	000106        	j	40274814 <getParameterFromResponse+0x78>
+4027480f:	000600        	excw
+40274812:	080000        	excw
 		}
 	} else return NULL;
 }
-40274089:	61c871        	l32r	a7, 4024c7ac <udp_bind+0x78>
-4027408c:	51d8      	l32i.n	a13, a1, 20
-4027408e:	41e8      	l32i.n	a14, a1, 16
-40274090:	31f8      	l32i.n	a15, a1, 12
-40274092:	20c112        	addi	a1, a1, 32
-40274095:	f00d      	ret.n
-40274097:	889000        	excw
-4027409a:	fe          	.byte 0xfe
-4027409b:	3f          	.byte 0x3f
-4027409c:	fe88a0        	excw
-4027409f:	3f          	.byte 0x3f
-402740a0:	88a8      	l32i.n	a10, a8, 32
-402740a2:	fe          	.byte 0xfe
-402740a3:	3f          	.byte 0x3f
-402740a4:	fe88b0        	excw
-402740a7:	3f          	.byte 0x3f
-402740a8:	88b8      	l32i.n	a11, a8, 32
-402740aa:	fe          	.byte 0xfe
-402740ab:	3f          	.byte 0x3f
-402740ac:	fe88c4        	excw
-402740af:	3f          	.byte 0x3f
-402740b0:	88cc      	bnez.n	a8, 402740bc <handlePOST+0x8>
-402740b2:	fe          	.byte 0xfe
-402740b3:	3f          	.byte 0x3f
+40274815:	61c871        	l32r	a7, 4024cf38 <lwip_listen+0x38>
+40274818:	51d8      	l32i.n	a13, a1, 20
+4027481a:	41e8      	l32i.n	a14, a1, 16
+4027481c:	31f8      	l32i.n	a15, a1, 12
+4027481e:	20c112        	addi	a1, a1, 32
+40274821:	f00d      	ret.n
+40274823:	88e000        	excw
+40274826:	fe          	.byte 0xfe
+40274827:	3f          	.byte 0x3f
+40274828:	fe88f0        	excw
+4027482b:	3f          	.byte 0x3f
+4027482c:	88f8      	l32i.n	a15, a8, 32
+4027482e:	fe          	.byte 0xfe
+4027482f:	3f          	.byte 0x3f
+40274830:	fe8900        	excw
+40274833:	3f          	.byte 0x3f
+40274834:	8908      	l32i.n	a0, a9, 32
+40274836:	fe          	.byte 0xfe
+40274837:	3f          	.byte 0x3f
+40274838:	fe8910        	excw
+4027483b:	3f          	.byte 0x3f
+4027483c:	8918      	l32i.n	a1, a9, 32
+4027483e:	fe          	.byte 0xfe
+4027483f:	3f          	.byte 0x3f
+40274840:	fe8920        	excw
+40274843:	3f          	.byte 0x3f
 
-402740b4 <handlePOST>:
+40274844 <handlePOST>:
 
 ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int conn) {
-402740b4:	d0c112        	addi	a1, a1, -48
-402740b7:	0a61c2        	s32i	a12, a1, 40
-402740ba:	03cd      	mov.n	a12, a3
+40274844:	d0c112        	addi	a1, a1, -48
+40274847:	a1c9      	s32i.n	a12, a1, 40
+40274849:	03cd      	mov.n	a12, a3
 	if(strcmp(name, "/instant_play") == 0) {
-402740bc:	fff731        	l32r	a3, 40274098 <getParameterFromResponse+0x88>
+4027484b:	fff631        	l32r	a3, 40274824 <getParameterFromResponse+0x88>
 			return t;
 		}
 	} else return NULL;
 }
 
 ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int conn) {
-402740bf:	91d9      	s32i.n	a13, a1, 36
-402740c1:	81e9      	s32i.n	a14, a1, 32
-402740c3:	71f9      	s32i.n	a15, a1, 28
-402740c5:	b109      	s32i.n	a0, a1, 44
-402740c7:	02ed      	mov.n	a14, a2
-402740c9:	04dd      	mov.n	a13, a4
-402740cb:	0159      	s32i.n	a5, a1, 0
+4027484e:	91d9      	s32i.n	a13, a1, 36
+40274850:	81e9      	s32i.n	a14, a1, 32
+40274852:	71f9      	s32i.n	a15, a1, 28
+40274854:	b109      	s32i.n	a0, a1, 44
+40274856:	02ed      	mov.n	a14, a2
+40274858:	04dd      	mov.n	a13, a4
+4027485a:	0159      	s32i.n	a5, a1, 0
 	if(strcmp(name, "/instant_play") == 0) {
-402740cd:	ccbf05        	call0	40240cc0 <strcmp>
-402740d0:	02fd      	mov.n	a15, a2
-402740d2:	0a3256        	bnez	a2, 40274179 <handlePOST+0xc5>
+4027485c:	cc4605        	call0	40240cc0 <strcmp>
+4027485f:	02fd      	mov.n	a15, a2
+40274861:	0a8256        	bnez	a2, 4027490d <handlePOST+0xc9>
 		if(data_size > 0) { 
-402740d5:	021de6        	bgei	a13, 1, 402740db <handlePOST+0x27>
-402740d8:	002f46        	j	40274199 <handlePOST+0xe5>
+40274864:	021de6        	bgei	a13, 1, 4027486a <handlePOST+0x26>
+40274867:	004946        	j	40274990 <handlePOST+0x14c>
 			char* url = getParameterFromResponse("url=", data, data_size);
-402740db:	f450d0        	extui	a5, a13, 0, 16
-402740de:	ffef21        	l32r	a2, 4027409c <getParameterFromResponse+0x8c>
-402740e1:	0c3d      	mov.n	a3, a12
-402740e3:	054d      	mov.n	a4, a5
-402740e5:	016152        	s32i	a5, a1, 4
-402740e8:	fff245        	call0	40274010 <getParameterFromResponse>
+4027486a:	f450d0        	extui	a5, a13, 0, 16
+4027486d:	ffee21        	l32r	a2, 40274828 <getParameterFromResponse+0x8c>
+40274870:	0c3d      	mov.n	a3, a12
+40274872:	054d      	mov.n	a4, a5
+40274874:	1159      	s32i.n	a5, a1, 4
+40274876:	fff245        	call0	4027479c <getParameterFromResponse>
 			char* path = getParameterFromResponse("path=", data, data_size);
-402740eb:	1158      	l32i.n	a5, a1, 4
+40274879:	1158      	l32i.n	a5, a1, 4
 }
 
 ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int conn) {
 	if(strcmp(name, "/instant_play") == 0) {
 		if(data_size > 0) { 
 			char* url = getParameterFromResponse("url=", data, data_size);
-402740ed:	02ed      	mov.n	a14, a2
+4027487b:	02ed      	mov.n	a14, a2
 			char* path = getParameterFromResponse("path=", data, data_size);
-402740ef:	ffec21        	l32r	a2, 402740a0 <getParameterFromResponse+0x90>
-402740f2:	0c3d      	mov.n	a3, a12
-402740f4:	054d      	mov.n	a4, a5
-402740f6:	fff185        	call0	40274010 <getParameterFromResponse>
+4027487d:	ffeb21        	l32r	a2, 4027482c <getParameterFromResponse+0x90>
+40274880:	0c3d      	mov.n	a3, a12
+40274882:	054d      	mov.n	a4, a5
+40274884:	fff145        	call0	4027479c <getParameterFromResponse>
 			char* port = getParameterFromResponse("port=", data, data_size);
-402740f9:	1158      	l32i.n	a5, a1, 4
+40274887:	1158      	l32i.n	a5, a1, 4
 
 ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int conn) {
 	if(strcmp(name, "/instant_play") == 0) {
 		if(data_size > 0) { 
 			char* url = getParameterFromResponse("url=", data, data_size);
 			char* path = getParameterFromResponse("path=", data, data_size);
-402740fb:	02dd      	mov.n	a13, a2
+40274889:	02dd      	mov.n	a13, a2
 			char* port = getParameterFromResponse("port=", data, data_size);
-402740fd:	ffe921        	l32r	a2, 402740a4 <getParameterFromResponse+0x94>
-40274100:	0c3d      	mov.n	a3, a12
-40274102:	054d      	mov.n	a4, a5
-40274104:	fff085        	call0	40274010 <getParameterFromResponse>
-40274107:	02cd      	mov.n	a12, a2
-			printf("%s %s %s\n\n", url, path, port);
-40274109:	ffe721        	l32r	a2, 402740a8 <getParameterFromResponse+0x98>
-4027410c:	0e3d      	mov.n	a3, a14
-4027410e:	0d4d      	mov.n	a4, a13
-40274110:	205cc0        	or	a5, a12, a12
-40274113:	2fc701        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-40274116:	0000c0        	callx0	a0
+4027488b:	ffe921        	l32r	a2, 40274830 <getParameterFromResponse+0x94>
+4027488e:	0c3d      	mov.n	a3, a12
+40274890:	054d      	mov.n	a4, a5
+40274892:	fff085        	call0	4027479c <getParameterFromResponse>
 			if(url != NULL && path != NULL && port != NULL) {
-40274119:	130c      	movi.n	a3, 1
-4027411b:	0f2d      	mov.n	a2, a15
-4027411d:	93f3d0        	movnez	a15, a3, a13
-40274120:	9323e0        	movnez	a2, a3, a14
-40274123:	74f0f0        	extui	a15, a15, 0, 8
-40274126:	742020        	extui	a2, a2, 0, 8
-40274129:	7fac      	beqz.n	a15, 40274154 <handlePOST+0xa0>
-4027412b:	02f216        	beqz	a2, 4027415e <handlePOST+0xaa>
-4027412e:	4cac      	beqz.n	a12, 40274156 <handlePOST+0xa2>
+40274895:	130c      	movi.n	a3, 1
+ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int conn) {
+	if(strcmp(name, "/instant_play") == 0) {
+		if(data_size > 0) { 
+			char* url = getParameterFromResponse("url=", data, data_size);
+			char* path = getParameterFromResponse("path=", data, data_size);
+			char* port = getParameterFromResponse("port=", data, data_size);
+40274897:	02cd      	mov.n	a12, a2
+			if(url != NULL && path != NULL && port != NULL) {
+40274899:	202ff0        	or	a2, a15, a15
+4027489c:	93f3d0        	movnez	a15, a3, a13
+4027489f:	9323e0        	movnez	a2, a3, a14
+402748a2:	74f0f0        	extui	a15, a15, 0, 8
+402748a5:	742020        	extui	a2, a2, 0, 8
+402748a8:	044f16        	beqz	a15, 402748f0 <handlePOST+0xac>
+402748ab:	04b216        	beqz	a2, 402748fa <handlePOST+0xb6>
+402748ae:	040c16        	beqz	a12, 402748f2 <handlePOST+0xae>
 				clientDisconnect();
-40274130:	ff8fc5        	call0	40273a30 <clientDisconnect>
-				vTaskDelay(10);
-40274133:	a20c      	movi.n	a2, 10
-40274135:	cff985        	call0	402440d0 <vTaskDelay>
+402748b1:	ff8305        	call0	402740e4 <clientDisconnect>
+				while(clientIsConnected()) vTaskDelay(10);
+402748b4:	000186        	j	402748be <handlePOST+0x7a>
+402748b7:	a02200        	addx4	a2, a2, a0
+402748ba:	450a      	add.n	a4, a5, a0
+402748bc:	45cf81        	l32r	a8, 40245ff8 <dhcp_stop+0x524>
+402748bf:	56ff60        	excw
+402748c2:	2dff32        	excw
 				clientSetURL(url);
-40274138:	0e2d      	mov.n	a2, a14
-4027413a:	ff8285        	call0	40273964 <clientSetURL>
+402748c5:	0e          	.byte 0xe
+402748c6:	ff7545        	call0	4027401c <clientSetURL>
 				clientSetPath(path);
-4027413d:	0d2d      	mov.n	a2, a13
-4027413f:	ff8785        	call0	402739b8 <clientSetPath>
+402748c9:	0d2d      	mov.n	a2, a13
+402748cb:	ff7a45        	call0	40274070 <clientSetPath>
 				clientSetPort(atoi(port));
-40274142:	0c2d      	mov.n	a2, a12
-40274144:	db9745        	call0	4024fabc <atoi>
-40274147:	f42020        	extui	a2, a2, 0, 16
-4027414a:	ff8c05        	call0	40273a0c <clientSetPort>
+402748ce:	0c2d      	mov.n	a2, a12
+402748d0:	db1e85        	call0	4024fabc <atoi>
+402748d3:	f42020        	extui	a2, a2, 0, 16
+402748d6:	ff7ec5        	call0	402740c4 <clientSetPort>
 				clientConnect();
-4027414d:	ff9105        	call0	40273a60 <clientConnect>
-40274150:	000086        	j	40274156 <handlePOST+0xa2>
-40274153:	229c00        	excw
+402748d9:	ff83c5        	call0	40274118 <clientConnect>
+				while(!clientIsConnected()) vTaskDelay(10);
+402748dc:	000146        	j	402748e5 <handlePOST+0xa1>
+402748df:	a20c00        	excw
+402748e2:	cf7ec5        	call0	402440d0 <vTaskDelay>
+402748e5:	ff5dc5        	call0	40273ec4 <clientIsConnected>
+402748e8:	ff4216        	beqz	a2, 402748e0 <handlePOST+0x9c>
+402748eb:	0000c6        	j	402748f2 <handlePOST+0xae>
+402748ee:	9c0000        	excw
 			}
 			if(url) free(url);
-40274156:	0e2d      	mov.n	a2, a14
-40274158:	30ec01        	l32r	a0, 40240508 <user_init_task+0xcc>
-4027415b:	0000c0        	callx0	a0
+402748f1:	0e2d02        	l32i	a0, a13, 56
+402748f4:	2f0501        	l32r	a0, 40240508 <user_init_task+0xcc>
+402748f7:	0000c0        	callx0	a0
 			if(path) free(path);
-4027415e:	008f16        	beqz	a15, 4027416a <handlePOST+0xb6>
-40274161:	202dd0        	or	a2, a13, a13
-40274164:	30e901        	l32r	a0, 40240508 <user_init_task+0xcc>
-40274167:	0000c0        	callx0	a0
+402748fa:	6f8c      	beqz.n	a15, 40274904 <handlePOST+0xc0>
+402748fc:	0d2d      	mov.n	a2, a13
+402748fe:	2f0201        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274901:	0000c0        	callx0	a0
 			if(port) free(port);
-4027416a:	bcac      	beqz.n	a12, 40274199 <handlePOST+0xe5>
-4027416c:	0c2d      	mov.n	a2, a12
-4027416e:	30e601        	l32r	a0, 40240508 <user_init_task+0xcc>
-40274171:	0000c0        	callx0	a0
-40274174:	000846        	j	40274199 <handlePOST+0xe5>
-40274177:	310000        	srai	a0, a0, 16
+40274904:	088c16        	beqz	a12, 40274990 <handlePOST+0x14c>
+40274907:	001f46        	j	40274988 <handlePOST+0x144>
+4027490a:	000000        	ill
 		}
 	} else if(strcmp(name, "/sound") == 0) {
-4027417a:	ffcc      	bnez.n	a15, 4027418d <handlePOST+0xd9>
-4027417c:	0e2d      	mov.n	a2, a14
-4027417e:	ccb405        	call0	40240cc0 <strcmp>
-40274181:	42dc      	bnez.n	a2, 40274199 <handlePOST+0xe5>
-		if(data_size > 0) { data[data_size-1] = 0; printf("%s", data); }
-40274183:	121da6        	blti	a13, 1, 40274199 <handlePOST+0xe5>
-40274186:	dcda      	add.n	a13, a12, a13
-40274188:	dd0b      	addi.n	a13, a13, -1
-4027418a:	004d22        	s8i	a2, a13, 0
-4027418d:	ffc821        	l32r	a2, 402740b0 <getParameterFromResponse+0xa0>
-40274190:	203cc0        	or	a3, a12, a12
-40274193:	2fa701        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-40274196:	0000c0        	callx0	a0
+4027490d:	ffc931        	l32r	a3, 40274834 <getParameterFromResponse+0x98>
+40274910:	202ee0        	or	a2, a14, a14
+40274913:	cc3ac5        	call0	40240cc0 <strcmp>
+40274916:	076256        	bnez	a2, 40274990 <handlePOST+0x14c>
+		if(data_size > 0) { 
+40274919:	021de6        	bgei	a13, 1, 4027491f <handlePOST+0xdb>
+4027491c:	001c06        	j	40274990 <handlePOST+0x14c>
+			char* vol = getParameterFromResponse("vol=", data, data_size);
+4027491f:	f4d0d0        	extui	a13, a13, 0, 16
+40274922:	ffc521        	l32r	a2, 40274838 <getParameterFromResponse+0x9c>
+40274925:	203cc0        	or	a3, a12, a12
+40274928:	204dd0        	or	a4, a13, a13
+4027492b:	ffe705        	call0	4027479c <getParameterFromResponse>
+4027492e:	02fd      	mov.n	a15, a2
+			char* bass = getParameterFromResponse("bass=", data, data_size);
+40274930:	ffc321        	l32r	a2, 4027483c <getParameterFromResponse+0xa0>
+40274933:	0c3d      	mov.n	a3, a12
+40274935:	0d4d      	mov.n	a4, a13
+40274937:	ffe645        	call0	4027479c <getParameterFromResponse>
+4027493a:	02ed      	mov.n	a14, a2
+			char* treble = getParameterFromResponse("treble=", data, data_size);
+4027493c:	ffc121        	l32r	a2, 40274840 <getParameterFromResponse+0xa4>
+4027493f:	0c3d      	mov.n	a3, a12
+40274941:	0d4d      	mov.n	a4, a13
+40274943:	ffe585        	call0	4027479c <getParameterFromResponse>
+40274946:	02cd      	mov.n	a12, a2
+			if(vol) {
+40274948:	6f9c      	beqz.n	a15, 40274962 <handlePOST+0x11e>
+				VS1053_SetVolume(254-atoi(vol));
+4027494a:	0f2d      	mov.n	a2, a15
+4027494c:	db16c5        	call0	4024fabc <atoi>
+4027494f:	e37c      	movi.n	a3, -2
+40274951:	c02320        	sub	a2, a3, a2
+40274954:	742020        	extui	a2, a2, 0, 8
+40274957:	ff2685        	call0	40273bc0 <VS1053_SetVolume>
+				free(vol);
+4027495a:	0f2d      	mov.n	a2, a15
+4027495c:	2eeb01        	l32r	a0, 40240508 <user_init_task+0xcc>
+4027495f:	0000c0        	callx0	a0
+			}
+			if(bass) {
+40274962:	014e16        	beqz	a14, 4027497a <handlePOST+0x136>
+				VS1053_SetBass(atoi(bass));
+40274965:	202ee0        	or	a2, a14, a14
+40274968:	db1505        	call0	4024fabc <atoi>
+4027496b:	742020        	extui	a2, a2, 0, 8
+4027496e:	ff2e45        	call0	40273c54 <VS1053_SetBass>
+				free(bass);
+40274971:	202ee0        	or	a2, a14, a14
+40274974:	2ee501        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274977:	0000c0        	callx0	a0
+			}
+			if(treble) {
+4027497a:	012c16        	beqz	a12, 40274990 <handlePOST+0x14c>
+				VS1053_SetTreble(atoi(treble));
+4027497d:	0c2d      	mov.n	a2, a12
+4027497f:	db13c5        	call0	4024fabc <atoi>
+40274982:	742020        	extui	a2, a2, 0, 8
+40274985:	ff26c5        	call0	40273bf4 <VS1053_SetTreble>
+				free(treble);
+40274988:	0c2d      	mov.n	a2, a12
+4027498a:	2edf01        	l32r	a0, 40240508 <user_init_task+0xcc>
+4027498d:	0000c0        	callx0	a0
+			}
+		}
 	}
 	
 	serveFile("/", conn); // Return back to index.html
-40274199:	002132        	l32i	a3, a1, 0
-4027419c:	ff9c21        	l32r	a2, 4027400c <serveFile+0xc0>
-4027419f:	ffdac5        	call0	40273f4c <serveFile>
+40274990:	0138      	l32i.n	a3, a1, 0
+40274992:	ff8121        	l32r	a2, 40274798 <serveFile+0xc0>
+40274995:	ffd405        	call0	402746d8 <serveFile>
 }
-402741a2:	0b2102        	l32i	a0, a1, 44
-402741a5:	0a21c2        	l32i	a12, a1, 40
-402741a8:	91d8      	l32i.n	a13, a1, 36
-402741aa:	81e8      	l32i.n	a14, a1, 32
-402741ac:	71f8      	l32i.n	a15, a1, 28
-402741ae:	30c112        	addi	a1, a1, 48
-402741b1:	f00d      	ret.n
-402741b3:	88d000        	excw
-402741b6:	fe          	.byte 0xfe
-402741b7:	3f          	.byte 0x3f
-402741b8:	88d8      	l32i.n	a13, a8, 32
-402741ba:	fe          	.byte 0xfe
-402741bb:	3f          	.byte 0x3f
-402741bc:	fe88e0        	excw
-402741bf:	3f          	.byte 0x3f
-402741c0:	8848      	l32i.n	a4, a8, 32
-402741c2:	fe          	.byte 0xfe
-402741c3:	3f          	.byte 0x3f
+40274998:	b108      	l32i.n	a0, a1, 44
+4027499a:	a1c8      	l32i.n	a12, a1, 40
+4027499c:	91d8      	l32i.n	a13, a1, 36
+4027499e:	81e8      	l32i.n	a14, a1, 32
+402749a0:	71f8      	l32i.n	a15, a1, 28
+402749a2:	30c112        	addi	a1, a1, 48
+402749a5:	f00d      	ret.n
+402749a7:	892800        	excw
+402749aa:	fe          	.byte 0xfe
+402749ab:	3f          	.byte 0x3f
+402749ac:	fe8930        	excw
+402749af:	3f          	.byte 0x3f
+402749b0:	8938      	l32i.n	a3, a9, 32
+402749b2:	fe          	.byte 0xfe
+402749b3:	3f          	.byte 0x3f
+402749b4:	8898      	l32i.n	a9, a8, 32
+402749b6:	fe          	.byte 0xfe
+402749b7:	3f          	.byte 0x3f
 
-402741c4 <httpServerHandleConnection>:
+402749b8 <httpServerHandleConnection>:
 
 void httpServerHandleConnection(int conn, char* buf, uint16_t buflen) {
-402741c4:	b0c112        	addi	a1, a1, -80
-402741c7:	1161d2        	s32i	a13, a1, 68
-402741ca:	1061e2        	s32i	a14, a1, 64
-402741cd:	03dd      	mov.n	a13, a3
-402741cf:	02ed      	mov.n	a14, a2
+402749b8:	b0c112        	addi	a1, a1, -80
+402749bb:	1161d2        	s32i	a13, a1, 68
+402749be:	1061e2        	s32i	a14, a1, 64
+402749c1:	03dd      	mov.n	a13, a3
+402749c3:	02ed      	mov.n	a14, a2
 	char *c;
 	if( (c = strstr(buf, "GET ")) != NULL)
-402741d1:	032d      	mov.n	a2, a3
-402741d3:	fff831        	l32r	a3, 402741b4 <handlePOST+0x100>
+402749c5:	032d      	mov.n	a2, a3
+402749c7:	fff831        	l32r	a3, 402749a8 <handlePOST+0x164>
 	}
 	
 	serveFile("/", conn); // Return back to index.html
 }
 
 void httpServerHandleConnection(int conn, char* buf, uint16_t buflen) {
-402741d6:	1261c2        	s32i	a12, a1, 72
-402741d9:	f1f9      	s32i.n	a15, a1, 60
-402741db:	136102        	s32i	a0, a1, 76
-402741de:	f4f040        	extui	a15, a4, 0, 16
+402749ca:	1261c2        	s32i	a12, a1, 72
+402749cd:	f1f9      	s32i.n	a15, a1, 60
+402749cf:	136102        	s32i	a0, a1, 76
+402749d2:	f4f040        	extui	a15, a4, 0, 16
 	char *c;
 	if( (c = strstr(buf, "GET ")) != NULL)
-402741e1:	ccb245        	call0	40240d08 <strstr>
-402741e4:	02cd      	mov.n	a12, a2
-402741e6:	03f216        	beqz	a2, 40274229 <httpServerHandleConnection+0x65>
-402741e9:	0d0c      	movi.n	a13, 0
+402749d5:	cc3305        	call0	40240d08 <strstr>
+402749d8:	02cd      	mov.n	a12, a2
+402749da:	03f216        	beqz	a2, 40274a1d <httpServerHandleConnection+0x65>
+402749dd:	0d0c      	movi.n	a13, 0
 	{
 		char fname[32];
 		uint8_t i;
 		for(i=0; i<32; i++) fname[i] = 0;
-402741eb:	203dd0        	or	a3, a13, a13
-402741ee:	8021d0        	add	a2, a1, a13
-402741f1:	004232        	s8i	a3, a2, 0
-402741f4:	dd1b      	addi.n	a13, a13, 1
-402741f6:	f4cd66        	bnei	a13, 32, 402741ee <httpServerHandleConnection+0x2a>
+402749df:	203dd0        	or	a3, a13, a13
+402749e2:	8021d0        	add	a2, a1, a13
+402749e5:	004232        	s8i	a3, a2, 0
+402749e8:	dd1b      	addi.n	a13, a13, 1
+402749ea:	f4cd66        	bnei	a13, 32, 402749e2 <httpServerHandleConnection+0x2a>
 		c += 4;
-402741f9:	cc4b      	addi.n	a12, a12, 4
+402749ed:	cc4b      	addi.n	a12, a12, 4
 		char* c_end = strstr(c, " ");
-402741fb:	0c2d      	mov.n	a2, a12
-402741fd:	203dd0        	or	a3, a13, a13
-40274200:	db8a05        	call0	4024faa4 <strchr>
+402749ef:	0c2d      	mov.n	a2, a12
+402749f1:	203dd0        	or	a3, a13, a13
+402749f4:	db0ac5        	call0	4024faa4 <strchr>
 		if(c_end == NULL) return;
-40274203:	082216        	beqz	a2, 40274289 <httpServerHandleConnection+0xc5>
+402749f7:	082216        	beqz	a2, 40274a7d <httpServerHandleConnection+0xc5>
 		uint8_t len = c_end-c;
-40274206:	c042c0        	sub	a4, a2, a12
+402749fa:	c042c0        	sub	a4, a2, a12
 		if(len > 32) return;
-40274209:	742040        	extui	a2, a4, 0, 8
-4027420c:	02bd27        	bgeu	a13, a2, 40274212 <httpServerHandleConnection+0x4e>
-4027420f:	001d86        	j	40274289 <httpServerHandleConnection+0xc5>
+402749fd:	742040        	extui	a2, a4, 0, 8
+40274a00:	02bd27        	bgeu	a13, a2, 40274a06 <httpServerHandleConnection+0x4e>
+40274a03:	001d86        	j	40274a7d <httpServerHandleConnection+0xc5>
 		strncpy(fname, c, len);
-40274212:	0c3d      	mov.n	a3, a12
-40274214:	202110        	or	a2, a1, a1
-40274217:	744040        	extui	a4, a4, 0, 8
-4027421a:	cca8c5        	call0	40240ca8 <strncpy>
+40274a06:	0c3d      	mov.n	a3, a12
+40274a08:	202110        	or	a2, a1, a1
+40274a0b:	744040        	extui	a4, a4, 0, 8
+40274a0e:	cc2985        	call0	40240ca8 <strncpy>
 		serveFile(fname, conn);
-4027421d:	012d      	mov.n	a2, a1
-4027421f:	0e3d      	mov.n	a3, a14
-40274221:	ffd285        	call0	40273f4c <serveFile>
-40274224:	001846        	j	40274289 <httpServerHandleConnection+0xc5>
-40274227:	310000        	srai	a0, a0, 16
+40274a11:	012d      	mov.n	a2, a1
+40274a13:	0e3d      	mov.n	a3, a14
+40274a15:	ffcc05        	call0	402746d8 <serveFile>
+40274a18:	001846        	j	40274a7d <httpServerHandleConnection+0xc5>
+40274a1b:	310000        	srai	a0, a0, 16
 	} else if( (c = strstr(buf, "POST ")) != NULL) {
-4027422a:	2dffe3        	excw
-4027422d:	850d      	excw
-4027422f:	ccad      	excw
-40274231:	054216        	beqz	a2, 40274289 <httpServerHandleConnection+0xc5>
+40274a1e:	2dffe3        	excw
+40274a21:	450d      	excw
+40274a23:	2e          	.byte 0x2e
+40274a24:	16cc      	bnez.n	a6, 40274a29 <httpServerHandleConnection+0x71>
+40274a26:	4d0542        	l8ui	a4, a5, 77
 		char fname[32];
 		uint8_t i;
 		for(i=0; i<32; i++) fname[i] = 0;
-40274234:	0c4d      	mov.n	a4, a12
-40274236:	31ca      	add.n	a3, a1, a12
-40274238:	004342        	s8i	a4, a3, 0
-4027423b:	cc1b      	addi.n	a12, a12, 1
-4027423d:	f5cc66        	bnei	a12, 32, 40274236 <httpServerHandleConnection+0x72>
+40274a29:	ca0c      	movi.n	a10, 12
+40274a2b:	434231        	l32r	a3, 40245734 <dhcp_arp_reply+0x214>
+40274a2e:	cc1b00        	excw
+40274a31:	f5cc66        	bnei	a12, 32, 40274a2a <httpServerHandleConnection+0x72>
 		c += 5;
-40274240:	525b      	addi.n	a5, a2, 5
+40274a34:	525b      	addi.n	a5, a2, 5
 		char* c_end = strstr(c, " ");
-40274242:	052d      	mov.n	a2, a5
-40274244:	0c3d      	mov.n	a3, a12
-40274246:	8159      	s32i.n	a5, a1, 32
-40274248:	db8585        	call0	4024faa4 <strchr>
+40274a36:	052d      	mov.n	a2, a5
+40274a38:	0c3d      	mov.n	a3, a12
+40274a3a:	8159      	s32i.n	a5, a1, 32
+40274a3c:	db0645        	call0	4024faa4 <strchr>
 		if(c_end == NULL) return;
-4027424b:	8158      	l32i.n	a5, a1, 32
-4027424d:	038216        	beqz	a2, 40274289 <httpServerHandleConnection+0xc5>
+40274a3f:	8158      	l32i.n	a5, a1, 32
+40274a41:	038216        	beqz	a2, 40274a7d <httpServerHandleConnection+0xc5>
 		uint8_t len = c_end-c;
-40274250:	c04250        	sub	a4, a2, a5
+40274a44:	c04250        	sub	a4, a2, a5
 		if(len > 32) return;
-40274253:	742040        	extui	a2, a4, 0, 8
-40274256:	2f3c27        	bltu	a12, a2, 40274289 <httpServerHandleConnection+0xc5>
+40274a47:	742040        	extui	a2, a4, 0, 8
+40274a4a:	2f3c27        	bltu	a12, a2, 40274a7d <httpServerHandleConnection+0xc5>
 		strncpy(fname, c, len);
-40274259:	053d      	mov.n	a3, a5
-4027425b:	744040        	extui	a4, a4, 0, 8
-4027425e:	012d      	mov.n	a2, a1
-40274260:	cca445        	call0	40240ca8 <strncpy>
+40274a4d:	053d      	mov.n	a3, a5
+40274a4f:	744040        	extui	a4, a4, 0, 8
+40274a52:	012d      	mov.n	a2, a1
+40274a54:	cc2505        	call0	40240ca8 <strncpy>
 		printf("Name: %s\n", fname);
-40274263:	ffd621        	l32r	a2, 402741bc <handlePOST+0x108>
-40274266:	013d      	mov.n	a3, a1
-40274268:	2f7201        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-4027426b:	0000c0        	callx0	a0
+40274a57:	ffd621        	l32r	a2, 402749b0 <handlePOST+0x16c>
+40274a5a:	013d      	mov.n	a3, a1
+40274a5c:	2d7501        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274a5f:	0000c0        	callx0	a0
 		// DATA
 		char* d_start = strstr(buf, "\r\n\r\n");
-4027426e:	ffd431        	l32r	a3, 402741c0 <handlePOST+0x10c>
-40274271:	0d2d      	mov.n	a2, a13
-40274273:	cca945        	call0	40240d08 <strstr>
+40274a62:	ffd431        	l32r	a3, 402749b4 <handlePOST+0x170>
+40274a65:	0d2d      	mov.n	a2, a13
+40274a67:	cc2a05        	call0	40240d08 <strstr>
 		if(d_start > 0) {
-40274276:	f28c      	beqz.n	a2, 40274289 <httpServerHandleConnection+0xc5>
+40274a6a:	f28c      	beqz.n	a2, 40274a7d <httpServerHandleConnection+0xc5>
 			d_start += 4;
-40274278:	324b      	addi.n	a3, a2, 4
+40274a6c:	324b      	addi.n	a3, a2, 4
 			uint16_t len = buflen - (d_start-buf);
-4027427a:	c0dd30        	sub	a13, a13, a3
-4027427d:	4fda      	add.n	a4, a15, a13
+40274a6e:	c0dd30        	sub	a13, a13, a3
+40274a71:	4fda      	add.n	a4, a15, a13
 			handlePOST(fname, d_start, len, conn);
-4027427f:	012d      	mov.n	a2, a1
-40274281:	f44040        	extui	a4, a4, 0, 16
-40274284:	0e5d      	mov.n	a5, a14
-40274286:	ffe2c5        	call0	402740b4 <handlePOST>
+40274a73:	012d      	mov.n	a2, a1
+40274a75:	f44040        	extui	a4, a4, 0, 16
+40274a78:	0e5d      	mov.n	a5, a14
+40274a7a:	ffdc85        	call0	40274844 <handlePOST>
 		}
 	}	
 }
-40274289:	132102        	l32i	a0, a1, 76
-4027428c:	1221c2        	l32i	a12, a1, 72
-4027428f:	1121d2        	l32i	a13, a1, 68
-40274292:	1021e2        	l32i	a14, a1, 64
-40274295:	f1f8      	l32i.n	a15, a1, 60
-40274297:	50c112        	addi	a1, a1, 80
-4027429a:	f00d      	ret.n
-4027429c:	005000        	syscall
+40274a7d:	132102        	l32i	a0, a1, 76
+40274a80:	1221c2        	l32i	a12, a1, 72
+40274a83:	1121d2        	l32i	a13, a1, 68
+40274a86:	1021e2        	l32i	a14, a1, 64
+40274a89:	f1f8      	l32i.n	a15, a1, 60
+40274a8b:	50c112        	addi	a1, a1, 80
+40274a8e:	f00d      	ret.n
+40274a90:	005000        	syscall
 	...
 
-402742a0 <serverTask>:
+40274a94 <serverTask>:
 
 void serverTask(void *pvParams) {
-402742a0:	c0c112        	addi	a1, a1, -64
-402742a3:	f109      	s32i.n	a0, a1, 60
-402742a5:	0e61c2        	s32i	a12, a1, 56
-402742a8:	0d61d2        	s32i	a13, a1, 52
-402742ab:	0c61e2        	s32i	a14, a1, 48
+40274a94:	c0c112        	addi	a1, a1, -64
+40274a97:	f109      	s32i.n	a0, a1, 60
+40274a99:	0e61c2        	s32i	a12, a1, 56
+40274a9c:	0d61d2        	s32i	a13, a1, 52
+40274a9f:	0c61e2        	s32i	a14, a1, 48
 	struct sockaddr_in server_addr, client_addr;
 	int server_sock, client_sock;
 	socklen_t sin_size;
 	
 	while (1) {
         bzero(&server_addr, sizeof(struct sockaddr_in));
-402742ae:	10a0c2        	movi	a12, 16
-402742b1:	030c      	movi.n	a3, 0
-402742b3:	204cc0        	or	a4, a12, a12
-402742b6:	8021c0        	add	a2, a1, a12
-402742b9:	309201        	l32r	a0, 40240504 <user_init_task+0xc8>
-402742bc:	0000c0        	callx0	a0
+40274aa2:	10a0c2        	movi	a12, 16
+40274aa5:	030c      	movi.n	a3, 0
+40274aa7:	204cc0        	or	a4, a12, a12
+40274aaa:	8021c0        	add	a2, a1, a12
+40274aad:	2e9501        	l32r	a0, 40240504 <user_init_task+0xc8>
+40274ab0:	0000c0        	callx0	a0
         server_addr.sin_family = AF_INET;
-402742bf:	220c      	movi.n	a2, 2
-402742c1:	114122        	s8i	a2, a1, 17
+40274ab3:	220c      	movi.n	a2, 2
+40274ab5:	114122        	s8i	a2, a1, 17
         server_addr.sin_addr.s_addr = INADDR_ANY;
         server_addr.sin_port = htons(80);
-402742c4:	fff621        	l32r	a2, 4027429c <httpServerHandleConnection+0xd8>
+40274ab8:	fff621        	l32r	a2, 40274a90 <httpServerHandleConnection+0xd8>
 
         int recbytes;
 
         do {
             if (-1 == (server_sock = socket(AF_INET, SOCK_STREAM, 0))) {
-402742c7:	130c      	movi.n	a3, 1
+40274abb:	130c      	movi.n	a3, 1
 	
 	while (1) {
         bzero(&server_addr, sizeof(struct sockaddr_in));
         server_addr.sin_family = AF_INET;
         server_addr.sin_addr.s_addr = INADDR_ANY;
         server_addr.sin_port = htons(80);
-402742c9:	095122        	s16i	a2, a1, 18
+40274abd:	095122        	s16i	a2, a1, 18
 
         int recbytes;
 
         do {
             if (-1 == (server_sock = socket(AF_INET, SOCK_STREAM, 0))) {
-402742cc:	040c      	movi.n	a4, 0
-402742ce:	220c      	movi.n	a2, 2
-402742d0:	d91845        	call0	4024d458 <lwip_socket>
-402742d3:	02dd      	mov.n	a13, a2
-402742d5:	d50226        	beqi	a2, -1, 402742ae <serverTask+0xe>
+40274ac0:	040c      	movi.n	a4, 0
+40274ac2:	220c      	movi.n	a2, 2
+40274ac4:	d89905        	call0	4024d458 <lwip_socket>
+40274ac7:	02dd      	mov.n	a13, a2
+40274ac9:	d50226        	beqi	a2, -1, 40274aa2 <serverTask+0xe>
                 break;
             }
 
             if (-1 == bind(server_sock, (struct sockaddr *)(&server_addr), sizeof(struct sockaddr))) {
-402742d8:	31ca      	add.n	a3, a1, a12
-402742da:	0c4d      	mov.n	a4, a12
-402742dc:	d8aac5        	call0	4024cd8c <lwip_bind>
-402742df:	cb0226        	beqi	a2, -1, 402742ae <serverTask+0xe>
+40274acc:	31ca      	add.n	a3, a1, a12
+40274ace:	0c4d      	mov.n	a4, a12
+40274ad0:	d82b85        	call0	4024cd8c <lwip_bind>
+40274ad3:	cb0226        	beqi	a2, -1, 40274aa2 <serverTask+0xe>
                 break;
             }
 
             if (-1 == listen(server_sock, 5)) {
-402742e2:	0d2d      	mov.n	a2, a13
-402742e4:	530c      	movi.n	a3, 5
-402742e6:	d8c185        	call0	4024cf00 <lwip_listen>
-402742e9:	c10226        	beqi	a2, -1, 402742ae <serverTask+0xe>
+40274ad6:	0d2d      	mov.n	a2, a13
+40274ad8:	530c      	movi.n	a3, 5
+40274ada:	d84245        	call0	4024cf00 <lwip_listen>
+40274add:	c10226        	beqi	a2, -1, 40274aa2 <serverTask+0xe>
                 break;
             }
 
             sin_size = sizeof(client_addr);
-402742ec:	81c9      	s32i.n	a12, a1, 32
+40274ae0:	81c9      	s32i.n	a12, a1, 32
 
             while(1) {
                 if ((client_sock = accept(server_sock, (struct sockaddr *) &client_addr, &sin_size)) < 0) {
-402742ee:	0d2d      	mov.n	a2, a13
-402742f0:	013d      	mov.n	a3, a1
-402742f2:	20c142        	addi	a4, a1, 32
-402742f5:	d89285        	call0	4024cc20 <lwip_accept>
-402742f8:	02cd      	mov.n	a12, a2
-402742fa:	ff0296        	bltz	a2, 402742ee <serverTask+0x4e>
+40274ae2:	0d2d      	mov.n	a2, a13
+40274ae4:	013d      	mov.n	a3, a1
+40274ae6:	20c142        	addi	a4, a1, 32
+40274ae9:	d81345        	call0	4024cc20 <lwip_accept>
+40274aec:	02cd      	mov.n	a12, a2
+40274aee:	ff0296        	bltz	a2, 40274ae2 <serverTask+0x4e>
                     continue;
                 }
 
                 char *buf = (char *)zalloc(2048);
-402742fd:	5c4621        	l32r	a2, 4024b418 <tcp_send_fin+0x1e4>
-40274300:	307f01        	l32r	a0, 402404fc <user_init_task+0xc0>
-40274303:	0000c0        	callx0	a0
-40274306:	02ed      	mov.n	a14, a2
+40274af1:	5a4921        	l32r	a2, 4024b418 <tcp_send_fin+0x1e4>
+40274af4:	2e8201        	l32r	a0, 402404fc <user_init_task+0xc0>
+40274af7:	0000c0        	callx0	a0
+40274afa:	02ed      	mov.n	a14, a2
                 while ((recbytes = read(client_sock , buf, 2047)) > 0) { // For now we assume max. 2047 bytes for request
-40274308:	0002c6        	j	40274317 <serverTask+0x77>
-4027430b:	2cc000        	excw
+40274afc:	0002c6        	j	40274b0b <serverTask+0x77>
+40274aff:	2cc000        	excw
 					httpServerHandleConnection(client_sock, buf, recbytes);
-4027430e:	0e3d20        	excw
-40274311:	f44040        	extui	a4, a4, 0, 16
-40274314:	ffeac5        	call0	402741c4 <httpServerHandleConnection>
+40274b02:	0e3d20        	excw
+40274b05:	f44040        	extui	a4, a4, 0, 16
+40274b08:	ffeac5        	call0	402749b8 <httpServerHandleConnection>
                 if ((client_sock = accept(server_sock, (struct sockaddr *) &client_addr, &sin_size)) < 0) {
                     continue;
                 }
 
                 char *buf = (char *)zalloc(2048);
                 while ((recbytes = read(client_sock , buf, 2047)) > 0) { // For now we assume max. 2047 bytes for request
-40274317:	ffa742        	movi	a4, 0x7ff
-4027431a:	0c2d      	mov.n	a2, a12
-4027431c:	0e3d      	mov.n	a3, a14
-4027431e:	d8f705        	call0	4024d290 <lwip_read>
-40274321:	024d      	mov.n	a4, a2
-40274323:	e512e6        	bgei	a2, 1, 4027430c <serverTask+0x6c>
+40274b0b:	ffa742        	movi	a4, 0x7ff
+40274b0e:	0c2d      	mov.n	a2, a12
+40274b10:	0e3d      	mov.n	a3, a14
+40274b12:	d877c5        	call0	4024d290 <lwip_read>
+40274b15:	024d      	mov.n	a4, a2
+40274b17:	e512e6        	bgei	a2, 1, 40274b00 <serverTask+0x6c>
 					httpServerHandleConnection(client_sock, buf, recbytes);
                 }
                 free(buf);
-40274326:	202ee0        	or	a2, a14, a14
-40274329:	307701        	l32r	a0, 40240508 <user_init_task+0xcc>
-4027432c:	0000c0        	callx0	a0
+40274b1a:	202ee0        	or	a2, a14, a14
+40274b1d:	2e7a01        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274b20:	0000c0        	callx0	a0
 
                 if (recbytes <= 0) {
                     close(client_sock);
-4027432f:	0c2d      	mov.n	a2, a12
-40274331:	d8ae05        	call0	4024ce14 <lwip_close>
-40274334:	ffed86        	j	402742ee <serverTask+0x4e>
-40274337:	000800        	excw
-4027433a:	106000        	and	a6, a0, a0
-4027433d:	600000        	neg	a0, a0
-40274340:	000000        	ill
-40274343:	213860        	srai	a3, a6, 8
-40274346:	ff          	.byte 0xff
-40274347:	3f          	.byte 0x3f
-40274348:	213c      	movi.n	a1, 50
-4027434a:	ff          	.byte 0xff
-4027434b:	3f          	.byte 0x3f
-4027434c:	ff2134        	excw
-4027434f:	3f          	.byte 0x3f
-40274350:	001c      	movi.n	a0, 16
-40274352:	126000        	excw
+40274b23:	0c2d      	mov.n	a2, a12
+40274b25:	d82ec5        	call0	4024ce14 <lwip_close>
+40274b28:	ffed86        	j	40274ae2 <serverTask+0x4e>
+40274b2b:	000800        	excw
+40274b2e:	106000        	and	a6, a0, a0
+40274b31:	600000        	neg	a0, a0
+40274b34:	000000        	ill
+40274b37:	21a860        	srai	a10, a6, 8
+40274b3a:	ff          	.byte 0xff
+40274b3b:	3f          	.byte 0x3f
+40274b3c:	21ac      	beqz.n	a1, 40274b62 <uart_isr+0x1a>
+40274b3e:	ff          	.byte 0xff
+40274b3f:	3f          	.byte 0x3f
+40274b40:	ff21a4        	excw
+40274b43:	3f          	.byte 0x3f
+40274b44:	001c      	movi.n	a0, 16
+40274b46:	126000        	excw
 
-40274354 <uart_isr>:
+40274b48 <uart_isr>:
 
 void ICACHE_FLASH_ATTR 
 uart_set_baud(int uart, int baud)
 {
 	uart_div_modify(uart, UART_CLK_FREQ / (baud));
 }
-40274354:	e0c112        	addi	a1, a1, -32
-40274357:	020c      	movi.n	a2, 0
-40274359:	0129      	s32i.n	a2, a1, 0
-4027435b:	fff721        	l32r	a2, 40274338 <serverTask+0x98>
-4027435e:	7109      	s32i.n	a0, a1, 28
-40274360:	0020c0        	memw
-40274363:	0228      	l32i.n	a2, a2, 0
-40274365:	5f6207        	bbci	a2, 0, 402743c8 <uart_isr+0x74>
-40274368:	fff521        	l32r	a2, 4027433c <serverTask+0x9c>
-4027436b:	130c      	movi.n	a3, 1
-4027436d:	0020c0        	memw
-40274370:	0239      	s32i.n	a3, a2, 0
-40274372:	000e86        	j	402743b0 <uart_isr+0x5c>
-40274375:	fff231        	l32r	a3, 40274340 <serverTask+0xa0>
-40274378:	204110        	or	a4, a1, a1
-4027437b:	0020c0        	memw
-4027437e:	002322        	l32i	a2, a3, 0
-40274381:	00a052        	movi	a5, 0
-40274384:	044122        	s8i	a2, a1, 4
-40274387:	ffef21        	l32r	a2, 40274344 <serverTask+0xa4>
-4027438a:	314b      	addi.n	a3, a1, 4
-4027438c:	0228      	l32i.n	a2, a2, 0
-4027438e:	cf6e85        	call0	40243a78 <xQueueGenericSendFromISR>
-40274391:	071226        	beqi	a2, 1, 4027439c <uart_isr+0x48>
-40274394:	ffed21        	l32r	a2, 40274348 <serverTask+0xa8>
-40274397:	000106        	j	4027439f <uart_isr+0x4b>
-4027439a:	210000        	srai	a0, a0, 0
-4027439d:	ffec      	bnez.n	a15, 402743d0 <uart_getchar_ms>
-4027439f:	001232        	l16ui	a3, a2, 0
-402743a2:	f43030        	extui	a3, a3, 0, 16
-402743a5:	331b      	addi.n	a3, a3, 1
-402743a7:	f43030        	extui	a3, a3, 0, 16
-402743aa:	0020c0        	memw
-402743ad:	005232        	s16i	a3, a2, 0
-402743b0:	ffe831        	l32r	a3, 40274350 <serverTask+0xb0>
-402743b3:	0020c0        	memw
-402743b6:	0328      	l32i.n	a2, a3, 0
-402743b8:	742020        	extui	a2, a2, 0, 8
-402743bb:	fb6256        	bnez	a2, 40274375 <uart_isr+0x21>
-402743be:	0128      	l32i.n	a2, a1, 0
-402743c0:	428c      	beqz.n	a2, 402743c8 <uart_isr+0x74>
-402743c2:	31e001        	l32r	a0, 40240b44 <ets_timer_handler_isr+0x9c>
-402743c5:	0000c0        	callx0	a0
-402743c8:	7108      	l32i.n	a0, a1, 28
-402743ca:	20c112        	addi	a1, a1, 32
-402743cd:	f00d      	ret.n
+40274b48:	e0c112        	addi	a1, a1, -32
+40274b4b:	020c      	movi.n	a2, 0
+40274b4d:	0129      	s32i.n	a2, a1, 0
+40274b4f:	fff721        	l32r	a2, 40274b2c <serverTask+0x98>
+40274b52:	7109      	s32i.n	a0, a1, 28
+40274b54:	0020c0        	memw
+40274b57:	0228      	l32i.n	a2, a2, 0
+40274b59:	5f6207        	bbci	a2, 0, 40274bbc <uart_isr+0x74>
+40274b5c:	fff521        	l32r	a2, 40274b30 <serverTask+0x9c>
+40274b5f:	130c      	movi.n	a3, 1
+40274b61:	0020c0        	memw
+40274b64:	0239      	s32i.n	a3, a2, 0
+40274b66:	000e86        	j	40274ba4 <uart_isr+0x5c>
+40274b69:	fff231        	l32r	a3, 40274b34 <serverTask+0xa0>
+40274b6c:	204110        	or	a4, a1, a1
+40274b6f:	0020c0        	memw
+40274b72:	002322        	l32i	a2, a3, 0
+40274b75:	00a052        	movi	a5, 0
+40274b78:	044122        	s8i	a2, a1, 4
+40274b7b:	ffef21        	l32r	a2, 40274b38 <serverTask+0xa4>
+40274b7e:	314b      	addi.n	a3, a1, 4
+40274b80:	0228      	l32i.n	a2, a2, 0
+40274b82:	ceef45        	call0	40243a78 <xQueueGenericSendFromISR>
+40274b85:	071226        	beqi	a2, 1, 40274b90 <uart_isr+0x48>
+40274b88:	ffed21        	l32r	a2, 40274b3c <serverTask+0xa8>
+40274b8b:	000106        	j	40274b93 <uart_isr+0x4b>
+40274b8e:	210000        	srai	a0, a0, 0
+40274b91:	ffec      	bnez.n	a15, 40274bc4 <uart_getchar_ms>
+40274b93:	001232        	l16ui	a3, a2, 0
+40274b96:	f43030        	extui	a3, a3, 0, 16
+40274b99:	331b      	addi.n	a3, a3, 1
+40274b9b:	f43030        	extui	a3, a3, 0, 16
+40274b9e:	0020c0        	memw
+40274ba1:	005232        	s16i	a3, a2, 0
+40274ba4:	ffe831        	l32r	a3, 40274b44 <serverTask+0xb0>
+40274ba7:	0020c0        	memw
+40274baa:	0328      	l32i.n	a2, a3, 0
+40274bac:	742020        	extui	a2, a2, 0, 8
+40274baf:	fb6256        	bnez	a2, 40274b69 <uart_isr+0x21>
+40274bb2:	0128      	l32i.n	a2, a1, 0
+40274bb4:	428c      	beqz.n	a2, 40274bbc <uart_isr+0x74>
+40274bb6:	2fe301        	l32r	a0, 40240b44 <ets_timer_handler_isr+0x9c>
+40274bb9:	0000c0        	callx0	a0
+40274bbc:	7108      	l32i.n	a0, a1, 28
+40274bbe:	20c112        	addi	a1, a1, 32
+40274bc1:	f00d      	ret.n
 	...
 
-402743d0 <uart_getchar_ms>:
-402743d0:	e0c112        	addi	a1, a1, -32
-402743d3:	7109      	s32i.n	a0, a1, 28
-402743d5:	f47c      	movi.n	a4, -1
-402743d7:	00a296        	bltz	a2, 402743e5 <uart_getchar_ms+0x15>
-402743da:	0aa032        	movi	a3, 10
-402743dd:	2f4001        	l32r	a0, 402400e0 <_irom0_text_start+0xe0>
-402743e0:	0000c0        	callx0	a0
-402743e3:	024d      	mov.n	a4, a2
-402743e5:	ffd721        	l32r	a2, 40274344 <serverTask+0xa4>
-402743e8:	013d      	mov.n	a3, a1
-402743ea:	0228      	l32i.n	a2, a2, 0
-402743ec:	050c      	movi.n	a5, 0
-402743ee:	cf6fc5        	call0	40243aec <xQueueGenericReceive>
-402743f1:	000132        	l8ui	a3, a1, 0
-402743f4:	220b      	addi.n	a2, a2, -1
-402743f6:	f47c      	movi.n	a4, -1
-402743f8:	7108      	l32i.n	a0, a1, 28
-402743fa:	834320        	moveqz	a4, a3, a2
-402743fd:	042d      	mov.n	a2, a4
-402743ff:	20c112        	addi	a1, a1, 32
-40274402:	f00d      	ret.n
-40274404:	274354        	excw
-40274407:	c11240        	mul16u	a1, a2, a4
+40274bc4 <uart_getchar_ms>:
+40274bc4:	e0c112        	addi	a1, a1, -32
+40274bc7:	7109      	s32i.n	a0, a1, 28
+40274bc9:	f47c      	movi.n	a4, -1
+40274bcb:	00a296        	bltz	a2, 40274bd9 <uart_getchar_ms+0x15>
+40274bce:	0aa032        	movi	a3, 10
+40274bd1:	2d4301        	l32r	a0, 402400e0 <_irom0_text_start+0xe0>
+40274bd4:	0000c0        	callx0	a0
+40274bd7:	024d      	mov.n	a4, a2
+40274bd9:	ffd721        	l32r	a2, 40274b38 <serverTask+0xa4>
+40274bdc:	013d      	mov.n	a3, a1
+40274bde:	0228      	l32i.n	a2, a2, 0
+40274be0:	050c      	movi.n	a5, 0
+40274be2:	cef085        	call0	40243aec <xQueueGenericReceive>
+40274be5:	000132        	l8ui	a3, a1, 0
+40274be8:	220b      	addi.n	a2, a2, -1
+40274bea:	f47c      	movi.n	a4, -1
+40274bec:	7108      	l32i.n	a0, a1, 28
+40274bee:	834320        	moveqz	a4, a3, a2
+40274bf1:	042d      	mov.n	a2, a4
+40274bf3:	20c112        	addi	a1, a1, 32
+40274bf6:	f00d      	ret.n
+40274bf8:	4b48      	l32i.n	a4, a11, 16
+40274bfa:	124027        	ball	a0, a2, 40274c10 <uart_rx_init+0x14>
 
-40274408 <uart_rx_init>:
+40274bfc <uart_rx_init>:
 /*
  * Initialise the uart receiver
  */
 void ICACHE_FLASH_ATTR
 uart_rx_init(void)
 { 
-40274408:	f0c112        	addi	a1, a1, -16
+40274bfc:	f0c112        	addi	a1, a1, -16
 	uart_rx_queue = xQueueCreate( 
-4027440b:	01a032        	movi	a3, 1
-4027440e:	00a042        	movi	a4, 0
-40274411:	022c      	movi.n	a2, 32
+40274bff:	01a032        	movi	a3, 1
+40274c02:	00a042        	movi	a4, 0
+40274c05:	022c      	movi.n	a2, 32
 /*
  * Initialise the uart receiver
  */
 void ICACHE_FLASH_ATTR
 uart_rx_init(void)
 { 
-40274413:	3109      	s32i.n	a0, a1, 12
+40274c07:	3109      	s32i.n	a0, a1, 12
 	uart_rx_queue = xQueueCreate( 
-40274415:	cf4185        	call0	40243830 <xQueueGenericCreate>
-40274418:	ffcb31        	l32r	a3, 40274344 <serverTask+0xa4>
+40274c09:	cec245        	call0	40243830 <xQueueGenericCreate>
+40274c0c:	ffcb31        	l32r	a3, 40274b38 <serverTask+0xa4>
 	);
 	uart_rx_overruns=0;
 	uart_rx_bytes=0;
 	/* _xt_isr_mask seems to cause Exception 20 ? */
 	//_xt_isr_mask(1<<ETS_UART_INUM);
 	_xt_isr_attach(ETS_UART_INUM, uart_isr, (void*)0);
-4027441b:	040c      	movi.n	a4, 0
+40274c0f:	040c      	movi.n	a4, 0
  * Initialise the uart receiver
  */
 void ICACHE_FLASH_ATTR
 uart_rx_init(void)
 { 
 	uart_rx_queue = xQueueCreate( 
-4027441d:	0329      	s32i.n	a2, a3, 0
+40274c11:	0329      	s32i.n	a2, a3, 0
 		UART_RX_QUEUE_SIZE,
 		sizeof(char)
 	);
 	uart_rx_overruns=0;
-4027441f:	ffca31        	l32r	a3, 40274348 <serverTask+0xa8>
-40274422:	020c      	movi.n	a2, 0
-40274424:	0020c0        	memw
-40274427:	005322        	s16i	a2, a3, 0
+40274c13:	ffca31        	l32r	a3, 40274b3c <serverTask+0xa8>
+40274c16:	020c      	movi.n	a2, 0
+40274c18:	0020c0        	memw
+40274c1b:	005322        	s16i	a2, a3, 0
 	uart_rx_bytes=0;
-4027442a:	ffc831        	l32r	a3, 4027434c <serverTask+0xac>
-4027442d:	0020c0        	memw
-40274430:	005322        	s16i	a2, a3, 0
+40274c1e:	ffc831        	l32r	a3, 40274b40 <serverTask+0xac>
+40274c21:	0020c0        	memw
+40274c24:	005322        	s16i	a2, a3, 0
 	/* _xt_isr_mask seems to cause Exception 20 ? */
 	//_xt_isr_mask(1<<ETS_UART_INUM);
 	_xt_isr_attach(ETS_UART_INUM, uart_isr, (void*)0);
-40274433:	fff431        	l32r	a3, 40274404 <uart_getchar_ms+0x34>
-40274436:	05a022        	movi	a2, 5
-40274439:	cf3585        	call0	40243794 <_xt_isr_attach>
+40274c27:	fff431        	l32r	a3, 40274bf8 <uart_getchar_ms+0x34>
+40274c2a:	05a022        	movi	a2, 5
+40274c2d:	ceb645        	call0	40243794 <_xt_isr_attach>
 	_xt_isr_unmask(1<<ETS_UART_INUM);
-4027443c:	022c      	movi.n	a2, 32
-4027443e:	31e401        	l32r	a0, 40240bd0 <ets_timer_handler_isr+0x128>
-40274441:	0000c0        	callx0	a0
+40274c30:	022c      	movi.n	a2, 32
+40274c32:	2fe701        	l32r	a0, 40240bd0 <ets_timer_handler_isr+0x128>
+40274c35:	0000c0        	callx0	a0
 }
-40274444:	3108      	l32i.n	a0, a1, 12
-40274446:	10c112        	addi	a1, a1, 16
-40274449:	f00d      	ret.n
-4027444b:	89a000        	excw
-4027444e:	fe          	.byte 0xfe
-4027444f:	3f          	.byte 0x3f
-40274450:	fe89b0        	excw
-40274453:	3f          	.byte 0x3f
-40274454:	fe89c0        	excw
-40274457:	3f          	.byte 0x3f
+40274c38:	3108      	l32i.n	a0, a1, 12
+40274c3a:	10c112        	addi	a1, a1, 16
+40274c3d:	f00d      	ret.n
+40274c3f:	89f800        	excw
+40274c42:	fe          	.byte 0xfe
+40274c43:	3f          	.byte 0x3f
+40274c44:	8a08      	l32i.n	a0, a10, 32
+40274c46:	fe          	.byte 0xfe
+40274c47:	3f          	.byte 0x3f
+40274c48:	8a18      	l32i.n	a1, a10, 32
+40274c4a:	fe          	.byte 0xfe
+40274c4b:	3f          	.byte 0x3f
 
-40274458 <wifiScanCallback>:
+40274c4c <wifiScanCallback>:
 * -OK- Connect to shoutcast (address, path)
 * -OK- Disconnect from shoutcast
 */
 
 void wifiScanCallback(void *arg, STATUS status)
 {
-40274458:	b0c112        	addi	a1, a1, -80
-4027445b:	1261c2        	s32i	a12, a1, 72
-4027445e:	136102        	s32i	a0, a1, 76
-40274461:	1161d2        	s32i	a13, a1, 68
-40274464:	02cd      	mov.n	a12, a2
+40274c4c:	b0c112        	addi	a1, a1, -80
+40274c4f:	1261c2        	s32i	a12, a1, 72
+40274c52:	136102        	s32i	a0, a1, 76
+40274c55:	1161d2        	s32i	a13, a1, 68
+40274c58:	02cd      	mov.n	a12, a2
 	if(status == OK)
-40274466:	046356        	bnez	a3, 402744b0 <wifiScanCallback+0x58>
+40274c5a:	046356        	bnez	a3, 40274ca4 <wifiScanCallback+0x58>
 	{
 		int i = MAX_WIFI_STATIONS;
 		char buf[64];
 		struct bss_info *bss_link = (struct bss_info *) arg;
 		printf("\n#WIFI.LIST#");
-40274469:	fff821        	l32r	a2, 4027444c <uart_rx_init+0x44>
-4027446c:	2d3c      	movi.n	a13, 50
-4027446e:	2ef001        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-40274471:	0000c0        	callx0	a0
+40274c5d:	fff821        	l32r	a2, 40274c40 <uart_rx_init+0x44>
+40274c60:	2d3c      	movi.n	a13, 50
+40274c62:	2cf301        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274c65:	0000c0        	callx0	a0
 		while(i > 0)
 		{
 			i--;
 			bss_link = bss_link->next.stqe_next;
-40274474:	0cc8      	l32i.n	a12, a12, 0
+40274c68:	0cc8      	l32i.n	a12, a12, 0
 			if(bss_link == NULL) break;
-40274476:	bccc      	bnez.n	a12, 40274485 <wifiScanCallback+0x2d>
+40274c6a:	bccc      	bnez.n	a12, 40274c79 <wifiScanCallback+0x2d>
 			sprintf(buf, "\n%s;%d;%d;%d", bss_link->ssid, bss_link->channel, bss_link->rssi, bss_link->authmode);
 			printf(buf);
 		}
 		printf("\n##WIFI.LIST#");
-40274478:	fff621        	l32r	a2, 40274450 <uart_rx_init+0x48>
-4027447b:	2eed01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-4027447e:	0000c0        	callx0	a0
-40274481:	000ac6        	j	402744b0 <wifiScanCallback+0x58>
-40274484:	0c6200        	excw
+40274c6c:	fff621        	l32r	a2, 40274c44 <uart_rx_init+0x48>
+40274c6f:	2cf001        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274c72:	0000c0        	callx0	a0
+40274c75:	000ac6        	j	40274ca4 <wifiScanCallback+0x58>
+40274c78:	0c6200        	excw
 		while(i > 0)
 		{
 			i--;
 			bss_link = bss_link->next.stqe_next;
 			if(bss_link == NULL) break;
 			sprintf(buf, "\n%s;%d;%d;%d", bss_link->ssid, bss_link->channel, bss_link->rssi, bss_link->authmode);
-40274487:	312b      	addi.n	a3, a1, 2
-40274489:	52fff3        	excw
-4027448c:	2a0c      	movi.n	a10, 2
-4027448e:	bc78      	l32i.n	a7, a12, 44
-40274490:	016680        	slli	a6, a6, 24
-40274493:	4cab      	addi.n	a4, a12, 10
-40274495:	316860        	srai	a6, a6, 24
-40274498:	202110        	or	a2, a1, a1
-4027449b:	db6505        	call0	4024faec <sprintf>
+40274c7b:	312b      	addi.n	a3, a1, 2
+40274c7d:	52fff3        	excw
+40274c80:	2a0c      	movi.n	a10, 2
+40274c82:	bc78      	l32i.n	a7, a12, 44
+40274c84:	016680        	slli	a6, a6, 24
+40274c87:	4cab      	addi.n	a4, a12, 10
+40274c89:	316860        	srai	a6, a6, 24
+40274c8c:	202110        	or	a2, a1, a1
+40274c8f:	dae5c5        	call0	4024faec <sprintf>
 			printf(buf);
-4027449e:	012d      	mov.n	a2, a1
-402744a0:	dd0b      	addi.n	a13, a13, -1
-402744a2:	2ee301        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-402744a5:	0000c0        	callx0	a0
+40274c92:	012d      	mov.n	a2, a1
+40274c94:	dd0b      	addi.n	a13, a13, -1
+40274c96:	2ce601        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274c99:	0000c0        	callx0	a0
 	{
 		int i = MAX_WIFI_STATIONS;
 		char buf[64];
 		struct bss_info *bss_link = (struct bss_info *) arg;
 		printf("\n#WIFI.LIST#");
 		while(i > 0)
-402744a8:	fc8d56        	bnez	a13, 40274474 <wifiScanCallback+0x1c>
-402744ab:	fff246        	j	40274478 <wifiScanCallback+0x20>
-402744ae:	020000        	excw
+40274c9c:	fc8d56        	bnez	a13, 40274c68 <wifiScanCallback+0x1c>
+40274c9f:	fff246        	j	40274c6c <wifiScanCallback+0x20>
+40274ca2:	020000        	excw
 			sprintf(buf, "\n%s;%d;%d;%d", bss_link->ssid, bss_link->channel, bss_link->rssi, bss_link->authmode);
 			printf(buf);
 		}
 		printf("\n##WIFI.LIST#");
 	}
 }
-402744b1:	c21321        	l32r	a2, 40264d00 <sta_input+0x290>
-402744b4:	d21221        	l32r	a2, 40268cfc <wpa_auth_sm_event+0xcfc>
-402744b7:	121121        	l32r	a2, 40238cfc <_lit4_end+0x1319fc>
-402744ba:	0d50c1        	l32r	a12, 402379fc <_lit4_end+0x1306fc>
-402744bd:	0000f0        	excw
+40274ca5:	c21321        	l32r	a2, 402654f4 <chm_start_op+0x84>
+40274ca8:	d21221        	l32r	a2, 402694f0 <wpa_auth_uses_mfp+0x24c>
+40274cab:	121121        	l32r	a2, 402394f0 <_lit4_end+0x1321f0>
+40274cae:	0d50c1        	l32r	a12, 402381f0 <_lit4_end+0x130ef0>
+40274cb1:	0000f0        	excw
 
-402744c0 <startsWith>:
+40274cb4 <startsWith>:
 */
 
 struct station_config cfg;
 
 uint8_t startsWith(const char *pre, const char *str)
 {
-402744c0:	e0c112        	addi	a1, a1, -32
-402744c3:	7109      	s32i.n	a0, a1, 28
-402744c5:	61c9      	s32i.n	a12, a1, 24
-402744c7:	51d9      	s32i.n	a13, a1, 20
-402744c9:	41e9      	s32i.n	a14, a1, 16
-402744cb:	03dd      	mov.n	a13, a3
-402744cd:	31f9      	s32i.n	a15, a1, 12
-402744cf:	02fd      	mov.n	a15, a2
+40274cb4:	e0c112        	addi	a1, a1, -32
+40274cb7:	7109      	s32i.n	a0, a1, 28
+40274cb9:	61c9      	s32i.n	a12, a1, 24
+40274cbb:	51d9      	s32i.n	a13, a1, 20
+40274cbd:	41e9      	s32i.n	a14, a1, 16
+40274cbf:	03dd      	mov.n	a13, a3
+40274cc1:	31f9      	s32i.n	a15, a1, 12
+40274cc3:	02fd      	mov.n	a15, a2
     size_t lenpre = strlen(pre),
-402744d1:	cc81c5        	call0	40240cf0 <strlen>
-402744d4:	20e220        	or	a14, a2, a2
+40274cc5:	cc0285        	call0	40240cf0 <strlen>
+40274cc8:	20e220        	or	a14, a2, a2
            lenstr = strlen(str);
-402744d7:	202dd0        	or	a2, a13, a13
-402744da:	cc8145        	call0	40240cf0 <strlen>
+40274ccb:	202dd0        	or	a2, a13, a13
+40274cce:	cc0205        	call0	40240cf0 <strlen>
     return lenstr < lenpre ? false : strncmp(pre, str, lenpre) == 0;
-402744dd:	0c0c      	movi.n	a12, 0
-402744df:	0e32e7        	bltu	a2, a14, 402744f1 <startsWith+0x31>
-402744e2:	0d3d      	mov.n	a3, a13
-402744e4:	0f2d      	mov.n	a2, a15
-402744e6:	204ee0        	or	a4, a14, a14
-402744e9:	cc7ec5        	call0	40240cd8 <strncmp>
-402744ec:	130c      	movi.n	a3, 1
-402744ee:	83c320        	moveqz	a12, a3, a2
+40274cd1:	0c0c      	movi.n	a12, 0
+40274cd3:	0e32e7        	bltu	a2, a14, 40274ce5 <startsWith+0x31>
+40274cd6:	0d3d      	mov.n	a3, a13
+40274cd8:	0f2d      	mov.n	a2, a15
+40274cda:	204ee0        	or	a4, a14, a14
+40274cdd:	cbff85        	call0	40240cd8 <strncmp>
+40274ce0:	130c      	movi.n	a3, 1
+40274ce2:	83c320        	moveqz	a12, a3, a2
 }
-402744f1:	7108      	l32i.n	a0, a1, 28
-402744f3:	0c2d      	mov.n	a2, a12
-402744f5:	51d8      	l32i.n	a13, a1, 20
-402744f7:	61c8      	l32i.n	a12, a1, 24
-402744f9:	41e8      	l32i.n	a14, a1, 16
-402744fb:	31f8      	l32i.n	a15, a1, 12
-402744fd:	20c112        	addi	a1, a1, 32
-40274500:	f00d      	ret.n
-40274502:	d00000        	subx2	a0, a0, a0
-40274505:	fe89      	s32i.n	a8, a14, 60
-40274507:	3f          	.byte 0x3f
-40274508:	89d8      	l32i.n	a13, a9, 32
-4027450a:	fe          	.byte 0xfe
-4027450b:	3f          	.byte 0x3f
+40274ce5:	7108      	l32i.n	a0, a1, 28
+40274ce7:	0c2d      	mov.n	a2, a12
+40274ce9:	51d8      	l32i.n	a13, a1, 20
+40274ceb:	61c8      	l32i.n	a12, a1, 24
+40274ced:	41e8      	l32i.n	a14, a1, 16
+40274cef:	31f8      	l32i.n	a15, a1, 12
+40274cf1:	20c112        	addi	a1, a1, 32
+40274cf4:	f00d      	ret.n
+40274cf6:	280000        	excw
+40274cf9:	fe8a      	add.n	a15, a14, a8
+40274cfb:	3f          	.byte 0x3f
+40274cfc:	fe8a30        	excw
+40274cff:	3f          	.byte 0x3f
 
-4027450c <printInfo>:
+40274d00 <printInfo>:
 
 void printInfo(char* s)
 {
-4027450c:	f0c112        	addi	a1, a1, -16
-4027450f:	21c9      	s32i.n	a12, a1, 8
-40274511:	02cd      	mov.n	a12, a2
+40274d00:	f0c112        	addi	a1, a1, -16
+40274d03:	21c9      	s32i.n	a12, a1, 8
+40274d05:	02cd      	mov.n	a12, a2
 	int i;
 	//char buf[12];
 	//sprintf(buf, " %d", size);
 	printf("\n#INFO#");
-40274513:	fffc21        	l32r	a2, 40274504 <startsWith+0x44>
+40274d07:	fffc21        	l32r	a2, 40274cf8 <startsWith+0x44>
            lenstr = strlen(str);
     return lenstr < lenpre ? false : strncmp(pre, str, lenpre) == 0;
 }
 
 void printInfo(char* s)
 {
-40274516:	3109      	s32i.n	a0, a1, 12
+40274d0a:	3109      	s32i.n	a0, a1, 12
 	int i;
 	//char buf[12];
 	//sprintf(buf, " %d", size);
 	printf("\n#INFO#");
-40274518:	2ec601        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-4027451b:	0000c0        	callx0	a0
+40274d0c:	2cc901        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274d0f:	0000c0        	callx0	a0
 	printf(s);
-4027451e:	0c2d      	mov.n	a2, a12
-40274520:	2ec401        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-40274523:	0000c0        	callx0	a0
+40274d12:	0c2d      	mov.n	a2, a12
+40274d14:	2cc701        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274d17:	0000c0        	callx0	a0
 	//printf(buf);
 	//for(i=0; i<size; i++) uart0_putc(*s++);
 	printf("\n##INFO#");
-40274526:	fff821        	l32r	a2, 40274508 <startsWith+0x48>
-40274529:	2ec101        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-4027452c:	0000c0        	callx0	a0
+40274d1a:	fff821        	l32r	a2, 40274cfc <startsWith+0x48>
+40274d1d:	2cc401        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274d20:	0000c0        	callx0	a0
 }
-4027452f:	3108      	l32i.n	a0, a1, 12
-40274531:	21c8      	l32i.n	a12, a1, 8
-40274533:	10c112        	addi	a1, a1, 16
-40274536:	f00d      	ret.n
-40274538:	4458      	l32i.n	a5, a4, 16
-4027453a:	314027        	ball	a0, a2, 4027456f <wifiScan+0x33>
+40274d23:	3108      	l32i.n	a0, a1, 12
+40274d25:	21c8      	l32i.n	a12, a1, 8
+40274d27:	10c112        	addi	a1, a1, 16
+40274d2a:	f00d      	ret.n
+40274d2c:	4c4c      	movi.n	a12, 68
+40274d2e:	314027        	ball	a0, a2, 40274d63 <wifiScan+0x33>
 
-4027453c <wifiScan>:
+40274d30 <wifiScan>:
 	}
 }
 
 void wifiScan()
 {
 	wifi_station_scan(NULL, wifiScanCallback);
-4027453c:	ffff31        	l32r	a3, 40274538 <printInfo+0x2c>
+40274d30:	ffff31        	l32r	a3, 40274d2c <printInfo+0x2c>
 		printf("\n##WIFI.LIST#");
 	}
 }
 
 void wifiScan()
 {
-4027453f:	f0c112        	addi	a1, a1, -16
+40274d33:	f0c112        	addi	a1, a1, -16
 	wifi_station_scan(NULL, wifiScanCallback);
-40274542:	00a022        	movi	a2, 0
+40274d36:	00a022        	movi	a2, 0
 		printf("\n##WIFI.LIST#");
 	}
 }
 
 void wifiScan()
 {
-40274545:	036102        	s32i	a0, a1, 12
+40274d39:	036102        	s32i	a0, a1, 12
 	wifi_station_scan(NULL, wifiScanCallback);
-40274548:	ce07c5        	call0	402425c8 <wifi_station_scan>
+40274d3c:	cd8885        	call0	402425c8 <wifi_station_scan>
 }
-4027454b:	032102        	l32i	a0, a1, 12
-4027454e:	10c112        	addi	a1, a1, 16
-40274551:	f00d      	ret.n
-40274553:	214000        	srai	a4, a0, 0
-40274556:	ff          	.byte 0xff
-40274557:	3f          	.byte 0x3f
-40274558:	ff2160        	excw
-4027455b:	3f          	.byte 0x3f
-4027455c:	fe89e4        	excw
-4027455f:	3f          	.byte 0x3f
-40274560:	89e8      	l32i.n	a14, a9, 32
-40274562:	fe          	.byte 0xfe
-40274563:	3f          	.byte 0x3f
-40274564:	89fc      	bnez.n	a9, 402745a0 <wifiConnect+0x2c>
-40274566:	fe          	.byte 0xfe
-40274567:	3f          	.byte 0x3f
-40274568:	fe8a00        	excw
-4027456b:	3f          	.byte 0x3f
-4027456c:	fe8a04        	excw
-4027456f:	3f          	.byte 0x3f
-40274570:	8a18      	l32i.n	a1, a10, 32
-40274572:	fe          	.byte 0xfe
-40274573:	3f          	.byte 0x3f
+40274d3f:	032102        	l32i	a0, a1, 12
+40274d42:	10c112        	addi	a1, a1, 16
+40274d45:	f00d      	ret.n
+40274d47:	21b000        	srai	a11, a0, 0
+40274d4a:	ff          	.byte 0xff
+40274d4b:	3f          	.byte 0x3f
+40274d4c:	ff21d0        	excw
+40274d4f:	3f          	.byte 0x3f
+40274d50:	8a3c      	movi.n	a10, 56
+40274d52:	fe          	.byte 0xfe
+40274d53:	3f          	.byte 0x3f
+40274d54:	fe8a40        	excw
+40274d57:	3f          	.byte 0x3f
+40274d58:	fe8a54        	excw
+40274d5b:	3f          	.byte 0x3f
+40274d5c:	8a58      	l32i.n	a5, a10, 32
+40274d5e:	fe          	.byte 0xfe
+40274d5f:	3f          	.byte 0x3f
+40274d60:	8a5c      	movi.n	a10, 88
+40274d62:	fe          	.byte 0xfe
+40274d63:	3f          	.byte 0x3f
+40274d64:	fe8a70        	excw
+40274d67:	3f          	.byte 0x3f
 
-40274574 <wifiConnect>:
+40274d68 <wifiConnect>:
 
 void wifiConnect(char* cmd)
 {
-40274574:	e0c112        	addi	a1, a1, -32
+40274d68:	e0c112        	addi	a1, a1, -32
 	int i;
 	
 	for(i = 0; i < 32; i++) cfg.ssid[i] = 0;
-40274577:	030c      	movi.n	a3, 0
-40274579:	fff641        	l32r	a4, 40274554 <wifiScan+0x18>
+40274d6b:	030c      	movi.n	a3, 0
+40274d6d:	fff641        	l32r	a4, 40274d48 <wifiScan+0x18>
 {
 	wifi_station_scan(NULL, wifiScanCallback);
 }
 
 void wifiConnect(char* cmd)
 {
-4027457c:	51d9      	s32i.n	a13, a1, 20
-4027457e:	7109      	s32i.n	a0, a1, 28
-40274580:	61c9      	s32i.n	a12, a1, 24
-40274582:	41e9      	s32i.n	a14, a1, 16
-40274584:	31f9      	s32i.n	a15, a1, 12
-40274586:	02dd      	mov.n	a13, a2
+40274d70:	51d9      	s32i.n	a13, a1, 20
+40274d72:	7109      	s32i.n	a0, a1, 28
+40274d74:	61c9      	s32i.n	a12, a1, 24
+40274d76:	41e9      	s32i.n	a14, a1, 16
+40274d78:	31f9      	s32i.n	a15, a1, 12
+40274d7a:	02dd      	mov.n	a13, a2
 	int i;
 	
 	for(i = 0; i < 32; i++) cfg.ssid[i] = 0;
-40274588:	035d      	mov.n	a5, a3
-4027458a:	234a      	add.n	a2, a3, a4
-4027458c:	004252        	s8i	a5, a2, 0
-4027458f:	331b      	addi.n	a3, a3, 1
-40274591:	04cd      	mov.n	a12, a4
-40274593:	f3c366        	bnei	a3, 32, 4027458a <wifiConnect+0x16>
-40274596:	fff031        	l32r	a3, 40274558 <wifiScan+0x1c>
-40274599:	60c422        	addi	a2, a4, 96
-4027459c:	03ed      	mov.n	a14, a3
+40274d7c:	035d      	mov.n	a5, a3
+40274d7e:	234a      	add.n	a2, a3, a4
+40274d80:	004252        	s8i	a5, a2, 0
+40274d83:	331b      	addi.n	a3, a3, 1
+40274d85:	04cd      	mov.n	a12, a4
+40274d87:	f3c366        	bnei	a3, 32, 40274d7e <wifiConnect+0x16>
+40274d8a:	fff031        	l32r	a3, 40274d4c <wifiScan+0x1c>
+40274d8d:	60c422        	addi	a2, a4, 96
+40274d90:	03ed      	mov.n	a14, a3
 	for(i = 0; i < 64; i++) cfg.password[i] = 0;
-4027459e:	00a042        	movi	a4, 0
-402745a1:	004342        	s8i	a4, a3, 0
-402745a4:	01c332        	addi	a3, a3, 1
-402745a7:	f69327        	bne	a3, a2, 402745a1 <wifiConnect+0x2d>
+40274d92:	00a042        	movi	a4, 0
+40274d95:	004342        	s8i	a4, a3, 0
+40274d98:	01c332        	addi	a3, a3, 1
+40274d9b:	f69327        	bne	a3, a2, 40274d95 <wifiConnect+0x2d>
 	cfg.bssid_set = 0;
-402745aa:	00a022        	movi	a2, 0
-402745ad:	604c22        	s8i	a2, a12, 96
+40274d9e:	00a022        	movi	a2, 0
+40274da1:	604c22        	s8i	a2, a12, 96
 	
 	wifi_station_disconnect();
-402745b0:	ce1845        	call0	40242738 <wifi_station_disconnect>
+40274da4:	cd9905        	call0	40242738 <wifi_station_disconnect>
 	
 	char *t = strstr(cmd, "(\"");
-402745b3:	ffea31        	l32r	a3, 4027455c <wifiScan+0x20>
-402745b6:	202dd0        	or	a2, a13, a13
-402745b9:	cc74c5        	call0	40240d08 <strstr>
-402745bc:	02dd      	mov.n	a13, a2
+40274da7:	ffea31        	l32r	a3, 40274d50 <wifiScan+0x20>
+40274daa:	202dd0        	or	a2, a13, a13
+40274dad:	cbf585        	call0	40240d08 <strstr>
+40274db0:	02dd      	mov.n	a13, a2
 	if(t == 0)
-402745be:	72cc      	bnez.n	a2, 402745c9 <wifiConnect+0x55>
+40274db2:	72cc      	bnez.n	a2, 40274dbd <wifiConnect+0x55>
 	{
 		printf("\n##WIFI.CMD_ERROR#");
-402745c0:	ffe821        	l32r	a2, 40274560 <wifiScan+0x24>
-402745c3:	001206        	j	4027460f <wifiConnect+0x9b>
-402745c6:	000000        	ill
+40274db4:	ffe821        	l32r	a2, 40274d54 <wifiScan+0x24>
+40274db7:	001206        	j	40274e03 <wifiConnect+0x9b>
+40274dba:	000000        	ill
 		return;
 	}
 	char *t_end  = strstr(t, "\",\"");
-402745c9:	ffe631        	l32r	a3, 40274564 <wifiScan+0x28>
-402745cc:	cc7385        	call0	40240d08 <strstr>
-402745cf:	02fd      	mov.n	a15, a2
+40274dbd:	ffe631        	l32r	a3, 40274d58 <wifiScan+0x28>
+40274dc0:	cbf445        	call0	40240d08 <strstr>
+40274dc3:	02fd      	mov.n	a15, a2
 	if(t_end == 0)
-402745d1:	feb216        	beqz	a2, 402745c0 <wifiConnect+0x4c>
+40274dc5:	feb216        	beqz	a2, 40274db4 <wifiConnect+0x4c>
 	{
 		printf("\n##WIFI.CMD_ERROR#");
 		return;
 	}
 	
 	strncpy( cfg.ssid, (t+2), (t_end-t-2) );
-402745d4:	c042d0        	sub	a4, a2, a13
-402745d7:	fec442        	addi	a4, a4, -2
-402745da:	3d2b      	addi.n	a3, a13, 2
-402745dc:	0c2d      	mov.n	a2, a12
-402745de:	cc6c85        	call0	40240ca8 <strncpy>
+40274dc8:	c042d0        	sub	a4, a2, a13
+40274dcb:	fec442        	addi	a4, a4, -2
+40274dce:	3d2b      	addi.n	a3, a13, 2
+40274dd0:	0c2d      	mov.n	a2, a12
+40274dd2:	cbed45        	call0	40240ca8 <strncpy>
 	
 	t = t_end+3;
-402745e1:	ff3b      	addi.n	a15, a15, 3
+40274dd5:	ff3b      	addi.n	a15, a15, 3
 	t_end = strstr(t, "\")");
-402745e3:	ffe131        	l32r	a3, 40274568 <wifiScan+0x2c>
-402745e6:	0f2d      	mov.n	a2, a15
-402745e8:	cc71c5        	call0	40240d08 <strstr>
-402745eb:	024d      	mov.n	a4, a2
+40274dd7:	ffe131        	l32r	a3, 40274d5c <wifiScan+0x2c>
+40274dda:	0f2d      	mov.n	a2, a15
+40274ddc:	cbf285        	call0	40240d08 <strstr>
+40274ddf:	024d      	mov.n	a4, a2
 	if(t_end == 0)
-402745ed:	fcf216        	beqz	a2, 402745c0 <wifiConnect+0x4c>
+40274de1:	fcf216        	beqz	a2, 40274db4 <wifiConnect+0x4c>
 	{
 		printf("\n##WIFI.CMD_ERROR#");
 		return;
 	}
 	
 	strncpy( cfg.password, t, (t_end-t)) ;
-402745f0:	0f3d      	mov.n	a3, a15
-402745f2:	c044f0        	sub	a4, a4, a15
-402745f5:	0e2d      	mov.n	a2, a14
-402745f7:	cc6b05        	call0	40240ca8 <strncpy>
+40274de4:	0f3d      	mov.n	a3, a15
+40274de6:	c044f0        	sub	a4, a4, a15
+40274de9:	0e2d      	mov.n	a2, a14
+40274deb:	cbebc5        	call0	40240ca8 <strncpy>
 	
 	wifi_station_set_config(&cfg);
-402745fa:	0c2d      	mov.n	a2, a12
-402745fc:	cde2c5        	call0	4024242c <wifi_station_set_config>
+40274dee:	0c2d      	mov.n	a2, a12
+40274df0:	cd6385        	call0	4024242c <wifi_station_set_config>
 
 	if( wifi_station_connect() ) printf("\n##WIFI.CONNECTED#");
-402745ff:	ce08c5        	call0	4024268c <wifi_station_connect>
-40274602:	628c      	beqz.n	a2, 4027460c <wifiConnect+0x98>
-40274604:	ffda21        	l32r	a2, 4027456c <wifiScan+0x30>
-40274607:	000106        	j	4027460f <wifiConnect+0x9b>
-4027460a:	210000        	srai	a0, a0, 0
+40274df3:	cd8985        	call0	4024268c <wifi_station_connect>
+40274df6:	628c      	beqz.n	a2, 40274e00 <wifiConnect+0x98>
+40274df8:	ffda21        	l32r	a2, 40274d60 <wifiScan+0x30>
+40274dfb:	000106        	j	40274e03 <wifiConnect+0x9b>
+40274dfe:	210000        	srai	a0, a0, 0
 	else printf("\n##WIFI.NOT_CONNECTED#");
-4027460d:	ffd9      	s32i.n	a13, a15, 60
-4027460f:	2e8801        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-40274612:	0000c0        	callx0	a0
+40274e01:	ffd9      	s32i.n	a13, a15, 60
+40274e03:	2c8b01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274e06:	0000c0        	callx0	a0
 }
-40274615:	7108      	l32i.n	a0, a1, 28
-40274617:	61c8      	l32i.n	a12, a1, 24
-40274619:	51d8      	l32i.n	a13, a1, 20
-4027461b:	41e8      	l32i.n	a14, a1, 16
-4027461d:	31f8      	l32i.n	a15, a1, 12
-4027461f:	20c112        	addi	a1, a1, 32
-40274622:	f00d      	ret.n
-40274624:	fe8a30        	excw
-40274627:	3f          	.byte 0x3f
+40274e09:	7108      	l32i.n	a0, a1, 28
+40274e0b:	61c8      	l32i.n	a12, a1, 24
+40274e0d:	51d8      	l32i.n	a13, a1, 20
+40274e0f:	41e8      	l32i.n	a14, a1, 16
+40274e11:	31f8      	l32i.n	a15, a1, 12
+40274e13:	20c112        	addi	a1, a1, 32
+40274e16:	f00d      	ret.n
+40274e18:	8a88      	l32i.n	a8, a10, 32
+40274e1a:	fe          	.byte 0xfe
+40274e1b:	3f          	.byte 0x3f
 
-40274628 <wifiDisconnect>:
+40274e1c <wifiDisconnect>:
 
 void wifiDisconnect()
 {
-40274628:	f0c112        	addi	a1, a1, -16
-4027462b:	3109      	s32i.n	a0, a1, 12
+40274e1c:	f0c112        	addi	a1, a1, -16
+40274e1f:	3109      	s32i.n	a0, a1, 12
 	if(wifi_station_disconnect()) printf("\n##WIFI.NOT_CONNECTED#");
-4027462d:	ce1085        	call0	40242738 <wifi_station_disconnect>
-40274630:	428c      	beqz.n	a2, 40274638 <wifiDisconnect+0x10>
-40274632:	ffcf21        	l32r	a2, 40274570 <wifiScan+0x34>
-40274635:	000086        	j	4027463b <wifiDisconnect+0x13>
+40274e21:	cd9145        	call0	40242738 <wifi_station_disconnect>
+40274e24:	428c      	beqz.n	a2, 40274e2c <wifiDisconnect+0x10>
+40274e26:	ffcf21        	l32r	a2, 40274d64 <wifiScan+0x34>
+40274e29:	000086        	j	40274e2f <wifiDisconnect+0x13>
 	else printf("\n##WIFI.DISCONNECT_FAILED#");
-40274638:	fffb21        	l32r	a2, 40274624 <wifiConnect+0xb0>
-4027463b:	2e7d01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-4027463e:	0000c0        	callx0	a0
+40274e2c:	fffb21        	l32r	a2, 40274e18 <wifiConnect+0xb0>
+40274e2f:	2c8001        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274e32:	0000c0        	callx0	a0
 }
-40274641:	3108      	l32i.n	a0, a1, 12
-40274643:	10c112        	addi	a1, a1, 16
-40274646:	f00d      	ret.n
-40274648:	8a4c      	movi.n	a10, 72
-4027464a:	fe          	.byte 0xfe
-4027464b:	3f          	.byte 0x3f
+40274e35:	3108      	l32i.n	a0, a1, 12
+40274e37:	10c112        	addi	a1, a1, 16
+40274e3a:	f00d      	ret.n
+40274e3c:	fe8aa4        	excw
+40274e3f:	3f          	.byte 0x3f
 
-4027464c <wifiStatus>:
-
-void wifiStatus()
-{
-4027464c:	a0a092        	movi	a9, 160
-4027464f:	c01190        	sub	a1, a1, a9
-40274652:	276102        	s32i	a0, a1, 156
-40274655:	2661c2        	s32i	a12, a1, 152
-	struct ip_info ipi;
-	char buf[32+50];
-	uint8_t t = wifi_station_get_connect_status();	
-40274658:	ce1b05        	call0	4024280c <wifi_station_get_connect_status>
-	wifi_get_ip_info(0, &ipi);
-4027465b:	30c142        	addi	a4, a1, 48
+40274e40 <wifiStatus>:
 
 void wifiStatus()
 {
+40274e40:	a0a092        	movi	a9, 160
+40274e43:	c01190        	sub	a1, a1, a9
+40274e46:	276102        	s32i	a0, a1, 156
+40274e49:	2661c2        	s32i	a12, a1, 152
 	struct ip_info ipi;
 	char buf[32+50];
 	uint8_t t = wifi_station_get_connect_status();	
-4027465e:	20c220        	or	a12, a2, a2
+40274e4c:	cd9bc5        	call0	4024280c <wifi_station_get_connect_status>
 	wifi_get_ip_info(0, &ipi);
-40274661:	54c432        	addi	a3, a4, 84
-40274664:	00a022        	movi	a2, 0
-40274667:	cec805        	call0	402432e8 <wifi_get_ip_info>
+40274e4f:	30c142        	addi	a4, a1, 48
+
+void wifiStatus()
+{
+	struct ip_info ipi;
+	char buf[32+50];
+	uint8_t t = wifi_station_get_connect_status();	
+40274e52:	20c220        	or	a12, a2, a2
+	wifi_get_ip_info(0, &ipi);
+40274e55:	54c432        	addi	a3, a4, 84
+40274e58:	00a022        	movi	a2, 0
+40274e5b:	ce48c5        	call0	402432e8 <wifi_get_ip_info>
 	sprintf(buf, "#WIFI.STATUS#\n%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n##WIFI.STATUS#\n",
 			  t, (ipi.ip.addr&0xff), ((ipi.ip.addr>>8)&0xff), ((ipi.ip.addr>>16)&0xff), ((ipi.ip.addr>>24)&0xff),
-4027466a:	212172        	l32i	a7, a1, 132
+40274e5e:	212172        	l32i	a7, a1, 132
 			 (ipi.netmask.addr&0xff), ((ipi.netmask.addr>>8)&0xff), ((ipi.netmask.addr>>16)&0xff), ((ipi.netmask.addr>>24)&0xff),
-4027466d:	222152        	l32i	a5, a1, 136
+40274e61:	222152        	l32i	a5, a1, 136
 {
 	struct ip_info ipi;
 	char buf[32+50];
 	uint8_t t = wifi_station_get_connect_status();	
 	wifi_get_ip_info(0, &ipi);
 	sprintf(buf, "#WIFI.STATUS#\n%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n##WIFI.STATUS#\n",
-40274670:	752870        	extui	a2, a7, 24, 8
-40274673:	006122        	s32i	a2, a1, 0
-40274676:	742050        	extui	a2, a5, 0, 8
+40274e64:	752870        	extui	a2, a7, 24, 8
+40274e67:	006122        	s32i	a2, a1, 0
+40274e6a:	742050        	extui	a2, a5, 0, 8
 			  t, (ipi.ip.addr&0xff), ((ipi.ip.addr>>8)&0xff), ((ipi.ip.addr>>16)&0xff), ((ipi.ip.addr>>24)&0xff),
 			 (ipi.netmask.addr&0xff), ((ipi.netmask.addr>>8)&0xff), ((ipi.netmask.addr>>16)&0xff), ((ipi.netmask.addr>>24)&0xff),
 			 (ipi.gw.addr&0xff), ((ipi.gw.addr>>8)&0xff), ((ipi.gw.addr>>16)&0xff), ((ipi.gw.addr>>24)&0xff));
-40274679:	232132        	l32i	a3, a1, 140
+40274e6d:	232132        	l32i	a3, a1, 140
 {
 	struct ip_info ipi;
 	char buf[32+50];
 	uint8_t t = wifi_station_get_connect_status();	
 	wifi_get_ip_info(0, &ipi);
 	sprintf(buf, "#WIFI.STATUS#\n%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n##WIFI.STATUS#\n",
-4027467c:	1129      	s32i.n	a2, a1, 4
-4027467e:	742850        	extui	a2, a5, 8, 8
-40274681:	2129      	s32i.n	a2, a1, 8
-40274683:	752050        	extui	a2, a5, 16, 8
-40274686:	3129      	s32i.n	a2, a1, 12
-40274688:	742030        	extui	a2, a3, 0, 8
-4027468b:	5129      	s32i.n	a2, a1, 20
-4027468d:	742830        	extui	a2, a3, 8, 8
-40274690:	6129      	s32i.n	a2, a1, 24
-40274692:	752030        	extui	a2, a3, 16, 8
-40274695:	753830        	extui	a3, a3, 24, 8
-40274698:	8139      	s32i.n	a3, a1, 32
-4027469a:	755850        	extui	a5, a5, 24, 8
-4027469d:	ffea31        	l32r	a3, 40274648 <wifiDisconnect+0x20>
-402746a0:	4159      	s32i.n	a5, a1, 16
-402746a2:	7129      	s32i.n	a2, a1, 28
-402746a4:	0c4d      	mov.n	a4, a12
-402746a6:	745070        	extui	a5, a7, 0, 8
-402746a9:	746870        	extui	a6, a7, 8, 8
-402746ac:	30c122        	addi	a2, a1, 48
-402746af:	757070        	extui	a7, a7, 16, 8
-402746b2:	db4385        	call0	4024faec <sprintf>
+40274e70:	1129      	s32i.n	a2, a1, 4
+40274e72:	742850        	extui	a2, a5, 8, 8
+40274e75:	2129      	s32i.n	a2, a1, 8
+40274e77:	752050        	extui	a2, a5, 16, 8
+40274e7a:	3129      	s32i.n	a2, a1, 12
+40274e7c:	742030        	extui	a2, a3, 0, 8
+40274e7f:	5129      	s32i.n	a2, a1, 20
+40274e81:	742830        	extui	a2, a3, 8, 8
+40274e84:	6129      	s32i.n	a2, a1, 24
+40274e86:	752030        	extui	a2, a3, 16, 8
+40274e89:	753830        	extui	a3, a3, 24, 8
+40274e8c:	8139      	s32i.n	a3, a1, 32
+40274e8e:	755850        	extui	a5, a5, 24, 8
+40274e91:	ffea31        	l32r	a3, 40274e3c <wifiDisconnect+0x20>
+40274e94:	4159      	s32i.n	a5, a1, 16
+40274e96:	7129      	s32i.n	a2, a1, 28
+40274e98:	0c4d      	mov.n	a4, a12
+40274e9a:	745070        	extui	a5, a7, 0, 8
+40274e9d:	746870        	extui	a6, a7, 8, 8
+40274ea0:	30c122        	addi	a2, a1, 48
+40274ea3:	757070        	extui	a7, a7, 16, 8
+40274ea6:	dac445        	call0	4024faec <sprintf>
 			  t, (ipi.ip.addr&0xff), ((ipi.ip.addr>>8)&0xff), ((ipi.ip.addr>>16)&0xff), ((ipi.ip.addr>>24)&0xff),
 			 (ipi.netmask.addr&0xff), ((ipi.netmask.addr>>8)&0xff), ((ipi.netmask.addr>>16)&0xff), ((ipi.netmask.addr>>24)&0xff),
 			 (ipi.gw.addr&0xff), ((ipi.gw.addr>>8)&0xff), ((ipi.gw.addr>>16)&0xff), ((ipi.gw.addr>>24)&0xff));
 	printf(buf);
-402746b5:	30c122        	addi	a2, a1, 48
-402746b8:	2e5e01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-402746bb:	0000c0        	callx0	a0
+40274ea9:	30c122        	addi	a2, a1, 48
+40274eac:	2c6101        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274eaf:	0000c0        	callx0	a0
 }
-402746be:	272102        	l32i	a0, a1, 156
-402746c1:	a0a092        	movi	a9, 160
-402746c4:	2621c2        	l32i	a12, a1, 152
-402746c7:	119a      	add.n	a1, a1, a9
-402746c9:	f00d      	ret.n
-402746cb:	8a9400        	excw
-402746ce:	fe          	.byte 0xfe
-402746cf:	3f          	.byte 0x3f
+40274eb2:	272102        	l32i	a0, a1, 156
+40274eb5:	a0a092        	movi	a9, 160
+40274eb8:	2621c2        	l32i	a12, a1, 152
+40274ebb:	119a      	add.n	a1, a1, a9
+40274ebd:	f00d      	ret.n
+40274ebf:	8aec00        	excw
+40274ec2:	fe          	.byte 0xfe
+40274ec3:	3f          	.byte 0x3f
 
-402746d0 <wifiGetStation>:
+40274ec4 <wifiGetStation>:
 
 void wifiGetStation()
 {
-402746d0:	00a192        	movi	a9, 0x100
-402746d3:	c01190        	sub	a1, a1, a9
+40274ec4:	00a192        	movi	a9, 0x100
+40274ec7:	c01190        	sub	a1, a1, a9
 	char buf[131];
 	struct station_config cfgg;
 	wifi_station_get_config(&cfgg);
-402746d6:	83a022        	movi	a2, 131
-402746d9:	802210        	add	a2, a2, a1
+40274eca:	83a022        	movi	a2, 131
+40274ecd:	802210        	add	a2, a2, a1
 			 (ipi.gw.addr&0xff), ((ipi.gw.addr>>8)&0xff), ((ipi.gw.addr>>16)&0xff), ((ipi.gw.addr>>24)&0xff));
 	printf(buf);
 }
 
 void wifiGetStation()
 {
-402746dc:	3f6102        	s32i	a0, a1, 252
+40274ed0:	3f6102        	s32i	a0, a1, 252
 	char buf[131];
 	struct station_config cfgg;
 	wifi_station_get_config(&cfgg);
-402746df:	cd9905        	call0	40242070 <wifi_station_get_config>
+40274ed3:	cd19c5        	call0	40242070 <wifi_station_get_config>
 	sprintf(buf, "\n#WIFI.STATION#\n%s\n%s\n##WIFI.STATION#\n", cfgg.ssid, cfgg.password);
-402746e2:	83a042        	movi	a4, 131
-402746e5:	804410        	add	a4, a4, a1
-402746e8:	fff931        	l32r	a3, 402746cc <wifiStatus+0x80>
-402746eb:	202110        	or	a2, a1, a1
-402746ee:	20c452        	addi	a5, a4, 32
-402746f1:	db3f85        	call0	4024faec <sprintf>
+40274ed6:	83a042        	movi	a4, 131
+40274ed9:	804410        	add	a4, a4, a1
+40274edc:	fff931        	l32r	a3, 40274ec0 <wifiStatus+0x80>
+40274edf:	202110        	or	a2, a1, a1
+40274ee2:	20c452        	addi	a5, a4, 32
+40274ee5:	dac045        	call0	4024faec <sprintf>
 	printf(buf);
-402746f4:	012d      	mov.n	a2, a1
-402746f6:	2e4e01        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-402746f9:	0000c0        	callx0	a0
+40274ee8:	012d      	mov.n	a2, a1
+40274eea:	2c5101        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274eed:	0000c0        	callx0	a0
 }
-402746fc:	3f2102        	l32i	a0, a1, 252
-402746ff:	00a192        	movi	a9, 0x100
-40274702:	119a      	add.n	a1, a1, a9
-40274704:	f00d      	ret.n
-40274706:	bc0000        	excw
-40274709:	fe8a      	add.n	a15, a14, a8
-4027470b:	3f          	.byte 0x3f
+40274ef0:	3f2102        	l32i	a0, a1, 252
+40274ef3:	00a192        	movi	a9, 0x100
+40274ef6:	119a      	add.n	a1, a1, a9
+40274ef8:	f00d      	ret.n
+40274efa:	140000        	extui	a0, a0, 0, 2
+40274efd:	fe8b      	addi.n	a15, a14, 8
+40274eff:	3f          	.byte 0x3f
 
-4027470c <clientParseUrl>:
+40274f00 <clientParseUrl>:
 
 void clientParseUrl(char* s)
 {
     char *t = strstr(s, "(\"");
-4027470c:	ff9431        	l32r	a3, 4027455c <wifiScan+0x20>
+40274f00:	ff9431        	l32r	a3, 40274d50 <wifiScan+0x20>
 	sprintf(buf, "\n#WIFI.STATION#\n%s\n%s\n##WIFI.STATION#\n", cfgg.ssid, cfgg.password);
 	printf(buf);
 }
 
 void clientParseUrl(char* s)
 {
-4027470f:	f0c112        	addi	a1, a1, -16
-40274712:	0161d2        	s32i	a13, a1, 4
-40274715:	036102        	s32i	a0, a1, 12
-40274718:	0261c2        	s32i	a12, a1, 8
-4027471b:	01e9      	s32i.n	a14, a1, 0
+40274f03:	f0c112        	addi	a1, a1, -16
+40274f06:	0161d2        	s32i	a13, a1, 4
+40274f09:	036102        	s32i	a0, a1, 12
+40274f0c:	0261c2        	s32i	a12, a1, 8
+40274f0f:	01e9      	s32i.n	a14, a1, 0
     char *t = strstr(s, "(\"");
-4027471d:	cc5e85        	call0	40240d08 <strstr>
-40274720:	02dd      	mov.n	a13, a2
+40274f11:	cbdf45        	call0	40240d08 <strstr>
+40274f14:	02dd      	mov.n	a13, a2
 	if(t == 0)
-40274722:	a2cc      	bnez.n	a2, 40274730 <clientParseUrl+0x24>
+40274f16:	a2cc      	bnez.n	a2, 40274f24 <clientParseUrl+0x24>
 	{
 		printf("\n##CLI.CMD_ERROR#");
-40274724:	fff921        	l32r	a2, 40274708 <wifiGetStation+0x38>
-40274727:	2e4201        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-4027472a:	0000c0        	callx0	a0
+40274f18:	fff921        	l32r	a2, 40274efc <wifiGetStation+0x38>
+40274f1b:	2c4501        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274f1e:	0000c0        	callx0	a0
 		return;
-4027472d:	001246        	j	4027477a <clientParseUrl+0x6e>
+40274f21:	001246        	j	40274f6e <clientParseUrl+0x6e>
 	}
 	char *t_end  = strstr(t, "\")")-2;
-40274730:	ff8e31        	l32r	a3, 40274568 <wifiScan+0x2c>
-40274733:	cc5d45        	call0	40240d08 <strstr>
-40274736:	fec222        	addi	a2, a2, -2
+40274f24:	ff8e31        	l32r	a3, 40274d5c <wifiScan+0x2c>
+40274f27:	cbde05        	call0	40240d08 <strstr>
+40274f2a:	fec222        	addi	a2, a2, -2
     if(t_end <= 0)
-40274739:	fe7216        	beqz	a2, 40274724 <clientParseUrl+0x18>
+40274f2d:	fe7216        	beqz	a2, 40274f18 <clientParseUrl+0x18>
     {
 		printf("\n##CLI.CMD_ERROR#");
 		return;
     }
     char *url = (char*) malloc((t_end-t+1)*sizeof(char));
-4027473c:	c0e2d0        	sub	a14, a2, a13
-4027473f:	01ce22        	addi	a2, a14, 1
-40274742:	2f7301        	l32r	a0, 40240510 <user_init_task+0xd4>
-40274745:	0000c0        	callx0	a0
-40274748:	20c220        	or	a12, a2, a2
+40274f30:	c0e2d0        	sub	a14, a2, a13
+40274f33:	01ce22        	addi	a2, a14, 1
+40274f36:	2d7601        	l32r	a0, 40240510 <user_init_task+0xd4>
+40274f39:	0000c0        	callx0	a0
+40274f3c:	20c220        	or	a12, a2, a2
     if(url != NULL)
-4027474b:	02b216        	beqz	a2, 4027477a <clientParseUrl+0x6e>
-4027474e:	050c      	movi.n	a5, 0
+40274f3f:	02b216        	beqz	a2, 40274f6e <clientParseUrl+0x6e>
+40274f42:	050c      	movi.n	a5, 0
     {
         uint8_t tmp;
         for(tmp=0; tmp<(t_end-t+1); tmp++) url[tmp] = 0;
-40274750:	052d      	mov.n	a2, a5
-40274752:	0002c6        	j	40274761 <clientParseUrl+0x55>
-40274755:	803c50        	add	a3, a12, a5
-40274758:	01c552        	addi	a5, a5, 1
-4027475b:	004322        	s8i	a2, a3, 0
-4027475e:	745050        	extui	a5, a5, 0, 8
-40274761:	f0ae57        	bge	a14, a5, 40274755 <clientParseUrl+0x49>
+40274f44:	052d      	mov.n	a2, a5
+40274f46:	0002c6        	j	40274f55 <clientParseUrl+0x55>
+40274f49:	803c50        	add	a3, a12, a5
+40274f4c:	01c552        	addi	a5, a5, 1
+40274f4f:	004322        	s8i	a2, a3, 0
+40274f52:	745050        	extui	a5, a5, 0, 8
+40274f55:	f0ae57        	bge	a14, a5, 40274f49 <clientParseUrl+0x49>
         strncpy(url, t+2, (t_end-t));
-40274764:	3d2b      	addi.n	a3, a13, 2
-40274766:	0e4d      	mov.n	a4, a14
-40274768:	0c2d      	mov.n	a2, a12
-4027476a:	cc53c5        	call0	40240ca8 <strncpy>
+40274f58:	3d2b      	addi.n	a3, a13, 2
+40274f5a:	0e4d      	mov.n	a4, a14
+40274f5c:	0c2d      	mov.n	a2, a12
+40274f5e:	cbd485        	call0	40240ca8 <strncpy>
         clientSetURL(url);
-4027476d:	0c2d      	mov.n	a2, a12
-4027476f:	ff1f45        	call0	40273964 <clientSetURL>
+40274f61:	0c2d      	mov.n	a2, a12
+40274f63:	ff0b85        	call0	4027401c <clientSetURL>
         free(url);
-40274772:	0c2d      	mov.n	a2, a12
-40274774:	2f6501        	l32r	a0, 40240508 <user_init_task+0xcc>
-40274777:	0000c0        	callx0	a0
+40274f66:	0c2d      	mov.n	a2, a12
+40274f68:	2d6801        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274f6b:	0000c0        	callx0	a0
     }
 }
-4027477a:	3108      	l32i.n	a0, a1, 12
-4027477c:	21c8      	l32i.n	a12, a1, 8
-4027477e:	11d8      	l32i.n	a13, a1, 4
-40274780:	01e8      	l32i.n	a14, a1, 0
-40274782:	10c112        	addi	a1, a1, 16
-40274785:	f00d      	ret.n
+40274f6e:	3108      	l32i.n	a0, a1, 12
+40274f70:	21c8      	l32i.n	a12, a1, 8
+40274f72:	11d8      	l32i.n	a13, a1, 4
+40274f74:	01e8      	l32i.n	a14, a1, 0
+40274f76:	10c112        	addi	a1, a1, 16
+40274f79:	f00d      	ret.n
 	...
 
-40274788 <clientParsePath>:
+40274f7c <clientParsePath>:
 
 void clientParsePath(char* s)
 {
     char *t = strstr(s, "(\"");
-40274788:	ff7531        	l32r	a3, 4027455c <wifiScan+0x20>
+40274f7c:	ff7531        	l32r	a3, 40274d50 <wifiScan+0x20>
         free(url);
     }
 }
 
 void clientParsePath(char* s)
 {
-4027478b:	f0c112        	addi	a1, a1, -16
-4027478e:	0161d2        	s32i	a13, a1, 4
-40274791:	036102        	s32i	a0, a1, 12
-40274794:	0261c2        	s32i	a12, a1, 8
-40274797:	01e9      	s32i.n	a14, a1, 0
+40274f7f:	f0c112        	addi	a1, a1, -16
+40274f82:	0161d2        	s32i	a13, a1, 4
+40274f85:	036102        	s32i	a0, a1, 12
+40274f88:	0261c2        	s32i	a12, a1, 8
+40274f8b:	01e9      	s32i.n	a14, a1, 0
     char *t = strstr(s, "(\"");
-40274799:	cc56c5        	call0	40240d08 <strstr>
-4027479c:	02dd      	mov.n	a13, a2
+40274f8d:	cbd785        	call0	40240d08 <strstr>
+40274f90:	02dd      	mov.n	a13, a2
 	if(t == 0)
-4027479e:	a2cc      	bnez.n	a2, 402747ac <clientParsePath+0x24>
+40274f92:	a2cc      	bnez.n	a2, 40274fa0 <clientParsePath+0x24>
 	{
 		printf("\n##CLI.CMD_ERROR#");
-402747a0:	ffda21        	l32r	a2, 40274708 <wifiGetStation+0x38>
-402747a3:	2e2301        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-402747a6:	0000c0        	callx0	a0
+40274f94:	ffda21        	l32r	a2, 40274efc <wifiGetStation+0x38>
+40274f97:	2c2601        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40274f9a:	0000c0        	callx0	a0
 		return;
-402747a9:	001246        	j	402747f6 <clientParsePath+0x6e>
+40274f9d:	001246        	j	40274fea <clientParsePath+0x6e>
 	}
 	char *t_end  = strstr(t, "\")")-2;
-402747ac:	ff6f31        	l32r	a3, 40274568 <wifiScan+0x2c>
-402747af:	cc5585        	call0	40240d08 <strstr>
-402747b2:	fec222        	addi	a2, a2, -2
+40274fa0:	ff6f31        	l32r	a3, 40274d5c <wifiScan+0x2c>
+40274fa3:	cbd645        	call0	40240d08 <strstr>
+40274fa6:	fec222        	addi	a2, a2, -2
     if(t_end <= 0)
-402747b5:	fe7216        	beqz	a2, 402747a0 <clientParsePath+0x18>
+40274fa9:	fe7216        	beqz	a2, 40274f94 <clientParsePath+0x18>
     {
 		printf("\n##CLI.CMD_ERROR#");
 		return;
     }
     char *path = (char*) malloc((t_end-t+1)*sizeof(char));
-402747b8:	c0e2d0        	sub	a14, a2, a13
-402747bb:	01ce22        	addi	a2, a14, 1
-402747be:	2f5401        	l32r	a0, 40240510 <user_init_task+0xd4>
-402747c1:	0000c0        	callx0	a0
-402747c4:	20c220        	or	a12, a2, a2
+40274fac:	c0e2d0        	sub	a14, a2, a13
+40274faf:	01ce22        	addi	a2, a14, 1
+40274fb2:	2d5701        	l32r	a0, 40240510 <user_init_task+0xd4>
+40274fb5:	0000c0        	callx0	a0
+40274fb8:	20c220        	or	a12, a2, a2
     if(path != NULL)
-402747c7:	02b216        	beqz	a2, 402747f6 <clientParsePath+0x6e>
-402747ca:	050c      	movi.n	a5, 0
+40274fbb:	02b216        	beqz	a2, 40274fea <clientParsePath+0x6e>
+40274fbe:	050c      	movi.n	a5, 0
     {
         uint8_t tmp;
         for(tmp=0; tmp<(t_end-t+1); tmp++) path[tmp] = 0;
-402747cc:	052d      	mov.n	a2, a5
-402747ce:	0002c6        	j	402747dd <clientParsePath+0x55>
-402747d1:	803c50        	add	a3, a12, a5
-402747d4:	01c552        	addi	a5, a5, 1
-402747d7:	004322        	s8i	a2, a3, 0
-402747da:	745050        	extui	a5, a5, 0, 8
-402747dd:	f0ae57        	bge	a14, a5, 402747d1 <clientParsePath+0x49>
+40274fc0:	052d      	mov.n	a2, a5
+40274fc2:	0002c6        	j	40274fd1 <clientParsePath+0x55>
+40274fc5:	803c50        	add	a3, a12, a5
+40274fc8:	01c552        	addi	a5, a5, 1
+40274fcb:	004322        	s8i	a2, a3, 0
+40274fce:	745050        	extui	a5, a5, 0, 8
+40274fd1:	f0ae57        	bge	a14, a5, 40274fc5 <clientParsePath+0x49>
         strncpy(path, t+2, (t_end-t));
-402747e0:	3d2b      	addi.n	a3, a13, 2
-402747e2:	0e4d      	mov.n	a4, a14
-402747e4:	0c2d      	mov.n	a2, a12
-402747e6:	cc4c05        	call0	40240ca8 <strncpy>
+40274fd4:	3d2b      	addi.n	a3, a13, 2
+40274fd6:	0e4d      	mov.n	a4, a14
+40274fd8:	0c2d      	mov.n	a2, a12
+40274fda:	cbccc5        	call0	40240ca8 <strncpy>
         clientSetPath(path);
-402747e9:	0c2d      	mov.n	a2, a12
-402747eb:	ff1cc5        	call0	402739b8 <clientSetPath>
+40274fdd:	0c2d      	mov.n	a2, a12
+40274fdf:	ff0905        	call0	40274070 <clientSetPath>
         free(path);
-402747ee:	0c2d      	mov.n	a2, a12
-402747f0:	2f4601        	l32r	a0, 40240508 <user_init_task+0xcc>
-402747f3:	0000c0        	callx0	a0
+40274fe2:	0c2d      	mov.n	a2, a12
+40274fe4:	2d4901        	l32r	a0, 40240508 <user_init_task+0xcc>
+40274fe7:	0000c0        	callx0	a0
     }
 }
-402747f6:	3108      	l32i.n	a0, a1, 12
-402747f8:	21c8      	l32i.n	a12, a1, 8
-402747fa:	11d8      	l32i.n	a13, a1, 4
-402747fc:	01e8      	l32i.n	a14, a1, 0
-402747fe:	10c112        	addi	a1, a1, 16
-40274801:	f00d      	ret.n
+40274fea:	3108      	l32i.n	a0, a1, 12
+40274fec:	21c8      	l32i.n	a12, a1, 8
+40274fee:	11d8      	l32i.n	a13, a1, 4
+40274ff0:	01e8      	l32i.n	a14, a1, 0
+40274ff2:	10c112        	addi	a1, a1, 16
+40274ff5:	f00d      	ret.n
 	...
 
-40274804 <clientParsePort>:
+40274ff8 <clientParsePort>:
 
 void clientParsePort(char *s)
 {
     char *t = strstr(s, "(\"");
-40274804:	ff5631        	l32r	a3, 4027455c <wifiScan+0x20>
+40274ff8:	ff5631        	l32r	a3, 40274d50 <wifiScan+0x20>
         free(path);
     }
 }
 
 void clientParsePort(char *s)
 {
-40274807:	f0c112        	addi	a1, a1, -16
-4027480a:	0161d2        	s32i	a13, a1, 4
-4027480d:	036102        	s32i	a0, a1, 12
-40274810:	0261c2        	s32i	a12, a1, 8
-40274813:	01e9      	s32i.n	a14, a1, 0
+40274ffb:	f0c112        	addi	a1, a1, -16
+40274ffe:	0161d2        	s32i	a13, a1, 4
+40275001:	036102        	s32i	a0, a1, 12
+40275004:	0261c2        	s32i	a12, a1, 8
+40275007:	01e9      	s32i.n	a14, a1, 0
     char *t = strstr(s, "(\"");
-40274815:	cc4f05        	call0	40240d08 <strstr>
-40274818:	02dd      	mov.n	a13, a2
+40275009:	cbcfc5        	call0	40240d08 <strstr>
+4027500c:	02dd      	mov.n	a13, a2
 	if(t == 0)
-4027481a:	a2cc      	bnez.n	a2, 40274828 <clientParsePort+0x24>
+4027500e:	a2cc      	bnez.n	a2, 4027501c <clientParsePort+0x24>
 	{
 		printf("\n##CLI.CMD_ERROR#");
-4027481c:	ffbb21        	l32r	a2, 40274708 <wifiGetStation+0x38>
-4027481f:	2e0401        	l32r	a0, 40240030 <_irom0_text_start+0x30>
-40274822:	0000c0        	callx0	a0
+40275010:	ffbb21        	l32r	a2, 40274efc <wifiGetStation+0x38>
+40275013:	2c0701        	l32r	a0, 40240030 <_irom0_text_start+0x30>
+40275016:	0000c0        	callx0	a0
 		return;
-40274825:	0013c6        	j	40274878 <clientParsePort+0x74>
+40275019:	0013c6        	j	4027506c <clientParsePort+0x74>
 	}
 	char *t_end  = strstr(t, "\")")-2;
-40274828:	ff5031        	l32r	a3, 40274568 <wifiScan+0x2c>
-4027482b:	cc4dc5        	call0	40240d08 <strstr>
-4027482e:	fec222        	addi	a2, a2, -2
+4027501c:	ff5031        	l32r	a3, 40274d5c <wifiScan+0x2c>
+4027501f:	cbce85        	call0	40240d08 <strstr>
+40275022:	fec222        	addi	a2, a2, -2
     if(t_end <= 0)
-40274831:	fe7216        	beqz	a2, 4027481c <clientParsePort+0x18>
+40275025:	fe7216        	beqz	a2, 40275010 <clientParsePort+0x18>
     {
 		printf("\n##CLI.CMD_ERROR#");
 		return;
     }
     char *port = (char*) malloc((t_end-t+1)*sizeof(char));
-40274834:	c0e2d0        	sub	a14, a2, a13
-40274837:	01ce22        	addi	a2, a14, 1
-4027483a:	2f3501        	l32r	a0, 40240510 <user_init_task+0xd4>
-4027483d:	0000c0        	callx0	a0
-40274840:	20c220        	or	a12, a2, a2
+40275028:	c0e2d0        	sub	a14, a2, a13
+4027502b:	01ce22        	addi	a2, a14, 1
+4027502e:	2d3801        	l32r	a0, 40240510 <user_init_task+0xd4>
+40275031:	0000c0        	callx0	a0
+40275034:	20c220        	or	a12, a2, a2
     if(port != NULL)
-40274843:	031216        	beqz	a2, 40274878 <clientParsePort+0x74>
-40274846:	050c      	movi.n	a5, 0
+40275037:	031216        	beqz	a2, 4027506c <clientParsePort+0x74>
+4027503a:	050c      	movi.n	a5, 0
     {
         uint8_t tmp;
         for(tmp=0; tmp<(t_end-t+1); tmp++) port[tmp] = 0;
-40274848:	052d      	mov.n	a2, a5
-4027484a:	000286        	j	40274858 <clientParsePort+0x54>
-4027484d:	803c50        	add	a3, a12, a5
-40274850:	551b      	addi.n	a5, a5, 1
-40274852:	004322        	s8i	a2, a3, 0
-40274855:	745050        	extui	a5, a5, 0, 8
-40274858:	f1ae57        	bge	a14, a5, 4027484d <clientParsePort+0x49>
+4027503c:	052d      	mov.n	a2, a5
+4027503e:	000286        	j	4027504c <clientParsePort+0x54>
+40275041:	803c50        	add	a3, a12, a5
+40275044:	551b      	addi.n	a5, a5, 1
+40275046:	004322        	s8i	a2, a3, 0
+40275049:	745050        	extui	a5, a5, 0, 8
+4027504c:	f1ae57        	bge	a14, a5, 40275041 <clientParsePort+0x49>
         strncpy(port, t+2, (t_end-t));
-4027485b:	3d2b      	addi.n	a3, a13, 2
-4027485d:	0e4d      	mov.n	a4, a14
-4027485f:	0c2d      	mov.n	a2, a12
-40274861:	cc4445        	call0	40240ca8 <strncpy>
+4027504f:	3d2b      	addi.n	a3, a13, 2
+40275051:	0e4d      	mov.n	a4, a14
+40275053:	0c2d      	mov.n	a2, a12
+40275055:	cbc505        	call0	40240ca8 <strncpy>
         uint16_t porti = atoi(port);
-40274864:	0c2d      	mov.n	a2, a12
-40274866:	db2545        	call0	4024fabc <atoi>
+40275058:	0c2d      	mov.n	a2, a12
+4027505a:	daa605        	call0	4024fabc <atoi>
         clientSetPort(porti);
-40274869:	f42020        	extui	a2, a2, 0, 16
-4027486c:	ff19c5        	call0	40273a0c <clientSetPort>
+4027505d:	f42020        	extui	a2, a2, 0, 16
+40275060:	ff0605        	call0	402740c4 <clientSetPort>
         free(port);
-4027486f:	202cc0        	or	a2, a12, a12
-40274872:	2f2501        	l32r	a0, 40240508 <user_init_task+0xcc>
-40274875:	0000c0        	callx0	a0
+40275063:	202cc0        	or	a2, a12, a12
+40275066:	2d2801        	l32r	a0, 40240508 <user_init_task+0xcc>
+40275069:	0000c0        	callx0	a0
     }
 }
-40274878:	3108      	l32i.n	a0, a1, 12
-4027487a:	21c8      	l32i.n	a12, a1, 8
-4027487c:	11d8      	l32i.n	a13, a1, 4
-4027487e:	01e8      	l32i.n	a14, a1, 0
-40274880:	10c112        	addi	a1, a1, 16
-40274883:	f00d      	ret.n
-40274885:	000000        	ill
-40274888:	fe8ad0        	excw
-4027488b:	3f          	.byte 0x3f
-4027488c:	8adc      	bnez.n	a10, 402748a8 <clientParsePort+0xa4>
-4027488e:	fe          	.byte 0xfe
-4027488f:	3f          	.byte 0x3f
-40274890:	8ae8      	l32i.n	a14, a10, 32
-40274892:	fe          	.byte 0xfe
-40274893:	3f          	.byte 0x3f
-40274894:	fe8af4        	excw
-40274897:	3f          	.byte 0x3f
-40274898:	fe8b00        	excw
-4027489b:	3f          	.byte 0x3f
-4027489c:	fe8b10        	excw
-4027489f:	3f          	.byte 0x3f
-402748a0:	8b18      	l32i.n	a1, a11, 32
-402748a2:	fe          	.byte 0xfe
-402748a3:	3f          	.byte 0x3f
-402748a4:	fe8b24        	excw
-402748a7:	3f          	.byte 0x3f
-402748a8:	fe8b30        	excw
-402748ab:	3f          	.byte 0x3f
-402748ac:	8b3c      	movi.n	a11, 56
-402748ae:	fe          	.byte 0xfe
-402748af:	3f          	.byte 0x3f
+4027506c:	3108      	l32i.n	a0, a1, 12
+4027506e:	21c8      	l32i.n	a12, a1, 8
+40275070:	11d8      	l32i.n	a13, a1, 4
+40275072:	01e8      	l32i.n	a14, a1, 0
+40275074:	10c112        	addi	a1, a1, 16
+40275077:	f00d      	ret.n
+40275079:	000000        	ill
+4027507c:	8b28      	l32i.n	a2, a11, 32
+4027507e:	fe          	.byte 0xfe
+4027507f:	3f          	.byte 0x3f
+40275080:	fe8b34        	excw
+40275083:	3f          	.byte 0x3f
+40275084:	fe8b40        	excw
+40275087:	3f          	.byte 0x3f
+40275088:	8b4c      	movi.n	a11, 72
+4027508a:	fe          	.byte 0xfe
+4027508b:	3f          	.byte 0x3f
+4027508c:	8b58      	l32i.n	a5, a11, 32
+4027508e:	fe          	.byte 0xfe
+4027508f:	3f          	.byte 0x3f
+40275090:	8b68      	l32i.n	a6, a11, 32
+40275092:	fe          	.byte 0xfe
+40275093:	3f          	.byte 0x3f
+40275094:	fe8b70        	excw
+40275097:	3f          	.byte 0x3f
+40275098:	8b7c      	movi.n	a11, -8
+4027509a:	fe          	.byte 0xfe
+4027509b:	3f          	.byte 0x3f
+4027509c:	8b88      	l32i.n	a8, a11, 32
+4027509e:	fe          	.byte 0xfe
+4027509f:	3f          	.byte 0x3f
+402750a0:	fe8b94        	excw
+402750a3:	3f          	.byte 0x3f
 
-402748b0 <checkCommand>:
+402750a4 <checkCommand>:
 
 void checkCommand(int size, char* s)
 {
-402748b0:	f0c112        	addi	a1, a1, -16
-402748b3:	11d9      	s32i.n	a13, a1, 4
-402748b5:	02dd      	mov.n	a13, a2
+402750a4:	f0c112        	addi	a1, a1, -16
+402750a7:	11d9      	s32i.n	a13, a1, 4
+402750a9:	02dd      	mov.n	a13, a2
 	char *tmp = (char*)malloc((size+1)*sizeof(char));
-402748b7:	221b      	addi.n	a2, a2, 1
+402750ab:	221b      	addi.n	a2, a2, 1
         free(port);
     }
 }
 
 void checkCommand(int size, char* s)
 {
-402748b9:	21c9      	s32i.n	a12, a1, 8
-402748bb:	01e9      	s32i.n	a14, a1, 0
-402748bd:	3109      	s32i.n	a0, a1, 12
-402748bf:	20e330        	or	a14, a3, a3
+402750ad:	21c9      	s32i.n	a12, a1, 8
+402750af:	01e9      	s32i.n	a14, a1, 0
+402750b1:	3109      	s32i.n	a0, a1, 12
+402750b3:	20e330        	or	a14, a3, a3
 	char *tmp = (char*)malloc((size+1)*sizeof(char));
-402748c2:	2f1301        	l32r	a0, 40240510 <user_init_task+0xd4>
-402748c5:	0000c0        	callx0	a0
-402748c8:	02cd      	mov.n	a12, a2
+402750b6:	2d1601        	l32r	a0, 40240510 <user_init_task+0xd4>
+402750b9:	0000c0        	callx0	a0
+402750bc:	02cd      	mov.n	a12, a2
 	int i;
 	for(i=0;i<size;i++) tmp[i] = s[i];
-402748ca:	040c      	movi.n	a4, 0
-402748cc:	000386        	j	402748de <checkCommand+0x2e>
-402748cf:	2e4000        	excw
-402748d2:	023280        	excw
-402748d5:	2c4000        	excw
-402748d8:	423280        	excw
-402748db:	441b00        	extui	a1, a0, 11, 5
-402748de:	ee24d7        	blt	a4, a13, 402748d0 <checkCommand+0x20>
+402750be:	040c      	movi.n	a4, 0
+402750c0:	000386        	j	402750d2 <checkCommand+0x2e>
+402750c3:	2e4000        	excw
+402750c6:	023280        	excw
+402750c9:	2c4000        	excw
+402750cc:	423280        	excw
+402750cf:	441b00        	extui	a1, a0, 11, 5
+402750d2:	ee24d7        	blt	a4, a13, 402750c4 <checkCommand+0x20>
 	tmp[size] = 0;
-402748e1:	020c      	movi.n	a2, 0
-402748e3:	dcda      	add.n	a13, a12, a13
+402750d5:	020c      	movi.n	a2, 0
+402750d7:	dcda      	add.n	a13, a12, a13
 	if(strcmp(tmp, "wifi.list") == 0) wifiScan(); //printInfo("WIFI LIST");
-402748e5:	ffe831        	l32r	a3, 40274888 <clientParsePort+0x84>
+402750d9:	ffe831        	l32r	a3, 4027507c <clientParsePort+0x84>
 void checkCommand(int size, char* s)
 {
 	char *tmp = (char*)malloc((size+1)*sizeof(char));
 	int i;
 	for(i=0;i<size;i++) tmp[i] = s[i];
 	tmp[size] = 0;
-402748e8:	004d22        	s8i	a2, a13, 0
+402750dc:	004d22        	s8i	a2, a13, 0
 	if(strcmp(tmp, "wifi.list") == 0) wifiScan(); //printInfo("WIFI LIST");
-402748eb:	0c2d      	mov.n	a2, a12
-402748ed:	cc3d05        	call0	40240cc0 <strcmp>
-402748f0:	52cc      	bnez.n	a2, 402748f9 <checkCommand+0x49>
-402748f2:	ffc485        	call0	4027453c <wifiScan>
-402748f5:	002dc6        	j	402749b0 <checkCommand+0x100>
-402748f8:	e42100        	extui	a2, a0, 1, 15
+402750df:	0c2d      	mov.n	a2, a12
+402750e1:	cbbdc5        	call0	40240cc0 <strcmp>
+402750e4:	52cc      	bnez.n	a2, 402750ed <checkCommand+0x49>
+402750e6:	ffc485        	call0	40274d30 <wifiScan>
+402750e9:	002dc6        	j	402751a4 <checkCommand+0x100>
+402750ec:	e42100        	extui	a2, a0, 1, 15
 	else if(startsWith("wifi.con", tmp)) wifiConnect(tmp);
-402748fb:	ff          	.byte 0xff
-402748fc:	0c3d      	mov.n	a3, a12
-402748fe:	ffbc05        	call0	402744c0 <startsWith>
-40274901:	008216        	beqz	a2, 4027490d <checkCommand+0x5d>
-40274904:	0c2d      	mov.n	a2, a12
-40274906:	ffc6c5        	call0	40274574 <wifiConnect>
-40274909:	0028c6        	j	402749b0 <checkCommand+0x100>
-4027490c:	e03100        	subx4	a3, a1, a0
+402750ef:	ff          	.byte 0xff
+402750f0:	0c3d      	mov.n	a3, a12
+402750f2:	ffbc05        	call0	40274cb4 <startsWith>
+402750f5:	008216        	beqz	a2, 40275101 <checkCommand+0x5d>
+402750f8:	0c2d      	mov.n	a2, a12
+402750fa:	ffc6c5        	call0	40274d68 <wifiConnect>
+402750fd:	0028c6        	j	402751a4 <checkCommand+0x100>
+40275100:	e03100        	subx4	a3, a1, a0
 	else if(strcmp(tmp, "wifi.discon") == 0) wifiDisconnect();
-4027490f:	ff          	.byte 0xff
-40274910:	202cc0        	or	a2, a12, a12
-40274913:	cc3ac5        	call0	40240cc0 <strcmp>
-40274916:	007256        	bnez	a2, 40274921 <checkCommand+0x71>
-40274919:	ffd0c5        	call0	40274628 <wifiDisconnect>
-4027491c:	002406        	j	402749b0 <checkCommand+0x100>
-4027491f:	310000        	srai	a0, a0, 16
+40275103:	ff          	.byte 0xff
+40275104:	202cc0        	or	a2, a12, a12
+40275107:	cbbb85        	call0	40240cc0 <strcmp>
+4027510a:	007256        	bnez	a2, 40275115 <checkCommand+0x71>
+4027510d:	ffd0c5        	call0	40274e1c <wifiDisconnect>
+40275110:	002406        	j	402751a4 <checkCommand+0x100>
+40275113:	310000        	srai	a0, a0, 16
 	else if(strcmp(tmp, "wifi.status") == 0) wifiStatus();
-40274922:	ffdc      	bnez.n	a15, 40274945 <checkCommand+0x95>
-40274924:	202cc0        	or	a2, a12, a12
-40274927:	cc3985        	call0	40240cc0 <strcmp>
-4027492a:	007256        	bnez	a2, 40274935 <checkCommand+0x85>
-4027492d:	ffd1c5        	call0	4027464c <wifiStatus>
-40274930:	001f06        	j	402749b0 <checkCommand+0x100>
-40274933:	310000        	srai	a0, a0, 16
+40275116:	ffdc      	bnez.n	a15, 40275139 <checkCommand+0x95>
+40275118:	202cc0        	or	a2, a12, a12
+4027511b:	cbba45        	call0	40240cc0 <strcmp>
+4027511e:	007256        	bnez	a2, 40275129 <checkCommand+0x85>
+40275121:	ffd1c5        	call0	40274e40 <wifiStatus>
+40275124:	001f06        	j	402751a4 <checkCommand+0x100>
+40275127:	310000        	srai	a0, a0, 16
 	else if(strcmp(tmp, "wifi.station") == 0) wifiGetStation();
-40274936:	ffd8      	l32i.n	a13, a15, 60
-40274938:	202cc0        	or	a2, a12, a12
-4027493b:	cc3845        	call0	40240cc0 <strcmp>
-4027493e:	007256        	bnez	a2, 40274949 <checkCommand+0x99>
-40274941:	ffd8c5        	call0	402746d0 <wifiGetStation>
-40274944:	001a06        	j	402749b0 <checkCommand+0x100>
-40274947:	210000        	srai	a0, a0, 0
+4027512a:	ffd8      	l32i.n	a13, a15, 60
+4027512c:	202cc0        	or	a2, a12, a12
+4027512f:	cbb905        	call0	40240cc0 <strcmp>
+40275132:	007256        	bnez	a2, 4027513d <checkCommand+0x99>
+40275135:	ffd8c5        	call0	40274ec4 <wifiGetStation>
+40275138:	001a06        	j	402751a4 <checkCommand+0x100>
+4027513b:	210000        	srai	a0, a0, 0
 	/*else if(strcmp(tmp, "srv.start") == 0) serverInit();
     else if(strcmp(tmp, "srv.stop") == 0) serverDisconnect();*/
     else if(startsWith("cli.url", tmp)) clientParseUrl(tmp);
-4027494a:	3dffd4        	excw
-4027494d:	050c      	movi.n	a5, 0
-4027494f:	16ffb7        	bbsi	a15, 27, 40274969 <checkCommand+0xb9>
-40274952:	2d0082        	l8ui	a8, a0, 45
-40274955:	450c      	movi.n	a5, 4
-40274957:	ffdb      	addi.n	a15, a15, 13
-40274959:	0014c6        	j	402749b0 <checkCommand+0x100>
-4027495c:	d02100        	subx2	a2, a1, a0
+4027513e:	3dffd4        	excw
+40275141:	050c      	movi.n	a5, 0
+40275143:	16ffb7        	bbsi	a15, 27, 4027515d <checkCommand+0xb9>
+40275146:	2d0082        	l8ui	a8, a0, 45
+40275149:	450c      	movi.n	a5, 4
+4027514b:	ffdb      	addi.n	a15, a15, 13
+4027514d:	0014c6        	j	402751a4 <checkCommand+0x100>
+40275150:	d02100        	subx2	a2, a1, a0
     else if(startsWith("cli.path", tmp)) clientParsePath(tmp);
-4027495f:	ff          	.byte 0xff
-40274960:	0c3d      	mov.n	a3, a12
-40274962:	ffb5c5        	call0	402744c0 <startsWith>
-40274965:	008216        	beqz	a2, 40274971 <checkCommand+0xc1>
-40274968:	0c2d      	mov.n	a2, a12
-4027496a:	ffe1c5        	call0	40274788 <clientParsePath>
-4027496d:	000fc6        	j	402749b0 <checkCommand+0x100>
-40274970:	cc2100        	excw
+40275153:	ff          	.byte 0xff
+40275154:	0c3d      	mov.n	a3, a12
+40275156:	ffb5c5        	call0	40274cb4 <startsWith>
+40275159:	008216        	beqz	a2, 40275165 <checkCommand+0xc1>
+4027515c:	0c2d      	mov.n	a2, a12
+4027515e:	ffe1c5        	call0	40274f7c <clientParsePath>
+40275161:	000fc6        	j	402751a4 <checkCommand+0x100>
+40275164:	cc2100        	excw
     else if(startsWith("cli.port", tmp)) clientParsePort(tmp);
-40274973:	ff          	.byte 0xff
-40274974:	0c3d      	mov.n	a3, a12
-40274976:	ffb485        	call0	402744c0 <startsWith>
-40274979:	008216        	beqz	a2, 40274985 <checkCommand+0xd5>
-4027497c:	0c2d      	mov.n	a2, a12
-4027497e:	ffe845        	call0	40274804 <clientParsePort>
-40274981:	000ac6        	j	402749b0 <checkCommand+0x100>
-40274984:	c83100        	excw
+40275167:	ff          	.byte 0xff
+40275168:	0c3d      	mov.n	a3, a12
+4027516a:	ffb485        	call0	40274cb4 <startsWith>
+4027516d:	008216        	beqz	a2, 40275179 <checkCommand+0xd5>
+40275170:	0c2d      	mov.n	a2, a12
+40275172:	ffe845        	call0	40274ff8 <clientParsePort>
+40275175:	000ac6        	j	402751a4 <checkCommand+0x100>
+40275178:	c83100        	excw
     else if(strcmp(tmp, "cli.start") == 0) clientConnect();
-40274987:	ff          	.byte 0xff
-40274988:	202cc0        	or	a2, a12, a12
-4027498b:	cc3345        	call0	40240cc0 <strcmp>
-4027498e:	007256        	bnez	a2, 40274999 <checkCommand+0xe9>
-40274991:	ff0cc5        	call0	40273a60 <clientConnect>
-40274994:	000606        	j	402749b0 <checkCommand+0x100>
-40274997:	310000        	srai	a0, a0, 16
+4027517b:	ff          	.byte 0xff
+4027517c:	202cc0        	or	a2, a12, a12
+4027517f:	cbb405        	call0	40240cc0 <strcmp>
+40275182:	007256        	bnez	a2, 4027518d <checkCommand+0xe9>
+40275185:	fef905        	call0	40274118 <clientConnect>
+40275188:	000606        	j	402751a4 <checkCommand+0x100>
+4027518b:	310000        	srai	a0, a0, 16
     else if(strcmp(tmp, "cli.stop") == 0) clientDisconnect();
-4027499a:	c0ffc4        	excw
-4027499d:	202c      	movi.n	a0, 34
-4027499f:	cc3205        	call0	40240cc0 <strcmp>
-402749a2:	005256        	bnez	a2, 402749ab <checkCommand+0xfb>
-402749a5:	ff0885        	call0	40273a30 <clientDisconnect>
-402749a8:	000106        	j	402749b0 <checkCommand+0x100>
+4027518e:	c0ffc4        	excw
+40275191:	202c      	movi.n	a0, 34
+40275193:	cbb2c5        	call0	40240cc0 <strcmp>
+40275196:	005256        	bnez	a2, 4027519f <checkCommand+0xfb>
+40275199:	fef485        	call0	402740e4 <clientDisconnect>
+4027519c:	000106        	j	402751a4 <checkCommand+0x100>
 	else printInfo(tmp);
-402749ab:	0c2d      	mov.n	a2, a12
-402749ad:	ffb5c5        	call0	4027450c <printInfo>
+4027519f:	0c2d      	mov.n	a2, a12
+402751a1:	ffb5c5        	call0	40274d00 <printInfo>
 	free(tmp);
-402749b0:	0c2d      	mov.n	a2, a12
-402749b2:	2ed501        	l32r	a0, 40240508 <user_init_task+0xcc>
-402749b5:	0000c0        	callx0	a0
+402751a4:	0c2d      	mov.n	a2, a12
+402751a6:	2cd801        	l32r	a0, 40240508 <user_init_task+0xcc>
+402751a9:	0000c0        	callx0	a0
 }
-402749b8:	3108      	l32i.n	a0, a1, 12
-402749ba:	21c8      	l32i.n	a12, a1, 8
-402749bc:	11d8      	l32i.n	a13, a1, 4
-402749be:	01e8      	l32i.n	a14, a1, 0
-402749c0:	10c112        	addi	a1, a1, 16
-402749c3:	f00d      	ret.n
-402749c5:	000000        	ill
-402749c8:	000800        	excw
-402749cb:	081c60        	excw
-402749ce:	306000        	xor	a6, a0, a0
-402749d1:	0008      	l32i.n	a0, a0, 0
-402749d3:	082060        	excw
-402749d6:	246000        	extui	a6, a0, 0, 3
-402749d9:	0008      	l32i.n	a0, a0, 0
-402749db:	080460        	excw
-402749de:	086000        	excw
-402749e1:	0008      	l32i.n	a0, a0, 0
-402749e3:	080c60        	excw
-402749e6:	306000        	xor	a6, a0, a0
+402751ac:	3108      	l32i.n	a0, a1, 12
+402751ae:	21c8      	l32i.n	a12, a1, 8
+402751b0:	11d8      	l32i.n	a13, a1, 4
+402751b2:	01e8      	l32i.n	a14, a1, 0
+402751b4:	10c112        	addi	a1, a1, 16
+402751b7:	f00d      	ret.n
+402751b9:	000000        	ill
+402751bc:	fef990        	excw
+402751bf:	3f          	.byte 0x3f
 
-402749e8 <spi_init_gpio>:
+402751c0 <spi_take_semaphore>:
+#include "spi.h"
+
+xSemaphoreHandle sSPI = NULL;
+
+uint8_t spi_take_semaphore() {
+	if(sSPI) if(xSemaphoreTake(sSPI, portMAX_DELAY)) return 1;
+402751c0:	ffff21        	l32r	a2, 402751bc <checkCommand+0x118>
+
+#include "spi.h"
+
+xSemaphoreHandle sSPI = NULL;
+
+uint8_t spi_take_semaphore() {
+402751c3:	f0c112        	addi	a1, a1, -16
+	if(sSPI) if(xSemaphoreTake(sSPI, portMAX_DELAY)) return 1;
+402751c6:	002222        	l32i	a2, a2, 0
+
+#include "spi.h"
+
+xSemaphoreHandle sSPI = NULL;
+
+uint8_t spi_take_semaphore() {
+402751c9:	0261c2        	s32i	a12, a1, 8
+402751cc:	036102        	s32i	a0, a1, 12
+	if(sSPI) if(xSemaphoreTake(sSPI, portMAX_DELAY)) return 1;
+	return 0;
+402751cf:	0c0c      	movi.n	a12, 0
+#include "spi.h"
+
+xSemaphoreHandle sSPI = NULL;
+
+uint8_t spi_take_semaphore() {
+	if(sSPI) if(xSemaphoreTake(sSPI, portMAX_DELAY)) return 1;
+402751d1:	1012c7        	beq	a2, a12, 402751e5 <spi_take_semaphore+0x25>
+402751d4:	0c3d      	mov.n	a3, a12
+402751d6:	0c5d      	mov.n	a5, a12
+402751d8:	f47c      	movi.n	a4, -1
+402751da:	ce9105        	call0	40243aec <xQueueGenericReceive>
+402751dd:	130c      	movi.n	a3, 1
+402751df:	93c320        	movnez	a12, a3, a2
+402751e2:	74c0c0        	extui	a12, a12, 0, 8
+	return 0;
+}
+402751e5:	3108      	l32i.n	a0, a1, 12
+402751e7:	0c2d      	mov.n	a2, a12
+402751e9:	21c8      	l32i.n	a12, a1, 8
+402751eb:	10c112        	addi	a1, a1, 16
+402751ee:	f00d      	ret.n
+
+402751f0 <spi_give_semaphore>:
+
+void spi_give_semaphore() {
+	if(sSPI) xSemaphoreGive(sSPI);
+402751f0:	fff321        	l32r	a2, 402751bc <checkCommand+0x118>
+uint8_t spi_take_semaphore() {
+	if(sSPI) if(xSemaphoreTake(sSPI, portMAX_DELAY)) return 1;
+	return 0;
+}
+
+void spi_give_semaphore() {
+402751f3:	f0c112        	addi	a1, a1, -16
+	if(sSPI) xSemaphoreGive(sSPI);
+402751f6:	002222        	l32i	a2, a2, 0
+uint8_t spi_take_semaphore() {
+	if(sSPI) if(xSemaphoreTake(sSPI, portMAX_DELAY)) return 1;
+	return 0;
+}
+
+void spi_give_semaphore() {
+402751f9:	036102        	s32i	a0, a1, 12
+	if(sSPI) xSemaphoreGive(sSPI);
+402751fc:	008216        	beqz	a2, 40275208 <spi_give_semaphore+0x18>
+402751ff:	030c      	movi.n	a3, 0
+40275201:	034d      	mov.n	a4, a3
+40275203:	035d      	mov.n	a5, a3
+40275205:	ce7605        	call0	40243968 <xQueueGenericSend>
+}
+40275208:	3108      	l32i.n	a0, a1, 12
+4027520a:	10c112        	addi	a1, a1, 16
+4027520d:	f00d      	ret.n
+4027520f:	080000        	excw
+40275212:	1c6000        	excw
+40275215:	0008      	l32i.n	a0, a0, 0
+40275217:	083060        	excw
+4027521a:	206000        	or	a6, a0, a0
+4027521d:	0008      	l32i.n	a0, a0, 0
+4027521f:	082460        	excw
+40275222:	046000        	extui	a6, a0, 0, 1
+40275225:	0008      	l32i.n	a0, a0, 0
+40275227:	080860        	excw
+4027522a:	0c6000        	excw
+4027522d:	0008      	l32i.n	a0, a0, 0
+4027522f:	303060        	xor	a3, a0, a6
+
+40275230 <spi_init_gpio>:
 //									 SPI_CLK_USE_DIV (0) if using divider to
 //									 get lower SPI clock speed.
 //				 
 ////////////////////////////////////////////////////////////////////////////////
 
 void spi_init_gpio(uint8 spi_no, uint8 sysclk_as_spiclk){
-402749e8:	743030        	extui	a3, a3, 0, 8
+40275230:	743030        	extui	a3, a3, 0, 8
 
 //	if(spi_no > 1) return; //Not required. Valid spi_no is checked with if/elif below.
 
 	uint32 clock_div_flag = 0;
 	if(sysclk_as_spiclk){
-402749eb:	040c      	movi.n	a4, 0
-402749ed:	150c      	movi.n	a5, 1
+40275233:	040c      	movi.n	a4, 0
+40275235:	150c      	movi.n	a5, 1
 //									 SPI_CLK_USE_DIV (0) if using divider to
 //									 get lower SPI clock speed.
 //				 
 ////////////////////////////////////////////////////////////////////////////////
 
 void spi_init_gpio(uint8 spi_no, uint8 sysclk_as_spiclk){
-402749ef:	742020        	extui	a2, a2, 0, 8
+40275237:	742020        	extui	a2, a2, 0, 8
 
 //	if(spi_no > 1) return; //Not required. Valid spi_no is checked with if/elif below.
 
 	uint32 clock_div_flag = 0;
 	if(sysclk_as_spiclk){
-402749f2:	934530        	movnez	a4, a5, a3
+4027523a:	934530        	movnez	a4, a5, a3
 		clock_div_flag = 0x0001;	
 	} 
 
 	if(spi_no==SPI){
-402749f5:	073256        	bnez	a2, 40274a6c <spi_init_gpio+0x84>
+4027523d:	073256        	bnez	a2, 402752b4 <spi_init_gpio+0x84>
 		WRITE_PERI_REG(PERIPHS_IO_MUX, 0x005|(clock_div_flag<<8)); //Set bit 8 if 80MHz sysclock required
-402749f8:	520c      	movi.n	a2, 5
-402749fa:	114480        	slli	a4, a4, 8
-402749fd:	204420        	or	a4, a4, a2
-40274a00:	fff221        	l32r	a2, 402749c8 <checkCommand+0x118>
-40274a03:	0020c0        	memw
-40274a06:	0249      	s32i.n	a4, a2, 0
+40275240:	520c      	movi.n	a2, 5
+40275242:	114480        	slli	a4, a4, 8
+40275245:	204420        	or	a4, a4, a2
+40275248:	fff221        	l32r	a2, 40275210 <spi_give_semaphore+0x20>
+4027524b:	0020c0        	memw
+4027524e:	0249      	s32i.n	a4, a2, 0
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_SD_CLK_U, 1);
-40274a08:	fff121        	l32r	a2, 402749cc <checkCommand+0x11c>
-40274a0b:	cfae42        	movi	a4, 0xfffffecf
-40274a0e:	0020c0        	memw
-40274a11:	0238      	l32i.n	a3, a2, 0
-40274a13:	103340        	and	a3, a3, a4
-40274a16:	0020c0        	memw
-40274a19:	0239      	s32i.n	a3, a2, 0
-40274a1b:	0020c0        	memw
-40274a1e:	0258      	l32i.n	a5, a2, 0
-40274a20:	031c      	movi.n	a3, 16
-40274a22:	205530        	or	a5, a5, a3
-40274a25:	0020c0        	memw
-40274a28:	0259      	s32i.n	a5, a2, 0
+40275250:	fff121        	l32r	a2, 40275214 <spi_give_semaphore+0x24>
+40275253:	cfae42        	movi	a4, 0xfffffecf
+40275256:	0020c0        	memw
+40275259:	0238      	l32i.n	a3, a2, 0
+4027525b:	103340        	and	a3, a3, a4
+4027525e:	0020c0        	memw
+40275261:	0239      	s32i.n	a3, a2, 0
+40275263:	0020c0        	memw
+40275266:	0258      	l32i.n	a5, a2, 0
+40275268:	031c      	movi.n	a3, 16
+4027526a:	205530        	or	a5, a5, a3
+4027526d:	0020c0        	memw
+40275270:	0259      	s32i.n	a5, a2, 0
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_SD_CMD_U, 1);
-40274a2a:	ffe921        	l32r	a2, 402749d0 <checkCommand+0x120>
-40274a2d:	0020c0        	memw
-40274a30:	0258      	l32i.n	a5, a2, 0
-40274a32:	105540        	and	a5, a5, a4
-40274a35:	0020c0        	memw
-40274a38:	0259      	s32i.n	a5, a2, 0
-40274a3a:	0020c0        	memw
-40274a3d:	0258      	l32i.n	a5, a2, 0
-40274a3f:	205530        	or	a5, a5, a3
-40274a42:	0020c0        	memw
-40274a45:	0259      	s32i.n	a5, a2, 0
+40275272:	ffe921        	l32r	a2, 40275218 <spi_give_semaphore+0x28>
+40275275:	0020c0        	memw
+40275278:	0258      	l32i.n	a5, a2, 0
+4027527a:	105540        	and	a5, a5, a4
+4027527d:	0020c0        	memw
+40275280:	0259      	s32i.n	a5, a2, 0
+40275282:	0020c0        	memw
+40275285:	0258      	l32i.n	a5, a2, 0
+40275287:	205530        	or	a5, a5, a3
+4027528a:	0020c0        	memw
+4027528d:	0259      	s32i.n	a5, a2, 0
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_SD_DATA0_U, 1);	
-40274a47:	ffe321        	l32r	a2, 402749d4 <checkCommand+0x124>
-40274a4a:	0020c0        	memw
-40274a4d:	0258      	l32i.n	a5, a2, 0
-40274a4f:	105540        	and	a5, a5, a4
-40274a52:	0020c0        	memw
-40274a55:	0259      	s32i.n	a5, a2, 0
-40274a57:	0020c0        	memw
-40274a5a:	0258      	l32i.n	a5, a2, 0
-40274a5c:	205530        	or	a5, a5, a3
-40274a5f:	0020c0        	memw
-40274a62:	0259      	s32i.n	a5, a2, 0
+4027528f:	ffe321        	l32r	a2, 4027521c <spi_give_semaphore+0x2c>
+40275292:	0020c0        	memw
+40275295:	0258      	l32i.n	a5, a2, 0
+40275297:	105540        	and	a5, a5, a4
+4027529a:	0020c0        	memw
+4027529d:	0259      	s32i.n	a5, a2, 0
+4027529f:	0020c0        	memw
+402752a2:	0258      	l32i.n	a5, a2, 0
+402752a4:	205530        	or	a5, a5, a3
+402752a7:	0020c0        	memw
+402752aa:	0259      	s32i.n	a5, a2, 0
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_SD_DATA1_U, 1);	
-40274a64:	ffdd21        	l32r	a2, 402749d8 <checkCommand+0x128>
-40274a67:	0015c6        	j	40274ac2 <spi_init_gpio+0xda>
-40274a6a:	660000        	excw
+402752ac:	ffdd21        	l32r	a2, 40275220 <spi_give_semaphore+0x30>
+402752af:	0015c6        	j	4027530a <spi_init_gpio+0xda>
+402752b2:	660000        	excw
 	}else if(spi_no==HSPI){
-40274a6d:	226c12        	s32i	a1, a12, 136
+402752b5:	226c12        	s32i	a1, a12, 136
 		WRITE_PERI_REG(PERIPHS_IO_MUX, 0x105|(clock_div_flag<<9)); //Set bit 9 if 80MHz sysclock required
-40274a70:	7005a1        	l32r	a10, 40250a84 <set_txcap_reg+0x60>
-40274a73:	201144        	excw
-40274a76:	212044        	excw
-40274a79:	c0ffd4        	excw
-40274a7c:	490020        	excw
-40274a7f:	d72102        	l32i	a0, a1, 0x35c
+402752b8:	7005a1        	l32r	a10, 402512cc <chip_60_set_channel+0x180>
+402752bb:	201144        	excw
+402752be:	212044        	excw
+402752c1:	c0ffd4        	excw
+402752c4:	490020        	excw
+402752c7:	d72102        	l32i	a0, a1, 0x35c
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTDI_U, 2); //GPIO12 is HSPI MISO pin (Master Data In)
-40274a82:	ff          	.byte 0xff
-40274a83:	cfae42        	movi	a4, 0xfffffecf
-40274a86:	0020c0        	memw
-40274a89:	0238      	l32i.n	a3, a2, 0
-40274a8b:	103340        	and	a3, a3, a4
-40274a8e:	0020c0        	memw
-40274a91:	0239      	s32i.n	a3, a2, 0
-40274a93:	0020c0        	memw
-40274a96:	0258      	l32i.n	a5, a2, 0
-40274a98:	032c      	movi.n	a3, 32
-40274a9a:	205530        	or	a5, a5, a3
-40274a9d:	0020c0        	memw
-40274aa0:	0259      	s32i.n	a5, a2, 0
+402752ca:	ff          	.byte 0xff
+402752cb:	cfae42        	movi	a4, 0xfffffecf
+402752ce:	0020c0        	memw
+402752d1:	0238      	l32i.n	a3, a2, 0
+402752d3:	103340        	and	a3, a3, a4
+402752d6:	0020c0        	memw
+402752d9:	0239      	s32i.n	a3, a2, 0
+402752db:	0020c0        	memw
+402752de:	0258      	l32i.n	a5, a2, 0
+402752e0:	032c      	movi.n	a3, 32
+402752e2:	205530        	or	a5, a5, a3
+402752e5:	0020c0        	memw
+402752e8:	0259      	s32i.n	a5, a2, 0
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTCK_U, 2); //GPIO13 is HSPI MOSI pin (Master Data Out)
-40274aa2:	ffcf21        	l32r	a2, 402749e0 <checkCommand+0x130>
-40274aa5:	0020c0        	memw
-40274aa8:	0258      	l32i.n	a5, a2, 0
-40274aaa:	105540        	and	a5, a5, a4
-40274aad:	0020c0        	memw
-40274ab0:	0259      	s32i.n	a5, a2, 0
-40274ab2:	0020c0        	memw
-40274ab5:	0258      	l32i.n	a5, a2, 0
-40274ab7:	205530        	or	a5, a5, a3
-40274aba:	0020c0        	memw
-40274abd:	0259      	s32i.n	a5, a2, 0
+402752ea:	ffcf21        	l32r	a2, 40275228 <spi_give_semaphore+0x38>
+402752ed:	0020c0        	memw
+402752f0:	0258      	l32i.n	a5, a2, 0
+402752f2:	105540        	and	a5, a5, a4
+402752f5:	0020c0        	memw
+402752f8:	0259      	s32i.n	a5, a2, 0
+402752fa:	0020c0        	memw
+402752fd:	0258      	l32i.n	a5, a2, 0
+402752ff:	205530        	or	a5, a5, a3
+40275302:	0020c0        	memw
+40275305:	0259      	s32i.n	a5, a2, 0
 		PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTMS_U, 2); //GPIO14 is HSPI CLK pin (Clock)
-40274abf:	ffc921        	l32r	a2, 402749e4 <checkCommand+0x134>
-40274ac2:	0020c0        	memw
-40274ac5:	0258      	l32i.n	a5, a2, 0
-40274ac7:	104540        	and	a4, a5, a4
-40274aca:	0020c0        	memw
-40274acd:	0249      	s32i.n	a4, a2, 0
-40274acf:	0020c0        	memw
-40274ad2:	0248      	l32i.n	a4, a2, 0
-40274ad4:	203430        	or	a3, a4, a3
-40274ad7:	0020c0        	memw
-40274ada:	0239      	s32i.n	a3, a2, 0
-40274adc:	f00d      	ret.n
-40274ade:	020000        	excw
-40274ae1:	006000        	rsil	a0, 0
+40275307:	ffc921        	l32r	a2, 4027522c <spi_give_semaphore+0x3c>
+4027530a:	0020c0        	memw
+4027530d:	0258      	l32i.n	a5, a2, 0
+4027530f:	104540        	and	a4, a5, a4
+40275312:	0020c0        	memw
+40275315:	0249      	s32i.n	a4, a2, 0
+40275317:	0020c0        	memw
+4027531a:	0248      	l32i.n	a4, a2, 0
+4027531c:	203430        	or	a3, a4, a3
+4027531f:	0020c0        	memw
+40275322:	0239      	s32i.n	a3, a2, 0
+40275324:	f00d      	ret.n
+40275326:	020000        	excw
+40275329:	006000        	rsil	a0, 0
 
-40274ae4 <spi_clock>:
+4027532c <spi_clock>:
 //				  cntdiv - postdivider value (actual division value)
 //				  Set either divider to 0 to disable all division (80MHz sysclock)
 //				 
 ////////////////////////////////////////////////////////////////////////////////
 
 void spi_clock(uint8 spi_no, uint16 prediv, uint8 cntdiv){
-40274ae4:	742020        	extui	a2, a2, 0, 8
-40274ae7:	f43030        	extui	a3, a3, 0, 16
-40274aea:	744040        	extui	a4, a4, 0, 8
+4027532c:	742020        	extui	a2, a2, 0, 8
+4027532f:	f43030        	extui	a3, a3, 0, 16
+40275332:	744040        	extui	a4, a4, 0, 8
 	
 	if(spi_no > 1) return;
-40274aed:	4422f6        	bgeui	a2, 2, 40274b35 <spi_clock+0x51>
+40275335:	4422f6        	bgeui	a2, 2, 4027537d <spi_clock+0x51>
 
 	if((prediv==0)|(cntdiv==0)){
-40274af0:	170c      	movi.n	a7, 1
-40274af2:	050c      	movi.n	a5, 0
-40274af4:	fffb61        	l32r	a6, 40274ae0 <spi_init_gpio+0xf8>
-40274af7:	835730        	moveqz	a5, a7, a3
+40275338:	170c      	movi.n	a7, 1
+4027533a:	050c      	movi.n	a5, 0
+4027533c:	fffb61        	l32r	a6, 40275328 <spi_init_gpio+0xf8>
+4027533f:	835730        	moveqz	a5, a7, a3
 
 		WRITE_PERI_REG(SPI_CLOCK(spi_no), SPI_CLK_EQU_SYSCLK);
 
 	} else {
 	
 		WRITE_PERI_REG(SPI_CLOCK(spi_no), 
-40274afa:	c02620        	sub	a2, a6, a2
+40275342:	c02620        	sub	a2, a6, a2
 
 void spi_clock(uint8 spi_no, uint16 prediv, uint8 cntdiv){
 	
 	if(spi_no > 1) return;
 
 	if((prediv==0)|(cntdiv==0)){
-40274afd:	745050        	extui	a5, a5, 0, 8
+40275345:	745050        	extui	a5, a5, 0, 8
 
 		WRITE_PERI_REG(SPI_CLOCK(spi_no), SPI_CLK_EQU_SYSCLK);
 
 	} else {
 	
 		WRITE_PERI_REG(SPI_CLOCK(spi_no), 
-40274b00:	112280        	slli	a2, a2, 8
+40275348:	112280        	slli	a2, a2, 8
 
 void spi_clock(uint8 spi_no, uint16 prediv, uint8 cntdiv){
 	
 	if(spi_no > 1) return;
 
 	if((prediv==0)|(cntdiv==0)){
-40274b03:	005556        	bnez	a5, 40274b0c <spi_clock+0x28>
-40274b06:	835740        	moveqz	a5, a7, a4
-40274b09:	007516        	beqz	a5, 40274b14 <spi_clock+0x30>
+4027534b:	005556        	bnez	a5, 40275354 <spi_clock+0x28>
+4027534e:	835740        	moveqz	a5, a7, a4
+40275351:	007516        	beqz	a5, 4027535c <spi_clock+0x30>
 
 		WRITE_PERI_REG(SPI_CLOCK(spi_no), SPI_CLK_EQU_SYSCLK);
-40274b0c:	4bc631        	l32r	a3, 40247a24 <ip4_addr_isbroadcast+0x2c>
-40274b0f:	000746        	j	40274b30 <spi_clock+0x4c>
-40274b12:	400000        	ssr	a0
+40275354:	49b431        	l32r	a3, 40247a24 <ip4_addr_isbroadcast+0x2c>
+40275357:	000746        	j	40275378 <spi_clock+0x4c>
+4027535a:	400000        	ssr	a0
 
 	} else {
 	
 		WRITE_PERI_REG(SPI_CLOCK(spi_no), 
-40274b15:	0b5451        	l32r	a5, 40237868 <_lit4_end+0x130568>
-40274b18:	404044        	excw
-40274b1b:	330b54        	excw
-40274b1e:	1155a0        	slli	a5, a5, 6
-40274b21:	114440        	slli	a4, a4, 12
-40274b24:	c43030        	extui	a3, a3, 0, 13
-40274b27:	204540        	or	a4, a5, a4
-40274b2a:	0133e0        	slli	a3, a3, 18
-40274b2d:	203430        	or	a3, a4, a3
-40274b30:	0020c0        	memw
-40274b33:	6239      	s32i.n	a3, a2, 24
-40274b35:	f00d      	ret.n
+4027535d:	0b5451        	l32r	a5, 402380b0 <_lit4_end+0x130db0>
+40275360:	404044        	excw
+40275363:	330b54        	excw
+40275366:	1155a0        	slli	a5, a5, 6
+40275369:	114440        	slli	a4, a4, 12
+4027536c:	c43030        	extui	a3, a3, 0, 13
+4027536f:	204540        	or	a4, a5, a4
+40275372:	0133e0        	slli	a3, a3, 18
+40275375:	203430        	or	a3, a4, a3
+40275378:	0020c0        	memw
+4027537b:	6239      	s32i.n	a3, a2, 24
+4027537d:	f00d      	ret.n
 	...
 
-40274b38 <spi_tx_byte_order>:
+40275380 <spi_tx_byte_order>:
 //							   0xABCDEFGH would be sent as 0xGHEFCDAB
 //
 //				 
 ////////////////////////////////////////////////////////////////////////////////
 
 void spi_tx_byte_order(uint8 spi_no, uint8 byte_order){
-40274b38:	742020        	extui	a2, a2, 0, 8
-40274b3b:	743030        	extui	a3, a3, 0, 8
+40275380:	742020        	extui	a2, a2, 0, 8
+40275383:	743030        	extui	a3, a3, 0, 8
 
 	if(spi_no > 1) return;
-40274b3e:	2622f6        	bgeui	a2, 2, 40274b68 <spi_tx_byte_order+0x30>
-40274b41:	ffe741        	l32r	a4, 40274ae0 <spi_init_gpio+0xf8>
+40275386:	2622f6        	bgeui	a2, 2, 402753b0 <spi_tx_byte_order+0x30>
+40275389:	ffe741        	l32r	a4, 40275328 <spi_init_gpio+0xf8>
 
 	if(byte_order){
 		SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_WR_BYTE_ORDER);
-40274b44:	c02420        	sub	a2, a4, a2
-40274b47:	112280        	slli	a2, a2, 8
-40274b4a:	0020c0        	memw
-40274b4d:	7248      	l32i.n	a4, a2, 28
+4027538c:	c02420        	sub	a2, a4, a2
+4027538f:	112280        	slli	a2, a2, 8
+40275392:	0020c0        	memw
+40275395:	7248      	l32i.n	a4, a2, 28
 
 void spi_tx_byte_order(uint8 spi_no, uint8 byte_order){
 
 	if(spi_no > 1) return;
 
 	if(byte_order){
-40274b4f:	a38c      	beqz.n	a3, 40274b5d <spi_tx_byte_order+0x25>
+40275397:	a38c      	beqz.n	a3, 402753a5 <spi_tx_byte_order+0x25>
 		SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_WR_BYTE_ORDER);
-40274b51:	5a3131        	l32r	a3, 4024b418 <tcp_send_fin+0x1e4>
-40274b54:	203430        	or	a3, a4, a3
-40274b57:	000206        	j	40274b63 <spi_tx_byte_order+0x2b>
-40274b5a:	000000        	ill
+40275399:	581f31        	l32r	a3, 4024b418 <tcp_send_fin+0x1e4>
+4027539c:	203430        	or	a3, a4, a3
+4027539f:	000206        	j	402753ab <spi_tx_byte_order+0x2b>
+402753a2:	000000        	ill
 	} else {
 		CLEAR_PERI_REG_MASK(SPI_USER(spi_no), SPI_WR_BYTE_ORDER);
-40274b5d:	7c4b31        	l32r	a3, 40253c8c <chip_v6_rxmax_ext+0xa0>
-40274b60:	103430        	and	a3, a4, a3
-40274b63:	0020c0        	memw
-40274b66:	7239      	s32i.n	a3, a2, 28
-40274b68:	f00d      	ret.n
+402753a5:	7a3931        	l32r	a3, 40253c8c <chip_v6_rxmax_ext+0xa0>
+402753a8:	103430        	and	a3, a4, a3
+402753ab:	0020c0        	memw
+402753ae:	7239      	s32i.n	a3, a2, 28
+402753b0:	f00d      	ret.n
 	...
 
-40274b6c <spi_rx_byte_order>:
+402753b4 <spi_rx_byte_order>:
 //							   0xABCDEFGH would be read as 0xGHEFCDAB
 //
 //				 
 ////////////////////////////////////////////////////////////////////////////////
 
 void spi_rx_byte_order(uint8 spi_no, uint8 byte_order){
-40274b6c:	742020        	extui	a2, a2, 0, 8
-40274b6f:	743030        	extui	a3, a3, 0, 8
+402753b4:	742020        	extui	a2, a2, 0, 8
+402753b7:	743030        	extui	a3, a3, 0, 8
 
 	if(spi_no > 1) return;
-40274b72:	2622f6        	bgeui	a2, 2, 40274b9c <spi_rx_byte_order+0x30>
-40274b75:	ffda41        	l32r	a4, 40274ae0 <spi_init_gpio+0xf8>
+402753ba:	2622f6        	bgeui	a2, 2, 402753e4 <spi_rx_byte_order+0x30>
+402753bd:	ffda41        	l32r	a4, 40275328 <spi_init_gpio+0xf8>
 
 	if(byte_order){
 		SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_RD_BYTE_ORDER);
-40274b78:	c02420        	sub	a2, a4, a2
-40274b7b:	112280        	slli	a2, a2, 8
-40274b7e:	0020c0        	memw
-40274b81:	7248      	l32i.n	a4, a2, 28
+402753c0:	c02420        	sub	a2, a4, a2
+402753c3:	112280        	slli	a2, a2, 8
+402753c6:	0020c0        	memw
+402753c9:	7248      	l32i.n	a4, a2, 28
 
 void spi_rx_byte_order(uint8 spi_no, uint8 byte_order){
 
 	if(spi_no > 1) return;
 
 	if(byte_order){
-40274b83:	a38c      	beqz.n	a3, 40274b91 <spi_rx_byte_order+0x25>
+402753cb:	a38c      	beqz.n	a3, 402753d9 <spi_rx_byte_order+0x25>
 		SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_RD_BYTE_ORDER);
-40274b85:	00a432        	movi	a3, 0x400
-40274b88:	203430        	or	a3, a4, a3
-40274b8b:	000206        	j	40274b97 <spi_rx_byte_order+0x2b>
-40274b8e:	000000        	ill
+402753cd:	00a432        	movi	a3, 0x400
+402753d0:	203430        	or	a3, a4, a3
+402753d3:	000206        	j	402753df <spi_rx_byte_order+0x2b>
+402753d6:	000000        	ill
 	} else {
 		CLEAR_PERI_REG_MASK(SPI_USER(spi_no), SPI_RD_BYTE_ORDER);
-40274b91:	ffab32        	movi	a3, 0xfffffbff
-40274b94:	103430        	and	a3, a4, a3
-40274b97:	0020c0        	memw
-40274b9a:	7239      	s32i.n	a3, a2, 28
-40274b9c:	f00d      	ret.n
+402753d9:	ffab32        	movi	a3, 0xfffffbff
+402753dc:	103430        	and	a3, a4, a3
+402753df:	0020c0        	memw
+402753e2:	7239      	s32i.n	a3, a2, 28
+402753e4:	f00d      	ret.n
 	...
 
-40274ba0 <spi_init>:
+402753e8 <spi_init>:
 //   Description: Wrapper to setup HSPI/SPI GPIO pins and default SPI clock
 //    Parameters: spi_no - SPI (0) or HSPI (1)
 //				 
 ////////////////////////////////////////////////////////////////////////////////
 
 void spi_init(uint8 spi_no){
-40274ba0:	f0c112        	addi	a1, a1, -16
-40274ba3:	21c9      	s32i.n	a12, a1, 8
-40274ba5:	3109      	s32i.n	a0, a1, 12
-40274ba7:	74c020        	extui	a12, a2, 0, 8
+402753e8:	f0c112        	addi	a1, a1, -16
+402753eb:	0061e2        	s32i	a14, a1, 0
+	
+	if(!sSPI) vSemaphoreCreateBinary(sSPI);
+402753ee:	ff73e1        	l32r	a14, 402751bc <checkCommand+0x118>
+//   Description: Wrapper to setup HSPI/SPI GPIO pins and default SPI clock
+//    Parameters: spi_no - SPI (0) or HSPI (1)
+//				 
+////////////////////////////////////////////////////////////////////////////////
+
+void spi_init(uint8 spi_no){
+402753f1:	0161d2        	s32i	a13, a1, 4
+	
+	if(!sSPI) vSemaphoreCreateBinary(sSPI);
+402753f4:	0ed8      	l32i.n	a13, a14, 0
+//   Description: Wrapper to setup HSPI/SPI GPIO pins and default SPI clock
+//    Parameters: spi_no - SPI (0) or HSPI (1)
+//				 
+////////////////////////////////////////////////////////////////////////////////
+
+void spi_init(uint8 spi_no){
+402753f6:	21c9      	s32i.n	a12, a1, 8
+402753f8:	3109      	s32i.n	a0, a1, 12
+402753fa:	74c020        	extui	a12, a2, 0, 8
+	
+	if(!sSPI) vSemaphoreCreateBinary(sSPI);
+402753fd:	4ddc      	bnez.n	a13, 40275415 <spi_init+0x2d>
+402753ff:	120c      	movi.n	a2, 1
+40275401:	0d3d      	mov.n	a3, a13
+40275403:	340c      	movi.n	a4, 3
+40275405:	ce4285        	call0	40243830 <xQueueGenericCreate>
+40275408:	0e29      	s32i.n	a2, a14, 0
+4027540a:	728c      	beqz.n	a2, 40275415 <spi_init+0x2d>
+4027540c:	0d3d      	mov.n	a3, a13
+4027540e:	0d4d      	mov.n	a4, a13
+40275410:	0d5d      	mov.n	a5, a13
+40275412:	ce5545        	call0	40243968 <xQueueGenericSend>
+	spi_give_semaphore();
+40275415:	ffdd85        	call0	402751f0 <spi_give_semaphore>
 	
 	if(spi_no > 1) return; //Only SPI and HSPI are valid spi modules. 
-40274baa:	462cf6        	bgeui	a12, 2, 40274bf4 <spi_init+0x54>
+40275418:	442cf6        	bgeui	a12, 2, 40275460 <spi_init+0x78>
 
 	spi_init_gpio(spi_no, SPI_CLK_USE_DIV);
-40274bad:	202cc0        	or	a2, a12, a12
-40274bb0:	030c      	movi.n	a3, 0
-40274bb2:	ffe345        	call0	402749e8 <spi_init_gpio>
+4027541b:	0c2d      	mov.n	a2, a12
+4027541d:	030c      	movi.n	a3, 0
+4027541f:	ffe105        	call0	40275230 <spi_init_gpio>
 	spi_clock(spi_no, SPI_CLK_PREDIV, SPI_CLK_CNTDIV);
-40274bb5:	0c2d      	mov.n	a2, a12
-40274bb7:	240c      	movi.n	a4, 2
-40274bb9:	530c      	movi.n	a3, 5
-40274bbb:	fff285        	call0	40274ae4 <spi_clock>
+40275422:	0c2d      	mov.n	a2, a12
+40275424:	240c      	movi.n	a4, 2
+40275426:	530c      	movi.n	a3, 5
+40275428:	fff005        	call0	4027532c <spi_clock>
 	spi_tx_byte_order(spi_no, SPI_BYTE_ORDER_HIGH_TO_LOW);
-40274bbe:	0c2d      	mov.n	a2, a12
-40274bc0:	130c      	movi.n	a3, 1
-40274bc2:	fff745        	call0	40274b38 <spi_tx_byte_order>
+4027542b:	0c2d      	mov.n	a2, a12
+4027542d:	130c      	movi.n	a3, 1
+4027542f:	fff505        	call0	40275380 <spi_tx_byte_order>
 	spi_rx_byte_order(spi_no, SPI_BYTE_ORDER_HIGH_TO_LOW); 
-40274bc5:	0c2d      	mov.n	a2, a12
-40274bc7:	01a032        	movi	a3, 1
-40274bca:	fffa05        	call0	40274b6c <spi_rx_byte_order>
+40275432:	0c2d      	mov.n	a2, a12
+40275434:	130c      	movi.n	a3, 1
+40275436:	fff7c5        	call0	402753b4 <spi_rx_byte_order>
 
 	SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_CS_SETUP|SPI_CS_HOLD);
-40274bcd:	ffc421        	l32r	a2, 40274ae0 <spi_init_gpio+0xf8>
-40274bd0:	c0c2c0        	sub	a12, a2, a12
-40274bd3:	11cc80        	slli	a12, a12, 8
-40274bd6:	0020c0        	memw
-40274bd9:	7c38      	l32i.n	a3, a12, 28
-40274bdb:	023c      	movi.n	a2, 48
-40274bdd:	202320        	or	a2, a3, a2
-40274be0:	0020c0        	memw
-40274be3:	7c29      	s32i.n	a2, a12, 28
+40275439:	ffbb21        	l32r	a2, 40275328 <spi_init_gpio+0xf8>
+4027543c:	c0c2c0        	sub	a12, a2, a12
+4027543f:	11cc80        	slli	a12, a12, 8
+40275442:	0020c0        	memw
+40275445:	7c38      	l32i.n	a3, a12, 28
+40275447:	023c      	movi.n	a2, 48
+40275449:	202320        	or	a2, a3, a2
+4027544c:	0020c0        	memw
+4027544f:	7c29      	s32i.n	a2, a12, 28
 	CLEAR_PERI_REG_MASK(SPI_USER(spi_no), SPI_FLASH_MODE);
-40274be5:	0020c0        	memw
-40274be8:	7c38      	l32i.n	a3, a12, 28
-40274bea:	b27c      	movi.n	a2, -5
-40274bec:	102320        	and	a2, a3, a2
-40274bef:	0020c0        	memw
-40274bf2:	7c29      	s32i.n	a2, a12, 28
+40275451:	0020c0        	memw
+40275454:	7c38      	l32i.n	a3, a12, 28
+40275456:	b27c      	movi.n	a2, -5
+40275458:	102320        	and	a2, a3, a2
+4027545b:	0020c0        	memw
+4027545e:	7c29      	s32i.n	a2, a12, 28
 
 }
-40274bf4:	3108      	l32i.n	a0, a1, 12
-40274bf6:	21c8      	l32i.n	a12, a1, 8
-40274bf8:	10c112        	addi	a1, a1, 16
-40274bfb:	f00d      	ret.n
-40274bfd:	000000        	ill
-40274c00:	ff          	.byte 0xff
-40274c01:	ff          	.byte 0xff
-40274c02:	ff          	.byte 0xff
-40274c03:	c11207        	beq	a2, a0, 40274bc8 <spi_init+0x28>
+40275460:	3108      	l32i.n	a0, a1, 12
+40275462:	21c8      	l32i.n	a12, a1, 8
+40275464:	11d8      	l32i.n	a13, a1, 4
+40275466:	01e8      	l32i.n	a14, a1, 0
+40275468:	10c112        	addi	a1, a1, 16
+4027546b:	f00d      	ret.n
+4027546d:	000000        	ill
+40275470:	ff          	.byte 0xff
+40275471:	ff          	.byte 0xff
+40275472:	ff          	.byte 0xff
+40275473:	c11207        	beq	a2, a0, 40275438 <spi_init+0x50>
 
-40274c04 <spi_transaction>:
+40275474 <spi_transaction>:
 //				  the data variables (for anything <32 bits). 
 //
 ////////////////////////////////////////////////////////////////////////////////
 
 uint32 spi_transaction(uint8 spi_no, uint8 cmd_bits, uint16 cmd_data, uint32 addr_bits, uint32 addr_data, uint32 dout_bits, uint32 dout_data,
 				uint32 din_bits, uint32 dummy_bits){
-40274c04:	f0c112        	addi	a1, a1, -16
-40274c07:	748020        	extui	a8, a2, 0, 8
-40274c0a:	31c9      	s32i.n	a12, a1, 12
-40274c0c:	41a8      	l32i.n	a10, a1, 16
-40274c0e:	5198      	l32i.n	a9, a1, 20
-40274c10:	61b8      	l32i.n	a11, a1, 24
-40274c12:	743030        	extui	a3, a3, 0, 8
-40274c15:	f44040        	extui	a4, a4, 0, 16
+40275474:	f0c112        	addi	a1, a1, -16
+40275477:	748020        	extui	a8, a2, 0, 8
+4027547a:	31c9      	s32i.n	a12, a1, 12
+4027547c:	41a8      	l32i.n	a10, a1, 16
+4027547e:	5198      	l32i.n	a9, a1, 20
+40275480:	61b8      	l32i.n	a11, a1, 24
+40275482:	743030        	extui	a3, a3, 0, 8
+40275485:	f44040        	extui	a4, a4, 0, 16
 
 	if(spi_no > 1) return 0;  //Check for a valid SPI 
-40274c18:	020c      	movi.n	a2, 0
-40274c1a:	0228b6        	bltui	a8, 2, 40274c20 <spi_transaction+0x1c>
-40274c1d:	005806        	j	40274d81 <spi_transaction+0x17d>
+40275488:	020c      	movi.n	a2, 0
+4027548a:	0228b6        	bltui	a8, 2, 40275490 <spi_transaction+0x1c>
+4027548d:	005846        	j	402755f2 <spi_transaction+0x17e>
 
 	//code for custom Chip Select as GPIO PIN here
 
 	while(spi_busy(spi_no)); //wait for SPI to be ready	
-40274c20:	ffb021        	l32r	a2, 40274ae0 <spi_init_gpio+0xf8>
-40274c23:	c08280        	sub	a8, a2, a8
-40274c26:	76e021        	l32r	a2, 402527a8 <chip_v6_set_chanfreq+0x30>
-40274c29:	118880        	slli	a8, a8, 8
-40274c2c:	0020c0        	memw
-40274c2f:	08c8      	l32i.n	a12, a8, 0
-40274c31:	f78c27        	bany	a12, a2, 40274c2c <spi_transaction+0x28>
+40275490:	ffa621        	l32r	a2, 40275328 <spi_init_gpio+0xf8>
+40275493:	c08280        	sub	a8, a2, a8
+40275496:	74c421        	l32r	a2, 402527a8 <chip_v6_set_chanfreq+0x30>
+40275499:	118880        	slli	a8, a8, 8
+4027549c:	0020c0        	memw
+4027549f:	08c8      	l32i.n	a12, a8, 0
+402754a1:	f78c27        	bany	a12, a2, 4027549c <spi_transaction+0x28>
 
 //########## Enable SPI Functions ##########//
 	//disable MOSI, MISO, ADDR, COMMAND, DUMMY in case previously set.
 	CLEAR_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_MOSI|SPI_USR_MISO|SPI_USR_COMMAND|SPI_USR_ADDR|SPI_USR_DUMMY);
-40274c34:	0020c0        	memw
-40274c37:	78c8      	l32i.n	a12, a8, 28
-40274c39:	fff121        	l32r	a2, 40274c00 <spi_init+0x60>
-40274c3c:	102c20        	and	a2, a12, a2
-40274c3f:	0020c0        	memw
-40274c42:	7829      	s32i.n	a2, a8, 28
+402754a4:	0020c0        	memw
+402754a7:	78c8      	l32i.n	a12, a8, 28
+402754a9:	fff121        	l32r	a2, 40275470 <spi_init+0x88>
+402754ac:	102c20        	and	a2, a12, a2
+402754af:	0020c0        	memw
+402754b2:	7829      	s32i.n	a2, a8, 28
 	//enable functions based on number of bits. 0 bits = disabled. 
 	//This is rather inefficient but allows for a very generic function.
 	//CMD ADDR and MOSI are set below to save on an extra if statement.
 //	if(cmd_bits) {SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_COMMAND);}
 //	if(addr_bits) {SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_ADDR);}
 	if(din_bits) {SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_MISO);}
-40274c44:	e98c      	beqz.n	a9, 40274c56 <spi_transaction+0x52>
-40274c46:	0020c0        	memw
-40274c49:	78c8      	l32i.n	a12, a8, 28
-40274c4b:	71ff21        	l32r	a2, 40251448 <chip_v6_set_chan_wakeup+0x78>
-40274c4e:	202c20        	or	a2, a12, a2
-40274c51:	0020c0        	memw
-40274c54:	7829      	s32i.n	a2, a8, 28
+402754b4:	e98c      	beqz.n	a9, 402754c6 <spi_transaction+0x52>
+402754b6:	0020c0        	memw
+402754b9:	78c8      	l32i.n	a12, a8, 28
+402754bb:	6fe321        	l32r	a2, 40251448 <chip_v6_set_chan_wakeup+0x78>
+402754be:	202c20        	or	a2, a12, a2
+402754c1:	0020c0        	memw
+402754c4:	7829      	s32i.n	a2, a8, 28
 	if(dummy_bits) {SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_DUMMY);}
-40274c56:	eb8c      	beqz.n	a11, 40274c68 <spi_transaction+0x64>
-40274c58:	0020c0        	memw
-40274c5b:	78c8      	l32i.n	a12, a8, 28
-40274c5d:	775321        	l32r	a2, 402529ac <target_power_add_backoff+0x4c>
-40274c60:	202c20        	or	a2, a12, a2
-40274c63:	0020c0        	memw
-40274c66:	7829      	s32i.n	a2, a8, 28
+402754c6:	eb8c      	beqz.n	a11, 402754d8 <spi_transaction+0x64>
+402754c8:	0020c0        	memw
+402754cb:	78c8      	l32i.n	a12, a8, 28
+402754cd:	753721        	l32r	a2, 402529ac <target_power_add_backoff+0x4c>
+402754d0:	202c20        	or	a2, a12, a2
+402754d3:	0020c0        	memw
+402754d6:	7829      	s32i.n	a2, a8, 28
 //########## END SECTION ##########//
 
 //########## Setup Bitlengths ##########//
 	WRITE_PERI_REG(SPI_USER1(spi_no), ((addr_bits-1)&SPI_USR_ADDR_BITLEN)<<SPI_USR_ADDR_BITLEN_S | //Number of bits in Address
-40274c68:	c70b      	addi.n	a12, a7, -1
-40274c6a:	84c0c0        	extui	a12, a12, 0, 9
-40274c6d:	250b      	addi.n	a2, a5, -1
-40274c6f:	01ccf0        	slli	a12, a12, 17
-40274c72:	012260        	slli	a2, a2, 26
-40274c75:	bb0b      	addi.n	a11, a11, -1
-40274c77:	202c20        	or	a2, a12, a2
-40274c7a:	74b0b0        	extui	a11, a11, 0, 8
-40274c7d:	20b2b0        	or	a11, a2, a11
-40274c80:	290b      	addi.n	a2, a9, -1
-40274c82:	842020        	extui	a2, a2, 0, 9
-40274c85:	112280        	slli	a2, a2, 8
-40274c88:	20bb20        	or	a11, a11, a2
-40274c8b:	0020c0        	memw
-40274c8e:	88b9      	s32i.n	a11, a8, 32
+402754d8:	c70b      	addi.n	a12, a7, -1
+402754da:	84c0c0        	extui	a12, a12, 0, 9
+402754dd:	250b      	addi.n	a2, a5, -1
+402754df:	01ccf0        	slli	a12, a12, 17
+402754e2:	012260        	slli	a2, a2, 26
+402754e5:	bb0b      	addi.n	a11, a11, -1
+402754e7:	202c20        	or	a2, a12, a2
+402754ea:	74b0b0        	extui	a11, a11, 0, 8
+402754ed:	20b2b0        	or	a11, a2, a11
+402754f0:	290b      	addi.n	a2, a9, -1
+402754f2:	842020        	extui	a2, a2, 0, 9
+402754f5:	112280        	slli	a2, a2, 8
+402754f8:	20bb20        	or	a11, a11, a2
+402754fb:	0020c0        	memw
+402754fe:	88b9      	s32i.n	a11, a8, 32
 									  ((din_bits-1)&SPI_USR_MISO_BITLEN)<<SPI_USR_MISO_BITLEN_S |  //Number of bits to receive
 									  ((dummy_bits-1)&SPI_USR_DUMMY_CYCLELEN)<<SPI_USR_DUMMY_CYCLELEN_S); //Number of Dummy bits to insert
 //########## END SECTION ##########//
 
 //########## Setup Command Data ##########//
 	if(cmd_bits) {
-40274c90:	53bc      	beqz.n	a3, 40274cc9 <spi_transaction+0xc5>
+40275500:	53bc      	beqz.n	a3, 40275539 <spi_transaction+0xc5>
 		SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_COMMAND); //enable COMMAND function in SPI module
-40274c92:	0020c0        	memw
-40274c95:	78b8      	l32i.n	a11, a8, 28
-40274c97:	4b6321        	l32r	a2, 40247a24 <ip4_addr_isbroadcast+0x2c>
-40274c9a:	202b20        	or	a2, a11, a2
-40274c9d:	0020c0        	memw
-40274ca0:	7829      	s32i.n	a2, a8, 28
+40275502:	0020c0        	memw
+40275505:	78b8      	l32i.n	a11, a8, 28
+40275507:	494721        	l32r	a2, 40247a24 <ip4_addr_isbroadcast+0x2c>
+4027550a:	202b20        	or	a2, a11, a2
+4027550d:	0020c0        	memw
+40275510:	7829      	s32i.n	a2, a8, 28
 		uint16 command = cmd_data << (16-cmd_bits); //align command data to high bits
-40274ca2:	021c      	movi.n	a2, 16
-40274ca4:	c02230        	sub	a2, a2, a3
-40274ca7:	401200        	ssl	a2
-40274caa:	a14400        	sll	a4, a4
+40275512:	021c      	movi.n	a2, 16
+40275514:	c02230        	sub	a2, a2, a3
+40275517:	401200        	ssl	a2
+4027551a:	a14400        	sll	a4, a4
 		command = ((command>>8)&0xff) | ((command<<8)&0xff00); //swap byte order
-40274cad:	f42040        	extui	a2, a4, 0, 16
-40274cb0:	112280        	slli	a2, a2, 8
-40274cb3:	744840        	extui	a4, a4, 8, 8
-40274cb6:	204240        	or	a4, a2, a4
+4027551d:	f42040        	extui	a2, a4, 0, 16
+40275520:	112280        	slli	a2, a2, 8
+40275523:	744840        	extui	a4, a4, 8, 8
+40275526:	204240        	or	a4, a2, a4
 		WRITE_PERI_REG(SPI_USER2(spi_no), ((((cmd_bits-1)&SPI_USR_COMMAND_BITLEN)<<SPI_USR_COMMAND_BITLEN_S) | command&SPI_USR_COMMAND_VALUE));	
-40274cb9:	330b      	addi.n	a3, a3, -1
-40274cbb:	f44040        	extui	a4, a4, 0, 16
-40274cbe:	013340        	slli	a3, a3, 28
-40274cc1:	203430        	or	a3, a4, a3
-40274cc4:	0020c0        	memw
-40274cc7:	9839      	s32i.n	a3, a8, 36
+40275529:	330b      	addi.n	a3, a3, -1
+4027552b:	f44040        	extui	a4, a4, 0, 16
+4027552e:	013340        	slli	a3, a3, 28
+40275531:	203430        	or	a3, a4, a3
+40275534:	0020c0        	memw
+40275537:	9839      	s32i.n	a3, a8, 36
 	}
 //########## END SECTION ##########//
 
 //########## Setup Address Data ##########//
 	if(addr_bits){
-40274cc9:	c59c      	beqz.n	a5, 40274ce9 <spi_transaction+0xe5>
+40275539:	c59c      	beqz.n	a5, 40275559 <spi_transaction+0xe5>
 		SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_ADDR); //enable ADDRess function in SPI module
-40274ccb:	0020c0        	memw
-40274cce:	7838      	l32i.n	a3, a8, 28
-40274cd0:	6dd021        	l32r	a2, 40250410 <ram_pbus_set_rxgain+0xd0>
+4027553b:	0020c0        	memw
+4027553e:	7838      	l32i.n	a3, a8, 28
+40275540:	6bb421        	l32r	a2, 40250410 <ram_pbus_set_rxgain+0xd0>
 		WRITE_PERI_REG(SPI_ADDR(spi_no), addr_data<<(32-addr_bits)); //align address data to high bits
-40274cd3:	605050        	neg	a5, a5
+40275543:	605050        	neg	a5, a5
 	}
 //########## END SECTION ##########//
 
 //########## Setup Address Data ##########//
 	if(addr_bits){
 		SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_ADDR); //enable ADDRess function in SPI module
-40274cd6:	202320        	or	a2, a3, a2
-40274cd9:	0020c0        	memw
-40274cdc:	7829      	s32i.n	a2, a8, 28
+40275546:	202320        	or	a2, a3, a2
+40275549:	0020c0        	memw
+4027554c:	7829      	s32i.n	a2, a8, 28
 		WRITE_PERI_REG(SPI_ADDR(spi_no), addr_data<<(32-addr_bits)); //align address data to high bits
-40274cde:	401500        	ssl	a5
-40274ce1:	a16600        	sll	a6, a6
-40274ce4:	0020c0        	memw
-40274ce7:	1869      	s32i.n	a6, a8, 4
+4027554e:	401500        	ssl	a5
+40275551:	a16600        	sll	a6, a6
+40275554:	0020c0        	memw
+40275557:	1869      	s32i.n	a6, a8, 4
 	
 
 //########## END SECTION ##########//	
 
 //########## Setup DOUT data ##########//
 	if(dout_bits) {
-40274ce9:	056716        	beqz	a7, 40274d43 <spi_transaction+0x13f>
+40275559:	056716        	beqz	a7, 402755b3 <spi_transaction+0x13f>
 		SET_PERI_REG_MASK(SPI_USER(spi_no), SPI_USR_MOSI); //enable MOSI function in SPI module
-40274cec:	0020c0        	memw
-40274cef:	7838      	l32i.n	a3, a8, 28
-40274cf1:	6dc521        	l32r	a2, 40250408 <ram_pbus_set_rxgain+0xc8>
-40274cf4:	202320        	or	a2, a3, a2
-40274cf7:	0020c0        	memw
-40274cfa:	7829      	s32i.n	a2, a8, 28
+4027555c:	0020c0        	memw
+4027555f:	7838      	l32i.n	a3, a8, 28
+40275561:	6ba921        	l32r	a2, 40250408 <ram_pbus_set_rxgain+0xc8>
+40275564:	202320        	or	a2, a3, a2
+40275567:	0020c0        	memw
+4027556a:	7829      	s32i.n	a2, a8, 28
 	//copy data to W0
 	if(READ_PERI_REG(SPI_USER(spi_no))&SPI_WR_BYTE_ORDER) {
-40274cfc:	0020c0        	memw
-40274cff:	7828      	l32i.n	a2, a8, 28
-40274d01:	0b62b7        	bbci	a2, 11, 40274d10 <spi_transaction+0x10c>
+4027556c:	0020c0        	memw
+4027556f:	7828      	l32i.n	a2, a8, 28
+40275571:	0b62b7        	bbci	a2, 11, 40275580 <spi_transaction+0x10c>
 		WRITE_PERI_REG(SPI_W0(spi_no), dout_data<<(32-dout_bits));
-40274d04:	607070        	neg	a7, a7
-40274d07:	401700        	ssl	a7
-40274d0a:	a1aa00        	sll	a10, a10
-40274d0d:	000b06        	j	40274d3d <spi_transaction+0x139>
+40275574:	607070        	neg	a7, a7
+40275577:	401700        	ssl	a7
+4027557a:	a1aa00        	sll	a10, a10
+4027557d:	000b06        	j	402755ad <spi_transaction+0x139>
 	} else {
 
 		uint8 dout_extra_bits = dout_bits%8;
-40274d10:	242070        	extui	a2, a7, 0, 3
+40275580:	242070        	extui	a2, a7, 0, 3
 
 		if(dout_extra_bits){
-40274d13:	62ac      	beqz.n	a2, 40274d3d <spi_transaction+0x139>
+40275583:	62ac      	beqz.n	a2, 402755ad <spi_transaction+0x139>
 			//if your data isn't a byte multiple (8/16/24/32 bits)and you don't have SPI_WR_BYTE_ORDER set, you need this to move the non-8bit remainder to the MSBs
 			//not sure if there's even a use case for this, but it's here if you need it...
 			//for example, 0xDA4 12 bits without SPI_WR_BYTE_ORDER would usually be output as if it were 0x0DA4, 
 			//of which 0xA4, and then 0x0 would be shifted out (first 8 bits of low byte, then 4 MSB bits of high byte - ie reverse byte order). 
 			//The code below shifts it out as 0xA4 followed by 0xD as you might require. 
 			WRITE_PERI_REG(SPI_W0(spi_no), ((0xFFFFFFFF<<(dout_bits - dout_extra_bits)&dout_data)<<(8-dout_extra_bits) | (0xFFFFFFFF>>(32-(dout_bits - dout_extra_bits)))&dout_data));
-40274d15:	c04720        	sub	a4, a7, a2
-40274d18:	f37c      	movi.n	a3, -1
-40274d1a:	401400        	ssl	a4
-40274d1d:	a14300        	sll	a4, a3
-40274d20:	850c      	movi.n	a5, 8
-40274d22:	c07270        	sub	a7, a2, a7
-40274d25:	1044a0        	and	a4, a4, a10
-40274d28:	c05520        	sub	a5, a5, a2
-40274d2b:	400700        	ssr	a7
-40274d2e:	913030        	srl	a3, a3
-40274d31:	401500        	ssl	a5
-40274d34:	a14400        	sll	a4, a4
-40274d37:	10a3a0        	and	a10, a3, a10
-40274d3a:	20a4a0        	or	a10, a4, a10
+40275585:	c04720        	sub	a4, a7, a2
+40275588:	f37c      	movi.n	a3, -1
+4027558a:	401400        	ssl	a4
+4027558d:	a14300        	sll	a4, a3
+40275590:	850c      	movi.n	a5, 8
+40275592:	c07270        	sub	a7, a2, a7
+40275595:	1044a0        	and	a4, a4, a10
+40275598:	c05520        	sub	a5, a5, a2
+4027559b:	400700        	ssr	a7
+4027559e:	913030        	srl	a3, a3
+402755a1:	401500        	ssl	a5
+402755a4:	a14400        	sll	a4, a4
+402755a7:	10a3a0        	and	a10, a3, a10
+402755aa:	20a4a0        	or	a10, a4, a10
 		} else {
 			WRITE_PERI_REG(SPI_W0(spi_no), dout_data);
-40274d3d:	0020c0        	memw
-40274d40:	1068a2        	s32i	a10, a8, 64
+402755ad:	0020c0        	memw
+402755b0:	1068a2        	s32i	a10, a8, 64
 	}
 	}
 //########## END SECTION ##########//
 
 //########## Begin SPI Transaction ##########//
 	SET_PERI_REG_MASK(SPI_CMD(spi_no), SPI_USR);
-40274d43:	769921        	l32r	a2, 402527a8 <chip_v6_set_chanfreq+0x30>
-40274d46:	0020c0        	memw
-40274d49:	0838      	l32i.n	a3, a8, 0
-40274d4b:	203320        	or	a3, a3, a2
-40274d4e:	0020c0        	memw
-40274d51:	0839      	s32i.n	a3, a8, 0
-40274d53:	023d      	mov.n	a3, a2
+402755b3:	747d21        	l32r	a2, 402527a8 <chip_v6_set_chanfreq+0x30>
+402755b6:	0020c0        	memw
+402755b9:	0838      	l32i.n	a3, a8, 0
+402755bb:	203320        	or	a3, a3, a2
+402755be:	0020c0        	memw
+402755c1:	0839      	s32i.n	a3, a8, 0
+402755c3:	023d      	mov.n	a3, a2
 		return 0; //something went wrong
 	}
 //########## END SECTION ##########//
 
 	//Transaction completed
 	return 1; //success
-40274d55:	120c      	movi.n	a2, 1
+402755c5:	120c      	movi.n	a2, 1
 //########## Begin SPI Transaction ##########//
 	SET_PERI_REG_MASK(SPI_CMD(spi_no), SPI_USR);
 //########## END SECTION ##########//
 
 //########## Return DIN data ##########//
 	if(din_bits) {
-40274d57:	69ac      	beqz.n	a9, 40274d81 <spi_transaction+0x17d>
+402755c7:	79ac      	beqz.n	a9, 402755f2 <spi_transaction+0x17e>
 		while(spi_busy(spi_no));	//wait for SPI transaction to complete
-40274d59:	0020c0        	memw
-40274d5c:	0828      	l32i.n	a2, a8, 0
-40274d5e:	f78237        	bany	a2, a3, 40274d59 <spi_transaction+0x155>
+402755c9:	0020c0        	memw
+402755cc:	0828      	l32i.n	a2, a8, 0
+402755ce:	f78237        	bany	a2, a3, 402755c9 <spi_transaction+0x155>
 		
 		if(READ_PERI_REG(SPI_USER(spi_no))&SPI_RD_BYTE_ORDER) {
-40274d61:	0020c0        	memw
-40274d64:	7828      	l32i.n	a2, a8, 28
-40274d66:	1162a7        	bbci	a2, 10, 40274d7b <spi_transaction+0x177>
+402755d1:	0020c0        	memw
+402755d4:	7828      	l32i.n	a2, a8, 28
+402755d6:	1262a7        	bbci	a2, 10, 402755ec <spi_transaction+0x178>
 			return READ_PERI_REG(SPI_W0(spi_no)) >> (32-din_bits); //Assuming data in is written to MSB. TBC
-40274d69:	0020c0        	memw
-40274d6c:	102822        	l32i	a2, a8, 64
-40274d6f:	609090        	neg	a9, a9
-40274d72:	400900        	ssr	a9
-40274d75:	912020        	srl	a2, a2
-40274d78:	000146        	j	40274d81 <spi_transaction+0x17d>
+402755d9:	0020c0        	memw
+402755dc:	102822        	l32i	a2, a8, 64
+402755df:	609090        	neg	a9, a9
+402755e2:	400900        	ssr	a9
+402755e5:	912020        	srl	a2, a2
+402755e8:	000186        	j	402755f2 <spi_transaction+0x17e>
+402755eb:	20c000        	or	a12, a0, a0
 		} else {
 			return READ_PERI_REG(SPI_W0(spi_no)); //Read in the same way as DOUT is sent. Note existing contents of SPI_W0 remain unless overwritten! 
-40274d7b:	0020c0        	memw
-40274d7e:	102822        	l32i	a2, a8, 64
+402755ee:	282200        	excw
+402755f1:	31c810        	srai	a12, a1, 24
 	}
 //########## END SECTION ##########//
 
 	//Transaction completed
 	return 1; //success
 }
-40274d81:	31c8      	l32i.n	a12, a1, 12
-40274d83:	10c112        	addi	a1, a1, 16
-40274d86:	f00d      	ret.n
+402755f4:	10c112        	addi	a1, a1, 16
+402755f7:	f00d      	ret.n

@@ -1,6 +1,7 @@
 #include "webserver.h"
 #include "serv-fs.h"
 #include "webclient.h"
+#include "vs1053.h"
 
 #include "lwip/opt.h"
 #include "lwip/arch.h"
@@ -72,6 +73,7 @@ ICACHE_FLASH_ATTR char* serverParseCGI(char* html, int length)
 {
   struct icyHeader *header = clientGetHeader();
   char* h = html;
+  char buf[15];
 
   h = str_replace(h, "#ICY-NAME#", header->members.single.name, length);
   h = str_replace(h, "#ICY-NOTICE1#", header->members.single.notice1, strlen(h));
@@ -79,6 +81,13 @@ ICACHE_FLASH_ATTR char* serverParseCGI(char* html, int length)
   h = str_replace(h, "#ICY-GENRE#", header->members.single.genre, strlen(h));
   h = str_replace(h, "#ICY-URL#", header->members.single.url, strlen(h));
   h = str_replace(h, "#ICY-BITRATE#", header->members.single.bitrate, strlen(h));
+  
+  sprintf(buf, "%d", 254-VS1053_GetVolume());
+  h = str_replace(h, "#SOUND-VOL#", buf, strlen(h));
+  sprintf(buf, "%d", VS1053_GetTreble());
+  h = str_replace(h, "#SOUND-TREBLE#", buf, strlen(h));
+  sprintf(buf, "%d", VS1053_GetBass());
+  h = str_replace(h, "#SOUND-BASS#", buf, strlen(h));
 
   return h;
 }
@@ -155,21 +164,37 @@ ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int con
 			char* url = getParameterFromResponse("url=", data, data_size);
 			char* path = getParameterFromResponse("path=", data, data_size);
 			char* port = getParameterFromResponse("port=", data, data_size);
-			printf("%s %s %s\n\n", url, path, port);
 			if(url != NULL && path != NULL && port != NULL) {
 				clientDisconnect();
-				vTaskDelay(10);
+				while(clientIsConnected()) vTaskDelay(10);
 				clientSetURL(url);
 				clientSetPath(path);
 				clientSetPort(atoi(port));
 				clientConnect();
+				while(!clientIsConnected()) vTaskDelay(10);
 			}
 			if(url) free(url);
 			if(path) free(path);
 			if(port) free(port);
 		}
 	} else if(strcmp(name, "/sound") == 0) {
-		if(data_size > 0) { data[data_size-1] = 0; printf("%s", data); }
+		if(data_size > 0) { 
+			char* vol = getParameterFromResponse("vol=", data, data_size);
+			char* bass = getParameterFromResponse("bass=", data, data_size);
+			char* treble = getParameterFromResponse("treble=", data, data_size);
+			if(vol) {
+				VS1053_SetVolume(254-atoi(vol));
+				free(vol);
+			}
+			if(bass) {
+				VS1053_SetBass(atoi(bass));
+				free(bass);
+			}
+			if(treble) {
+				VS1053_SetTreble(atoi(treble));
+				free(treble);
+			}
+		}
 	}
 	
 	serveFile("/", conn); // Return back to index.html
