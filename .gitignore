@@ -30,3 +30,4 @@
 
 *.dump
 *.S
+ESP8266-Firmware/app/.output/*
