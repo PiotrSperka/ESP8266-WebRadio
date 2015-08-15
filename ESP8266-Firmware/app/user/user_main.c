@@ -23,6 +23,8 @@
 
 #include "vs1053.h"
 
+#include "eeprom.h"
+
 void uartInterfaceTask(void *pvParameters) {
 	char tmp[64];
 	int t = 0;
@@ -37,6 +39,7 @@ void uartInterfaceTask(void *pvParameters) {
 			if(c == '\n') break;
 			tmp[t] = c;
 			t++;
+			if(t == 64) t = 0;
 		}
 		checkCommand(t, tmp);
 		for(t = 0; t<64; t++) tmp[t] = 0;
@@ -76,9 +79,20 @@ void user_init(void)
 	VS1053_HW_init();
 	VS1053_Start();
 	VS1053_SetVolume(70);
-	printf("\n\nVOLUME: %d\n\n", VS1053_GetVolume());
 
 	VS1053_SPI_SpeedUp();
+	
+	uint8_t tab[] = "To jest test eeprom";
+	uint8_t tab2[32] = {};
+	int i;
+	eeGetData(4088, tab2, 20);
+	for(i=0; i<20; i++) printf("%c", tab2[i]);
+	printf("\n\n");
+	/*eeSetData(4088, tab, 20);
+	for(i=0; i<20; i++) tab2[i] = 0;
+	eeGetData(4088, tab2, 20);
+	for(i=0; i<20; i++) printf("%c", tab2[i]);
+	printf("\n\n");*/
 
 	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 1, NULL);
 	xTaskCreate(serverTask, "t2", 256, NULL, 1, NULL);

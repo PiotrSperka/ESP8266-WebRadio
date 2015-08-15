@@ -42,4 +42,4 @@
  ../../include/freertos/semphr.h ../../include/freertos/queue.h \
  ../../include/lwip/lwip/sockets.h ../../include/lwip/ipv4/lwip/inet.h \
  ../../include/lwip/ipv6/lwip/inet6.h ../../include/lwip/lwip/dns.h \
- ../../include/lwip/lwip/netdb.h
+ ../../include/lwip/lwip/netdb.h ../include/flash.h

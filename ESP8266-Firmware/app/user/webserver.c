@@ -11,20 +11,7 @@
 #include "lwip/dns.h"
 #include "lwip/netdb.h"
 
-#define INTERNAL_FLASH_START_ADDRESS    0x40200000
-
-ICACHE_FLASH_ATTR uint32_t fread( void *to, uint32_t fromaddr, uint32_t size )
-{
-  fromaddr -= INTERNAL_FLASH_START_ADDRESS;
-  int r;
-  WRITE_PERI_REG(0x60000914, 0x73);
-  r = spi_flash_read(fromaddr, (uint32 *)to, size);
-  if(0 == r)
-    return size;
-  else{
-    return 0;
-  }
-}
+#include "flash.h"
 
 ICACHE_FLASH_ATTR char* my_strdup(char* string, int length)
 {
@@ -123,7 +110,7 @@ ICACHE_FLASH_ATTR void serveFile(char* name, int conn)
 		char *con = (char*)malloc(length*sizeof(char));
 		if(con != NULL)
 		{
-			fread(con, (uint32_t)content, length);
+			flashRead(con, (uint32_t)content, length);
 			if(f->cgi == 1) {
 				con = serverParseCGI(con, length);
 				length = strlen(con);
@@ -166,12 +153,12 @@ ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int con
 			char* port = getParameterFromResponse("port=", data, data_size);
 			if(url != NULL && path != NULL && port != NULL) {
 				clientDisconnect();
-				while(clientIsConnected()) vTaskDelay(10);
+				while(clientIsConnected()) vTaskDelay(5);
 				clientSetURL(url);
 				clientSetPath(path);
 				clientSetPort(atoi(port));
 				clientConnect();
-				while(!clientIsConnected()) vTaskDelay(10);
+				while(!clientIsConnected()) vTaskDelay(5);
 			}
 			if(url) free(url);
 			if(path) free(path);
@@ -196,7 +183,7 @@ ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int con
 			}
 		}
 	}
-	
+	// todo: return only some "OK" message
 	serveFile("/", conn); // Return back to index.html
 }
 

@@ -8,23 +8,23 @@ ifeq ($(COMPILE), gcc)
 	AR = xtensa-lx106-elf-ar
 	CC = xtensa-lx106-elf-gcc
 	NM = xtensa-lx106-elf-nm
-	CPP = xtensa-lx106-elf-g++
-	OBJCOPY = xtensa-lx106-elf-objcopy
-	OBJDUMP = xtensa-lx106-elf-objdump
-else
-	AR = xtensa-lx106-elf-ar
-	CC = xtensa-lx106-elf-gcc
-	NM = xtensa-lx106-elf-nm
 	CPP = xtensa-lx106-elf-cpp
 	OBJCOPY = xtensa-lx106-elf-objcopy
 	OBJDUMP = xtensa-lx106-elf-objdump
+else
+	AR = xt-ar
+	CC = xt-xcc
+	NM = xt-nm
+	CPP = xt-cpp
+	OBJCOPY = xt-objcopy
+	OBJDUMP = xt-objdump
 endif
 
 BOOT?=none
 APP?=0
 SPI_SPEED?=40
 SPI_MODE?=QIO
-SPI_SIZE_MAP?=2
+SPI_SIZE_MAP?=6
 
 ifeq ($(BOOT), new)
     boot = new
@@ -162,7 +162,6 @@ else
 endif
 
 CSRCS ?= $(wildcard *.c)
-CPPSRCS ?= $(wildcard *.cpp)
 ASRCs ?= $(wildcard *.s)
 ASRCS ?= $(wildcard *.S)
 SUBDIRS ?= $(patsubst %/,%,$(dir $(wildcard */Makefile)))
@@ -171,12 +170,10 @@ ODIR := .output
 OBJODIR := $(ODIR)/$(TARGET)/$(FLAVOR)/obj
 
 OBJS := $(CSRCS:%.c=$(OBJODIR)/%.o) \
-        $(CPPSRCS:%.cpp=$(OBJODIR)/%.o) \
         $(ASRCs:%.s=$(OBJODIR)/%.o) \
         $(ASRCS:%.S=$(OBJODIR)/%.o)
 
 DEPS := $(CSRCS:%.c=$(OBJODIR)/%.d) \
-        $(CPPSRCS:%.cpp=$(OBJODIR)/%.d) \
         $(ASRCs:%.s=$(OBJODIR)/%.d) \
         $(ASRCS:%.S=$(OBJODIR)/%.d)
 
@@ -191,6 +188,7 @@ OBINS := $(GEN_BINS:%=$(BINODIR)/%)
 
 CCFLAGS += 			\
 	-g			\
+	-O2			\
 	-Wpointer-arith		\
 	-Wundef			\
 	-Werror			\
@@ -329,18 +327,6 @@ $(OBJODIR)/%.d: %.c
 	@echo DEPEND: $(CC) -M $(CFLAGS) $<
 	@set -e; rm -f $@; \
 	$(CC) -M $(CFLAGS) $< > $@.$$$$; \
-	sed 's,\($*\.o\)[ :]*,$(OBJODIR)/\1 $@ : ,g' < $@.$$$$ > $@; \
-	rm -f $@.$$$$
-	
-$(OBJODIR)/%.o: %.cpp
-	@mkdir -p $(OBJODIR);
-	$(CPP) $(if $(findstring $<,$(DSRCS)),$(DFLAGS),$(CFLAGS)) $(COPTS_$(*F)) -o $@ -c $<
-
-$(OBJODIR)/%.d: %.cpp
-	@mkdir -p $(OBJODIR);
-	@echo DEPEND: $(CPP) -M $(CFLAGS) $<
-	@set -e; rm -f $@; \
-	$(CPP) -M $(CFLAGS) $< > $@.$$$$; \
 	sed 's,\($*\.o\)[ :]*,$(OBJODIR)/\1 $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
