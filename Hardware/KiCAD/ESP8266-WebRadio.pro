@@ -1,46 +1,6 @@
-update=sob, 15 sie 2015, 18:02:54
+update=pon, 17 sie 2015, 19:20:36
 version=1
-last_client=eeschema
-[cvpcb]
-version=1
-NetITyp=0
-NetIExt=.net
-PkgIExt=.pkg
-NetDir=
-LibDir=
-NetType=0
-[cvpcb/libraries]
-EquName1=devcms
-[pcbnew]
-version=1
-PadDrlX=320
-PadDimH=600
-PadDimV=600
-BoardThickness=630
-TxtPcbV=800
-TxtPcbH=600
-TxtModV=600
-TxtModH=600
-TxtModW=120
-VEgarde=100
-DrawLar=150
-EdgeLar=150
-TxtLar=120
-MSegLar=150
-LastNetListRead=
-[pcbnew/libraries]
-LibDir=
-LibName1=_moje
-LibName2=sockets
-LibName3=connect
-LibName4=discret
-LibName5=pin_array
-LibName6=divers
-LibName7=libcms
-LibName8=display
-LibName9=valves
-LibName10=led
-LibName11=dip_sockets
+last_client=pcbnew
 [general]
 version=1
 [eeschema]
@@ -88,3 +48,43 @@ LibName33=vs10xx
 LibName34=lm1117
 LibName35=23lcv1024
 LibName36=ne5532
+[cvpcb]
+version=1
+NetIExt=net
+[cvpcb/libraries]
+EquName1=devcms
+[pcbnew]
+version=1
+LastNetListRead=
+UseCmpFile=1
+PadDrill="    0,600000"
+PadDrillOvalY="    0,600000"
+PadSizeH="    1,400000"
+PadSizeV="    1,400000"
+PcbTextSizeV="    1,500000"
+PcbTextSizeH="    1,500000"
+PcbTextThickness="    0,300000"
+ModuleTextSizeV="    1,500000"
+ModuleTextSizeH="    1,500000"
+ModuleTextSizeThickness="    0,150000"
+SolderMaskClearance="    0,200000"
+SolderMaskMinWidth="    0,000000"
+DrawSegmentWidth="    0,200000"
+BoardOutlineThickness="    0,150000"
+ModuleOutlineThickness="    0,150000"
+[pcbnew/libraries]
+LibDir=
+LibName1=_moje
+LibName2=sockets
+LibName3=connect
+LibName4=discret
+LibName5=pin_array
+LibName6=divers
+LibName7=libcms
+LibName8=display
+LibName9=valves
+LibName10=led
+LibName11=dip_sockets
+LibName12=esp8266
+LibName13=lqfp48
+LibName14=logo
