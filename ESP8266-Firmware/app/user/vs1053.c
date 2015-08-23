@@ -30,7 +30,7 @@ extern volatile uint32_t PIN_IN;
 extern volatile uint32_t PIN_0;
 extern volatile uint32_t PIN_2;
 
-void VS1053_HW_init(){
+ICACHE_FLASH_ATTR void VS1053_HW_init(){
  	spi_init(HSPI);
 	spi_clock(HSPI, 4, 10); //2MHz
 	PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTDO_U, 3);
@@ -39,26 +39,26 @@ void VS1053_HW_init(){
 	PIN_OUT_SET |= (1<<RST_PIN)|(1<<CS_PIN)|(1<<XDCS_PIN);
 }
 
-void VS1053_SPI_SpeedUp()
+ICACHE_FLASH_ATTR void VS1053_SPI_SpeedUp()
 {
 	spi_clock(HSPI, 4, 2); //10MHz
 }
 
-void VS1053_SPI_SpeedDown() {
+ICACHE_FLASH_ATTR void VS1053_SPI_SpeedDown() {
 	spi_clock(HSPI, 4, 10); //2MHz
 }
 
-void SPIPutChar(uint8_t data){
+ICACHE_FLASH_ATTR void SPIPutChar(uint8_t data){
 	spi_tx8(HSPI, data);
 	while(spi_busy(HSPI));
 }
 
-uint8_t SPIGetChar(){
+ICACHE_FLASH_ATTR uint8_t SPIGetChar(){
 	while(spi_busy(HSPI));
 	return spi_rx8(HSPI);
 }
 
-void Delay(uint32_t nTime)
+ICACHE_FLASH_ATTR void Delay(uint32_t nTime)
 {
 	unsigned int i;
 	unsigned long j;
@@ -66,27 +66,27 @@ void Delay(uint32_t nTime)
 		for(j = 1000;j > 0;j--);
 }
 
-void ControlReset(uint8_t State){
+ICACHE_FLASH_ATTR void ControlReset(uint8_t State){
 	if(State) PIN_OUT_CLEAR |= (1<<RST_PIN);
 	else PIN_OUT_SET |= (1<<RST_PIN);
 }
 
-void SCI_ChipSelect(uint8_t State){
+ICACHE_FLASH_ATTR void SCI_ChipSelect(uint8_t State){
 	if(State) PIN_OUT_CLEAR |= (1<<CS_PIN);
 	else PIN_OUT_SET |= (1<<CS_PIN);
 }
 
-void SDI_ChipSelect(uint8_t State){
+ICACHE_FLASH_ATTR void SDI_ChipSelect(uint8_t State){
 	if(State) PIN_OUT_CLEAR |= (1<<XDCS_PIN);
 	else PIN_OUT_SET |= (1<<XDCS_PIN);
 }
 
-uint8_t VS1053_checkDREQ() {
+ICACHE_FLASH_ATTR uint8_t VS1053_checkDREQ() {
 	if(PIN_IN & (1<<DREQ_PIN)) return 1;
 	else return 0;
 }
 
-void VS1053_SineTest(){
+ICACHE_FLASH_ATTR void VS1053_SineTest(){
 	ControlReset(SET);
 	VS1053_ResetChip();
 	Delay(1000);
@@ -117,7 +117,7 @@ void VS1053_SineTest(){
 
 }
 
-void VS1053_WriteRegister(uint8_t addressbyte, uint8_t highbyte, uint8_t lowbyte)
+ICACHE_FLASH_ATTR void VS1053_WriteRegister(uint8_t addressbyte, uint8_t highbyte, uint8_t lowbyte)
 {
 	spi_take_semaphore();
 	VS1053_SPI_SpeedDown();
@@ -134,7 +134,7 @@ void VS1053_WriteRegister(uint8_t addressbyte, uint8_t highbyte, uint8_t lowbyte
 	spi_give_semaphore();
 }
 
-uint16_t VS1053_ReadRegister(uint8_t addressbyte){
+ICACHE_FLASH_ATTR uint16_t VS1053_ReadRegister(uint8_t addressbyte){
 	spi_take_semaphore();
 	VS1053_SPI_SpeedDown();
 	uint16_t result;
@@ -152,7 +152,7 @@ uint16_t VS1053_ReadRegister(uint8_t addressbyte){
 	return result;
 }
 
-void VS1053_ResetChip(){
+ICACHE_FLASH_ATTR void VS1053_ResetChip(){
 	ControlReset(SET);
 	Delay(1000);
 	SPIPutChar(0xff);
@@ -164,11 +164,11 @@ void VS1053_ResetChip(){
 	Delay(100);
 }
 
-uint16_t MaskAndShiftRight(uint16_t Source, uint16_t Mask, uint16_t Shift){
+ICACHE_FLASH_ATTR uint16_t MaskAndShiftRight(uint16_t Source, uint16_t Mask, uint16_t Shift){
 	return ( (Source & Mask) >> Shift );
 }
 
-void VS1053_regtest()
+ICACHE_FLASH_ATTR void VS1053_regtest()
 {
 	int MP3Status = VS1053_ReadRegister(SPI_STATUS);
 	int MP3Mode = VS1053_ReadRegister(SPI_MODE);
@@ -193,7 +193,7 @@ void VS1053_PluginLoad()
   }
 }
 */
-void VS1053_Start(){
+ICACHE_FLASH_ATTR void VS1053_Start(){
 	VS1053_ResetChip();
 	while(VS1053_checkDREQ() == 0);
 
@@ -202,7 +202,7 @@ void VS1053_Start(){
 	while(VS1053_checkDREQ() == 0);
 }
 
-int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
+ICACHE_FLASH_ATTR int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
 	if(quantity < 1) return 0;
 	while(!spi_take_semaphore());
 	while(VS1053_checkDREQ() == 0);
@@ -227,11 +227,11 @@ int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
 	return o;
 }
 
-void VS1053_SoftwareReset(){
+ICACHE_FLASH_ATTR void VS1053_SoftwareReset(){
 	VS1053_WriteRegister(SPI_MODE,0x00,0x04);
 }
 
-uint8_t VS1053_GetVolume(){
+ICACHE_FLASH_ATTR uint8_t VS1053_GetVolume(){
 	return ( VS1053_ReadRegister(SPI_VOL) & 0x00FF );
 }
 /**
@@ -239,7 +239,7 @@ uint8_t VS1053_GetVolume(){
  * @param xMinusHalfdB describes damping level as a multiple
  * 		of 0.5dB. Maximum volume is 0 and silence is 0xFEFE.
  */
-void VS1053_SetVolume(uint8_t xMinusHalfdB){
+ICACHE_FLASH_ATTR void VS1053_SetVolume(uint8_t xMinusHalfdB){
 	VS1053_WriteRegister(SPI_VOL,xMinusHalfdB,xMinusHalfdB);
 }
 
@@ -248,7 +248,7 @@ void VS1053_SetVolume(uint8_t xMinusHalfdB){
  * @return Returned value describes enhancement in multiplies
  * 		of 1.5dB. 0 value means no enhancement, 8 max (12dB).
  */
-uint8_t	VS1053_GetTreble(){
+ICACHE_FLASH_ATTR uint8_t	VS1053_GetTreble(){
 	return ( (VS1053_ReadRegister(SPI_BASS) & 0xF000) >> 12);
 }
 
@@ -260,7 +260,7 @@ uint8_t	VS1053_GetTreble(){
  * 		of 1.5dB. 0 - no enhancement, 8 - maximum, 12dB.
  * @return void
  */
-void VS1053_SetTreble(uint8_t xOneAndHalfdB){
+ICACHE_FLASH_ATTR void VS1053_SetTreble(uint8_t xOneAndHalfdB){
 	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
 	if ( xOneAndHalfdB <= 8)
 		VS1053_WriteRegister( SPI_BASS, MaskAndShiftRight(bassReg,0x0F00,8) | (xOneAndHalfdB << 4), bassReg & 0x00FF );
@@ -275,7 +275,7 @@ void VS1053_SetTreble(uint8_t xOneAndHalfdB){
  * 		Values from 0 to 15 (in kHz)
  * @return void
  */
-void VS1053_SetTrebleFreq(uint8_t xkHz){
+ICACHE_FLASH_ATTR void VS1053_SetTrebleFreq(uint8_t xkHz){
 	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
 	if ( xkHz <= 15 )
 		VS1053_WriteRegister( SPI_BASS, MaskAndShiftRight(bassReg,0xF000,8) | xkHz, bassReg & 0x00FF );
@@ -285,7 +285,7 @@ void VS1053_SetTrebleFreq(uint8_t xkHz){
  * Returns level of bass boost in dB.
  * @return Value of bass enhancement from 0 (off) to 15(dB).
  */
-uint8_t	VS1053_GetBass(){
+ICACHE_FLASH_ATTR uint8_t	VS1053_GetBass(){
 	return ( (VS1053_ReadRegister(SPI_BASS) & 0x00F0) >> 4);
 }
 
@@ -295,7 +295,7 @@ uint8_t	VS1053_GetBass(){
  * @param xdB Value of bass enhancement from 0 (off) to 15(dB).
  * @return void
  */
-void VS1053_SetBass(uint8_t xdB){
+ICACHE_FLASH_ATTR void VS1053_SetBass(uint8_t xdB){
 	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
 	if (xdB <= 15)
 		VS1053_WriteRegister(SPI_BASS, (bassReg & 0xFF00) >> 8, (bassReg & 0x000F) | (xdB << 4) );
@@ -310,17 +310,17 @@ void VS1053_SetBass(uint8_t xdB){
  * 		Values from 2 to 15 ( equal to 20 - 150 Hz).
  * @return void
  */
-void VS1053_SetBassFreq(uint8_t xTenHz){
+ICACHE_FLASH_ATTR void VS1053_SetBassFreq(uint8_t xTenHz){
 	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
 	if (xTenHz >=2 && xTenHz <= 15)
 		VS1053_WriteRegister(SPI_BASS, MaskAndShiftRight(bassReg,0xFF00,8), (bassReg & 0x00F0) | xTenHz );
 }
 
-uint16_t VS1053_GetDecodeTime(){
+ICACHE_FLASH_ATTR uint16_t VS1053_GetDecodeTime(){
 	return VS1053_ReadRegister(SPI_DECODE_TIME);
 }
 
-uint16_t VS1053_GetBitrate(){
+ICACHE_FLASH_ATTR uint16_t VS1053_GetBitrate(){
 	uint16_t bitrate = (VS1053_ReadRegister(SPI_HDAT0) & 0xf000) >> 12;
 	uint8_t ID = (VS1053_ReadRegister(SPI_HDAT1) & 0x18) >> 3;
 	uint16_t res;
@@ -364,6 +364,6 @@ uint16_t VS1053_GetBitrate(){
 	return res;
 }
 
-uint16_t VS1053_GetSampleRate(){
+ICACHE_FLASH_ATTR uint16_t VS1053_GetSampleRate(){
 	return (VS1053_ReadRegister(SPI_AUDATA) & 0xFFFE);
 }

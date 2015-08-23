@@ -12,6 +12,7 @@
 #include "lwip/netdb.h"
 
 #include "flash.h"
+#include "eeprom.h"
 
 ICACHE_FLASH_ATTR char* my_strdup(char* string, int length)
 {
@@ -128,7 +129,7 @@ ICACHE_FLASH_ATTR void serveFile(char* name, int conn)
 	}
 }
 
-char* getParameterFromResponse(char* param, char* data, uint16_t data_length) {
+ICACHE_FLASH_ATTR char* getParameterFromResponse(char* param, char* data, uint16_t data_length) {
 	char* p = strstr(data, param);
 	if(p > 0) {
 		p += strlen(param);
@@ -165,7 +166,7 @@ ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int con
 			if(port) free(port);
 		}
 	} else if(strcmp(name, "/sound") == 0) {
-		if(data_size > 0) { 
+		if(data_size > 0) {
 			char* vol = getParameterFromResponse("vol=", data, data_size);
 			char* bass = getParameterFromResponse("bass=", data, data_size);
 			char* treble = getParameterFromResponse("treble=", data, data_size);
@@ -182,12 +183,58 @@ ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int con
 				free(treble);
 			}
 		}
+	} else if(strcmp(name, "/getStation") == 0) {
+		if(data_size > 0) {
+			char* id = getParameterFromResponse("id=", data, data_size);
+			if(id) {
+				char* buf = malloc(6);
+				int i;
+				for(i = 0; i<sizeof(buf); i++) buf[i] = 0;
+				struct shoutcast_info* si;
+				si = getStation(atoi(id));
+				sprintf(buf, "%d", si->port);
+				int json_length = strlen(si->domain) + strlen(si->file) + strlen(si->name) + strlen(buf) + 40;
+				free(buf);
+				buf = malloc(json_length + 75);
+				for(i = 0; i<sizeof(buf); i++) buf[i] = 0;
+				sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: %d\r\n\r\n{\"URL\":\"%s\",\"File\":\"%s\",\"Name\":\"%s\",\"Port\":\"%d\"}",
+						json_length, si->domain, si->file, si->name, si->port);
+				write(conn, buf, strlen(buf));
+				free(si);
+				free(id);
+				free(buf);
+				return;
+			}
+		}
+	} else if(strcmp(name, "/setStation") == 0) {
+		if(data_size > 0) {
+			char* id = getParameterFromResponse("id=", data, data_size);
+			char* url = getParameterFromResponse("url=", data, data_size);
+			char* file = getParameterFromResponse("file=", data, data_size);
+			char* name = getParameterFromResponse("name=", data, data_size);
+			char* port = getParameterFromResponse("port=", data, data_size);
+			if(id && url && file && name && port) {
+				struct shoutcast_info *si = malloc(sizeof(struct shoutcast_info));
+				strcpy(si->domain, url);
+				strcpy(si->file, file);
+				strcpy(si->name, name);
+				si->port = atoi(port);
+				saveStation(si, atoi(id));
+				free(si);
+			}
+			free(id);
+			free(url);
+			free(file);
+			free(name);
+			free(port);
+		}
 	}
-	// todo: return only some "OK" message
-	serveFile("/", conn); // Return back to index.html
+	
+	char resp[] = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 2\r\n\r\nOK";
+	write(conn, resp, strlen(resp));
 }
 
-void httpServerHandleConnection(int conn, char* buf, uint16_t buflen) {
+ICACHE_FLASH_ATTR void httpServerHandleConnection(int conn, char* buf, uint16_t buflen) {
 	char *c;
 	if( (c = strstr(buf, "GET ")) != NULL)
 	{
@@ -222,7 +269,7 @@ void httpServerHandleConnection(int conn, char* buf, uint16_t buflen) {
 	}	
 }
 
-void serverTask(void *pvParams) {
+ICACHE_FLASH_ATTR void serverTask(void *pvParams) {
 	struct sockaddr_in server_addr, client_addr;
 	int server_sock, client_sock;
 	socklen_t sin_size;

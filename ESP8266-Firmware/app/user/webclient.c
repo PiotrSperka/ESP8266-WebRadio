@@ -2,10 +2,9 @@
 
 #include "webserver.h"
 
-#include "lwip/opt.h"
-#include "lwip/arch.h"
+#include "lwip/sockets.h"
 #include "lwip/api.h"
-#include "lwip/tcp.h"
+#include "lwip/netdb.h"
 
 #include "esp_common.h"
 
@@ -17,7 +16,8 @@ struct icyHeader header = {NULL, NULL, NULL, NULL, 0};
 char *clientURL = NULL;
 char *clientPath = NULL;
 uint16_t clientPort = 80;
-struct ip_addr ipAddress;
+
+struct hostent *server;
 
 static const char* icyHeaders[] = { "icy-name:", "icy-notice1:", "icy-notice2:",  "icy-url:", "icy-genre:", "icy-br:", "icy-metaint:" };
 
@@ -45,17 +45,17 @@ uint16_t wptr = 0;
 uint16_t rptr = 0;
 uint8_t bempty = 1;
 
-uint16_t getBufferFree() {
+ICACHE_FLASH_ATTR uint16_t getBufferFree() {
 	if(wptr > rptr ) return BUFFER_SIZE - wptr + rptr;
 	else if(wptr < rptr) return rptr - wptr;
 	else if(bempty) return BUFFER_SIZE; else return 0;
 }
 
-uint16_t getBufferFilled() {
+ICACHE_FLASH_ATTR uint16_t getBufferFilled() {
 	return BUFFER_SIZE - getBufferFree();
 }
 
-uint16_t bufferWrite(uint8_t *data, uint16_t size) {
+ICACHE_FLASH_ATTR uint16_t bufferWrite(uint8_t *data, uint16_t size) {
 	uint16_t s = size, i = 0;
 	for(i=0; i<s; i++) {
 		if(getBufferFree() == 0) return i;
@@ -67,7 +67,7 @@ uint16_t bufferWrite(uint8_t *data, uint16_t size) {
 	return s;
 }
 
-uint16_t bufferRead(uint8_t *data, uint16_t size) {
+ICACHE_FLASH_ATTR uint16_t bufferRead(uint8_t *data, uint16_t size) {
 	uint16_t s = size, i = 0;
 	if(s > getBufferFilled()) s = getBufferFilled();
 	for (i = 0; i < s; i++) {
@@ -80,7 +80,7 @@ uint16_t bufferRead(uint8_t *data, uint16_t size) {
 	return s;
 }
 
-void bufferReset() {
+ICACHE_FLASH_ATTR void bufferReset() {
 	wptr = 0;
 	rptr = 0;
 	bempty = 1;
@@ -231,7 +231,9 @@ ICACHE_FLASH_ATTR void clientConnect()
 	metacount = 0;
 	metasize = 0;
 	
-	if(netconn_gethostbyname(clientURL, &ipAddress) == ERR_OK) {
+	//if(netconn_gethostbyname(clientURL, &ipAddress) == ERR_OK) {
+	if(server) free(server);
+	if((server = (struct hostent*)gethostbyname(clientURL))) {
 		xSemaphoreGive(sConnect);
 		//connect = 1; // todo: semafor!!!
 	} else {
@@ -284,7 +286,7 @@ ICACHE_FLASH_ATTR void clientReceiveCallback(void *arg, char *pdata, unsigned sh
 	}
 }
 
-void vsTask(void *pvParams) {
+ICACHE_FLASH_ATTR void vsTask(void *pvParams) {
 	uint8_t b[1024];
 	
 	while(1) {
@@ -298,11 +300,10 @@ void vsTask(void *pvParams) {
 	}
 }
 
-void clientTask(void *pvParams) {
-	struct netconn *NetConn = NULL;
-	struct netbuf *inbuf;
-	
-	err_t rc1, rc2, rc3;
+ICACHE_FLASH_ATTR void clientTask(void *pvParams) {
+	int sockfd, bytes_read;
+	struct sockaddr_in dest;
+	uint8_t buffer[1024];
 	
 	while(1) {
 		xSemaphoreGive(sConnected);
@@ -311,51 +312,40 @@ void clientTask(void *pvParams) {
 			
 			xSemaphoreTake(sDisconnect, 0);
 
-			NetConn = netconn_new(NETCONN_TCP);
-			netconn_set_recvtimeout(NetConn, 1000);
+			sockfd = socket(AF_INET, SOCK_STREAM, 0);
+			if(sockfd >= 0) printf("Socket created\n");
+			bzero(&dest, sizeof(dest));
+			dest.sin_family = AF_INET;
+			dest.sin_port = htons(clientPort);
+			dest.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)(server -> h_addr_list[0])));
 
-			if(NetConn == NULL){
-					/*No memory for new connection? */
-					printf("No mem for new con\r\n");
-			}
-			rc1 = netconn_bind(NetConn, NULL, 666);        //3250          /* Adres IP i port local host'a */
-			printf("netcon binded\r\n");
-			rc2 = netconn_connect(NetConn, &ipAddress, clientPort);     // todo: !!!         /* Adres IP i port serwera */
-			//rc2 = netconn_connect(NetConn, &ipaddrserv, 80); 
-			printf("netcon connected\r\n");
+			/*---Connect to server---*/
+			if(connect(sockfd, (struct sockaddr*)&dest, sizeof(dest)) >= 0) {
+				printf("Socket connected\n");
+				bzero(buffer, sizeof(buffer));
+				sprintf(buffer, "GET %s HTTP/1.0\r\nicy-metadata:0\r\n\r\n", clientPath);
+				send(sockfd, buffer, strlen(buffer), 0);
 
-			if(rc1 != ERR_OK || rc2 != ERR_OK){
-					netconn_delete(NetConn);
-					printf("connection error\r\n");
-					clientDisconnect();
-					continue;
-			} else {
-				char *getQuery = malloc(sizeof(char)*(strlen(clientPath) + 34));
-				sprintf(getQuery, "GET %s HTTP/1.0\r\nicy-metadata:0\r\n\r\n", clientPath);
-				netconn_write(NetConn, getQuery, strlen(getQuery), NETCONN_NOCOPY);
-				free(getQuery);
-				while(1){
-					if(netconn_recv(NetConn, &inbuf) != ERR_OK) break;
-					int BufLen = netbuf_len(inbuf);
-					char *tmp = malloc(BufLen);
-					netbuf_copy(inbuf, tmp, BufLen);
-					netbuf_delete(inbuf);
-					clientReceiveCallback(NULL, tmp, BufLen);
-
-					free(tmp);
+				do
+				{
+					bzero(buffer, sizeof(buffer));
+					bytes_read = recv(sockfd, buffer, sizeof(buffer), 0);
+					if ( bytes_read > 0 ) {
+						clientReceiveCallback(NULL, buffer, bytes_read);
+					}
 					if(xSemaphoreTake(sDisconnect, 0)) break;
 					xSemaphoreTake(sConnected, 0);
 					vTaskDelay(1);
 				}
-
+				while ( bytes_read > 0 );
+				
 			}
-			
+
+			/*---Clean up---*/
 			playing = 0;
 			bufferReset();
-			netconn_close(NetConn);
-			printf("netcon closed\r\n");
-			netconn_delete(NetConn);
-			printf("netcon deleted\r\n");
+			close(sockfd);
+			printf("Socket closed\n");
 		}
 	}
 }

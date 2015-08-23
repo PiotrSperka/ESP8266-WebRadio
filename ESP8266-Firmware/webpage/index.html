@@ -47,7 +47,22 @@
 					<input type="radio" name="tabs" id="tab2" />
 					<label for="tab2">Manage stations</label>
 					<div id="tab-content2" class="tab-content">
-					  <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla?</p>
+						<h1>Add station</h1>
+						<form>
+							<p>
+								<span class="bold">Slot number: </span><input type="text" id="add_slot" name="slot"><br>
+								<span class="bold">Name: </span><input type="text" id="add_name" name="name"><br>
+								<span class="bold">URL: </span><input type="text" id="add_url" name="url"><br>
+								<span class="bold">Port: </span><input type="text" id="add_port" name="port" value="80"><br>
+								<span class="bold">Path: </span><input type="text" id="add_path" name="path" value="/"><br>
+								<input type="button" value="Save" onClick="saveStation()">
+							</p>
+						</form>
+						<h1>Manage stations</h1>
+						<table id = "stationsTable">
+							<thead><tr><td style="width:10%">No.</td><td style="width:20%">Name</td><td style="width:20%">URL</td><td style="width:30%">File</td><td style="width:10%">Port</td><td style="width:10%">-</td></tr></thead>
+							<tbody></tbody>
+						</table>
 					</div>
 				</li>
 				<li>
@@ -93,10 +108,47 @@
 				xmlhttp.send("vol=" + document.getElementById('vol_range').value + "&bass=" + document.getElementById('bass_range').value + "&treble=" + document.getElementById('treble_range').value);
 				window.location.replace("/");
 			}
+			function saveStation() {
+				xmlhttp = new XMLHttpRequest();
+				xmlhttp.open("POST","setStation",false);
+				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xmlhttp.send("id=" + document.getElementById('add_slot').value + "&url=" + document.getElementById('add_url').value + "&name=" + document.getElementById('add_name').value + "&file=" + document.getElementById('add_path').value + "&port=" + document.getElementById('add_port').value);
+				window.location.replace("/");
+			}
+			function loadStations() {
+				var new_tbody = document.createElement('tbody');
+				var id = 0;
+				for(id = 0; id < 16; id++) {
+					xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							var arr = JSON.parse(xmlhttp.responseText);
+							var tr = document.createElement('TR');
+							var td = document.createElement('TD');
+							td.appendChild(document.createTextNode(id + 1));
+							tr.appendChild(td);
+							for(var key in arr){
+								var td = document.createElement('TD');
+								td.appendChild(document.createTextNode(arr[key]));
+								tr.appendChild(td);
+							}
+							new_tbody.appendChild(tr);
+						}
+					}
+					xmlhttp.open("POST","getStation",false);
+					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+					xmlhttp.send("id=" + id);
+				}
+				console.log(new_tbody);
+				var old_tbody = document.getElementById("stationsTable").getElementsByTagName('tbody')[0];
+				old_tbody.parentNode.replaceChild(new_tbody, old_tbody);
+				//window.location.replace("/");
+			}
 			document.addEventListener("DOMContentLoaded", function(event) { 
 			  onRangeChange('treble_range', 'treble_span', 1.5, false);
 			  onRangeChange('bass_range', 'bass_span', 1, false);
 			  onRangeChange('vol_range', 'vol_span', -0.5, true);
+			  loadStations();
 			});
 		</script>
 	</body>

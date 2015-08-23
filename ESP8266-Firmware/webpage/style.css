@@ -150,3 +150,9 @@ html, body
 .tabs [id^="tab"]:checked ~ [id^="tab-content"] {
   display: block;
 }
+
+table#stationsTable, table#stationsTable th, table#stationsTable td {
+	border: solid 1px;
+	border-collapse: collapse;
+	width: 100%;
+}

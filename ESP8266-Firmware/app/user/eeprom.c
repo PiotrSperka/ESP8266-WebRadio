@@ -1,6 +1,7 @@
 #include "eeprom.h"
 #include "flash.h"
 #include "stdio.h"
+#include "stdlib.h"
 
 #define ICACHE_STORE_TYPEDEF_ATTR __attribute__((aligned(4),packed))
 #define ICACHE_STORE_ATTR __attribute__((aligned(4)))
@@ -10,13 +11,13 @@
 
 uint32_t eebuf[1024];
 
-uint8_t eeGetByte(uint32_t address) { // address = number of 1-byte parts from beginning
+ICACHE_FLASH_ATTR uint8_t eeGetByte(uint32_t address) { // address = number of 1-byte parts from beginning
 	uint8_t t = 0;
 	spi_flash_read(EEPROM_START + address, (uint32 *)&t, 1);
 	return t;
 }
 
-void eeSetByte(uint32_t address, uint8_t data) {
+ICACHE_FLASH_ATTR void eeSetByte(uint32_t address, uint8_t data) {
 	uint32_t addr = (EEPROM_START + address) & 0xFFF000;
 	spi_flash_read(addr, (uint32 *)eebuf, 4096);
 	spi_flash_erase_sector(addr >> 12);
@@ -24,14 +25,14 @@ void eeSetByte(uint32_t address, uint8_t data) {
 	spi_flash_write(addr, (uint32 *)eebuf, 4096);
 }
 
-uint32_t eeGet4Byte(uint32_t address) { // address = number of 4-byte parts from beginning
+ICACHE_FLASH_ATTR uint32_t eeGet4Byte(uint32_t address) { // address = number of 4-byte parts from beginning
 	address *= 4;
 	uint32_t t = 0;
 	spi_flash_read(EEPROM_START + address, (uint32 *)&t, 4);
 	return t;
 }
 
-void eeSet4Byte(uint32_t address, uint32_t data) {
+ICACHE_FLASH_ATTR void eeSet4Byte(uint32_t address, uint32_t data) {
 	address *= 4;
 	uint32_t addr = (EEPROM_START + address) & 0xFFF000;
 	spi_flash_read(addr, (uint32 *)eebuf, 4096);
@@ -40,11 +41,11 @@ void eeSet4Byte(uint32_t address, uint32_t data) {
 	spi_flash_write(addr, (uint32 *)eebuf, 4096);
 }
 
-void eeGetData(int address, void* buffer, int size) { // address, size in BYTES !!!!
+ICACHE_FLASH_ATTR void eeGetData(int address, void* buffer, int size) { // address, size in BYTES !!!!
 	spi_flash_read(EEPROM_START + address, (uint32 *)buffer, size);
 }
 
-void eeSetData(int address, void* buffer, int size) { // address, size in BYTES !!!!
+ICACHE_FLASH_ATTR void eeSetData(int address, void* buffer, int size) { // address, size in BYTES !!!!
 	uint8_t* inbuf = buffer;
 	while(1) {
 		uint32_t sector = (EEPROM_START + address) & 0xFFF000;
@@ -65,4 +66,28 @@ void eeSetData(int address, void* buffer, int size) { // address, size in BYTES 
 		inbuf += i;
 		size -= i;
 	}
+}
+
+ICACHE_FLASH_ATTR void saveStation(struct shoutcast_info *station, uint8_t position) {
+	eeSetData((position+1)*256, station, 256);
+}
+
+ICACHE_FLASH_ATTR struct shoutcast_info* getStation(uint8_t position) {
+	uint8_t* buffer = malloc(256);
+	if(buffer) {
+		eeGetData((position+1)*256, buffer, 256);
+		return (struct shoutcast_info*)buffer;
+	} else return NULL;
+}
+
+ICACHE_FLASH_ATTR void saveDeviceSettings(struct device_settings *settings) {
+	eeSetData(0, settings, 256);
+}
+
+ICACHE_FLASH_ATTR struct device_settings* getDeviceSettings() {
+	uint8_t* buffer = malloc(256);
+	if(buffer) {
+		eeGetData(0, buffer, 256);
+		return (struct device_settings*)buffer;
+	} else return NULL;
 }

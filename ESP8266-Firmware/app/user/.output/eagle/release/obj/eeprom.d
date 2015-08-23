@@ -7,4 +7,5 @@
  ../../include/sys/reent.h ../../include/_ansi.h \
  ../../include/sys/_types.h ../../include/sys/lock.h \
  ../../include/sys/types.h ../../include/machine/types.h \
- ../../include/sys/stdio.h
+ ../../include/sys/stdio.h ../../include/stdlib.h \
+ ../../include/machine/stdlib.h ../../include/alloca.h

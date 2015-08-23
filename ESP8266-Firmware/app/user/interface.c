@@ -25,7 +25,7 @@ uint8_t startsWith(const char *pre, const char *str)
     return lenstr < lenpre ? false : strncmp(pre, str, lenpre) == 0;
 }
 
-void printInfo(char* s)
+ICACHE_FLASH_ATTR void printInfo(char* s)
 {
 	int i;
 	//char buf[12];
@@ -49,7 +49,7 @@ void printInfo(char* s)
 * -OK- Disconnect from shoutcast
 */
 
-void wifiScanCallback(void *arg, STATUS status)
+ICACHE_FLASH_ATTR void wifiScanCallback(void *arg, STATUS status)
 {
 	if(status == OK)
 	{
@@ -69,12 +69,12 @@ void wifiScanCallback(void *arg, STATUS status)
 	}
 }
 
-void wifiScan()
+ICACHE_FLASH_ATTR void wifiScan()
 {
 	wifi_station_scan(NULL, wifiScanCallback);
 }
 
-void wifiConnect(char* cmd)
+ICACHE_FLASH_ATTR void wifiConnect(char* cmd)
 {
 	int i;
 	
@@ -115,13 +115,13 @@ void wifiConnect(char* cmd)
 	else printf("\n##WIFI.NOT_CONNECTED#");
 }
 
-void wifiDisconnect()
+ICACHE_FLASH_ATTR void wifiDisconnect()
 {
 	if(wifi_station_disconnect()) printf("\n##WIFI.NOT_CONNECTED#");
 	else printf("\n##WIFI.DISCONNECT_FAILED#");
 }
 
-void wifiStatus()
+ICACHE_FLASH_ATTR void wifiStatus()
 {
 	struct ip_info ipi;
 	char buf[32+50];
@@ -134,7 +134,7 @@ void wifiStatus()
 	printf(buf);
 }
 
-void wifiGetStation()
+ICACHE_FLASH_ATTR void wifiGetStation()
 {
 	char buf[131];
 	struct station_config cfgg;
@@ -143,7 +143,7 @@ void wifiGetStation()
 	printf(buf);
 }
 
-void clientParseUrl(char* s)
+ICACHE_FLASH_ATTR void clientParseUrl(char* s)
 {
     char *t = strstr(s, "(\"");
 	if(t == 0)
@@ -168,7 +168,7 @@ void clientParseUrl(char* s)
     }
 }
 
-void clientParsePath(char* s)
+ICACHE_FLASH_ATTR void clientParsePath(char* s)
 {
     char *t = strstr(s, "(\"");
 	if(t == 0)
@@ -193,7 +193,7 @@ void clientParsePath(char* s)
     }
 }
 
-void clientParsePort(char *s)
+ICACHE_FLASH_ATTR void clientParsePort(char *s)
 {
     char *t = strstr(s, "(\"");
 	if(t == 0)
@@ -219,7 +219,7 @@ void clientParsePort(char *s)
     }
 }
 
-void checkCommand(int size, char* s)
+ICACHE_FLASH_ATTR void checkCommand(int size, char* s)
 {
 	char *tmp = (char*)malloc((size+1)*sizeof(char));
 	int i;
@@ -241,7 +241,7 @@ void checkCommand(int size, char* s)
 	free(tmp);
 }
 
-void printConfig()
+ICACHE_FLASH_ATTR void printConfig()
 {
 	
 }

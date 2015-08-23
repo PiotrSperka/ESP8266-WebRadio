@@ -52,6 +52,16 @@ UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
 	uart_div_modify(uart_no, UART_CLK_FREQ / baud_rate);
 }
 
+void testtask(void* p) {
+	gpio16_output_conf();
+	while(1) {
+		gpio16_output_set(0);
+		vTaskDelay(50);
+		gpio16_output_set(1);
+		vTaskDelay(50);
+	};
+}
+
 /******************************************************************************
  * FunctionName : user_init
  * Description  : entry of user application, init user function here
@@ -60,7 +70,7 @@ UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
 *******************************************************************************/
 void user_init(void)
 {
-	UART_SetBaudrate(0,460800);
+	UART_SetBaudrate(0,115200);
 	wifi_set_opmode(STATION_MODE);
 	
 	clientInit();
@@ -82,21 +92,11 @@ void user_init(void)
 
 	VS1053_SPI_SpeedUp();
 	
-	uint8_t tab[] = "To jest test eeprom";
-	uint8_t tab2[32] = {};
-	int i;
-	eeGetData(4088, tab2, 20);
-	for(i=0; i<20; i++) printf("%c", tab2[i]);
-	printf("\n\n");
-	/*eeSetData(4088, tab, 20);
-	for(i=0; i<20; i++) tab2[i] = 0;
-	eeGetData(4088, tab2, 20);
-	for(i=0; i<20; i++) printf("%c", tab2[i]);
-	printf("\n\n");*/
+	xTaskCreate(testtask, "t0", 256, NULL, 1, NULL); // DEBUG/TEST
 
 	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 1, NULL);
 	xTaskCreate(serverTask, "t2", 256, NULL, 1, NULL);
-	xTaskCreate(clientTask, "t3", 256, NULL, 2, NULL);
+	xTaskCreate(clientTask, "t3", 512, NULL, 2, NULL);
 	xTaskCreate(vsTask, "t4", 512, NULL, 2, NULL);
 }
 

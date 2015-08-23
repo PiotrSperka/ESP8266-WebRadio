@@ -1,15 +1,17 @@
 .output/eagle/release/obj/webclient.o .output/eagle/release/obj/webclient.d : webclient.c ../include/webclient.h \
  ../../include/espressif/c_types.h ../include/webserver.h \
- ../../include/lwip/lwip/opt.h ../../include/lwip/lwipopts.h \
- ../../include/lwip/lwip/debug.h ../../include/lwip/lwip/arch.h \
- ../../include/lwip/arch/cc.h ../../include/lwip/lwip/api.h \
+ ../../include/lwip/lwip/sockets.h ../../include/lwip/lwip/opt.h \
+ ../../include/lwip/lwipopts.h ../../include/lwip/lwip/debug.h \
+ ../../include/lwip/lwip/arch.h ../../include/lwip/arch/cc.h \
  /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/lib/gcc/xtensa-lx106-elf/4.8.2/include/stddef.h \
- ../../include/lwip/lwip/netbuf.h ../../include/lwip/lwip/pbuf.h \
- ../../include/lwip/lwip/err.h ../../include/lwip/lwip/ip_addr.h \
- ../../include/lwip/lwip/def.h ../../include/lwip/ipv4/lwip/ip4_addr.h \
- ../../include/lwip/ipv6/lwip/ip6_addr.h ../../include/lwip/lwip/sys.h \
- ../../include/lwip/arch/sys_arch.h ../../include/freertos/FreeRTOS.h \
- ../../include/freertos/projdefs.h \
+ ../../include/lwip/lwip/ip_addr.h ../../include/lwip/lwip/def.h \
+ ../../include/lwip/ipv4/lwip/ip4_addr.h \
+ ../../include/lwip/ipv6/lwip/ip6_addr.h \
+ ../../include/lwip/ipv4/lwip/inet.h ../../include/lwip/ipv6/lwip/inet6.h \
+ ../../include/lwip/lwip/api.h ../../include/lwip/lwip/netbuf.h \
+ ../../include/lwip/lwip/pbuf.h ../../include/lwip/lwip/err.h \
+ ../../include/lwip/lwip/sys.h ../../include/lwip/arch/sys_arch.h \
+ ../../include/freertos/FreeRTOS.h ../../include/freertos/projdefs.h \
  ../../include/freertos/FreeRTOSConfig.h \
  ../../include/freertos/portable.h ../../include/freertos/portmacro.h \
  ../../include/espressif/esp_common.h ../../include/espressif/c_types.h \
@@ -39,7 +41,4 @@
  ../../include/freertos/mpu_wrappers.h ../../include/freertos/task.h \
  ../../include/freertos/list.h ../../include/freertos/queue.h \
  ../../include/freertos/semphr.h ../../include/freertos/queue.h \
- ../../include/lwip/lwip/tcp.h ../../include/lwip/lwip/mem.h \
- ../../include/lwip/lwip/ip.h ../../include/lwip/lwip/netif.h \
- ../../include/lwip/ipv4/lwip/ip4.h ../../include/lwip/ipv6/lwip/ip6.h \
- ../../include/lwip/ipv4/lwip/icmp.h ../include/vs1053.h
+ ../../include/lwip/lwip/netdb.h ../include/vs1053.h
