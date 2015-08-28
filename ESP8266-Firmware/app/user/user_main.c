@@ -32,6 +32,22 @@ void uartInterfaceTask(void *pvParameters) {
 	t = 0;
 	uart_rx_init();
 	printf("UART READY TO READ\n");
+	
+	
+	//DEBUG
+	struct station_config *config = (struct station_config *)malloc(sizeof(struct station_config));
+	if(!config) printf("Unable to create config!\n");
+	else {
+		wifi_station_disconnect();
+		sprintf(config->ssid, "linksys@Pogodna8");
+		sprintf(config->password, "Pogodna8");
+		wifi_station_set_config(config);
+		wifi_station_connect();
+		free(config);
+	}
+	//DEBUG
+	
+	
 	while(1) {
 		while(1) {
 			char c = uart_getchar();
@@ -74,19 +90,6 @@ void user_init(void)
 	wifi_set_opmode(STATION_MODE);
 	
 	clientInit();
-	
-	//DEBUG
-	/*struct station_config *config = (struct station_config *)malloc(sizeof(struct station_config));
-	if(!config) printf("Unable to create config!\n");
-	else {
-		wifi_station_disconnect();
-		sprintf(config->ssid, "linksys@Pogodna8");
-		sprintf(config->password, "Pogodna8");
-		wifi_station_set_config(config);
-		wifi_station_connect();
-		free(config);
-	}*/
-	//DEBUG
 	
 	VS1053_HW_init();
 	VS1053_Start();
