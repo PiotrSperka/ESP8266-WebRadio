@@ -197,8 +197,8 @@ ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int con
 				free(buf);
 				buf = malloc(json_length + 75);
 				for(i = 0; i<sizeof(buf); i++) buf[i] = 0;
-				sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: %d\r\n\r\n{\"URL\":\"%s\",\"File\":\"%s\",\"Name\":\"%s\",\"Port\":\"%d\"}",
-						json_length, si->domain, si->file, si->name, si->port);
+				sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: %d\r\n\r\n{\"Name\":\"%s\",\"URL\":\"%s\",\"File\":\"%s\",\"Port\":\"%d\"}",
+						json_length, si->name, si->domain, si->file, si->port);
 				write(conn, buf, strlen(buf));
 				free(si);
 				free(id);
@@ -228,8 +228,26 @@ ICACHE_FLASH_ATTR void handlePOST(char* name, char* data, int data_size, int con
 			free(name);
 			free(port);
 		}
+	} else if(strcmp(name, "/play") == 0) {
+		if(data_size > 0) { 
+			char* id = getParameterFromResponse("id=", data, data_size);
+			if(id != NULL) {
+				struct shoutcast_info* si;
+				si = getStation(atoi(id));
+				if(si->domain && si->file) {
+					clientDisconnect();
+					while(clientIsConnected()) vTaskDelay(5);
+					clientSetURL(si->domain);
+					clientSetPath(si->file);
+					clientSetPort(si->port);
+					clientConnect();
+					while(!clientIsConnected()) vTaskDelay(5);
+				}
+				free(si);
+			}
+			if(id) free(id);
+		}
 	}
-	
 	char resp[] = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 2\r\n\r\nOK";
 	write(conn, resp, strlen(resp));
 }

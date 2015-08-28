@@ -156,3 +156,8 @@ table#stationsTable, table#stationsTable th, table#stationsTable td {
 	border-collapse: collapse;
 	width: 100%;
 }
+
+a.page {
+	font-size: 18pt !important;
+	margin-right: 10px;
+}

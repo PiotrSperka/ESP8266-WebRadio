@@ -4,19 +4,9 @@
 #include "stdio.h"
 #include "string.h"
 #include "stdlib.h"
+#include "eeprom.h"
 
 #define MAX_WIFI_STATIONS 50
-
-/*
-TODO:
--OK- HTTP server autostart
-- Connecting to shoutcast server
-- Sending data to uC
-- UART semaphores
-- Admin panel with in/out data
-*/
-
-struct station_config cfg;
 
 uint8_t startsWith(const char *pre, const char *str)
 {
@@ -27,27 +17,8 @@ uint8_t startsWith(const char *pre, const char *str)
 
 ICACHE_FLASH_ATTR void printInfo(char* s)
 {
-	int i;
-	//char buf[12];
-	//sprintf(buf, " %d", size);
-	printf("\n#INFO#");
-	printf(s);
-	//printf(buf);
-	//for(i=0; i<size; i++) uart0_putc(*s++);
-	printf("\n##INFO#");
+	printf("\n#INFO#\n%s\n##INFO#", s);
 }
-
-/*
-* LIST OF REQUIRED COMMANDS:
-* -OK- List available wifi networks
-* -OK- Connect to choosen wifi network (id, passwd)
-* -OK- Disconnect from wifi (?)
-* -OK- Get info about connected network
-* - Set settings (to admin panel)
-* - Get settings (from admin panel)
-* -OK- Connect to shoutcast (address, path)
-* -OK- Disconnect from shoutcast
-*/
 
 ICACHE_FLASH_ATTR void wifiScanCallback(void *arg, STATUS status)
 {
@@ -77,10 +48,11 @@ ICACHE_FLASH_ATTR void wifiScan()
 ICACHE_FLASH_ATTR void wifiConnect(char* cmd)
 {
 	int i;
+	struct station_config* cfg = malloc(sizeof(struct station_config));
 	
-	for(i = 0; i < 32; i++) cfg.ssid[i] = 0;
-	for(i = 0; i < 64; i++) cfg.password[i] = 0;
-	cfg.bssid_set = 0;
+	for(i = 0; i < 32; i++) cfg->ssid[i] = 0;
+	for(i = 0; i < 64; i++) cfg->password[i] = 0;
+	cfg->bssid_set = 0;
 	
 	wifi_station_disconnect();
 	
@@ -97,7 +69,7 @@ ICACHE_FLASH_ATTR void wifiConnect(char* cmd)
 		return;
 	}
 	
-	strncpy( cfg.ssid, (t+2), (t_end-t-2) );
+	strncpy( cfg->ssid, (t+2), (t_end-t-2) );
 	
 	t = t_end+3;
 	t_end = strstr(t, "\")");
@@ -107,12 +79,47 @@ ICACHE_FLASH_ATTR void wifiConnect(char* cmd)
 		return;
 	}
 	
-	strncpy( cfg.password, t, (t_end-t)) ;
+	strncpy( cfg->password, t, (t_end-t)) ;
 	
-	wifi_station_set_config(&cfg);
+	wifi_station_set_config(cfg);
+
+	if( wifi_station_connect() ) {
+		struct device_settings* devset = getDeviceSettings();
+		for(i = 0; i < 64; i++) devset->ssid[i] = 0;
+		for(i = 0; i < 64; i++) devset->pass[i] = 0;
+		for(i = 0; i < strlen(cfg->ssid); i++) devset->ssid[i] = cfg->ssid[i];
+		for(i = 0; i < strlen(cfg->password); i++) devset->pass[i] = cfg->password[i];
+		saveDeviceSettings(devset);
+		free(devset);
+		printf("\n##WIFI.CONNECTED#");
+	}
+	else printf("\n##WIFI.NOT_CONNECTED#");
+	
+	free(cfg);
+}
+
+ICACHE_FLASH_ATTR void wifiConnectMem()
+{
+	int i;
+	struct station_config* cfg = malloc(sizeof(struct station_config));
+	
+	for(i = 0; i < 32; i++) cfg->ssid[i] = 0;
+	for(i = 0; i < 64; i++) cfg->password[i] = 0;
+	cfg->bssid_set = 0;
+	
+	wifi_station_disconnect();
+	
+	struct device_settings* devset = getDeviceSettings();
+	for(i = 0; i < strlen(devset->ssid); i++) cfg->ssid[i] = devset->ssid[i];
+	for(i = 0; i < strlen(devset->pass); i++) cfg->password[i] = devset->pass[i];
+	free(devset);
+
+	wifi_station_set_config(cfg);
 
 	if( wifi_station_connect() ) printf("\n##WIFI.CONNECTED#");
 	else printf("\n##WIFI.NOT_CONNECTED#");
+	
+	free(cfg);
 }
 
 ICACHE_FLASH_ATTR void wifiDisconnect()
@@ -124,23 +131,19 @@ ICACHE_FLASH_ATTR void wifiDisconnect()
 ICACHE_FLASH_ATTR void wifiStatus()
 {
 	struct ip_info ipi;
-	char buf[32+50];
 	uint8_t t = wifi_station_get_connect_status();	
 	wifi_get_ip_info(0, &ipi);
-	sprintf(buf, "#WIFI.STATUS#\n%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n##WIFI.STATUS#\n",
+	printf("#WIFI.STATUS#\n%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n%d.%d.%d.%d\n##WIFI.STATUS#\n",
 			  t, (ipi.ip.addr&0xff), ((ipi.ip.addr>>8)&0xff), ((ipi.ip.addr>>16)&0xff), ((ipi.ip.addr>>24)&0xff),
 			 (ipi.netmask.addr&0xff), ((ipi.netmask.addr>>8)&0xff), ((ipi.netmask.addr>>16)&0xff), ((ipi.netmask.addr>>24)&0xff),
 			 (ipi.gw.addr&0xff), ((ipi.gw.addr>>8)&0xff), ((ipi.gw.addr>>16)&0xff), ((ipi.gw.addr>>24)&0xff));
-	printf(buf);
 }
 
 ICACHE_FLASH_ATTR void wifiGetStation()
 {
-	char buf[131];
 	struct station_config cfgg;
 	wifi_station_get_config(&cfgg);
-	sprintf(buf, "\n#WIFI.STATION#\n%s\n%s\n##WIFI.STATION#\n", cfgg.ssid, cfgg.password);
-	printf(buf);
+	printf("\n#WIFI.STATION#\n%s\n%s\n##WIFI.STATION#\n", cfgg.ssid, cfgg.password);
 }
 
 ICACHE_FLASH_ATTR void clientParseUrl(char* s)
@@ -225,23 +228,18 @@ ICACHE_FLASH_ATTR void checkCommand(int size, char* s)
 	int i;
 	for(i=0;i<size;i++) tmp[i] = s[i];
 	tmp[size] = 0;
-	if(strcmp(tmp, "wifi.list") == 0) wifiScan(); //printInfo("WIFI LIST");
+	if(strcmp(tmp, "wifi.list") == 0) wifiScan();
+	else if(strcmp(tmp, "wifi.con") == 0) wifiConnectMem();
 	else if(startsWith("wifi.con", tmp)) wifiConnect(tmp);
 	else if(strcmp(tmp, "wifi.discon") == 0) wifiDisconnect();
 	else if(strcmp(tmp, "wifi.status") == 0) wifiStatus();
 	else if(strcmp(tmp, "wifi.station") == 0) wifiGetStation();
-	/*else if(strcmp(tmp, "srv.start") == 0) serverInit();
-    else if(strcmp(tmp, "srv.stop") == 0) serverDisconnect();*/
     else if(startsWith("cli.url", tmp)) clientParseUrl(tmp);
     else if(startsWith("cli.path", tmp)) clientParsePath(tmp);
     else if(startsWith("cli.port", tmp)) clientParsePort(tmp);
     else if(strcmp(tmp, "cli.start") == 0) clientConnect();
     else if(strcmp(tmp, "cli.stop") == 0) clientDisconnect();
+    else if(strcmp(tmp, "sys.erase") == 0) eeEraseAll();
 	else printInfo(tmp);
 	free(tmp);
-}
-
-ICACHE_FLASH_ATTR void printConfig()
-{
-	
 }

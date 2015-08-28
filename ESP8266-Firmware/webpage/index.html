@@ -22,14 +22,11 @@
 					<p><span class="bold">URL: </span><a href="#ICY-URL#" target="_blank">#ICY-URL#</a></p>
 					<p><span class="bold">Bitrate: </span>#ICY-BITRATE# kB/s</p>
 					<h1>Select station</h1>
-					<form action="/" method="GET">
+					<form>
 						<p>Select station:<br>
-						<select>
-							<option>Antyradio Katowice</option>
-							<option>Antyradio Kraków</option>
-							<option>Kerrang Radio</option>
+						<select id="stationsSelect">
 						</select>
-						<input type="submit" value="Play">
+						<input type="button" value="Play" onClick="playStation()">
 						</p>
 					</form>
 					<h1>Instant play</h1>
@@ -47,22 +44,42 @@
 					<input type="radio" name="tabs" id="tab2" />
 					<label for="tab2">Manage stations</label>
 					<div id="tab-content2" class="tab-content">
-						<h1>Add station</h1>
-						<form>
-							<p>
-								<span class="bold">Slot number: </span><input type="text" id="add_slot" name="slot"><br>
-								<span class="bold">Name: </span><input type="text" id="add_name" name="name"><br>
-								<span class="bold">URL: </span><input type="text" id="add_url" name="url"><br>
-								<span class="bold">Port: </span><input type="text" id="add_port" name="port" value="80"><br>
-								<span class="bold">Path: </span><input type="text" id="add_path" name="path" value="/"><br>
-								<input type="button" value="Save" onClick="saveStation()">
-							</p>
-						</form>
+						<div id="editStationDiv" style="display: none;">
+							<h1>Edit station</h1>
+							<form>
+								<p>
+									<span class="bold">Slot number: </span><input type="text" id="add_slot" name="slot"><br>
+									<span class="bold">Name: </span><input type="text" id="add_name" name="name"><br>
+									<span class="bold">URL: </span><input type="text" id="add_url" name="url"><br>
+									<span class="bold">Port: </span><input type="text" id="add_port" name="port" value="80"><br>
+									<span class="bold">Path: </span><input type="text" id="add_path" name="path" value="/"><br>
+									<input type="button" value="Save" onClick="saveStation()">
+								</p>
+							</form>
+						</div>
 						<h1>Manage stations</h1>
 						<table id = "stationsTable">
 							<thead><tr><td style="width:10%">No.</td><td style="width:20%">Name</td><td style="width:20%">URL</td><td style="width:30%">File</td><td style="width:10%">Port</td><td style="width:10%">-</td></tr></thead>
 							<tbody></tbody>
 						</table>
+						<div>
+							<a class="page" href="#" onClick="loadStations(1);">1</a>
+							<a class="page" href="#" onClick="loadStations(2);">2</a>
+							<a class="page" href="#" onClick="loadStations(3);">3</a>
+							<a class="page" href="#" onClick="loadStations(4);">4</a>
+							<a class="page" href="#" onClick="loadStations(5);">5</a>
+							<a class="page" href="#" onClick="loadStations(6);">6</a>
+							<a class="page" href="#" onClick="loadStations(7);">7</a>
+							<a class="page" href="#" onClick="loadStations(8);">8</a>
+							<a class="page" href="#" onClick="loadStations(9);">9</a>
+							<a class="page" href="#" onClick="loadStations(10);">10</a>
+							<a class="page" href="#" onClick="loadStations(11);">11</a>
+							<a class="page" href="#" onClick="loadStations(12);">12</a>
+							<a class="page" href="#" onClick="loadStations(13);">13</a>
+							<a class="page" href="#" onClick="loadStations(14);">14</a>
+							<a class="page" href="#" onClick="loadStations(15);">15</a>
+							<a class="page" href="#" onClick="loadStations(16);">16</a>
+						</div>
 					</div>
 				</li>
 				<li>
@@ -83,73 +100,6 @@
 				</ul>
 			</div>
 		</div>
-		<script>
-			function reloadAfter($seconds) {
-				setTimeout(function(){
-				   window.location.replace("/");
-				}, $seconds*1000);
-			}
-			function onRangeChange($range, $spanid, $mul, $rotate) {
-				var val = document.getElementById($range).value;
-				if($rotate) val = document.getElementById($range).max - val;
-				document.getElementById($spanid).innerHTML = (val * $mul) + " dB";
-			}
-			function instantPlay() {
-				xmlhttp = new XMLHttpRequest();
-				xmlhttp.open("POST","instant_play",false);
-				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-				xmlhttp.send("url=" + document.getElementById('instant_url').value + "&port=" + document.getElementById('instant_port').value + "&path=" + document.getElementById('instant_path').value);
-				window.location.replace("/");
-			}
-			function saveSoundSettings() {
-				xmlhttp = new XMLHttpRequest();
-				xmlhttp.open("POST","sound",false);
-				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-				xmlhttp.send("vol=" + document.getElementById('vol_range').value + "&bass=" + document.getElementById('bass_range').value + "&treble=" + document.getElementById('treble_range').value);
-				window.location.replace("/");
-			}
-			function saveStation() {
-				xmlhttp = new XMLHttpRequest();
-				xmlhttp.open("POST","setStation",false);
-				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-				xmlhttp.send("id=" + document.getElementById('add_slot').value + "&url=" + document.getElementById('add_url').value + "&name=" + document.getElementById('add_name').value + "&file=" + document.getElementById('add_path').value + "&port=" + document.getElementById('add_port').value);
-				window.location.replace("/");
-			}
-			function loadStations() {
-				var new_tbody = document.createElement('tbody');
-				var id = 0;
-				for(id = 0; id < 16; id++) {
-					xmlhttp = new XMLHttpRequest();
-					xmlhttp.onreadystatechange = function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							var arr = JSON.parse(xmlhttp.responseText);
-							var tr = document.createElement('TR');
-							var td = document.createElement('TD');
-							td.appendChild(document.createTextNode(id + 1));
-							tr.appendChild(td);
-							for(var key in arr){
-								var td = document.createElement('TD');
-								td.appendChild(document.createTextNode(arr[key]));
-								tr.appendChild(td);
-							}
-							new_tbody.appendChild(tr);
-						}
-					}
-					xmlhttp.open("POST","getStation",false);
-					xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-					xmlhttp.send("id=" + id);
-				}
-				console.log(new_tbody);
-				var old_tbody = document.getElementById("stationsTable").getElementsByTagName('tbody')[0];
-				old_tbody.parentNode.replaceChild(new_tbody, old_tbody);
-				//window.location.replace("/");
-			}
-			document.addEventListener("DOMContentLoaded", function(event) { 
-			  onRangeChange('treble_range', 'treble_span', 1.5, false);
-			  onRangeChange('bass_range', 'bass_span', 1, false);
-			  onRangeChange('vol_range', 'vol_span', -0.5, true);
-			  loadStations();
-			});
-		</script>
+		<script src="script.js"></script>
 	</body>
 </HTML>

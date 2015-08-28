@@ -20,4 +20,5 @@
  /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/lib/gcc/xtensa-lx106-elf/4.8.2/include/stdarg.h \
  ../../include/sys/types.h ../../include/machine/types.h \
  ../../include/sys/stdio.h ../../include/stdlib.h \
- ../../include/machine/stdlib.h ../../include/alloca.h
+ ../../include/machine/stdlib.h ../../include/alloca.h \
+ ../include/eeprom.h ../../include/espressif/c_types.h

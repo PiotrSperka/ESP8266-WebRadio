@@ -1,23 +1,25 @@
 # **ESP8266-WebRadio** #
 ###WiFi shoutcast player based on ESP8266 chip
 ##Basic informations
-Version: 0.12<br />
+Version: 0.13<br />
 Status: under design and development
 ##Used hardware
-WiFi and main MCU: ESP8266 (ESP-12)<br />
-Additional MCU (for UI): AVR<br />
+WiFi and main MCU: ESP8266 (ESP-12 with 32Mbits flash)<br />
+Additional MCU (as a bridge UART<=>UI): AVR<br />
 Audio decoder: VS1053<br />
 ##TODO list
 ###ESP8266
--**[HIGH]**Finish web interface<br />
 -**[NORMAL]**Metadata processing<br />
--**[LOW]**UART commands for VS1053 sound settings<br />
--**[LOW]**SRAM implementation<br />
--**[LOW]**Code cleanup
+-**[LOW]**External SRAM implementation<br />
+-**[LOW]**Code cleanup and optimization
 ###AVR
 -Hardware design<br />
 -Code
 ##Changelog
+###v0.13
+-**[ESP8266]**Some kind of beta version of web interface is ready.<br />
+-**[ESP8266]**Works saving and loading stations and settings to/from flash<br />
+-**[ESP8266]**Added "How to run" document
 ###v0.12
 -**[ESP8266]**Development of functions for saving and reading settings from flash "eeprom"<br />
 -**[ESP8266]**Functions for driving GPIO16<br />
