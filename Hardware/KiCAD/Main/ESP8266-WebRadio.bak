@@ -42,7 +42,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "ESP8266 SHOUTcast player"
-Date "15 aug 2015"
+Date "1 sep 2015"
 Rev "1.0"
 Comp "Piotr Sperka"
 Comment1 "This is open-source and open-hardware project"
@@ -246,12 +246,12 @@ $EndComp
 $Comp
 L C C21
 U 1 1 55CF4ABE
-P 9150 1450
-F 0 "C21" H 9200 1550 50  0000 L CNN
-F 1 "100n" H 9200 1350 50  0000 L CNN
-F 2 "" H 9150 1450 60  0000 C CNN
-F 3 "" H 9150 1450 60  0000 C CNN
-	1    9150 1450
+P 8950 2450
+F 0 "C21" H 9000 2550 50  0000 L CNN
+F 1 "100n" H 9000 2350 50  0000 L CNN
+F 2 "" H 8950 2450 60  0000 C CNN
+F 3 "" H 8950 2450 60  0000 C CNN
+	1    8950 2450
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -268,12 +268,12 @@ $EndComp
 $Comp
 L GND #PWR07
 U 1 1 55CF50C8
-P 9150 1150
-F 0 "#PWR07" H 9150 1150 30  0001 C CNN
-F 1 "GND" H 9150 1080 30  0001 C CNN
-F 2 "" H 9150 1150 60  0000 C CNN
-F 3 "" H 9150 1150 60  0000 C CNN
-	1    9150 1150
+P 8950 1150
+F 0 "#PWR07" H 8950 1150 30  0001 C CNN
+F 1 "GND" H 8950 1080 30  0001 C CNN
+F 2 "" H 8950 1150 60  0000 C CNN
+F 3 "" H 8950 1150 60  0000 C CNN
+	1    8950 1150
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -949,7 +949,7 @@ F 3 "" H 10200 3950 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	8950 3050 8950 2650
+	8950 2550 8950 3050
 Wire Wire Line
 	8750 2950 8950 2950
 Wire Wire Line
@@ -1089,12 +1089,7 @@ Wire Wire Line
 	8150 2000 8250 2000
 Connection ~ 8250 2100
 Wire Wire Line
-	8150 1650 9150 1650
-Wire Wire Line
-	9150 1650 9150 1550
-Wire Wire Line
 	8950 1550 8950 1650
-Connection ~ 8950 1650
 Wire Wire Line
 	8750 1550 8750 1650
 Connection ~ 8750 1650
@@ -1109,11 +1104,7 @@ Connection ~ 8250 1750
 Wire Wire Line
 	8750 1250 8750 1350
 Wire Wire Line
-	8750 1250 9150 1250
-Wire Wire Line
-	9150 1200 9150 1350
-Wire Wire Line
-	8950 1350 8950 1250
+	8950 1200 8950 1350
 Connection ~ 8950 1250
 Wire Wire Line
 	9350 2550 9350 2700
@@ -1125,7 +1116,6 @@ Wire Wire Line
 Wire Wire Line
 	8400 2900 8400 3000
 Connection ~ 9350 2650
-Connection ~ 9150 1250
 Wire Wire Line
 	8750 3050 8750 2950
 Connection ~ 8950 2950
@@ -1427,4 +1417,86 @@ Wire Wire Line
 Wire Wire Line
 	8750 2250 8750 2300
 Connection ~ 8750 2300
+Wire Wire Line
+	8950 2350 8950 2300
+Connection ~ 8950 2300
+Connection ~ 8950 2650
+Wire Wire Line
+	8950 1650 8150 1650
+Wire Wire Line
+	8950 1250 8750 1250
+$Comp
+L R R?
+U 1 1 55E5CB71
+P 4100 3950
+F 0 "R?" V 4185 3940 50  0000 C CNN
+F 1 "10k" V 4105 3950 50  0000 C CNN
+F 2 "" H 4100 3950 60  0000 C CNN
+F 3 "" H 4100 3950 60  0000 C CNN
+	1    4100 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 55E5CB77
+P 4300 4900
+F 0 "R?" V 4385 4890 50  0000 C CNN
+F 1 "10k" V 4305 4900 50  0000 C CNN
+F 2 "" H 4300 4900 60  0000 C CNN
+F 3 "" H 4300 4900 60  0000 C CNN
+	1    4300 4900
+	-1   0    0    1   
+$EndComp
+$Comp
+L R R?
+U 1 1 55E5CB7D
+P 3950 3950
+F 0 "R?" V 4035 3940 50  0000 C CNN
+F 1 "10k" V 3955 3950 50  0000 C CNN
+F 2 "" H 3950 3950 60  0000 C CNN
+F 3 "" H 3950 3950 60  0000 C CNN
+	1    3950 3950
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2750 4450 4100 4450
+Wire Wire Line
+	4300 4750 4300 4550
+Connection ~ 4300 4550
+$Comp
+L GND #PWR?
+U 1 1 55E5D205
+P 4300 5150
+F 0 "#PWR?" H 4300 5150 30  0001 C CNN
+F 1 "GND" H 4300 5080 30  0001 C CNN
+F 2 "" H 4300 5150 60  0000 C CNN
+F 3 "" H 4300 5150 60  0000 C CNN
+	1    4300 5150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4300 5100 4300 5050
+Wire Wire Line
+	4100 4450 4100 4100
+Wire Wire Line
+	3950 4100 3950 4350
+Connection ~ 3950 4350
+$Comp
+L +3.3V #PWR?
+U 1 1 55E5D535
+P 3950 3700
+F 0 "#PWR?" H 3950 3660 30  0001 C CNN
+F 1 "+3.3V" H 3950 3800 30  0000 C CNN
+F 2 "" H 3950 3700 60  0000 C CNN
+F 3 "" H 3950 3700 60  0000 C CNN
+	1    3950 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3950 3800 3950 3700
+Wire Wire Line
+	3950 3750 4100 3750
+Wire Wire Line
+	4100 3750 4100 3800
+Connection ~ 3950 3750
 $EndSCHEMATC
