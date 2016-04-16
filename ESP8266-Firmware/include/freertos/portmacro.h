@@ -70,7 +70,9 @@
 extern "C" {
 #endif
 
-#include "esp_common.h"
+#include "c_types.h"
+#include "espressif/esp_libc.h"
+#include "esp8266/ets_sys.h"
 
 #include    <xtensa/xtruntime.h>
 #include    "xtensa_rtos.h"
@@ -110,9 +112,10 @@ extern void PendSV(char req);
 //#define portYIELD()	vPortYield()
 #define portYIELD()	PendSV(1)
 
-
-//#define portEND_SWITCHING_ISR( xSwitchRequired ) \
-//	if(xSwitchRequired) PendSV(1)
+#if 0
+#define portEND_SWITCHING_ISR( xSwitchRequired ) \
+	if(xSwitchRequired) PendSV(1)
+#endif
 
 #define HDL_MAC_SIG_IN_LV1_ISR() PendSV(2)
 

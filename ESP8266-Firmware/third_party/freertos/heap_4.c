@@ -81,6 +81,8 @@ task.h is included from an application file. */
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#include "espressif/esp8266/ets_sys.h"
+
 #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 
 extern char _heap_start;
@@ -127,7 +129,7 @@ static void prvHeapInit( void );
 
 /* The size of the structure placed at the beginning of each allocated memory
 block must by correctly byte aligned. */
-static const size_t heapSTRUCT_SIZE	ICACHE_RODATA_ATTR = ( ( sizeof ( xBlockLink ) + ( portBYTE_ALIGNMENT - 1 ) ) & ~portBYTE_ALIGNMENT_MASK );
+static const size_t heapSTRUCT_SIZE  = ( ( sizeof ( xBlockLink ) + ( portBYTE_ALIGNMENT - 1 ) ) & ~portBYTE_ALIGNMENT_MASK );
 
 /* Ensure the pxEnd pointer will end up on the correct byte alignment. */
 //static const size_t xTotalHeapSize = ( ( size_t ) heapADJUSTED_HEAP_SIZE ) & ( ( size_t ) ~portBYTE_ALIGNMENT_MASK );
@@ -148,6 +150,21 @@ space. */
 static size_t xBlockAllocatedBit = 0;
 
 /*-----------------------------------------------------------*/
+
+size_t xPortWantedSizeAlign(size_t xWantedSize)
+{
+	xWantedSize += heapSTRUCT_SIZE;
+
+	/* Ensure that blocks are always aligned to the required number
+	of bytes. */
+	if( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) != 0x00 )
+	{
+		/* Byte alignment required. */
+		xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
+	}
+
+	return xWantedSize;
+}
 
 void *pvPortMalloc( size_t xWantedSize )
 {
@@ -176,15 +193,7 @@ void *pvReturn = NULL;
 			structure in addition to the requested amount of bytes. */
 			if( xWantedSize > 0 )
 			{
-				xWantedSize += heapSTRUCT_SIZE;
-
-				/* Ensure that blocks are always aligned to the required number 
-				of bytes. */
-				if( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) != 0x00 )
-				{
-					/* Byte alignment required. */
-					xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
-				}
+				xWantedSize = xPortWantedSizeAlign(xWantedSize);
 			}
 
 			if( ( xWantedSize > 0 ) && ( xWantedSize <= xFreeBytesRemaining ) )
@@ -317,7 +326,7 @@ void *pvPortCalloc(size_t count, size_t size)
   p = pvPortMalloc(count * size);
   if (p) {
     /* zero the memory */
-    ets_memset(p, 0, count * size);
+    memset(p, 0, count * size);
   }
   return p;
 }
@@ -337,12 +346,19 @@ void *zalloc(size_t nbytes) __attribute__((alias("pvPortZalloc")));
 
 void *pvPortRealloc(void *mem, size_t newsize)
 {
+    if (newsize == 0) {
+        vPortFree(mem);
+        return NULL;
+    }
+
      void *p;  	
      p = pvPortMalloc(newsize);
      if (p) {
        /* zero the memory */
-       ets_memcpy(p, mem, newsize);
-       vPortFree(mem);
+       if (mem != NULL) {
+		   memcpy(p, mem, newsize);
+		   vPortFree(mem);
+       }
      }
      return p;     
 }

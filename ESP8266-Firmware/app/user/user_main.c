@@ -32,22 +32,22 @@ void uartInterfaceTask(void *pvParameters) {
 	t = 0;
 	uart_rx_init();
 	printf("UART READY TO READ\n");
-	
-	
+
+
 	//DEBUG
 	struct station_config *config = (struct station_config *)malloc(sizeof(struct station_config));
 	if(!config) printf("Unable to create config!\n");
 	else {
 		wifi_station_disconnect();
-		sprintf(config->ssid, "linksys@Pogodna8");
+		sprintf(config->ssid, "livebox@Pogodna8");
 		sprintf(config->password, "Pogodna8");
 		wifi_station_set_config(config);
 		wifi_station_connect();
 		free(config);
 	}
 	//DEBUG
-	
-	
+
+
 	while(1) {
 		while(1) {
 			char c = uart_getchar();
@@ -86,22 +86,19 @@ void testtask(void* p) {
 *******************************************************************************/
 void user_init(void)
 {
+    Delay(400);
 	UART_SetBaudrate(0,115200);
 	wifi_set_opmode(STATION_MODE);
-	
+    Delay(500);
+	printf ("Heap size: %d\n",xPortGetFreeHeapSize( ));
 	clientInit();
-	
 	VS1053_HW_init();
-	VS1053_Start();
-	VS1053_SetVolume(70);
+//	TCP_WND = 2 * TCP_MSS;
 
-	VS1053_SPI_SpeedUp();
-	
 	xTaskCreate(testtask, "t0", 256, NULL, 1, NULL); // DEBUG/TEST
-
-	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 1, NULL);
-	xTaskCreate(serverTask, "t2", 256, NULL, 1, NULL);
-	xTaskCreate(clientTask, "t3", 512, NULL, 2, NULL);
-	xTaskCreate(vsTask, "t4", 512, NULL, 2, NULL);
+	xTaskCreate(uartInterfaceTask, "t1", 256, NULL, 2, NULL);
+	xTaskCreate(serverTask, "t2", 376, NULL, 3, NULL);
+	xTaskCreate(clientTask, "t3", 512, NULL, 4, NULL);
+	xTaskCreate(vsTask, "t4", 376, NULL, 4, NULL);
 }
 

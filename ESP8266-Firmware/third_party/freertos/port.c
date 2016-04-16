@@ -69,11 +69,13 @@
 /* Scheduler includes. */
 #include <xtensa/config/core.h>
 #include <xtensa/tie/xt_interrupt.h>
+#include <xtensa/tie/xt_timer.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/xtensa_rtos.h"
 
+#define PORT_ASSERT(x) do { if (!(x)) {ets_printf("%s %u\n", "rtos_port", __LINE__); while(1){}; }} while (0)
 
 extern char NMIIrqIsOn;
 static char HdlMacSig = 0;
@@ -239,7 +241,7 @@ xPortStartScheduler( void )
     /* Initialize system tick timer interrupt and schedule the first tick. */
     _xt_tick_timer_init();
 
-    os_printf("xPortStartScheduler\n");
+//    os_printf("xPortStartScheduler\n");
     vTaskSwitchContext();
 
 //    REG_SET_BIT(0x3ff2006c, BIT(4));
@@ -287,26 +289,47 @@ void vPortExitCritical( void )
 {
 	if(NMIIrqIsOn == 0)
 	{
-		uxCriticalNesting--;
-		if( uxCriticalNesting == 0 )
-		{
-			//if( (WDEV_NOW() - tick_lock) > 2000000 )
-				//printf("INTR LOCK TOO LONG:%d\n",(WDEV_NOW() - tick_lock));
-			if( ClosedLv1Isr ==1 )
+		if(uxCriticalNesting > 0)
+		{	
+			uxCriticalNesting--;
+			if( uxCriticalNesting == 0 )
 			{
-				ClosedLv1Isr = 0;
-				portENABLE_INTERRUPTS();
+				if( ClosedLv1Isr ==1 )
+				{
+					ClosedLv1Isr = 0;
+					portENABLE_INTERRUPTS();
+				}
 			}
+		}		
+		else
+		{
+			ets_printf("E:C:%d\n",uxCriticalNesting);
+			PORT_ASSERT((uxCriticalNesting>0));
 		}
 	}
 }
 
+void ShowCritical(void)
+{
+	ets_printf("ShowCritical:%d\n",uxCriticalNesting);
+    ets_delay_us(50000);
+}
+
+
+void vPortETSIntrLock( void )
+{
+	ETS_INTR_LOCK();
+}
+
+void vPortETSIntrUnlock( void )
+{
+	ETS_INTR_UNLOCK();
+}
 
 void 
 PortDisableInt_NoNest( void )
 {
 //	printf("ERRRRRRR\n");
-
 	if(NMIIrqIsOn == 0)	
 	{
 		if( ClosedLv1Isr !=1 )
@@ -333,6 +356,11 @@ PortEnableInt_NoNest( void )
 }
 
 /*-----------------------------------------------------------*/
+void ICACHE_FLASH_ATTR ResetCcountVal( unsigned int cnt_val )
+{
+//  XT_WSR_CCOUNT(cnt_val);
+    asm volatile("wsr a2, ccount");
+}
 
 _xt_isr_entry isr[16];
 char _xt_isr_status = 0;

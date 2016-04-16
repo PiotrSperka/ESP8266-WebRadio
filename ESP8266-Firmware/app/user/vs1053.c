@@ -41,10 +41,11 @@ ICACHE_FLASH_ATTR void VS1053_HW_init(){
 
 ICACHE_FLASH_ATTR void VS1053_SPI_SpeedUp()
 {
-	spi_clock(HSPI, 4, 2); //10MHz
+	spi_clock(HSPI, 4, 3); //10MHz
 }
 
 ICACHE_FLASH_ATTR void VS1053_SPI_SpeedDown() {
+//	spi_clock(HSPI, 4, 10); //2MHz
 	spi_clock(HSPI, 4, 10); //2MHz
 }
 
@@ -135,6 +136,7 @@ ICACHE_FLASH_ATTR void VS1053_WriteRegister(uint8_t addressbyte, uint8_t highbyt
 }
 
 ICACHE_FLASH_ATTR uint16_t VS1053_ReadRegister(uint8_t addressbyte){
+//    while(!spi_take_semaphore());
 	spi_take_semaphore();
 	VS1053_SPI_SpeedDown();
 	uint16_t result;
@@ -154,7 +156,7 @@ ICACHE_FLASH_ATTR uint16_t VS1053_ReadRegister(uint8_t addressbyte){
 
 ICACHE_FLASH_ATTR void VS1053_ResetChip(){
 	ControlReset(SET);
-	Delay(1000);
+	Delay(500);
 	SPIPutChar(0xff);
 	SCI_ChipSelect(RESET);
 	SDI_ChipSelect(RESET);
@@ -195,16 +197,26 @@ void VS1053_PluginLoad()
 */
 ICACHE_FLASH_ATTR void VS1053_Start(){
 	VS1053_ResetChip();
+	Delay(100);
+// these 4 lines makes board to run on mp3 mode, no soldering required anymore
+	VS1053_WriteRegister(SPI_WRAMADDR, 0xc0,0x17); //address of GPIO_DDR is 0xC017
+	VS1053_WriteRegister(SPI_WRAM, 0x00,0x03); //GPIO_DDR=3
+	VS1053_WriteRegister(SPI_WRAMADDR, 0xc0,0x19); //address of GPIO_ODATA is 0xC019
+	VS1053_WriteRegister(SPI_WRAM, 0x00,0x00); //GPIO_ODATA=0
+	Delay(100);
 	while(VS1053_checkDREQ() == 0);
-
 	VS1053_WriteRegister(SPI_CLOCKF,0x60,0x00);
-	VS1053_WriteRegister(0x00, 0x08, 0x02); //0x0842 -> STREAM MODE ON
+//	VS1053_WriteRegister(SPI_MODE, (SM_LINE1 | SM_SDINEW)>>8 , SM_RESET); // soft reset
+	VS1053_SoftwareReset();
+
+	VS1053_WriteRegister(SPI_MODE, SM_SDINEW>>8, SM_LAYER12); //mode 
 	while(VS1053_checkDREQ() == 0);
+	VS1053_regtest();
 }
 
 ICACHE_FLASH_ATTR int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
 	if(quantity < 1) return 0;
-	while(!spi_take_semaphore());
+	spi_take_semaphore();
 	while(VS1053_checkDREQ() == 0);
 	SDI_ChipSelect(SET);
 	int o = 0;
@@ -228,7 +240,8 @@ ICACHE_FLASH_ATTR int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
 }
 
 ICACHE_FLASH_ATTR void VS1053_SoftwareReset(){
-	VS1053_WriteRegister(SPI_MODE,0x00,0x04);
+	VS1053_WriteRegister(SPI_MODE, SM_SDINEW>>8,SM_RESET);
+	VS1053_WriteRegister(SPI_MODE, SM_SDINEW>>8, SM_LAYER12); //mode 
 }
 
 ICACHE_FLASH_ATTR uint8_t VS1053_GetVolume(){

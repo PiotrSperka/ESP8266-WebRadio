@@ -1,6 +1,6 @@
 #include "c_types.h"
 
-#define ICY_HEADERS_COUNT 7
+#define ICY_HEADERS_COUNT 9
 
 struct icyHeader
 {
@@ -15,13 +15,15 @@ struct icyHeader
 			char* url;
 			char* genre;
 			char* bitrate;
+			char* description;
+			char* audioinfo;
 			char* metadata;
 			int metaint;
 		} single;
 	} members;
 };
 
-enum clientStatus { C_HEADER, C_METADATA, C_DATA };
+enum clientStatus { C_HEADER, C_HEADER1,C_METADATA, C_DATA, C_PLAYLIST, C_PLAYLIST1 };
 
 void clientInit();
 uint8_t clientIsConnected();
@@ -33,5 +35,6 @@ struct icyHeader* clientGetHeader();
 void clientConnect();
 void clientDisconnect();
 void clientTask(void *pvParams);
-
+bool clientTakesHeader();
+bool clientGivesHeader();
 void vsTask(void *pvParams) ;

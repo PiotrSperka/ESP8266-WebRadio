@@ -1,14 +1,19 @@
 <HTML>
 	<head>
-		<meta charset='utf-8'>
+		<meta charset='ISO-8859-1'>
+		<meta name="viewport" content="width=device-width, minimum-scale=0.25"/>
 		<link rel="stylesheet" href="style.css" type="text/css"/>
 		<title>Webradio administration panel</title>
+	    <style type="text/css">
+        </style>
 	</head>
 	<body>
+	<script src="script.js"></script>
 		<div id="MAIN">
 			<div id="HEAD">
-				<img src="logo.png"><p>Webradio administration panel</p>
-			</div>
+				</span><img src="logo.png">
+				<p>Webradio administration panel</p>
+		  </div>
 			<div id="CONTENT">
 				<ul class="tabs">
 				<li>
@@ -17,16 +22,23 @@
 				<div id="tab-content1" class="tab-content">
 				 <h1>Now playing</h1>
 					<p><span class="bold">Name: </span>#ICY-NAME#</p>
+					<p><span class="bold">Title: </span><span id="meta_title">No title provided</span></p>
+					<p><span class="bold">Description: </span>#ICY-DESCRIPTION#</p>
 					<p><span class="bold">Notice: </span>#ICY-NOTICE1# #ICY-NOTICE2#</p>
 					<p><span class="bold">Genre: </span>#ICY-GENRE#</p>
 					<p><span class="bold">URL: </span><a href="#ICY-URL#" target="_blank">#ICY-URL#</a></p>
 					<p><span class="bold">Bitrate: </span>#ICY-BITRATE# kB/s</p>
-					<h1>Select station</h1>
+					<h1>stations</h1>
 					<form>
-						<p>Select station:<br>
-						<select id="stationsSelect">
+						<p><span class="bold">Select station:</span><br>
+						<select id="stationsSelect" 
+						style=" font-weight:bold; background-color:#C1DFFF;">
 						</select>
-						<input type="button" value="Play" onClick="playStation()">
+						<input type="button" value="Play"  onClick="playStation()">
+						<input type="button" value="Stop"  onClick="stopStation()">
+                        </p
+						><p><span class="bold">Volume:</span><br/> 
+						<input type="range" id="vol1_range" name="vol1" style=" font-weight:bold; background-color:C1DFFF;" onChange="onRangeVolChange(this.value)" min=0 max=254 value=#SOUND-VOL#><span id="vol1_span"></span><br>
 						</p>
 					</form>
 					<h1>Instant play</h1>
@@ -35,14 +47,14 @@
 						<span class="bold">URL: </span><input type="text" id="instant_url" name="url"><br>
 						<span class="bold">Port: </span><input type="text" id="instant_port" name="port" value="80"><br>
 						<span class="bold">Path: </span><input type="text" id="instant_path" name="path" value="/"><br>
-						<input type="button" value="Play" onClick="instantPlay()">
+						<input type="button" value="Play" style=" font-weight:bold; background-color:C1DFFF;"  onClick="instantPlay()">
 						</p>
 					</form>
 				</div>
 				</li>
 				<li>
 					<input type="radio" name="tabs" id="tab2" />
-					<label for="tab2">Manage stations</label>
+					<label for="tab2">stations</label>
 					<div id="tab-content2" class="tab-content">
 						<div id="editStationDiv" style="display: none;">
 							<h1>Edit station</h1>
@@ -53,7 +65,7 @@
 									<span class="bold">URL: </span><input type="text" id="add_url" name="url"><br>
 									<span class="bold">Port: </span><input type="text" id="add_port" name="port" value="80"><br>
 									<span class="bold">Path: </span><input type="text" id="add_path" name="path" value="/"><br>
-									<input type="button" value="Save" onClick="saveStation()">
+									<input type="button" value="Save" style="font-weight:bold; background-color:C1DFFF;" onClick="saveStation()">
 								</p>
 							</form>
 						</div>
@@ -75,24 +87,21 @@
 							<a class="page" href="#" onClick="loadStations(10);">10</a>
 							<a class="page" href="#" onClick="loadStations(11);">11</a>
 							<a class="page" href="#" onClick="loadStations(12);">12</a>
-							<a class="page" href="#" onClick="loadStations(13);">13</a>
-							<a class="page" href="#" onClick="loadStations(14);">14</a>
-							<a class="page" href="#" onClick="loadStations(15);">15</a>
-							<a class="page" href="#" onClick="loadStations(16);">16</a>
 						</div>
 					</div>
 				</li>
 				<li>
 					<input type="radio" name="tabs" id="tab3" />
-					<label for="tab3">Sound settings</label>
+					<label for="tab3">Settings</label>
 					<div id="tab-content3" class="tab-content">
 					<h1>Sound settings</h1>
 					<form>
 						<p>
-						<span class="bold">Treble control: </span><input type="range" id="treble_range" name="treble" onChange="onRangeChange('treble_range', 'treble_span', 1.5, false)" min=0 max=8 value=#SOUND-TREBLE#><span id="treble_span"></span><br>
-						<span class="bold">Bass enhance: </span><input type="range"  id="bass_range" name="bass" onChange="onRangeChange('bass_range', 'bass_span', 1, false)" min=0 max=15 value=#SOUND-BASS#><span id="bass_span"></span><br>
-						<span class="bold">Volume: </span><input type="range" id="vol_range" name="vol" onChange="onRangeChange('vol_range', 'vol_span', -0.5, true)" min=0 max=254 value=#SOUND-VOL#><span id="vol_span"></span><br>
-						<input type="button" onClick="saveSoundSettings()" value="Save">
+						<span class="bold"; style="width:150px;display:inline-block;">Treble control: </span><input type="range" id="treble_range" name="treble" style=" font-weight:bold; background-color:C1DFFF;" onChange="onRangeChange('treble_range', 'treble_span', 1.5, false)" min=0 max=8 value=#SOUND-TREBLE#><span id="treble_span"></span><br>
+						<span class="bold"; style="width: 150px;display:inline-block;">  Bass enhance: </span><input type="range"  id="bass_range" name="bass" style=" font-weight:bold; background-color:C1DFFF;" onChange="onRangeChange('bass_range', 'bass_span', 1, false)" min=0 max=15 value=#SOUND-BASS#><span id="bass_span"></span><br>
+						<input type="button"  onClick="saveSoundSettings()" value="Save">
+						<br/><br/>
+						<span class="bold"; style="width:150px;display:inline-block;">        Volume: </span><input type="range" id="vol_range" name="vol" style=" font-weight:bold; background-color:C1DFFF;" onChange="onRangeVolChange(this.value)" min=0 max=254 value=#SOUND-VOL#><span id="vol_span"></span><br>
 						</p>
 					</form>
 					</div>
@@ -100,6 +109,6 @@
 				</ul>
 			</div>
 		</div>
-		<script src="script.js"></script>
+		
 	</body>
 </HTML>

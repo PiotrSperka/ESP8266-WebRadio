@@ -162,6 +162,7 @@ else
 endif
 
 CSRCS ?= $(wildcard *.c)
+CPPSRCS ?= $(wildcard *.cpp)
 ASRCs ?= $(wildcard *.s)
 ASRCS ?= $(wildcard *.S)
 SUBDIRS ?= $(patsubst %/,%,$(dir $(wildcard */Makefile)))
@@ -170,10 +171,12 @@ ODIR := .output
 OBJODIR := $(ODIR)/$(TARGET)/$(FLAVOR)/obj
 
 OBJS := $(CSRCS:%.c=$(OBJODIR)/%.o) \
+        $(CPPSRCS:%.cpp=$(OBJODIR)/%.o) \
         $(ASRCs:%.s=$(OBJODIR)/%.o) \
         $(ASRCS:%.S=$(OBJODIR)/%.o)
 
 DEPS := $(CSRCS:%.c=$(OBJODIR)/%.d) \
+        $(CPPSRCS:%.cpp=$(OBJODIR)/%.d) \
         $(ASRCs:%.s=$(OBJODIR)/%.d) \
         $(ASRCS:%.S=$(OBJODIR)/%.d)
 
@@ -233,6 +236,7 @@ $$(IMAGEODIR)/$(1).out: $$(OBJS) $$(DEP_OBJS_$(1)) $$(DEP_LIBS_$(1)) $$(DEPENDS_
 endef
 
 $(BINODIR)/%.bin: $(IMAGEODIR)/%.out
+	@mkdir -p ../bin
 	@mkdir -p $(BINODIR)
 	
 ifeq ($(APP), 0)
@@ -240,6 +244,7 @@ ifeq ($(APP), 0)
 	@$(OBJDUMP) -x -s $< > ../bin/eagle.dump
 	@$(OBJDUMP) -S $< > ../bin/eagle.S
 else
+	@mkdir -p ../bin/upgrade
 	@$(RM) -r ../bin/upgrade/$(BIN_NAME).S ../bin/upgrade/$(BIN_NAME).dump
 	@$(OBJDUMP) -x -s $< > ../bin/upgrade/$(BIN_NAME).dump
 	@$(OBJDUMP) -S $< > ../bin/upgrade/$(BIN_NAME).S
@@ -252,17 +257,23 @@ endif
 
 	@echo ""
 	@echo "!!!"
+	@echo "SDK_PATH: .."
 	
 ifeq ($(app), 0)
 	@python ../tools/gen_appbin.py $< 0 $(mode) $(freqdiv) $(size_map)
 	@mv eagle.app.flash.bin ../bin/eagle.flash.bin
 	@mv eagle.app.v6.irom0text.bin ../bin/eagle.irom0text.bin
 	@rm eagle.app.v6.*
+	@echo "BIN_PATH: ../bin"
+	@echo ""
 	@echo "No boot needed."
-	@echo "Generate eagle.flash.bin and eagle.irom0text.bin successully in folder bin."
+	@echo "Generate eagle.flash.bin and eagle.irom0text.bin successully in BIN_PATH"
 	@echo "eagle.flash.bin-------->0x00000"
-	@echo "eagle.irom0text.bin---->0x40000"
+	@echo "eagle.irom0text.bin---->0x20000"
 else
+	@echo "BIN_PATH: ../bin/upgrade"
+	@echo ""
+
     ifneq ($(boot), new)
 		@python ../tools/gen_appbin.py $< 1 $(mode) $(freqdiv) $(size_map)
 		@echo "Support boot_v1.1 and +"
@@ -282,7 +293,7 @@ else
 
 	@mv eagle.app.flash.bin ../bin/upgrade/$(BIN_NAME).bin
 	@rm eagle.app.v6.*
-	@echo "Generate $(BIN_NAME).bin successully in folder bin/upgrade."
+	@echo "Generate $(BIN_NAME).bin successully in BIN_PATH"
 	@echo "boot.bin------------>0x00000"
 	@echo "$(BIN_NAME).bin--->$(addr)"
 endif
@@ -327,6 +338,18 @@ $(OBJODIR)/%.d: %.c
 	@echo DEPEND: $(CC) -M $(CFLAGS) $<
 	@set -e; rm -f $@; \
 	$(CC) -M $(CFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\.o\)[ :]*,$(OBJODIR)/\1 $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+	
+$(OBJODIR)/%.o: %.cpp
+	@mkdir -p $(OBJODIR);
+	$(CPP) $(if $(findstring $<,$(DSRCS)),$(DFLAGS),$(CFLAGS)) $(COPTS_$(*F)) -o $@ -c $<
+
+$(OBJODIR)/%.d: %.cpp
+	@mkdir -p $(OBJODIR);
+	@echo DEPEND: $(CPP) -M $(CFLAGS) $<
+	@set -e; rm -f $@; \
+	$(CPP) -M $(CFLAGS) $< > $@.$$$$; \
 	sed 's,\($*\.o\)[ :]*,$(OBJODIR)/\1 $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
@@ -375,7 +398,13 @@ $(foreach image,$(GEN_IMAGES),$(eval $(call MakeImage,$(basename $(image)))))
 #
 
 INCLUDES := $(INCLUDES) -I $(PDIR)include -I $(PDIR)extra_include
-INCLUDES += -I $(PDIR)include/lwip -I $(PDIR)include/lwip/ipv4 -I $(PDIR)include/lwip/ipv6
 INCLUDES += -I $(PDIR)include/espressif
+INCLUDES += -I $(PDIR)include/lwip
+INCLUDES += -I $(PDIR)include/lwip/ipv4
+INCLUDES += -I $(PDIR)include/lwip/ipv6
+INCLUDES += -I $(PDIR)include/nopoll
+INCLUDES += -I $(PDIR)include/spiffs
+INCLUDES += -I $(PDIR)include/ssl
+INCLUDES += -I $(PDIR)include/json
 PDIR := ../$(PDIR)
 sinclude $(PDIR)Makefile

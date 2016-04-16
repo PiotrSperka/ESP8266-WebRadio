@@ -30,13 +30,14 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:UI-Bridge-cache
 EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date "30 aug 2015"
+Date "16 apr 2016"
 Rev ""
 Comp ""
 Comment1 ""
@@ -181,7 +182,7 @@ L CRYSTAL X?
 U 1 1 55E35905
 P 3550 3850
 F 0 "X?" H 3550 3975 50  0000 C CNN
-F 1 "CRYSTAL" H 3550 3725 40  0000 C CNN
+F 1 "11.0592MHz" H 3550 3725 40  0000 C CNN
 F 2 "" H 3550 3850 60  0000 C CNN
 F 3 "" H 3550 3850 60  0000 C CNN
 	1    3550 3850
@@ -427,4 +428,6 @@ Wire Wire Line
 	6450 5100 6450 5150
 Text Label 7100 5100 0    60   ~ 0
 RESET
+Text Notes 6100 2300 0    60   ~ 0
+DODAĆ LCD z PWM, PRZYCISKI, ENCODER Z PRZYCISKIEM, POWER(?), PILOT(?)
 $EndSCHEMATC

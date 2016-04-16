@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, Cameron Rich
+ * Copyright (c) 2007-2015, Cameron Rich
  * 
  * All rights reserved.
  * 
@@ -59,22 +59,43 @@ struct tm
 };
 
 
-#define SIG_OID_PREFIX_SIZE 8
-#define SIG_IIS6_OID_SIZE   5
-#define SIG_SUBJECT_ALT_NAME_SIZE 3
-
-/* Must be an RSA algorithm with either SHA1 or MD5 for verifying to work */
-static const uint8_t sig_oid_prefix[SIG_OID_PREFIX_SIZE] = 
+ /*1.2.840.113549.1.1 OID prefix - handle the following */
+/* md5WithRSAEncryption(4) */
+/* sha1WithRSAEncryption(5) */
+/* sha256WithRSAEncryption (11) */
+/* sha384WithRSAEncryption (12) */
+/* sha512WithRSAEncryption (13) */
+static const uint8_t sig_oid_prefix[] = 
 {
     0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01
 };
 
-static const uint8_t sig_sha1WithRSAEncrypt[SIG_IIS6_OID_SIZE] =
+/* 1.3.14.3.2.29 SHA1 with RSA signature */
+static const uint8_t sig_sha1WithRSAEncrypt[] =
 {
     0x2b, 0x0e, 0x03, 0x02, 0x1d
 };
 
-static const uint8_t sig_subject_alt_name[SIG_SUBJECT_ALT_NAME_SIZE] =
+/* 2.16.840.1.101.3.4.2.1 SHA-256 */
+static const uint8_t sig_sha256[] =
+{
+    0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01
+};
+
+
+/* 2.16.840.1.101.3.4.2.2 SHA-384 */
+static const uint8_t sig_sha384[] =
+{
+    0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x02
+};
+
+/* 2.16.840.1.101.3.4.2.3 SHA-512 */
+static const uint8_t sig_sha512[] =
+{
+    0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03
+};
+
+static const uint8_t sig_subject_alt_name[] =
 {
     0x55, 0x1d, 0x11
 };
@@ -82,9 +103,10 @@ static const uint8_t sig_subject_alt_name[SIG_SUBJECT_ALT_NAME_SIZE] =
 /* CN, O, OU */
 static const uint8_t g_dn_types[] = { 3, 10, 11 };
 
-int ICACHE_FLASH_ATTR get_asn1_length(const uint8_t *buf, int *offset)
+uint32_t ICACHE_FLASH_ATTR get_asn1_length(const uint8_t *buf, int *offset)
 {
-    int len, i;
+    int i;
+    uint32_t len;
 
     if (!(buf[*offset] & 0x80)) /* short form */
     {
@@ -93,6 +115,9 @@ int ICACHE_FLASH_ATTR get_asn1_length(const uint8_t *buf, int *offset)
     else  /* long form */
     {
         int length_bytes = buf[(*offset)++]&0x7f;
+        if (length_bytes > 4)   /* limit number of bytes */
+            return 0;
+
         len = 0;
         for (i = 0; i < length_bytes; i++)
         {
@@ -149,7 +174,7 @@ int ICACHE_FLASH_ATTR asn1_get_int(const uint8_t *buf, int *offset, uint8_t **ob
         (*offset)++;
     }
 
-    *object = (uint8_t *)malloc(len);
+    *object = (uint8_t *)SSL_MALLOC(len);
     memcpy(*object, &buf[*offset], len);
     *offset += len;
 
@@ -203,20 +228,46 @@ int ICACHE_FLASH_ATTR asn1_get_private_key(const uint8_t *buf, int len, RSA_CTX 
             modulus, mod_len, pub_exp, pub_len, priv_exp, priv_len,
             p, p_len, q, p_len, dP, dP_len, dQ, dQ_len, qInv, qInv_len);
 
-    free(p);
-    free(q);
-    free(dP);
-    free(dQ);
-    free(qInv);
+    SSL_FREE(p);
+    SSL_FREE(q);
+    SSL_FREE(dP);
+    SSL_FREE(dQ);
+    SSL_FREE(qInv);
 #else
     RSA_priv_key_new(rsa_ctx, 
             modulus, mod_len, pub_exp, pub_len, priv_exp, priv_len);
 #endif
 
-    free(modulus);
-    free(priv_exp);
-    free(pub_exp);
+    SSL_FREE(modulus);
+    SSL_FREE(priv_exp);
+    SSL_FREE(pub_exp);
     return X509_OK;
+}
+
+static time_t ICACHE_FLASH_ATTR mktime(struct tm *ptm)
+{
+	uint16 year = 0,mon = 0,day = 0,hour = 0,min = 0,sec = 0;
+	if (ptm == NULL)
+		return 0;
+
+	year = ptm->tm_year;
+	mon = ptm->tm_mon;
+	day = ptm->tm_mday;
+	hour = ptm->tm_hour;
+	min = ptm->tm_min;
+	sec = ptm->tm_sec;
+
+	if (0 >= (int)(mon -= 2)){/*1..12 ->11,12,1..10*/
+		mon += 12;			/*Puts Feb last since it has leap day*/
+		year -= 1;
+	}
+
+	return (((
+			 (unsigned long)(year/4 - year/100 + year/400 +367*mon/12 +day) +
+			 year*365 -719499
+			)*24 + hour/*now have hours*/
+		)*60 + min/*now have minutes*/
+	)*60 + sec;/*finally seconds*/
 }
 
 /**
@@ -224,32 +275,65 @@ int ICACHE_FLASH_ATTR asn1_get_private_key(const uint8_t *buf, int len, RSA_CTX 
  */
 static int ICACHE_FLASH_ATTR asn1_get_utc_time(const uint8_t *buf, int *offset, time_t *t)
 {
-    int ret = X509_NOT_OK, len, t_offset;
+    int ret = X509_NOT_OK, len, t_offset, abs_year;
     struct tm tm;
 
-    if (buf[(*offset)++] != ASN1_UTC_TIME)
-        goto end_utc_time;
+    /* see http://tools.ietf.org/html/rfc5280#section-4.1.2.5 */
+    if (buf[*offset] == ASN1_UTC_TIME)
+    {
+        (*offset)++;
 
-    len = get_asn1_length(buf, offset);
-    t_offset = *offset;
+        len = get_asn1_length(buf, offset);
+        t_offset = *offset;
 
     memset(&tm, 0, sizeof(struct tm));
     tm.tm_year = (buf[t_offset] - '0')*10 + (buf[t_offset+1] - '0');
 
-    if (tm.tm_year <= 50)    /* 1951-2050 thing */
+        if (tm.tm_year <= 50)    /* 1951-2050 thing */
+        {
+            tm.tm_year += 100;
+        }
+
+        tm.tm_mon = (buf[t_offset+2] - '0')*10 + (buf[t_offset+3] - '0') - 1;
+        tm.tm_mday = (buf[t_offset+4] - '0')*10 + (buf[t_offset+5] - '0');
+		// LiuH : add mktime interface in function at 2015.06.11
+        *t = mktime(&tm);
+        *offset += len;
+        ret = X509_OK;
+    }
+    else if (buf[*offset] == ASN1_GENERALIZED_TIME)
     {
-        tm.tm_year += 100;
+        (*offset)++;
+
+        len = get_asn1_length(buf, offset);
+        t_offset = *offset;
+
+        memset(&tm, 0, sizeof(struct tm));
+        abs_year = ((buf[t_offset] - '0')*1000 +
+                (buf[t_offset+1] - '0')*100 + (buf[t_offset+2] - '0')*10 +
+                (buf[t_offset+3] - '0'));
+
+        if (abs_year <= 1901)
+        {
+          tm.tm_year = 1;
+          tm.tm_mon = 0;
+          tm.tm_mday = 1;
+        }
+        else
+        {
+          tm.tm_year = abs_year - 1900;
+          tm.tm_mon = (buf[t_offset+4] - '0')*10 + (buf[t_offset+5] - '0') - 1;
+          tm.tm_mday = (buf[t_offset+6] - '0')*10 + (buf[t_offset+7] - '0');
+          tm.tm_hour = (buf[t_offset+8] - '0')*10 + (buf[t_offset+9] - '0');
+          tm.tm_min = (buf[t_offset+10] - '0')*10 + (buf[t_offset+11] - '0');
+          tm.tm_sec = (buf[t_offset+12] - '0')*10 + (buf[t_offset+13] - '0');
+          *t = mktime(&tm);
+        }
+
+        *offset += len;
+        ret = X509_OK;
     }
 
-    tm.tm_mon = (buf[t_offset+2] - '0')*10 + (buf[t_offset+3] - '0') - 1;
-    tm.tm_mday = (buf[t_offset+4] - '0')*10 + (buf[t_offset+5] - '0');
-
-// wujg : pass compile first
-//    *t = mktime(&tm);
-    *offset += len;
-    ret = X509_OK;
-
-end_utc_time:
     return ret;
 }
 
@@ -325,7 +409,7 @@ static int ICACHE_FLASH_ATTR asn1_get_printable_str(const uint8_t *buf, int *off
     if (asn1_type == ASN1_UNICODE_STR)
     {
         int i;
-        *str = (char *)malloc(len/2+1);     /* allow for null */
+        *str = (char *)SSL_MALLOC(len/2+1);     /* allow for null */
 
         for (i = 0; i < len; i += 2)
             (*str)[i/2] = buf[*offset + i + 1];
@@ -334,7 +418,7 @@ static int ICACHE_FLASH_ATTR asn1_get_printable_str(const uint8_t *buf, int *off
     }
     else
     {
-        *str = (char *)malloc(len+1);       /* allow for null */
+        *str = (char *)SSL_MALLOC(len+1);       /* allow for null */
         memcpy(*str, &buf[*offset], len);
         (*str)[len] = 0;                    /* null terminate */
     }
@@ -369,7 +453,7 @@ int ICACHE_FLASH_ATTR asn1_name(const uint8_t *cert, int *offset, char *dn[])
 
         if (asn1_get_printable_str(cert, offset, &tmp) < 0)
         {
-            free(tmp);
+        	SSL_FREE(tmp);
             goto end_name;
         }
 
@@ -389,7 +473,7 @@ int ICACHE_FLASH_ATTR asn1_name(const uint8_t *cert, int *offset, char *dn[])
 
         if (found == 0) /* not found so get rid of it */
         {
-            free(tmp);
+        	SSL_FREE(tmp);
         }
     }
 
@@ -421,8 +505,8 @@ int ICACHE_FLASH_ATTR asn1_public_key(const uint8_t *cert, int *offset, X509_CTX
 
     RSA_pub_key_new(&x509_ctx->rsa_ctx, modulus, mod_len, pub_exp, pub_len);
 
-    free(modulus);
-    free(pub_exp);
+    SSL_FREE(modulus);
+    SSL_FREE(pub_exp);
     ret = X509_OK;
 
 end_pub_key:
@@ -442,7 +526,7 @@ int ICACHE_FLASH_ATTR asn1_signature(const uint8_t *cert, int *offset, X509_CTX 
 
     x509_ctx->sig_len = get_asn1_length(cert, offset)-1;
     (*offset)++;            /* ignore bit string padding bits */
-    x509_ctx->signature = (uint8_t *)malloc(x509_ctx->sig_len);
+    x509_ctx->signature = (uint8_t *)SSL_MALLOC(x509_ctx->sig_len);
     memcpy(x509_ctx->signature, &cert[*offset], x509_ctx->sig_len);
     *offset += x509_ctx->sig_len;
     ret = X509_OK;
@@ -483,7 +567,7 @@ void ICACHE_FLASH_ATTR remove_ca_certs(CA_CERT_CTX *ca_cert_ctx)
         ca_cert_ctx->cert[i++] = NULL;
     }
 
-    free(ca_cert_ctx);
+    SSL_FREE(ca_cert_ctx);
 }
 
 /*
@@ -496,6 +580,9 @@ int ICACHE_FLASH_ATTR asn1_compare_dn(char * const dn1[], char * const dn2[])
 
     for (i = 0; i < X509_NUM_DN_TYPES; i++)
     {
+#if CONFIG_SSL_DISPLAY_MODE
+    	os_printf("distinguished names: [%s], [%s]\n", dn1[i], dn2[i]);
+#endif
         if (asn1_compare_dn_comp(dn1[i], dn2[i]))
             return 1;
     }
@@ -540,7 +627,7 @@ int ICACHE_FLASH_ATTR asn1_find_oid(const uint8_t* cert, int* offset,
 int ICACHE_FLASH_ATTR asn1_find_subjectaltname(const uint8_t* cert, int offset)
 {
     if (asn1_find_oid(cert, &offset, sig_subject_alt_name, 
-                                SIG_SUBJECT_ALT_NAME_SIZE))
+                                sizeof(sig_subject_alt_name)))
     {
         return offset;
     }
@@ -564,17 +651,36 @@ int ICACHE_FLASH_ATTR asn1_signature_type(const uint8_t *cert,
 
     len = get_asn1_length(cert, offset);
 
-    if (len == 5 && memcmp(sig_sha1WithRSAEncrypt, &cert[*offset],
-                                    SIG_IIS6_OID_SIZE) == 0)
+    if (len == sizeof(sig_sha1WithRSAEncrypt) && 
+            memcmp(sig_sha1WithRSAEncrypt, &cert[*offset], 
+                                    sizeof(sig_sha1WithRSAEncrypt)) == 0)
     {
         x509_ctx->sig_type = SIG_TYPE_SHA1;
     }
+    else if (len == sizeof(sig_sha256) && 
+            memcmp(sig_sha256, &cert[*offset], 
+                                    sizeof(sig_sha256)) == 0)
+    {
+        x509_ctx->sig_type = SIG_TYPE_SHA256;
+    }
+    else if (len == sizeof(sig_sha384) && 
+            memcmp(sig_sha384, &cert[*offset], 
+                                    sizeof(sig_sha384)) == 0)
+    {
+        x509_ctx->sig_type = SIG_TYPE_SHA384;
+    }
+    else if (len == sizeof(sig_sha512) && 
+            memcmp(sig_sha512, &cert[*offset], 
+                                    sizeof(sig_sha512)) == 0)
+    {
+        x509_ctx->sig_type = SIG_TYPE_SHA512;
+    }
     else
     {
-        if (memcmp(sig_oid_prefix, &cert[*offset], SIG_OID_PREFIX_SIZE))
+        if (memcmp(sig_oid_prefix, &cert[*offset], sizeof(sig_oid_prefix)))
             goto end_check_sig;     /* unrecognised cert type */
 
-        x509_ctx->sig_type = cert[*offset + SIG_OID_PREFIX_SIZE];
+        x509_ctx->sig_type = cert[*offset + sizeof(sig_oid_prefix)];
     }
 
     *offset += len;
