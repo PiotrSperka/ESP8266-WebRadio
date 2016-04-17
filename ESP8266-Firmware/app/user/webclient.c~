@@ -31,6 +31,7 @@ static uint8_t connect = 0, playing = 0;
 
 
 /* TODO:
+	- METADATA HANDLING
 	- IP SETTINGS
 	- VS1053 - DELAY USING vTaskDelay
 */
