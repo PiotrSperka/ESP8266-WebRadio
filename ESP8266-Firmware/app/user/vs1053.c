@@ -4,6 +4,8 @@
   * @author  Piotr Sperka
   * @date    07.08.2015
   * @brief   This file provides VS1053 usage and control functions. Based on VS1003 library by Przemyslaw Stasiak.
+ * Copyright 2016 karawin (http://www.karawin.fr)
+ * added control treble, bass and spacialisation
   ***********************************************************************************************************************
 */
 
@@ -16,6 +18,7 @@
 #include "stdio.h"
 #include "spi.h"
 #include "osapi.h"
+#include <math.h>
 
 extern volatile uint32_t PIN_OUT;
 extern volatile uint32_t PIN_OUT_SET;
@@ -41,11 +44,12 @@ ICACHE_FLASH_ATTR void VS1053_HW_init(){
 
 ICACHE_FLASH_ATTR void VS1053_SPI_SpeedUp()
 {
-	spi_clock(HSPI, 4, 3); //10MHz
+	spi_clock(HSPI, 4, 2); //10MHz
+//	spi_clock(HSPI, 4, 3); //6.66MHz
+//	spi_clock(HSPI, 3, 3); //8.88MHz
 }
 
 ICACHE_FLASH_ATTR void VS1053_SPI_SpeedDown() {
-//	spi_clock(HSPI, 4, 10); //2MHz
 	spi_clock(HSPI, 4, 10); //2MHz
 }
 
@@ -83,8 +87,9 @@ ICACHE_FLASH_ATTR void SDI_ChipSelect(uint8_t State){
 }
 
 ICACHE_FLASH_ATTR uint8_t VS1053_checkDREQ() {
-	if(PIN_IN & (1<<DREQ_PIN)) return 1;
-	else return 0;
+	return (PIN_IN & (1<<DREQ_PIN));
+/*	if(PIN_IN & (1<<DREQ_PIN)) return 1;
+	else return 0;*/
 }
 
 ICACHE_FLASH_ATTR void VS1053_SineTest(){
@@ -182,8 +187,7 @@ ICACHE_FLASH_ATTR void VS1053_regtest()
 	vsVersion = (MP3Status >> 4) & 0x000F; //Mask out only the four version bits
 	printf("VS Version (VS1053 is 4) = %d\r\n",vsVersion);
 	//The 1053B should respond with 4. VS1001 = 0, VS1011 = 1, VS1002 = 2, VS1053 = 3
-
-	printf("SCI_ClockF = 0x%X\r\n",MP3Clock);
+//	printf("SCI_ClockF = 0x%X\r\n",MP3Clock);
 	printf("SCI_ClockF = 0x%X\r\n",MP3Clock);
 }
 /*
@@ -215,14 +219,16 @@ ICACHE_FLASH_ATTR void VS1053_Start(){
 }
 
 ICACHE_FLASH_ATTR int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
-	if(quantity < 1) return 0;
+	if(quantity ==0) return 0;
 	spi_take_semaphore();
-	while(VS1053_checkDREQ() == 0);
+	VS1053_SPI_SpeedUp();
+	while(VS1053_checkDREQ() == 0) ;
 	SDI_ChipSelect(SET);
 	int o = 0;
 	while(quantity)
 	{
-		if(VS1053_checkDREQ()) {
+		if(VS1053_checkDREQ()) 
+		{
 			int t = quantity;
 			int k;
 			if(t > 32) t = 32;
@@ -232,9 +238,10 @@ ICACHE_FLASH_ATTR int VS1053_SendMusicBytes(uint8_t* music, uint16_t quantity){
 			}
 			o += t;
 			quantity -= t;
-		}
+		} 
 	}
 	SDI_ChipSelect(RESET);
+//	VS1053_SPI_SpeedDown();
 	spi_give_semaphore();
 	return o;
 }
@@ -245,7 +252,18 @@ ICACHE_FLASH_ATTR void VS1053_SoftwareReset(){
 }
 
 ICACHE_FLASH_ATTR uint8_t VS1053_GetVolume(){
-	return ( VS1053_ReadRegister(SPI_VOL) & 0x00FF );
+uint8_t i,j;
+uint8_t value =  VS1053_ReadRegister(SPI_VOL) & 0x00FF;
+	for (i = 0;i< 255; i++)
+	{
+		j = (log10(255/((float)i+1)) * 105.54571334);
+//		printf("i=%d  j=%d value=%d\n",i,j,value);
+		if (value == j ){  return i;}
+	}	
+	return 127;
+}
+ICACHE_FLASH_ATTR uint8_t VS1053_GetVolumeLinear(){
+	return VS1053_ReadRegister(SPI_VOL) & 0x00FF;
 }
 /**
  * Function sets the same volume level to both channels.
@@ -253,7 +271,11 @@ ICACHE_FLASH_ATTR uint8_t VS1053_GetVolume(){
  * 		of 0.5dB. Maximum volume is 0 and silence is 0xFEFE.
  */
 ICACHE_FLASH_ATTR void VS1053_SetVolume(uint8_t xMinusHalfdB){
-	VS1053_WriteRegister(SPI_VOL,xMinusHalfdB,xMinusHalfdB);
+uint8_t value = (log10(255/((float)xMinusHalfdB+1)) * 105.54571334);	
+//printf("setvol: %d\n",value);
+if (value == 255) value = 254;
+//printf("xMinusHalfdB=%d  value=%d\n",xMinusHalfdB,value);
+	VS1053_WriteRegister(SPI_VOL,value,value);
 }
 
 /**
@@ -261,8 +283,10 @@ ICACHE_FLASH_ATTR void VS1053_SetVolume(uint8_t xMinusHalfdB){
  * @return Returned value describes enhancement in multiplies
  * 		of 1.5dB. 0 value means no enhancement, 8 max (12dB).
  */
-ICACHE_FLASH_ATTR uint8_t	VS1053_GetTreble(){
-	return ( (VS1053_ReadRegister(SPI_BASS) & 0xF000) >> 12);
+ICACHE_FLASH_ATTR int8_t	VS1053_GetTreble(){
+	int8_t  treble = (VS1053_ReadRegister(SPI_BASS) & 0xF000) >> 12;
+	if ( (treble&0x08)) treble |= 0xF0; // negative value
+	return ( treble);
 }
 
 /**
@@ -270,15 +294,13 @@ ICACHE_FLASH_ATTR uint8_t	VS1053_GetTreble(){
  * @note If xOneAndHalfdB is greater than max value, sets treble
  * 		to maximum.
  * @param xOneAndHalfdB describes level of enhancement. It is a multiplier
- * 		of 1.5dB. 0 - no enhancement, 8 - maximum, 12dB.
+ * 		of 1.5dB. 0 - no enhancement, -8 minimum -12dB , 7 - maximum, 10.5dB.
  * @return void
  */
-ICACHE_FLASH_ATTR void VS1053_SetTreble(uint8_t xOneAndHalfdB){
+ICACHE_FLASH_ATTR void VS1053_SetTreble(int8_t xOneAndHalfdB){
 	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
-	if ( xOneAndHalfdB <= 8)
+	if (( xOneAndHalfdB <= 7) && ( xOneAndHalfdB >=-8))
 		VS1053_WriteRegister( SPI_BASS, MaskAndShiftRight(bassReg,0x0F00,8) | (xOneAndHalfdB << 4), bassReg & 0x00FF );
-	else
-		VS1053_WriteRegister( SPI_BASS, MaskAndShiftRight(bassReg,0x0F00,8) | 0x80, bassReg & 0x00FF );
 }
 
 /**
@@ -292,6 +314,9 @@ ICACHE_FLASH_ATTR void VS1053_SetTrebleFreq(uint8_t xkHz){
 	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
 	if ( xkHz <= 15 )
 		VS1053_WriteRegister( SPI_BASS, MaskAndShiftRight(bassReg,0xF000,8) | xkHz, bassReg & 0x00FF );
+}
+ICACHE_FLASH_ATTR int8_t	VS1053_GetTrebleFreq(){
+	return ( (VS1053_ReadRegister(SPI_BASS) & 0x0F00) >> 8);
 }
 
 /**
@@ -327,6 +352,25 @@ ICACHE_FLASH_ATTR void VS1053_SetBassFreq(uint8_t xTenHz){
 	uint16_t bassReg = VS1053_ReadRegister(SPI_BASS);
 	if (xTenHz >=2 && xTenHz <= 15)
 		VS1053_WriteRegister(SPI_BASS, MaskAndShiftRight(bassReg,0xFF00,8), (bassReg & 0x00F0) | xTenHz );
+}
+
+ICACHE_FLASH_ATTR uint8_t	VS1053_GetBassFreq(){
+	return ( (VS1053_ReadRegister(SPI_BASS) & 0x000F) );
+}
+
+ICACHE_FLASH_ATTR uint8_t	VS1053_GetSpatial(){
+	uint16_t spatial = (VS1053_ReadRegister(SPI_MODE) & 0x0090) >>4;
+//	printf("GetSpatial: %d\n",(spatial&1) | ((spatial>>2) & 2));
+	return ((spatial&1) | ((spatial>>2) & 2));
+}
+
+ICACHE_FLASH_ATTR void VS1053_SetSpatial(uint8_t num){
+	uint16_t spatial = VS1053_ReadRegister(SPI_MODE);
+	if (num >=0 && num <= 3)
+	{	
+		num = (((num <<2)&8) | (num&1))<<4;
+		VS1053_WriteRegister(SPI_MODE, MaskAndShiftRight(spatial,0xFF00,8), (spatial & 0x006F) | num );
+	}	
 }
 
 ICACHE_FLASH_ATTR uint16_t VS1053_GetDecodeTime(){
@@ -380,3 +424,41 @@ ICACHE_FLASH_ATTR uint16_t VS1053_GetBitrate(){
 ICACHE_FLASH_ATTR uint16_t VS1053_GetSampleRate(){
 	return (VS1053_ReadRegister(SPI_AUDATA) & 0xFFFE);
 }
+
+/* to start and stop a new stream */
+ICACHE_FLASH_ATTR void VS1053_flush_cancel(uint8_t mode) {  // 0 only fillbyte  1 before play    2 cancel play
+//  int8_t endFillByte = (int8_t) (Mp3ReadWRAM(para_endFillByte) & 0xFF);
+	VS1053_WriteRegister(SPI_WRAMADDR,MaskAndShiftRight(para_endFillByte,0xFF00,8), (para_endFillByte & 0x00FF) );
+	int8_t endFillByte = (int8_t) VS1053_ReadRegister(SPI_WRAM) & 0xFF;
+	uint8_t buf[513];
+	int y;
+	for (y = 0; y < 513; y++) buf[y] = endFillByte;
+
+  if (mode != 0) //set CANCEL
+  {
+//Mp3WriteRegister(SCI_MODE, (Mp3ReadRegister(SCI_MODE) | SM_CANCEL));
+	uint16_t spimode = VS1053_ReadRegister(SPI_MODE)| SM_CANCEL;
+  // set CANCEL
+	VS1053_WriteRegister(SPI_MODE,MaskAndShiftRight(spimode,0xFF00,8), (spimode & 0x00FF) );
+	// wait CANCEL
+	y = 0;
+	while (VS1053_ReadRegister(SPI_MODE)& SM_CANCEL)
+	{	  
+		if (mode == 1) VS1053_SendMusicBytes( buf, 32); //1
+		else vTaskDelay(2); //2  
+//		printf ("Wait CANCEL clear\n");
+		if (y++ > 513) 
+		{
+			VS1053_Start();
+			break;
+		}
+		
+	}	 
+	for ( y = 0; y < 4; y++)	VS1053_SendMusicBytes( buf, 513); // 4*513 = 2052
+  } else
+  {
+	for ( y = 0; y < 4; y++)	VS1053_SendMusicBytes( buf, 513); // 4*513 = 2052
+  }	  
+}
+
+

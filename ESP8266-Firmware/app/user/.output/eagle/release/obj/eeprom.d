@@ -23,4 +23,5 @@
  /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/sys/stdio.h \
  /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/stdlib.h \
  /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/machine/stdlib.h \
- /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/alloca.h
+ /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/alloca.h \
+ ../../include/espressif/spi_flash.h

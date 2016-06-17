@@ -8,14 +8,16 @@ WiFi and main MCU: ESP8266 (ESP-12 with 32Mbits flash)<br />
 Additional MCU (as a bridge UART<=>UI): AVR<br />
 Audio decoder: VS1053<br />
 ##TODO list
-###ESP8266
+-**[HIGH]**LCD and encoder <=> UART converter based on AVR (ATmega88?)<br />
+-**[NORMAL]**FM module (RDA5807M) implementation
 -**[NORMAL]**External SRAM implementation<br />
--**[NORMAL]**Reconnect to webradio when wifi connection reappears<br />
+-**[NORMAL]**Reconnect to webradio when internet connection reappears<br />
 -**[LOW]**Code cleanup and optimization
-###AVR
--Hardware design<br />
--Code
 ##Changelog
+###v0.17
+-**[MERGE]**Merged with karawin's fork (version 1.0.4)<br />
+He made lots of changes, especially he improved stability and webpage user experience. For details please visit his Github webpage:<br />
+https://github.com/karawin/Ka-Radio
 ###v0.16
 -**[Hardware]**Slightly updated GERBER files
 ###v0.15
@@ -74,3 +76,4 @@ Audio decoder: VS1053<br />
 -**[ESP8266]**Added: Simple UART command parser for wifi configuration
 ###v0.1
 -**[ESP8266]**Initial release - ESP8266 firmware based on cleaned nodemcu source (deleted lua, flash-fs, etc.)
+

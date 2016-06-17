@@ -49,4 +49,5 @@
  /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/sys/string.h \
  ../include/user_config.h \
  /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/sysroot/usr/include/os_type.h \
- /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/sysroot/usr/include/ets_sys.h
+ /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/sysroot/usr/include/ets_sys.h \
+ /opt/Espressif/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/math.h

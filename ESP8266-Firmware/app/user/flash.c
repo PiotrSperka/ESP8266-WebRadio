@@ -1,6 +1,8 @@
 #include "flash.h"
 #include "esp_common.h"
 
+
+
 ICACHE_FLASH_ATTR uint32_t flashRead( void *to, uint32_t fromaddr, uint32_t size )
 {
   fromaddr -= INTERNAL_FLASH_START_ADDRESS;

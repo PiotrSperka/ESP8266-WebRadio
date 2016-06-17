@@ -7,6 +7,7 @@
 //#include "stm32f10x.h"
 #pragma once
 #include "c_types.h"
+//#include "freertos/FreeRTOS.h"
 //#include "stdio.h"
 //#include "stdlib.h"
 //#include "espconn.h"
@@ -50,6 +51,7 @@
 #define SM_JUMP         	0x02
 #define SM_LAYER12			0x02
 #define SM_RESET        	0x04
+#define SM_CANCEL           0x08
 #define SM_OUTOFWAV     	0x08
 #define SM_PDOWN        	0x10
 #define SM_TESTS        	0x20
@@ -62,7 +64,7 @@
 #define SM_ADPCM        	0x1000
 #define SM_ADPCM_HP     	0x2000
 #define SM_LINE1            0x4000
-
+#define para_endFillByte    0x1E06
 //public functions
 void 	VS1053_HW_init();
 void 	VS1053_SineTest();
@@ -73,25 +75,31 @@ void 	VS1053_SoftwareReset();
 uint16_t	VS1053_GetBitrate();
 uint16_t	VS1053_GetSampleRate();
 uint16_t	VS1053_GetDecodeTime();
+void	VS1053_flush_cancel(uint8_t mode);// 0 only fillbyte  1 before play    2 close play
 
 //Volume control
 uint8_t 	VS1053_GetVolume();
+uint8_t 	VS1053_GetVolumeLinear();
 void	VS1053_SetVolume(uint8_t xMinusHalfdB);
 void 	VS1053_VolumeUp(uint8_t xHalfdB);
 void	VS1053_VolumeDown(uint8_t xHalfdB);
 //Treble control
-uint8_t	VS1053_GetTreble();
-void	VS1053_SetTreble(uint8_t xOneAndHalfdB);
+int8_t	VS1053_GetTreble();
+void	VS1053_SetTreble(int8_t xOneAndHalfdB);
 void	VS1053_TrebleUp(uint8_t xOneAndHalfdB);
 void	VS1053_TrebleDown(uint8_t xOneAndHalfdB);
 void	VS1053_SetTrebleFreq(uint8_t xkHz);
+int8_t	VS1053_GetTrebleFreq(void);
 //Bass control
 uint8_t	VS1053_GetBass();
 void	VS1053_SetBass(uint8_t xdB);
 void	VS1053_BassUp(uint8_t xdB);
 void	VS1053_BassDown(uint8_t xdB);
 void	VS1053_SetBassFreq(uint8_t xTenHz);
-
+uint8_t	VS1053_GetBassFreq(void);
+// Spacial
+uint8_t	VS1053_GetSpatial();
+void VS1053_SetSpatial(uint8_t num);
 //private functions
 void SPIPutChar(uint8_t outB);
 uint8_t SPIGetChar();

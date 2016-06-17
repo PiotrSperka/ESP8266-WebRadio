@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 
 """CSS-HTML-JS-Minify.
 
-StandAlone Async single-file cross-platform no-dependencies
-Unicode-ready Python3-ready Minifier for the Web.
+StandAlone Async single-file cross-platform no-dependency Minifier for the Web.
 """
 
 
@@ -17,6 +16,7 @@ import re
 import socket
 import sys
 import traceback
+
 from argparse import ArgumentParser
 from copy import copy
 from ctypes import byref, cdll, create_string_buffer
@@ -35,16 +35,13 @@ try:
     from subprocess import getoutput
     from shutil import disk_usage
     from io import StringIO  # pure-Python StringIO supports unicode.
-except ImportError:
-    request = getoutput = disk_usage = None
-    from StringIO import StringIO  # lint:ok
-try:
     import resource  # windows dont have resource
 except ImportError:
-    resource = None
+    request = getoutput = disk_usage = resource = None
+    from StringIO import StringIO  # lint:ok
 
 
-__version__ = '1.0.14'
+__version__ = '1.2.2'
 __license__ = 'GPLv3+ LGPLv3+'
 __author__ = 'Juan Carlos'
 __email__ = 'juancarlospaco@gmail.com'
@@ -59,21 +56,20 @@ EXTENDED_NAMED_COLORS, start_time = {  # 'Color Name String': (R, G, B)
     'brown': (165, 42, 42), 'burlywood': (222, 184, 135),
     'chartreuse': (127, 255, 0), 'chocolate': (210, 105, 30),
     'coral': (255, 127, 80), 'cornsilk': (255, 248, 220),
-    'crimson': (220, 20, 60), 'cyan': (0, 255, 255),
-    'darkcyan': (0, 139, 139), 'darkgoldenrod': (184, 134, 11),
-    'darkgray': (169, 169, 169), 'darkgreen': (0, 100, 0),
-    'darkgrey': (169, 169, 169), 'darkkhaki': (189, 183, 107),
-    'darkmagenta': (139, 0, 139), 'darkolivegreen': (85, 107, 47),
-    'darkorange': (255, 140, 0), 'darkorchid': (153, 50, 204),
-    'darkred': (139, 0, 0), 'darksalmon': (233, 150, 122),
-    'darkseagreen': (143, 188, 143), 'darkslategray': (47, 79, 79),
-    'darkslategrey': (47, 79, 79), 'darkturquoise': (0, 206, 209),
-    'darkviolet': (148, 0, 211), 'deeppink': (255, 20, 147),
-    'dimgray': (105, 105, 105), 'dimgrey': (105, 105, 105),
-    'firebrick': (178, 34, 34), 'forestgreen': (34, 139, 34),
-    'gainsboro': (220, 220, 220), 'gold': (255, 215, 0),
-    'goldenrod': (218, 165, 32), 'gray': (128, 128, 128),
-    'green': (0, 128, 0), 'grey': (128, 128, 128),
+    'crimson': (220, 20, 60), 'cyan': (0, 255, 255), 'darkcyan': (0, 139, 139),
+    'darkgoldenrod': (184, 134, 11), 'darkgray': (169, 169, 169),
+    'darkgreen': (0, 100, 0), 'darkgrey': (169, 169, 169),
+    'darkkhaki': (189, 183, 107), 'darkmagenta': (139, 0, 139),
+    'darkolivegreen': (85, 107, 47), 'darkorange': (255, 140, 0),
+    'darkorchid': (153, 50, 204), 'darkred': (139, 0, 0),
+    'darksalmon': (233, 150, 122), 'darkseagreen': (143, 188, 143),
+    'darkslategray': (47, 79, 79), 'darkslategrey': (47, 79, 79),
+    'darkturquoise': (0, 206, 209), 'darkviolet': (148, 0, 211),
+    'deeppink': (255, 20, 147), 'dimgray': (105, 105, 105),
+    'dimgrey': (105, 105, 105), 'firebrick': (178, 34, 34),
+    'forestgreen': (34, 139, 34), 'gainsboro': (220, 220, 220),
+    'gold': (255, 215, 0), 'goldenrod': (218, 165, 32),
+    'gray': (128, 128, 128), 'green': (0, 128, 0), 'grey': (128, 128, 128),
     'honeydew': (240, 255, 240), 'hotpink': (255, 105, 180),
     'indianred': (205, 92, 92), 'indigo': (75, 0, 130),
     'ivory': (255, 255, 240), 'khaki': (240, 230, 140),
@@ -117,24 +113,27 @@ animation-direction animation-duration animation-iteration-count
 animation-name animation-play-state animation-timing-function appearance
 azimuth
 
-backface-visibility background background-attachment background-clip
-background-color background-image background-origin background-position
-background-repeat background-size baseline-shift bikeshedding bookmark-label
-bookmark-level bookmark-state bookmark-target border border-bottom
-border-bottom-color border-bottom-left-radius border-bottom-right-radius
-border-bottom-style border-bottom-width border-collapse border-color
-border-image border-image-outset border-image-repeat border-image-slice
-border-image-source border-image-width border-left border-left-color
-border-left-style border-left-width border-radius border-right
-border-right-color border-right-style border-right-width border-spacing
-border-style border-top border-top-color border-top-left-radius
-border-top-right-radius border-top-style border-top-width border-width bottom
-box-decoration-break box-shadow box-sizing
-
-caption-side clear clip color column-count column-fill column-gap column-rule
+backface-visibility background background-blend-mode background-attachment
+background-clip background-color background-image background-origin
+background-position background-position-block background-position-inline
+background-position-x background-position-y background-repeat background-size
+baseline-shift bikeshedding bookmark-label bookmark-level bookmark-state
+bookmark-target border border-bottom border-bottom-color
+border-bottom-left-radius border-bottom-parts border-bottom-right-radius
+border-bottom-style border-bottom-width border-clip border-clip-top
+border-clip-right border-clip-bottom border-clip-left border-collapse
+border-color border-corner-shape border-image border-image-outset
+border-image-repeat border-image-slice border-image-source border-image-width
+border-left border-left-color border-left-style border-left-parts
+border-left-width border-limit border-parts border-radius border-right
+border-right-color border-right-style border-right-width border-right-parts
+border-spacing border-style border-top border-top-color border-top-left-radius
+border-top-parts border-top-right-radius border-top-style border-top-width
+border-width bottom box-decoration-break box-shadow box-sizing caption-side
+clear clip color column-count column-fill column-gap column-rule
 column-rule-color column-rule-style column-rule-width column-span column-width
-columns content counter-increment counter-reset cue cue-after cue-before
-cursor
+columns content counter-increment counter-reset corners corner-shape
+cue cue-after cue-before cursor
 
 direction display drop-initial-after-adjust drop-initial-after-align
 drop-initial-before-adjust drop-initial-before-align drop-initial-size
@@ -142,10 +141,13 @@ drop-initial-value
 
 elevation empty-cells
 
-fit fit-position float font font-family font-size font-size-adjust
-font-stretch font-style font-variant font-weight
+flex flex-basis flex-direction flex-flow flex-grow flex-shrink flex-wrap fit
+fit-position float font font-family font-size font-size-adjust font-stretch
+font-style font-variant font-weight
 
 grid-columns grid-rows
+
+justify-content
 
 hanging-punctuation height hyphenate-character hyphenate-resource hyphens
 
@@ -201,9 +203,9 @@ z-index
 
 def _compile_props(props_text, grouped=False):
     """Take a list of props and prepare them."""
-    props = []
-    for line_of_props in props_text.strip().lower().splitlines():
-        props += line_of_props.split(" ")
+    props, prefixes = [], "-webkit-,-khtml-,-epub-,-moz-,-ms-,-o-,".split(",")
+    for propline in props_text.strip().lower().splitlines():
+        props += [pre + pro for pro in propline.split(" ") for pre in prefixes]
     props = filter(lambda line: not line.startswith('#'), props)
     if not grouped:
         props = list(filter(None, props))
@@ -215,29 +217,29 @@ def _compile_props(props_text, grouped=False):
             groups.append(g_id)
         else:
             g_id += 1
-    return final_props, groups
+    return (final_props, groups)
 
 
-def _prioritify(line_buffer, pgs):
+def _prioritify(line_of_css, css_props_text_as_list):
     """Return args priority, priority is integer and smaller means higher."""
-    props, groups = pgs
-    priority, group = 9999, 0
-    for css_property in props:
-        if line_buffer.find(css_property + ':') != -1:
-            priority = props.index(css_property)
-            group = groups[priority]
+    sorted_css_properties, groups_by_alphabetic_order = css_props_text_as_list
+    priority_integer, group_integer = 9999, 0
+    for css_property in sorted_css_properties:
+        if css_property.lower() == line_of_css.split(":")[0].lower().strip():
+            priority_integer = sorted_css_properties.index(css_property)
+            group_integer = groups_by_alphabetic_order[priority_integer]
             break
-    return priority, group
+    return (priority_integer, group_integer)
 
 
 def _props_grouper(props, pgs):
     """Return groups for properties."""
     if not props:
         return props
-    props = sorted([
-        _ if _.strip().endswith(";")
-        and not _.strip().endswith("*/") and not _.strip().endswith("/*")
-        else _.rstrip() + ";\n" for _ in props])
+    #props = sorted([
+        #_ if _.strip().endswith(";")
+        #and not _.strip().endswith("*/") and not _.strip().endswith("/*")
+        #else _.rstrip() + ";\n" for _ in props])
     props_pg = zip(map(lambda prop: _prioritify(prop, pgs), props), props)
     props_pg = sorted(props_pg, key=lambda item: item[0][1])
     props_by_groups = map(
@@ -335,7 +337,7 @@ def remove_unnecessary_whitespace(css):
 
     css = pseudoclasscolon(css)
     # Remove spaces from before things.
-    css = re.sub(r"\s+([!{};:>+\(\)\],])", r"\1", css)
+    css = re.sub(r"\s+([!{};:>\(\)\],])", r"\1", css)
     # If there is a `@charset`, then only allow one, and move to beginning.
     css = re.sub(r"^(.*)(@charset \"[^\"]*\";)", r"\2\1", css)
     css = re.sub(r"^(\s*@charset [^;]+;\s*)+", r"\1", css)
@@ -345,7 +347,7 @@ def remove_unnecessary_whitespace(css):
     # Put the colons back.
     css = css.replace('___PSEUDOCLASSCOLON___', ':')
     # Remove spaces from after things.
-    css = re.sub(r"([!{}:;>+\(\[,])\s+", r"\1", css)
+    css = re.sub(r"([!{}:;>\(\[,])\s+", r"\1", css)
     return css
 
 
@@ -377,19 +379,17 @@ def normalize_rgb_colors_to_hex(css):
 def condense_zero_units(css):
     """Replace `0(px, em, %, etc)` with `0`."""
     log.debug("Condensing all zeroes on values.")
-    return re.sub(r"([\s:])(0)(px|em|%|in|cm|mm|pc|pt|ex|rem)", r"\1\2", css)
+    return re.sub(r"([\s:])(0)(px|em|%|in|q|ch|cm|mm|pc|pt|ex|rem|s|ms|"
+                  r"deg|grad|rad|turn|vw|vh|vmin|vmax|fr)", r"\1\2", css)
 
 
 def condense_multidimensional_zeros(css):
     """Replace `:0 0 0 0;`, `:0 0 0;` etc. with `:0;`."""
     log.debug("Condensing all multidimensional zeroes on values.")
-    css = css.replace(":0 0 0 0;", ":0;")
-    css = css.replace(":0 0 0;", ":0;")
-    css = css.replace(":0 0;", ":0;")
-    # Revert `background-position:0;` to the valid `background-position:0 0;`.
-    css = css.replace("background-position:0;", "background-position:0 0;")
-    css = css.replace("transform-origin:0;", "transform-origin:0 0;")
-    return css
+    return css.replace(":0 0 0 0;", ":0;").replace(
+        ":0 0 0;", ":0;").replace(":0 0;", ":0;").replace(
+            "background-position:0;", "background-position:0 0;").replace(
+                "transform-origin:0;", "transform-origin:0 0;")
 
 
 def condense_floating_points(css):
@@ -431,7 +431,7 @@ def condense_semicolons(css):
 
 def wrap_css_lines(css, line_length=80):
     """Wrap the lines of the given CSS to an approximate length."""
-    log.debug("Wrapping lines to ~{} max line lenght.".format(line_length))
+    log.debug("Wrapping lines to ~{0} max line lenght.".format(line_length))
     lines, line_start = [], 0
     for i, char in enumerate(css):
         # Its safe to break after } characters.
@@ -464,7 +464,7 @@ def condense_xtra_named_colors(css):
     """Condense named color values to shorter replacement using HEX."""
     log.debug("Condensing extended named color values.")
     for k, v in iter(tuple(EXTENDED_NAMED_COLORS.items())):
-        same_color_but_rgb = 'rgb({},{},{})'.format(v[0], v[1], v[2])
+        same_color_but_rgb = 'rgb({0},{1},{2})'.format(v[0], v[1], v[2])
         if len(k) > len(same_color_but_rgb):
             css = css.replace(k, same_color_but_rgb)
     return css
@@ -540,7 +540,7 @@ def condense_html_whitespace(html):
     """  # first space between tags, then empty new lines and in-between.
     log.debug("Removing unnecessary HTML White Spaces and Empty New Lines.")
     is_ok = "<textarea" not in html.lower() and "<pre" not in html.lower()
-    html = re.sub(r'>\s+<', '><', html) if is_ok else html
+    html = re.sub(r'>\s+<', '> <', html) if is_ok else html
     return re.sub(r'\s{2,}|[\r\n]', ' ', html) if is_ok else html.strip()
 
 
@@ -551,10 +551,9 @@ def condense_style(html):
     '<style>*{border:0}</style><p>a b c'
     """  # May look silly but Emmet does this and is wrong.
     log.debug("Condensing HTML Style CSS tags.")
-    html = html.replace('<style type="text/css">', '<style>')
-    html = html.replace("<style type='text/css'>", '<style>')
-    html = html.replace("<style type=text/css>", '<style>')
-    return html
+    return html.replace('<style type="text/css">', '<style>').replace(
+        "<style type='text/css'>", '<style>').replace(
+            "<style type=text/css>", '<style>')
 
 
 def condense_script(html):
@@ -564,10 +563,9 @@ def condense_script(html):
     '<script> </script><p>a b c'
     """  # May look silly but Emmet does this and is wrong.
     log.debug("Condensing HTML Script JS tags.")
-    html = html.replace('<script type="text/javascript">', '<script>')
-    html = html.replace("<style type='text/javascript'>", '<script>')
-    html = html.replace("<style type=text/javascript>", '<script>')
-    return html
+    return html.replace('<script type="text/javascript">', '<script>').replace(
+        "<style type='text/javascript'>", '<script>').replace(
+            "<style type=text/javascript>", '<script>')
 
 
 def clean_unneeded_html_tags(html):
@@ -577,16 +575,13 @@ def clean_unneeded_html_tags(html):
     'abc'
     """
     log.debug("Removing unnecessary optional HTML tags.")
-#'<tbody>', '</tbody>',
-    for tag_to_remove in (  # May look silly but Emmet does this and is wrong.
-        '</area>', '</base>', '<body>', '</body>', '</br>', '</col>',
-        '</colgroup>', '</dd>', '</dt>', '<head>', '</head>', '</hr>',
-        '<html>', '</html>', '</img>', '</input>', '</li>', '</link>',
-        '</meta>', '</option>', '</p>', '</param>', 
-        '</td>', '</tfoot>', '</th>', '</thead>', '</tr>', '</basefont>',
-            '</isindex>', '</param>'):
+    for tag_to_remove in ("""</area> </base> <body> </body> </br> </col>
+        </colgroup> </dd> </dt> <head> </head> </hr> <html> </html> </img>
+        </input> </li> </link> </meta> </option> </param> 
+        </td> </tfoot> </th> </thead> </tr> </basefont> </isindex> </param>
+        """.split()):
             html = html.replace(tag_to_remove, '')
-    return html
+    return html  # May look silly but Emmet does this and is wrong.
 
 
 def remove_html_comments(html):
@@ -676,7 +671,7 @@ def js_minify(js):
 
 def force_single_line_js(js):
     """Force Javascript to a single line, even if need to add semicolon."""
-    log.debug("Forcing JS from ~{} to 1 Line.".format(len(js.splitlines())))
+    log.debug("Forcing JS from ~{0} to 1 Line.".format(len(js.splitlines())))
     return ";".join(js.splitlines()) if len(js.splitlines()) > 1 else js
 
 
@@ -929,12 +924,10 @@ class JavascriptMinify(object):
 
 def walkdir_to_filelist(where, target, omit):
     """Perform full walk of where, gather full path of all files."""
-    log.debug("""Recursively Scanning {}, searching for {}, and ignoring {}.
-    """.format(where, target, omit))
-    return tuple([os.path.join(root, f) for root, d, files in os.walk(where)
-                  for f in files if not f.startswith('.')  # ignore hidden
-                  and not f.endswith(omit)  # not process processed file
-                  and f.endswith(target)])  # only compress target files
+    log.debug("Scan {},searching {},ignoring {}".format(where, target, omit))
+    return tuple([os.path.join(r, f) for r, d, fs in os.walk(where)
+                  for f in fs if not f.startswith('.') and not f.endswith(omit)
+                  and f.endswith(target)])  # only target files,no hidden files
 
 
 def process_multiple_files(file_path):
@@ -949,7 +942,7 @@ def process_multiple_files(file_path):
                 sleep(60)
             else:
                 previous = actual
-                log.debug("Modification detected on {}.".format(file_path))
+                log.debug("Modification detected on {0}.".format(file_path))
                 check_working_folder(os.path.dirname(file_path))
                 if file_path.endswith(".css"):
                     process_single_css_file(file_path)
@@ -989,7 +982,7 @@ def prefixer_extensioner(file_path, old, new, file_content=None):
 
 def process_single_css_file(css_file_path):
     """Process a single CSS file."""
-    log.info("Processing CSS file: {}.".format(css_file_path))
+    log.info("Processing CSS file: {0}.".format(css_file_path))
     global args
     try:  # Python3
         with open(css_file_path, encoding="utf-8-sig") as css_file:
@@ -1001,7 +994,7 @@ def process_single_css_file(css_file_path):
     minified_css = css_minify(original_css, wrap=args.wrap,
                               comments=args.comments, sort=args.sort)
     if args.timestamp:
-        taim = "/* {} */ ".format(datetime.now().isoformat()[:-7].lower())
+        taim = "/* {0} */ ".format(datetime.now().isoformat()[:-7].lower())
         minified_css = taim + minified_css
     min_css_file_path = prefixer_extensioner(
         css_file_path, ".css", ".css" if args.overwrite else ".min.css",
@@ -1023,12 +1016,12 @@ def process_single_css_file(css_file_path):
         if only_on_py3(args.gzip):
             with gzip.open(gz_file_path, "w") as output_gz:
                 output_gz.write(minified_css)
-    log.debug("OUTPUT: Writing CSS Minified {}.".format(min_css_file_path))
+    log.debug("OUTPUT: Writing CSS Minified {0}.".format(min_css_file_path))
 
 
 def process_single_html_file(html_file_path):
     """Process a single HTML file."""
-    log.info("Processing HTML file: {}.".format(html_file_path))
+    log.info("Processing HTML file: {0}.".format(html_file_path))
     try:  # Python3
         with open(html_file_path, encoding="utf-8-sig") as html_file:
             minified_html = html_minify(html_file.read(),
@@ -1037,7 +1030,7 @@ def process_single_html_file(html_file_path):
         with open(html_file_path) as html_file:
             minified_html = html_minify(html_file.read(),
                                         comments=only_on_py3(args.comments))
-    log.debug("INPUT: Reading HTML file {}.".format(html_file_path))
+    log.debug("INPUT: Reading HTML file {0}.".format(html_file_path))
     html_file_path = prefixer_extensioner(
         html_file_path, ".html" if args.overwrite else ".htm", ".html")
     try:  # Python3
@@ -1046,19 +1039,19 @@ def process_single_html_file(html_file_path):
     except:  # Python2
         with open(html_file_path, "w") as output_file:
             output_file.write(minified_html)
-    log.debug("OUTPUT: Writing HTML Minified {}.".format(html_file_path))
+    log.debug("OUTPUT: Writing HTML Minified {0}.".format(html_file_path))
 
 
 def process_single_js_file(js_file_path):
     """Process a single JS file."""
-    log.info("Processing JS file: {}.".format(js_file_path))
+    log.info("Processing JS file: {0}.".format(js_file_path))
     try:  # Python3
         with open(js_file_path, encoding="utf-8-sig") as js_file:
             original_js = js_file.read()
     except:  # Python2
         with open(js_file_path) as js_file:
             original_js = js_file.read()
-    log.debug("INPUT: Reading JS file {}.".format(js_file_path))
+    log.debug("INPUT: Reading JS file {0}.".format(js_file_path))
     if args.obfuscate:  # with obfuscation
         minified_js = simple_replacer_js(js_minify(js_minify2(original_js)))
     else:  # without obfuscation
@@ -1086,17 +1079,16 @@ def process_single_js_file(js_file_path):
         if only_on_py3(args.gzip):
             with gzip.open(gz_file_path, "w") as output_gz:
                 output_gz.write(minified_js)
-    log.debug("OUTPUT: Writing JS Minified {}.".format(min_js_file_path))
+    log.debug("OUTPUT: Writing JS Minified {0}.".format(min_js_file_path))
 
 
 def check_for_updates():
     """Method to check for updates from Git repo versus this version."""
-    this_version = str(open(__file__, "r", encoding="utf-8-sig").read())
     last_version = str(request.urlopen(__source__).read().decode("utf8"))
-    if this_version != last_version:
-        log.warning("Theres new Version available!,Update from " + __source__)
+    if str(open(__file__).read()) != last_version:
+        log.warning("Theres new Version available!, Update from " + __source__)
     else:
-        log.info("No new updates!, You have the latest version of this app.")
+        log.info("No new updates!,You have the lastest version of this app.")
 
 
 def only_on_py3(boolean_argument=True):
@@ -1151,46 +1143,6 @@ def check_working_folder(folder_to_check=os.path.expanduser("~")):
     return False
 
 
-def log_exception():
-    """Log Exceptions but pretty printing with more info, return string."""
-    unfriendly_names = {"<module>": "Unnamed Anonymous Module Function",
-                        "<stdin>": "System Standard Input Function"}
-    line_tpl = "    |___ {key} = {val}  # Type: {t}, Size: {s}Bytes, ID: {i}\n"
-    body_tpl = """
-    ################################ D E B U G ###############################
-    Listing all Local objects by context frame, ordered by innermost last:
-    {body}
-    Thats all we know about the error, check the LOG file and StdOut.
-    ############################### D E B U G #############################"""
-    tb, body_txt, whole_txt = sys.exc_info()[2], "", ""
-    while 1:
-        if not tb.tb_next:
-            break
-        tb = tb.tb_next
-    stack = []
-    f = tb.tb_frame
-    while f:
-        stack.append(f)
-        f = f.f_back
-    stack.reverse()
-    traceback.print_exc()
-    for frame in stack:
-        if frame.f_code.co_name in unfriendly_names.keys():
-            fun = unfriendly_names[frame.f_code.co_name]
-        else:
-            fun = "Function {0}()".format(frame.f_code.co_name)
-        body_txt += "\nThe {nm} from file {fl} at line {ln} failed!.".format(
-            nm=fun, fl=frame.f_code.co_filename, ln=frame.f_lineno)
-        body_txt += "\n    {}\n    |\n".format(fun)
-        for key, value in frame.f_locals.items():
-            whole_txt += line_tpl.format(key=key, val=repr(value)[:50],
-                                         t=str(type(value))[:25],
-                                         s=sys.getsizeof(key), i=id(value))
-    result = body_tpl.format(body=body_txt + whole_txt)
-    log.debug(result)
-    return result
-
-
 def make_root_check_and_encoding_debug():
     """Debug and Log Encodings and Check for root/administrator,return Boolean.
 
@@ -1206,7 +1158,7 @@ def make_root_check_and_encoding_debug():
     log.debug("FileSystem Encoding: {0}.".format(sys.getfilesystemencoding()))
     log.debug("PYTHONIOENCODING Encoding: {0}.".format(
         os.environ.get("PYTHONIOENCODING", None)))
-    os.environ["PYTHONIOENCODING"] = "utf-8"
+    os.environ["PYTHONIOENCODING"], sys.dont_write_bytecode = "utf-8", True
     if not sys.platform.startswith("win"):  # root check
         if not os.geteuid():
             log.critical("Runing as root is not Recommended,NOT Run as root!.")
@@ -1238,11 +1190,7 @@ def set_process_name_and_cpu_priority(name):
 
 
 def set_single_instance(name, single_instance=True, port=8888):
-    """Set process name and cpu priority, return socket.socket object or None.
-
-    >>> isinstance(set_single_instance("test"), socket.socket)
-    True
-    """
+    """Set process name and cpu priority,return socket.socket object or None"""
     __lock = None
     if single_instance:
         try:  # Single instance app ~crossplatform, uses udp socket.
@@ -1256,17 +1204,12 @@ def set_single_instance(name, single_instance=True, port=8888):
         except socket.error as e:
             log.warning(e)
         else:
-            log.info("Socket Lock for Single Instance: {}.".format(__lock))
-    else:  # if multiple instance want to touch same file bad things can happen
-        log.warning("Multiple instance on same file can cause Race Condition.")
+            log.info("Socket Lock for Single Instance: {0}.".format(__lock))
     return __lock
 
 
 def make_logger(name=str(os.getpid())):
     """Build and return a Logging Logger."""
-    log_file = os.path.join(gettempdir(), str(name).lower().strip() + ".log")
-    log.basicConfig(level=-1, filemode="w", filename=log_file,
-                    format="%(levelname)s:%(asctime)s %(message)s %(lineno)s")
     if not sys.platform.startswith("win") and sys.stderr.isatty():
         def add_color_emit_ansi(fn):
             """Add methods we need to the class."""
@@ -1297,41 +1240,35 @@ def make_logger(name=str(os.getpid())):
                     print(reason)  # Do not use log here.
                 return fn(*new_args)
             return new
-        # all non-Windows platforms support ANSI Colors so we use them
         log.StreamHandler.emit = add_color_emit_ansi(log.StreamHandler.emit)
-        a = "/dev/log" if sys.platform.startswith("lin") else "/var/run/syslog"
-        try:  # try to Hook Up the SysLog Server if Any.
-            handler = log.handlers.SysLogHandler(address=a)
-        except:  # SysLog Server not found
-            log.debug("Unix SysLog Server not found,ignored Logging to SysLog")
-        else:  # SysLog Server found, log to it.
-            log.addHandler(handler)
-    else:
-        log.debug("Colored Logs not supported on {0}.".format(sys.platform))
+    log_file = os.path.join(gettempdir(), str(name).lower().strip() + ".log")
+    log.basicConfig(level=-1, filemode="w", filename=log_file)
     log.getLogger().addHandler(log.StreamHandler(sys.stderr))
+    adrs = "/dev/log" if sys.platform.startswith("lin") else "/var/run/syslog"
+    try:
+        handler = log.handlers.SysLogHandler(address=adrs)
+    except:
+        log.debug("Unix SysLog Server not found, ignored Logging to SysLog.")
+    else:
+        log.getLogger().addHandler(handler)
     log.debug("Logger created with Log file at: {0}.".format(log_file))
     return log
 
 
 def make_post_execution_message(app=__doc__.splitlines()[0].strip()):
-    """Simple Post-Execution Message with information about RAM and Time.
-
-    >>> make_post_execution_message() >= 0
-    True
-    """
+    """Simple Post-Execution Message with information about RAM and Time."""
     ram_use, ram_all = 0, 0
     if sys.platform.startswith("linux"):
-        ram_use = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss *
+        use = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss *
                     resource.getpagesize() / 1024 / 1024 if resource else 0)
-        ram_all = int(os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES')
+        al = int(os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES')
                       / 1024 / 1024 if hasattr(os, "sysconf") else 0)
-    msg = "Total Maximum RAM Memory used: ~{0} of {1} MegaBytes.".format(
-        ram_use, ram_all)
+    msg = "Total Maximum RAM Memory used: ~{0} of {1}MegaBytes".format(use, al)
     log.info(msg)
     if start_time and datetime:
         log.info("Total Working Time: {0}".format(datetime.now() - start_time))
     if randint(0, 100) < 25:  # ~25% chance to see the message,dont get on logs
-        print("Thanks for using this App,share your experience!{0}".format("""
+        print("Thanks for using this App,share your experience! {0}".format("""
         Twitter: https://twitter.com/home?status=I%20Like%20{n}!:%20{u}
         Facebook: https://www.facebook.com/share.php?u={u}&t=I%20Like%20{n}
         G+: https://plus.google.com/share?url={u}""".format(u=__url__, n=app)))
@@ -1356,14 +1293,12 @@ def make_arguments_parser():
                         help="Prefix string to prepend on output filenames.")
     parser.add_argument('--timestamp', action='store_true',
                         help="Add a Time Stamp on all CSS/JS output files.")
-    parser.add_argument('--quiet', action='store_true',
-                        help="Quiet, Silent, force disable all logging.")
+    parser.add_argument('--quiet', action='store_true', help="Quiet, Silent.")
     parser.add_argument('--obfuscate', action='store_true',
                         help="Obfuscate Javascript. JS only. (Recommended).")
     parser.add_argument('--checkupdates', action='store_true',
                         help="Check for updates from internet while running.")
-    parser.add_argument('--tests', action='store_true',
-                        help="Run all built-in Unit Tests, report and exit.")
+    parser.add_argument('--tests', action='store_true', help="Run Unit Tests.")
     parser.add_argument('--hash', action='store_true',
                         help="Add SHA1 HEX-Digest 11chars Hash to Filenames.")
     parser.add_argument('--gzip', action='store_true',
@@ -1378,8 +1313,7 @@ def make_arguments_parser():
                         help="Command to execute after run (Experimental).")
     parser.add_argument('--before', type=str,
                         help="Command to execute before run (Experimental).")
-    parser.add_argument('--watch', action='store_true',
-                        help="Re-Compress if file changes (Experimental).")
+    parser.add_argument('--watch', action='store_true', help="Watch changes.")
     parser.add_argument('--multiple', action='store_true',
                         help="Allow Multiple instances (Not Recommended).")
     parser.add_argument('--_42', action='store_true')
@@ -1400,24 +1334,20 @@ def main():
         ) or (y < r and x + r < y and x - r > 4 * r - y) else '.' for x in
             range(4 * r)) for y in range(1, 3 * r, 2)))(9) +
             "\n! ti htiw laeD ........####################........\n"[::-1])
-    if only_on_py3((args.checkupdates, request)):
-        check_for_updates()
+    check_for_updates() if args.checkupdates else log.debug("No Check Updates")
     if args.tests:
         testmod(verbose=True, report=True, exclude_empty=True)
         sys.exit(0)
-    if only_on_py3((args.before, getoutput)):
-        log.info(getoutput(str(args.before)))
-    if args and only_on_py3(args.quiet):
-        log.disable(log.CRITICAL)
+    log.disable(log.CRITICAL) if args.quiet else log.debug("Max Logging ON")
+    log.info(__doc__ + __version__)
     check_working_folder(os.path.dirname(args.fullpath))
-    # Work based on if argument is file or folder, folder is slower.
     if os.path.isfile(args.fullpath) and args.fullpath.endswith(".css"):
-        log.info("Target is a CSS File.")
-        list_of_files = str(args.fullpath)
+        log.info("Target is a CSS File.")  #  Work based on if argument is
+        list_of_files = str(args.fullpath)  # file or folder, folder is slower.
         process_single_css_file(args.fullpath)
     elif os.path.isfile(args.fullpath) and args.fullpath.endswith(
             ".html" if args.overwrite else ".htm"):
-        log.info("Target is HTM{} File.".format("L" if args.overwrite else ""))
+        log.info("Target is HTML File.")
         list_of_files = str(args.fullpath)
         process_single_html_file(args.fullpath)
     elif os.path.isfile(args.fullpath) and args.fullpath.endswith(".js"):
@@ -1425,8 +1355,7 @@ def main():
         list_of_files = str(args.fullpath)
         process_single_js_file(args.fullpath)
     elif os.path.isdir(args.fullpath):
-        log.info("Target is a Folder with CSS, HTM{}, JS files !.".format(
-            "L" if args.overwrite else ""))
+        log.info("Target is a Folder with CSS, HTML, JS files !.")
         log.warning("Processing a whole Folder may take some time...")
         list_of_files = walkdir_to_filelist(
             args.fullpath,
@@ -1442,8 +1371,7 @@ def main():
         sys.exit(1)
     if only_on_py3((args.after, getoutput)):
         log.info(getoutput(str(args.after)))
-    log.info('-' * 80)
-    log.info('Files Processed: {}.'.format(list_of_files))
+    log.info('\n {0} \n Files Processed: {1}.'.format('-' * 80, list_of_files))
     log.info('Number of Files Processed: {}.'.format(
         len(list_of_files) if isinstance(list_of_files, tuple) else 1))
     make_post_execution_message()

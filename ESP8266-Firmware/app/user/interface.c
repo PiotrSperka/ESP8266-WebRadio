@@ -1,3 +1,7 @@
+/******************************************************************************
+ * Copyright 2015 Piotr Sperka (http://www.piotrsperka.info)/*
+ * Copyright 2016 karawin (http://www.karawin.fr)
+*/
 #include "interface.h"
 #include "user_interface.h"
 #include "osapi.h"
@@ -6,7 +10,88 @@
 #include "stdlib.h"
 #include "eeprom.h"
 
+
+uint16_t currentStation = 0;
+
+//extern uint16_t currentStation;
+extern void wsVol(char* vol);
+extern void playStation(char* id);
+extern void setVolume(char* vol);
 #define MAX_WIFI_STATIONS 50
+	bool inside = false;
+
+unsigned short adcdiv;	
+void switchCommand() {
+	int adc;
+	uint8_t vol;
+	char Vol[22];
+	if (adcdiv == 0) return; // no panel
+//	vTaskDelay(100);
+//	while (true)
+	{	
+		adc = system_adc_read(); 
+		adc *= adcdiv;
+//		if (adc < 940) 
+//			printf("adc: %d  div: %d\n",adc,adcdiv);
+//		if (adc >940) vTaskDelay(10);
+		if (inside&&(adc > 940)) inside = false;
+		
+		if ((adc >400) && (adc < 580)) // volume +
+		{
+			vol = VS1053_GetVolume();
+			if (vol <244) 
+			{	
+				vol+=10;	
+//				printf("vol %d   vol1 %d\n",vol,vol1);					
+				sprintf(Vol,"%d",vol);
+				setVolume(Vol);
+				wsVol(Vol);	
+			}
+		}
+		else if ((adc >730) && (adc < 830)) // volume -
+		{
+			vol = VS1053_GetVolume();
+			if (vol >10) 
+			{	
+				vol-=10;
+//				printf("vol %d   vol1 %d\n",vol,vol1);					
+				sprintf(Vol,"%d",vol);
+				setVolume(Vol);
+				wsVol(Vol);	
+			}
+		}		
+		if (!inside)
+		{	
+			if (adc < 200) // stop
+			{
+				inside = true;
+				clientDisconnect();
+			}
+			else if ((adc >278) && (adc < 380)) //start
+			{
+				inside = true;
+				sprintf(Vol,"%d",currentStation);
+				playStation	(Vol);
+				sprintf(Vol,"{\"wsstation\":\"%d\"}",currentStation);
+				websocketbroadcast(Vol, strlen(Vol));
+			}
+			else if ((adc >830) && (adc < 930)) // station+
+			{
+				inside = true;
+				wsStationNext();
+			}
+			else if ((adc >590) && (adc < 710)) // station-
+			{
+				inside = true;
+				wsStationPrev();
+			}
+//			vTaskDelay(5);	
+		}
+	};
+}
+
+
+
 
 uint8_t startsWith(const char *pre, const char *str)
 {
@@ -17,7 +102,7 @@ uint8_t startsWith(const char *pre, const char *str)
 
 ICACHE_FLASH_ATTR void printInfo(char* s)
 {
-	printf("\n#INFO#\n%s\n##INFO#", s);
+	printf("#INFO:\"%s\"#\n", s);
 }
 
 ICACHE_FLASH_ATTR void wifiScanCallback(void *arg, STATUS status)
@@ -222,6 +307,74 @@ ICACHE_FLASH_ATTR void clientParsePort(char *s)
     }
 }
 
+
+ICACHE_FLASH_ATTR void clientPlay(char *s)
+{
+    char *t = strstr(s, "(\"");
+	if(t == 0)
+	{
+		printf("\n##CLI.CMD_ERROR#");
+		return;
+	}
+	char *t_end  = strstr(t, "\")")-2;
+    if(t_end <= 0)
+    {
+		printf("\n##CLI.CMD_ERROR#");
+		return;
+    }
+   char *id = (char*) malloc((t_end-t+1)*sizeof(char));
+    if(id != NULL)
+    {
+        uint8_t tmp;
+        for(tmp=0; tmp<(t_end-t+1); tmp++) id[tmp] = 0;
+        strncpy(id, t+2, (t_end-t));
+		playStation(id);
+        free(id);
+    }	
+}
+
+ICACHE_FLASH_ATTR void clientList()
+{
+	struct shoutcast_info* si;
+	int i;
+	printf("\n#CLI.LIST#\n");
+	for (i = 0;i <192;i++)
+	{
+		si = getStation(i);
+		if (si->port != 0)
+			printf("%3d: %s, %s:%d%s\n",i,si->name,si->domain,si->port,si->file);	
+		free(si);
+	}	
+	printf("\n##CLI.LIST#\n");
+}
+
+ICACHE_FLASH_ATTR void clientVol(char *s)
+{
+    char *t = strstr(s, "(\"");
+	if(t == 0)
+	{
+		printf("\n##CLI.CMD_ERROR#");
+		return;
+	}
+	char *t_end  = strstr(t, "\")")-2;
+    if(t_end <= 0)
+    {
+		printf("\n##CLI.CMD_ERROR#");
+		return;
+    }
+   char *vol = (char*) malloc((t_end-t+1)*sizeof(char));
+    if (vol != NULL)
+    {
+        uint8_t tmp;
+        for(tmp=0; tmp<(t_end-t+1); tmp++) vol[tmp] = 0;
+        strncpy(vol, t+2, (t_end-t));
+		if ((atoi(vol)>=0)&&(atoi(vol)<=254))
+		{	
+			setVolume(vol);
+			wsVol(vol);		}	
+        free(vol);
+    }	
+}
 ICACHE_FLASH_ATTR void checkCommand(int size, char* s)
 {
 	char *tmp = (char*)malloc((size+1)*sizeof(char));
@@ -239,7 +392,13 @@ ICACHE_FLASH_ATTR void checkCommand(int size, char* s)
     else if(startsWith("cli.port", tmp)) clientParsePort(tmp);
     else if(strcmp(tmp, "cli.start") == 0) clientConnect();
     else if(strcmp(tmp, "cli.stop") == 0) clientDisconnect();
+    else if(strcmp(tmp, "cli.list") == 0) clientList();
+    else if(strcmp(tmp, "cli.next") == 0) wsStationNext();
+    else if(strncmp(tmp, "cli.previous",8) == 0) wsStationPrev();
+    else if(startsWith("cli.play",tmp)) clientPlay(tmp);
+	else if(startsWith("cli.vol",tmp)) clientVol(tmp);
     else if(strcmp(tmp, "sys.erase") == 0) eeEraseAll();
 	else printInfo(tmp);
 	free(tmp);
+	
 }
