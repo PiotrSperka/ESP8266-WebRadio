@@ -1,19 +1,20 @@
 # **ESP8266-WebRadio** #
 ###WiFi shoutcast player based on ESP8266 chip
 ##Basic informations
-Version: 0.16<br />
+Version: 0.18<br />
 Status: under design and development
 ##Used hardware
 WiFi and main MCU: ESP8266 (ESP-12 with 32Mbits flash)<br />
-Additional MCU (as a bridge UART<=>UI): AVR<br />
+Additional MCU (as a UART<=>UI bridge): AVR<br />
 Audio decoder: VS1053<br />
 ##TODO list
 -**[HIGH]**LCD and encoder <=> UART converter based on AVR (ATmega88?)<br />
--**[NORMAL]**FM module (RDA5807M) implementation
--**[NORMAL]**External SRAM implementation<br />
+-**[NORMAL]**FM module (RDA5807M) implementation<br />
 -**[NORMAL]**Reconnect to webradio when internet connection reappears<br />
 -**[LOW]**Code cleanup and optimization
 ##Changelog
+###v0.18
+-**[ESP8266]**External SRAM is now implemented and it is set by deafult as place for audio buffer. However, operation without external SRAM is still possible (please refer to buffer.h)
 ###v0.17
 -**[MERGE]**Merged with karawin's fork (version 1.0.4)<br />
 He made lots of changes, especially he improved stability and webpage user experience. For details please visit his Github webpage:<br />

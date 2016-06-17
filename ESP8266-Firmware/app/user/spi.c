@@ -36,6 +36,16 @@ void spi_give_semaphore() {
 	if(sSPI) xSemaphoreGive(sSPI);
 }
 
+ICACHE_FLASH_ATTR void SPIPutChar(uint8_t data){
+	spi_tx8(HSPI, data);
+	while(spi_busy(HSPI));
+}
+
+ICACHE_FLASH_ATTR uint8_t SPIGetChar(){
+	while(spi_busy(HSPI));
+	return spi_rx8(HSPI);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Function Name: spi_init

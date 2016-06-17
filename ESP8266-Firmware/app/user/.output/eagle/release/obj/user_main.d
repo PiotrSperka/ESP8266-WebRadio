@@ -81,4 +81,4 @@
  ../../include/ssl/ssl_config.h ../../include/ssl/ssl_bigint_impl.h \
  ../../include/ssl/ssl_bigint.h ../include/cencode_inc.h \
  ../include/vs1053.h ../include/flash.h ../include/eeprom.h \
- ../include/interface.h ../include/webclient.h
+ ../include/interface.h ../include/webclient.h ../include/extram.h

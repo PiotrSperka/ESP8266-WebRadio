@@ -53,16 +53,6 @@ ICACHE_FLASH_ATTR void VS1053_SPI_SpeedDown() {
 	spi_clock(HSPI, 4, 10); //2MHz
 }
 
-ICACHE_FLASH_ATTR void SPIPutChar(uint8_t data){
-	spi_tx8(HSPI, data);
-	while(spi_busy(HSPI));
-}
-
-ICACHE_FLASH_ATTR uint8_t SPIGetChar(){
-	while(spi_busy(HSPI));
-	return spi_rx8(HSPI);
-}
-
 ICACHE_FLASH_ATTR void Delay(uint32_t nTime)
 {
 	unsigned int i;

@@ -55,6 +55,8 @@
 
 uint8_t spi_take_semaphore();
 void spi_give_semaphore();
+void SPIPutChar(uint8_t data);
+uint8_t SPIGetChar();
 
 void spi_init(uint8 spi_no);
 void spi_init_gpio(uint8 spi_no, uint8 sysclk_as_spiclk);

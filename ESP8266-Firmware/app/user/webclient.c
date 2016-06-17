@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 karawin (http://www.karawin.fr)
+ * Copyright 2016 Piotr Sperka (http://www.piotrsperka.info)
 */
 
 #include "webclient.h"
@@ -15,6 +16,7 @@
 
 #include "vs1053.h"
 #include "eeprom.h"
+#include "buffer.h"
 
 static enum clientStatus cstatus;
 //static uint32_t metacount = 0;
@@ -25,12 +27,6 @@ xSemaphoreHandle sConnect, sConnected, sDisconnect, sHeader;
 
 static uint8_t connect = 0, playing = 0;
 
-
-/* TODO:
-	- METADATA HANDLING
-	- IP SETTINGS
-	- VS1053 - DELAY USING vTaskDelay
-*/
 struct icyHeader header = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL};
 
 char metaint[10];
@@ -39,15 +35,6 @@ char clientPath[256] = {0,0};
 uint16_t clientPort = 80;
 
 struct hostent *server = NULL;
-
-///////////////
-#define BUFFER_SIZE 12960
-//#define BUFFER_SIZE 9600
-//#define BUFFER_SIZE 8000
-uint8_t buffer[BUFFER_SIZE];
-uint16_t wptr = 0;
-uint16_t rptr = 0;
-uint8_t bempty = 1;
 
 void *incmalloc(size_t n)
 {
@@ -64,55 +51,6 @@ void incfree(void *p,char* from)
 	free(p);
 //	printf ("Client incfree of %x, from %s           Heap size: %d\n",p,from,xPortGetFreeHeapSize( ));
 }	
-
-ICACHE_FLASH_ATTR uint16_t getBufferFree() {
-	if(wptr > rptr ) return BUFFER_SIZE - wptr + rptr;
-	else if(wptr < rptr) return rptr - wptr;
-	else if(bempty) return BUFFER_SIZE; else return 0;
-}
-
-ICACHE_FLASH_ATTR uint16_t getBufferFilled() {
-	return BUFFER_SIZE - getBufferFree();
-}
-
-ICACHE_FLASH_ATTR uint16_t bufferWrite(uint8_t *data, uint16_t size) {
-//	uint16_t s = size;
-	uint16_t i = 0;
-	for(i=0; i<size; i++) {
-		if(getBufferFree() == 0) { return i;}
-		buffer[wptr++] = data[i];
-		if(bempty) bempty = 0;
-//		wptr++;
-		if(wptr == BUFFER_SIZE) wptr = 0;
-	}
-	return size;
-}
-
-ICACHE_FLASH_ATTR uint16_t bufferRead(uint8_t *data, uint16_t size) {
-	uint16_t s = size;
-	size = (size>>6)<<6; //mod 32
-	uint16_t i = 0;
-	uint16_t bf = BUFFER_SIZE - getBufferFree();
-	if(s > bf) s = bf;
-	for (i = 0; i < s; i++) {
-		if(bf == 0) { return i;}
-		data[i] = buffer[rptr++];
-//		rptr++;
-		if(rptr == BUFFER_SIZE) rptr = 0;
-		if(rptr == wptr) bempty = 1;
-	}
-	return s;
-}
-
-ICACHE_FLASH_ATTR void bufferReset() {
-	playing = 0;	
-	wptr = 0;
-	rptr = 0;
-	bempty = 1;
-}
-
-///////////////
-
 
 ICACHE_FLASH_ATTR void clientInit() {
 	vSemaphoreCreateBinary(sHeader);
@@ -774,6 +712,7 @@ ICACHE_FLASH_ATTR void clientTask(void *pvParams) {
 					
 			}//jpc
 			bufferReset();
+			playing = 0;
 /*
 			uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
 			printf("watermark: %x  %d\n",uxHighWaterMark,uxHighWaterMark);

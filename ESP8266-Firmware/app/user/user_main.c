@@ -28,6 +28,8 @@
 
 #include "eeprom.h"
 
+#include "extram.h"
+
 
 void uart_div_modify(int no, unsigned int freq);
 
@@ -199,16 +201,6 @@ UART_SetBaudrate(uint8 uart_no, uint32 baud_rate) {
 	uart_div_modify(uart_no, UART_CLK_FREQ / baud_rate);
 }
 
-void testtask(void* p) {
-	gpio16_output_conf();
-	while(1) {
-		gpio16_output_set(0);
-		vTaskDelay(FlashOff);
-		gpio16_output_set(1);
-		vTaskDelay(FlashOn);
-	};
-}
-
 /******************************************************************************
  * FunctionName : user_init
  * Description  : entry of user application, init user function here
@@ -220,7 +212,8 @@ void user_init(void)
 //	REG_SET_BIT(0x3ff00014, BIT(0));
 //	system_update_cpu_freq(SYS_CPU_160MHZ);
 //	system_update_cpu_freq(160); //- See more at: http://www.esp8266.com/viewtopic.php?p=8107#p8107
-    Delay(300);
+    	Delay(300);
+	extramInit();
 	UART_SetBaudrate(0,115200);
 	wifi_set_opmode(STATION_MODE);
 	Delay(100);	
@@ -231,7 +224,6 @@ void user_init(void)
 	Delay(100);	
 	TCP_WND = 2 * TCP_MSS;
 
-	xTaskCreate(testtask, "t0", 80, NULL, 1, NULL); // DEBUG/TEST 80
 	xTaskCreate(uartInterfaceTask, "t1", 265, NULL, 2, NULL); //240
 	xTaskCreate(clientTask, "t3", 1024, NULL, 5, NULL); //1024
 	xTaskCreate(serverTask, "t2", 180, NULL, 4, NULL); //200
